@@ -2,8 +2,8 @@
 
 ### How to run :
 ```
-cmsrel  CMSSW_10_2_18
-cd  CMSSW_10_2_18/src
+cmsrel  CMSSW_10_6_19
+cd  CMSSW_10_6_19/src
 cmsenv
 mkdir Test
 mkedanlzr QCDEventShape
