@@ -11,8 +11,8 @@
      [Notes on implementation]
 */
 //
-// Original Author:  Tanmay Sarkar
-//         Created:  Wed, 01 Jul 2015 10:24:21 GMT
+// Original Author:  Soumyadip Barman
+//         Created:  Tue, 02 Feb 2021 10:24:21 GMT
 //
 //
 
@@ -3356,18 +3356,18 @@ QCDEventShape::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 #ifdef TRIGGER
 
 // cout << "Write test 4 = ok " << endl;
-	bool changed(true);
+  bool changed(true);
   if (hltPrescaleProvider_.init(iRun,iSetup,theHLTTag.c_str(),changed)) {
   HLTConfigProvider const&  hltConfig = hltPrescaleProvider_.hltConfigProvider();
-    hltConfig.dump("Triggers");
-    hltConfig.dump("PrescaleTable");
+  hltConfig.dump("Triggers");
+  hltConfig.dump("PrescaleTable");
 
     for (unsigned int ij=0; ij<nHLTmx; ij++) {
       l1pres[ij] = hltpres[ij]=-7;
-    }
-
-       } else {
-         }
+      }
+	} 
+	else {
+         	}
 
 
 
@@ -3401,9 +3401,6 @@ bool changed(true);
          }
 
 */
-
-
-
 
 /* bool changed(true);
    if (hltConfig_.init(iRun,iSetup,theHLTTag.c_str(),changed)) {
@@ -3492,7 +3489,7 @@ double PhiInRange(const double& phi) {
 
 template <class T, class U>
 double deltaR(const T& t, const U& u) {
-  return sqrt(pow(t.eta()-u.eta(),2) +pow(PhiInRange(t.phi()-u.phi()),2));
+return sqrt(pow(t.eta()-u.eta(),2) +pow(PhiInRange(t.phi()-u.phi()),2));
 }
 
 
