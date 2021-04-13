@@ -46,8 +46,8 @@ process.source = cms.Source("PoolSource",
 
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")

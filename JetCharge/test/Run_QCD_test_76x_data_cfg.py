@@ -13,23 +13,23 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 # source
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(#'/store/mc/Spring14dr/TTJets_MSDecaysCKM_central_Tune4C_13TeV-madgraph-tauola/AODSIM/PU20bx25_POSTLS170_V5-v1/00000/00B6F8B6-90F1-E311-B72C-0025905A6092.root'
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/02EDD8BA-B037-E811-B399-001E67792768.root',
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/02FDDB8F-F037-E811-98EF-001E67792884.root',
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/02FFDBF4-C037-E811-85A9-001E67E6F4EF.root',
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8C3F3069-C937-E811-912E-A4BF0112DCB4.root',
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8C0E44D5-1038-E811-9152-A4BF0112BE34.root',
-'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8A922D57-C937-E811-9FFA-001E677926E4.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8A582EE4-CA37-E811-B066-A4BF0112BD18.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8A28CDED-ED37-E811-8584-002590796302.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8A05FC9C-AB37-E811-A5E2-A4BF01159734.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/31Mar2018-v1/30000/8A01C041-F137-E811-B683-001E677927F8.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/17Nov2017-v1/70000/F8D1C550-C9DF-E711-B91A-02163E0134D5.root',
+'/store/data/Run2017F/JetHT/MINIAOD/17Nov2017-v1/70000/FEA2ED14-5CDF-E711-ACA6-02163E012AF0.root',
+'/store/data/Run2017F/JetHT/MINIAOD/17Nov2017-v1/70000/FE211553-36DF-E711-BAB7-02163E019BD0.root',
+#'/store/data/Run2017F/JetHT/MINIAOD/17Nov2017-v1/70000/FE155D02-00DF-E711-BA34-02163E011A55.root',
+#'/store/data/Run2017F/JetHT/MINIAOD/17Nov2017-v1/70000/FE08F446-63DF-E711-A338-A4BF0112BCF8.root',
+#'/store/data/Run2015D/JetHT/MINIAOD/PromptReco-v4/000/258/750/00000/28938773-BD72-E511-A479-02163E01432A.root',
+#'/store/data/Run2015D/JetHT/MINIAOD/PromptReco-v4/000/258/159/00000/0075E33B-3B6C-E511-BCC8-02163E01455C.root'
+#'/store/data/Run2015D/JetHT/MINIAOD/PromptReco-v4/000/258/159/00000/0CE8F23E-3B6C-E511-B68A-02163E013744.root',
+#'/store/data/Run2015D/JetHT/MINIAOD/PromptReco-v4/000/258/159/00000/36DC8060-3B6C-E511-BC73-02163E0143DD.root',
 #'/store/data/Run2015D/JetHT/MINIAOD/PromptReco-v4/000/258/159/00000/50A3A073-3B6C-E511-A997-02163E0144CD.root'
+#'/store/data/Run2015D/JetHT/MINIAOD/16Dec2015-v1/00000/301A497D-70B0-E511-9630-002590D0AFA8.root',
+#'/store/data/Run2015D/JetHT/MINIAOD/16Dec2015-v1/00000/7210C351-67B0-E511-A34C-7845C4FC37AF.root'
+#'/store/data/Run2015D/JetHT/MINIAOD/16Dec2015-v1/00000/745E2A4F-67B0-E511-9DA3-0090FAA57620.root',
 #'/store/data/Run2015D/JetHT/MINIAOD/16Dec2015-v1/00000/7E46D250-67B0-E511-BB96-0025905C3E66.root'
  )
 )
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
@@ -44,9 +44,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'74X_dataRun2_Prompt_v1')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_ReReco_EOY17_v6')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_ReReco_EOY17_v2')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_v6')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_ReReco_EOY17_v6')
-process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_v11')
+process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_v6')
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -90,7 +88,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 
 
 process.TFileService=cms.Service("TFileService",
-    fileName=cms.string("Tet_Data2017_31Mar2018.root")
+    fileName=cms.string("Test_Data_QCD_char_2017.root")
 )
 print "test1"
 process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
