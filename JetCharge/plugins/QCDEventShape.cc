@@ -22,8 +22,8 @@
 #define DIJETAVE 
 
 ////for data
-#define JETENERGY
-#define TRIGGER
+//#define JETENERGY
+//#define TRIGGER
 
 // //for Madgraph
 //#define LHAPDF
@@ -32,8 +32,8 @@
 //#define TRIGGER
 
 ////for Pythia8
-//#define JETRESO
-//#define TRIGGER
+#define JETRESO
+#define TRIGGER
 
 //For Flat
 #define FLAT
@@ -491,7 +491,9 @@ double respfun(double a, double b, double c, double x){
   return func;
 }
 
-double JetCharge1(int charge, double candspt, double jetpt, float k);
+double JetCharge1(int charge, double candspt, double jpt, double k);
+
+double candsmom(int charge, double candspt, double k);
 
 struct triggervar{
   HepLorentzVector trg4v;
@@ -593,9 +595,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -785,6 +787,14 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* jetcharge2_03;
 
   //TH1F* jc;
+  
+  TH1F* genjetcharge1_1;
+  TH1F* genjetcharge1_06;
+  TH1F* genjetcharge1_03;
+
+  TH1F* genjetcharge2_1;
+  TH1F* genjetcharge2_06;
+  TH1F* genjetcharge2_03;
 
   // ----------member data ---------------------------
   edm::EDGetTokenT<GenEventInfoProduct> generator1_;
@@ -1266,6 +1276,7 @@ edm::LumiReWeighting *LumiWeights_;
   //jc = fs->make<TH1F>("jc","Q_{Subleading_jet_charge_k=1.0}",20, -1.0, 1.0);
   //jc->Sumw2();
 
+  
 #endif
 
  //================*****===================================
@@ -1362,9 +1373,9 @@ edm::LumiReWeighting *LumiWeights_;
   genjt2_phi = fs->make<TH1F>("genjet2_phi","#phi_{genjets}",100,-M_PI, M_PI);
   genjt2_phi->Sumw2();
 
-  genjt3_eta = fs->make<TH1F>("genjet2_eta","#eta_{genjets}",100,-2.5, 2.5);
+  genjt3_eta = fs->make<TH1F>("genjet3_eta","#eta_{genjets}",100,-2.5, 2.5);
   genjt3_eta->Sumw2();
-  genjt3_phi = fs->make<TH1F>("genjet2_phi","#phi_{genjets}",100,-M_PI, M_PI);
+  genjt3_phi = fs->make<TH1F>("genjet3_phi","#phi_{genjets}",100,-M_PI, M_PI);
   genjt3_phi->Sumw2();
   //  genjt_oth_pt = fs->make<TH1F>("genjt_oth_pt","Et_{genjets_oth}",100, 20., 2020.);
   //  genjt_oth_pt->Sumw2();
@@ -1402,6 +1413,21 @@ edm::LumiReWeighting *LumiWeights_;
   genchg3_eta->Sumw2();
   genchg3_phi = fs->make<TH1F>("genchg3_phi","#phi_{gencharge_jet3}",100,-M_PI, M_PI);
   genchg3_phi->Sumw2();
+
+  genjetcharge1_1 = fs->make<TH1F>("genjetcharge1_1","Q_{leading_jet_charge_k=1.0}",20, -1.0, 1.0);
+  genjetcharge1_1->Sumw2();
+  genjetcharge1_06 = fs->make<TH1F>("genjetcharge1_06","Q_{leading_jet_charge_k=0.6}",40, -2.0, 2.0);
+  genjetcharge1_06->Sumw2();
+  genjetcharge1_03 = fs->make<TH1F>("genjetcharge1_03","Q_{leading_jet_charge_k=0.3}",60, -3.0, 3.0);
+  genjetcharge1_03->Sumw2();
+
+  genjetcharge2_1 = fs->make<TH1F>("genjetcharge2_1","Q_{Subleading_jet_charge_k=1.0}",20, -1.0, 1.0);
+  genjetcharge2_1->Sumw2();
+  genjetcharge2_06 = fs->make<TH1F>("genjetcharge2_06","Q_{Subleading_jet_charge_k=0.6}",40, -2.0, 2.0);
+  genjetcharge2_06->Sumw2();
+  genjetcharge2_03 = fs->make<TH1F>("genjetcharge2_03","Q_{Subleading_jet_charge_k=0.3}",60, -3.0, 3.0);
+  genjetcharge2_03->Sumw2();
+
 
   // genchg_oth_hist = fs->make<TH1F>("genchg_oth_hist","# of genchargeds (others)",120,-0.5, 239.5);
   // genchg_oth_hist->Sumw2();
@@ -2149,8 +2175,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #if defined(JETRESO)&&(!defined(JETENERGY))
       // resolution file 
       JME::JetResolution resolution;
-      resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");      // for DATA
-      //resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
+      //resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");      // for DATA
+      resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
       //resolution = JME::JetResolution("Fall17_V2_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall17_V3b_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt");
@@ -2158,8 +2184,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       // Scalefactor file
       JME::JetResolutionScaleFactor res_sf;
       //cout<<"Filename="<<scalefile<<endl;
-      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
-      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");        // for MC
+      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
+      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");        // for MC
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V3b_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V2_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall15_25nsV2_MC_SF_AK4PFchs.txt");
@@ -2427,8 +2453,21 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  
 		  if (tmpjt4v.size()==3) {hjetpt3bypt2[iet]->Fill(tmpjt4v[2].perp()/tmpjt4v[1].perp(), weighttrg);}
 		  } //if (isrc==0) {
-		
+
+		//double jcharge1_1=0;
+		//double z2 =0;
+		//double x1=0;
+		//double y1=0;
+
 	        int nchg=0;	
+		double ijet0_candsmom_1 = 0;
+		double ijet0_candsmom_06 =0;
+		double ijet0_candsmom_03 =0;
+
+		double ijet1_candsmom_1 = 0;
+                double ijet1_candsmom_06 =0;
+                double ijet1_candsmom_03 =0;
+
 		std::vector<reco::CandidatePtr> daus((*ak4PFJets)[ireorjt].daughterPtrVector());           
 		std::sort(daus.begin(), daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                                                                                                  
 		for (unsigned int i2 = 0; i2< daus.size(); ++i2) {   
@@ -2497,30 +2536,65 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     //  }
 
 		   // jet charge observable
+		   //double x1 =0;
+		   //double y1 =0;
+		   //double z1 =0;
+		   //double z2 =0;
 		   if (isrc==0){
-			if (ijet==0){
-			double jcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1);
-			double jcharge1_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
-                        double jcharge1_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+			if (ijet==0 && cand4v.perp() > 1.0){
 
-			jetcharge1_1->Fill(jcharge1_1,weighttrg);
-			jetcharge1_06->Fill(jcharge1_06,weighttrg);
-			jetcharge1_03->Fill(jcharge1_03,weighttrg);
-                
+			ijet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
+			ijet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
+			ijet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+
+			//ijet0_jetmom_1 = pow(tmp4v.perp(), 1.0);
+			//ijet0_jetmom_06 = pow(tmp4v.perp(), 0.6);
+			//ijet0_jetmom_03 = pow(tmp4v.perp(), 0.3);
+
+			//double jcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+			//jcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+			//double jcharge1_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
+                        //double jcharge1_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+                        
+                        //double jcharge1_1 = 0;
+                        //double jcharge1_06 = 0;
+                        //double jcharge1_03 = 0;
+			//x1 += 1.0*(charge*(pow(cand4v.perp(),0.3)));
+			//x1 += candmom(charge, cand4v.perp(), 0.3);
+			//y1 = pow(tmp4v.perp(), 0.3);
+			//z1 =(x1/y1);
+			//jcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+                        //jcharge1_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
+                        //jcharge1_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+			//jetcharge1_1->Fill(z1,weighttrg);
+			//jetcharge1_1->Fill(jcharge1_1,weighttrg);
+			//jetcharge1_06->Fill(jcharge1_06,weighttrg);
+			//jetcharge1_03->Fill(jcharge1_03,weighttrg);
+               		//if (nevt==1){ 
 			//std::cout<< "jetpt1 : "<<tmp4v.perp()<<endl;
                         //std::cout<<"charge1 : "<<charge<<endl;
                         //std::cout<<"candspt1 : "<<cand4v.perp()<< "charge1 : "<<charge<<endl;
-
+			//std::cout<<"jetcharge :"<<jcharge1_1<<endl;
+			//std::cout<<"z1 :"<< z1<<endl;
+			//}
+			
 				}
-			if (ijet==1){
+			//double z2 = (x1/y1);
+			//std::cout<<"z2 :"<< z2<<endl;
+			if (ijet==1 && cand4v.perp() > 1.0){
 			//if (ijet==1 && cand4v.perp()>1){
-			double jcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1);
-                        double jcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
-                        double jcharge2_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
 
-                        jetcharge2_1->Fill(jcharge2_1,weighttrg);
-                        jetcharge2_06->Fill(jcharge2_06,weighttrg);
-                        jetcharge2_03->Fill(jcharge2_03,weighttrg);
+			ijet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
+                        ijet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
+                        ijet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+
+			//double jcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+                        //double jcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
+                        //double jcharge2_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+
+                        //jetcharge2_1->Fill(jcharge2_1,weighttrg);
+                        //jetcharge2_06->Fill(jcharge2_06,weighttrg);
+                        //jetcharge2_03->Fill(jcharge2_03,weighttrg);
 			//float c2 = 0;
 			//float jet2 =0;
 			//float Q1 =0;
@@ -2535,6 +2609,16 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			}
 
 		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
+	        //z2 = (x1/y1);
+	        if (tmpjt4v[0].perp() > 400){	
+		jetcharge1_1->Fill(ijet0_candsmom_1/(pow(tmpjt4v[0].perp(),1.0)),weighttrg);
+		jetcharge1_06->Fill(ijet0_candsmom_06/(pow(tmpjt4v[0].perp(),0.6)),weighttrg);
+		jetcharge1_03->Fill(ijet0_candsmom_03/(pow(tmpjt4v[0].perp(),0.3)),weighttrg);
+
+		jetcharge2_1->Fill(ijet1_candsmom_1/(pow(tmpjt4v[1].perp(),1.0)),weighttrg);
+                jetcharge2_06->Fill(ijet1_candsmom_06/(pow(tmpjt4v[1].perp(),0.6)),weighttrg);
+                jetcharge2_03->Fill(ijet1_candsmom_03/(pow(tmpjt4v[1].perp(),0.3)),weighttrg);
+		}
 		//  if (isEta && isPt) {ncount++;}
 	   //   } //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet])
 	  //  } // for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++)
@@ -2967,6 +3051,14 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  if (tmpgen4v.size()==3) {genjetpt3bypt2[iet]->Fill(tmpgen4v[2].perp()/tmpgen4v[1].perp(), weight);}
 		}
 #ifdef GENPART
+		double igenjet0_candsmom_1 = 0;
+                double igenjet0_candsmom_06 =0;
+                double igenjet0_candsmom_03 =0;
+
+                double igenjet1_candsmom_1 = 0;
+                double igenjet1_candsmom_06 =0;
+                double igenjet1_candsmom_03 =0;
+
 		std::vector <const GenParticle*> daus ((*genjets)[igenjt].getGenConstituents ());
 		//std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); }); 
 		
@@ -2975,15 +3067,23 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  int charge = pfcand->charge();
 		  HepLorentzVector cand4v(pfcand->px(), pfcand->py(), pfcand->pz(), pfcand->energy());
 		  //int pdgid = pfcand->pdgId();
-		  
-#else								
+		 //std::cout<<"GENPART loop"<<endl; 
+#else		
+		double igenjet0_candsmom_1 = 0;
+                double igenjet0_candsmom_06 =0;
+                double igenjet0_candsmom_03 =0;
+
+                double igenjet1_candsmom_1 = 0;
+                double igenjet1_candsmom_06 =0;
+                double igenjet1_candsmom_03 =0;
+						
 		  std::vector<reco::CandidatePtr> daus((*genjets)[igenjt].daughterPtrVector());
 		  std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                               
 		  
 		  for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
 		    const pat::PackedCandidate &pfcand = static_cast<const pat::PackedCandidate &>(*daus[i2]);
 		    int charge = pfcand.charge();
-		    
+		    //std::cout<<"ALL loop"<<endl;
 		    HepLorentzVector cand4v(pfcand.px(), pfcand.py(), pfcand.pz(), pfcand.energy());
 #endif
 		    //	    if (cand4v.perp()<0.5) continue;
@@ -3058,7 +3158,35 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                       }
 
 		      }//if (charge !=0) { 
-                      
+                     
+		      if (ijet==0 && cand4v.perp()>1.0){
+                        igenjet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
+                        igenjet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
+                        igenjet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+			//std::cout<< "loop 1"<<endl;
+			//std::cout<<"candspt : "<<cand4v.perp()<<" cahrge : "<<charge<<endl;
+			//double genjcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+                        //double genjcharge1_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
+                        //double genjcharge1_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+
+                        //genjetcharge1_1->Fill(genjcharge1_1,weighttrg);
+                        //genjetcharge1_06->Fill(genjcharge1_06,weighttrg);
+                        //genjetcharge1_03->Fill(genjcharge1_03,weighttrg);
+			}
+		      if (ijet==1 && cand4v.perp()>1.0){
+			igenjet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
+                        igenjet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
+                        igenjet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+
+			//double genjcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
+                        //double genjcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
+                        //double genjcharge2_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+
+                        //genjetcharge2_1->Fill(genjcharge2_1,weighttrg);
+                        //genjetcharge2_06->Fill(genjcharge2_06,weighttrg);
+                        //genjetcharge2_03->Fill(genjcharge2_03,weighttrg);
+			}
+ 
                     /*if (isEta) {
                         if (charge !=0) {
                           genchg_pt->Fill(tmp4v.perp(), weighttrg);
@@ -3104,6 +3232,19 @@ else {
 		      }*/
 		    } //if (isrc==0)
 		  } //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
+			if (tmpgen4v[0].perp() > 400){
+			genjetcharge1_1->Fill(igenjet0_candsmom_1/(pow(tmpgen4v[0].perp(),1.0)),weighttrg);	
+			genjetcharge1_06->Fill(igenjet0_candsmom_06/(pow(tmpgen4v[0].perp(),0.6)),weighttrg);
+			genjetcharge1_03->Fill(igenjet0_candsmom_03/(pow(tmpgen4v[0].perp(),0.3)),weighttrg);
+
+			genjetcharge2_1->Fill(igenjet1_candsmom_1/(pow(tmpgen4v[1].perp(),1.0)),weighttrg);
+			genjetcharge2_06->Fill(igenjet1_candsmom_06/(pow(tmpgen4v[1].perp(),0.6)),weighttrg);
+			genjetcharge2_03->Fill(igenjet1_candsmom_03/(pow(tmpgen4v[1].perp(),0.3)),weighttrg);	
+			
+			//std::cout<<"Gen sum of cands mom of lead jet : "<<igenjet0_candsmom_1<<endl;
+			//std::cout<<"Gen pt of lead jet : "<<(pow(tmpgen4v[0].perp(),1.0))<<endl;
+			//std::cout<<"Gen jetcharge of lead jet : "<<(igenjet0_candsmom_1/(pow(tmpgen4v[0].perp(),1.0)))<<endl;
+			}
 		  //  if (isEta && isPt) {ncount++;}
 		} // if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && 
 		//								abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet])
@@ -3363,9 +3504,9 @@ QCDEventShape::beginJob() {
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall15_25nsV2_DATA_UncertaintySources_AK4PF.txt", name);      // mc file suman
-    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V4_DATA_UncertaintySources_AK4PFchs.txt", name);  // data file suman
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V4_DATA_UncertaintySources_AK4PFchs.txt", name);  // data file suman
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt", name);    
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc  
+    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc  
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017F_V6_DATA_UncertaintySources_AK4PFchs.txt", name);    
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
@@ -3575,10 +3716,18 @@ return l_dot_product;
 }
 */
 // Default jet charge observable
-double JetCharge1(int charge, double candspt, double jetpt, float k) {
-	double Q1 = 0;
-	Q1 +=( charge*(pow(candspt,k)));
-	return Q1/pow(jetpt,k);
+double JetCharge1(int charge, double candspt, double jpt, double k) {
+	double Q1 = 0.0;
+	//double j1 = 0.0;
+	Q1 +=1.0*( charge*(pow(candspt,k)));
+	//j1 = Q1/pow(jpt,k);
+	return Q1/pow(jpt,k);
+	//return j1;
+}
+double candsmom(int charge, double candspt, double k){	
+	double q = 0.0;
+	q =1.0*( charge*(pow(candspt,k)));
+	return q;
 }
 
 //define this as a plug-in
