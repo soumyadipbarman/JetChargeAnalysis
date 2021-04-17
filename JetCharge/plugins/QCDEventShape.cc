@@ -494,6 +494,8 @@ double respfun(double a, double b, double c, double x){
 double JetCharge1(int charge, double candspt, double jpt, double k);
 
 double candsmom(int charge, double candspt, double k);
+double dotproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k);
+double crossproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k);
 
 struct triggervar{
   HepLorentzVector trg4v;
@@ -785,6 +787,22 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* jetcharge2_1;
   TH1F* jetcharge2_06;
   TH1F* jetcharge2_03;
+  
+  TH1F* jetcharge_long1_1;
+  TH1F* jetcharge_long1_06;
+  TH1F* jetcharge_long1_03;
+
+  TH1F* jetcharge_tran1_1;
+  TH1F* jetcharge_tran1_06;
+  TH1F* jetcharge_tran1_03;
+
+  TH1F* jetcharge_long2_1;
+  TH1F* jetcharge_long2_06;
+  TH1F* jetcharge_long2_03;
+
+  TH1F* jetcharge_tran2_1;
+  TH1F* jetcharge_tran2_06;
+  TH1F* jetcharge_tran2_03;
 
   //TH1F* jc;
   
@@ -795,6 +813,23 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* genjetcharge2_1;
   TH1F* genjetcharge2_06;
   TH1F* genjetcharge2_03;
+
+  TH1F* genjetcharge_long1_1;
+  TH1F* genjetcharge_long1_06;
+  TH1F* genjetcharge_long1_03;
+
+  TH1F* genjetcharge_tran1_1;
+  TH1F* genjetcharge_tran1_06;
+  TH1F* genjetcharge_tran1_03;
+
+  TH1F* genjetcharge_long2_1;
+  TH1F* genjetcharge_long2_06;
+  TH1F* genjetcharge_long2_03;
+
+  TH1F* genjetcharge_tran2_1;
+  TH1F* genjetcharge_tran2_06;
+  TH1F* genjetcharge_tran2_03;
+  
 
   // ----------member data ---------------------------
   edm::EDGetTokenT<GenEventInfoProduct> generator1_;
@@ -1272,6 +1307,35 @@ edm::LumiReWeighting *LumiWeights_;
   jetcharge2_06->Sumw2();
   jetcharge2_03 = fs->make<TH1F>("jetcharge2_03","Q_{Subleading_jet_charge_k=0.3}",60, -3.0, 3.0);
   jetcharge2_03->Sumw2();
+ 
+  jetcharge_long1_1 = fs->make<TH1F>("jetcharge_long1_1","Q_{leading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
+  jetcharge_long1_1->Sumw2();
+  jetcharge_long1_06 = fs->make<TH1F>("jetcharge_long1_06","Q_{leading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
+  jetcharge_long1_06->Sumw2();
+  jetcharge_long1_03 = fs->make<TH1F>("jetcharge_long1_03","Q_{leading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
+  jetcharge_long1_03->Sumw2();
+
+  jetcharge_tran1_1 = fs->make<TH1F>("jetcharge_tran1_1","Q_{leading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
+  jetcharge_tran1_1->Sumw2(); 
+  jetcharge_tran1_06 = fs->make<TH1F>("jetcharge_tran1_06","Q_{leading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
+  jetcharge_tran1_06->Sumw2();
+  jetcharge_tran1_03 = fs->make<TH1F>("jetcharge_tran1_03","Q_{leading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
+  jetcharge_tran1_03->Sumw2();
+
+  jetcharge_long2_1 = fs->make<TH1F>("jetcharge_long2_1","Q_{Subleading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
+  jetcharge_long2_1->Sumw2();
+  jetcharge_long2_06 = fs->make<TH1F>("jetcharge_long2_06","Q_{Subleading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
+  jetcharge_long2_06->Sumw2();
+  jetcharge_long2_03 = fs->make<TH1F>("jetcharge_long2_03","Q_{Subleading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
+  jetcharge_long2_03->Sumw2();
+
+  jetcharge_tran2_1 = fs->make<TH1F>("jetcharge_tran2_1","Q_{Subleading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
+  jetcharge_tran2_1->Sumw2();
+  jetcharge_tran2_06 = fs->make<TH1F>("jetcharge_tran2_06","Q_{Subleading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
+  jetcharge_tran2_06->Sumw2();
+  jetcharge_tran2_03 = fs->make<TH1F>("jetcharge_tran2_03","Q_{Subleading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
+  jetcharge_tran2_03->Sumw2();
+
 
   //jc = fs->make<TH1F>("jc","Q_{Subleading_jet_charge_k=1.0}",20, -1.0, 1.0);
   //jc->Sumw2();
@@ -1428,6 +1492,32 @@ edm::LumiReWeighting *LumiWeights_;
   genjetcharge2_03 = fs->make<TH1F>("genjetcharge2_03","Q_{Subleading_jet_charge_k=0.3}",60, -3.0, 3.0);
   genjetcharge2_03->Sumw2();
 
+  genjetcharge_long1_1 = fs->make<TH1F>("genjetcharge_long1_1","Q_{leading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
+  genjetcharge_long1_1->Sumw2();
+  genjetcharge_long1_06 = fs->make<TH1F>("genjetcharge_long1_06","Q_{leading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
+  genjetcharge_long1_06->Sumw2();
+  genjetcharge_long1_03 = fs->make<TH1F>("genjetcharge_long1_03","Q_{leading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
+  genjetcharge_long1_03->Sumw2();
+
+  genjetcharge_tran1_1 = fs->make<TH1F>("genjetcharge_tran1_1","Q_{leading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
+  genjetcharge_tran1_1->Sumw2();
+  genjetcharge_tran1_06 = fs->make<TH1F>("genjetcharge_tran1_06","Q_{leading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
+  genjetcharge_tran1_06->Sumw2();
+  genjetcharge_tran1_03 = fs->make<TH1F>("genjetcharge_tran1_03","Q_{leading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
+  genjetcharge_tran1_03->Sumw2();
+
+  genjetcharge_long2_1 = fs->make<TH1F>("genjetcharge_long2_1","Q_{Subleading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
+  genjetcharge_long2_1->Sumw2();
+  genjetcharge_long2_06 = fs->make<TH1F>("genjetcharge_long2_06","Q_{Subleading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
+  genjetcharge_long2_06->Sumw2();
+  genjetcharge_long2_03 = fs->make<TH1F>("genjetcharge_long2_03","Q_{Subleading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
+  genjetcharge_long2_03->Sumw2();
+
+  genjetcharge_tran2_1 = fs->make<TH1F>("genjetcharge_tran2_1","Q_{Subleading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
+  genjetcharge_tran2_1->Sumw2();
+  genjetcharge_tran2_06 = fs->make<TH1F>("genjetcharge_tran2_06","Q_{Subleading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
+  genjetcharge_tran2_06->Sumw2();
+  genjetcharge_tran2_03 = fs->make<TH1F>("genjetcharge_tran2_03","Q_{Subleading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
 
   // genchg_oth_hist = fs->make<TH1F>("genchg_oth_hist","# of genchargeds (others)",120,-0.5, 239.5);
   // genchg_oth_hist->Sumw2();
@@ -2416,13 +2506,14 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    }
 		  }*/
 		//}
+		double recojet0_pt =0, recojet1_pt =0;
 		if (isrc==0) { 
 		  if(ijet==0) { 
-		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet0_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {recojt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {recojt1_phi->Fill(tmp4v.phi(), weighttrg);}
 		  } else if(ijet==1){
-		    if (isInEtaRange[iet]) {recojt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+		    if (isInEtaRange[iet]) {recojt2_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {recojt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {recojt2_phi->Fill(tmp4v.phi(), weighttrg);}
 		    if (isInEtaRange[iet] && ncount==2) { 
@@ -2467,6 +2558,39 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		double ijet1_candsmom_1 = 0;
                 double ijet1_candsmom_06 =0;
                 double ijet1_candsmom_03 =0;
+
+		double ijet0_long_num_1 =0;
+		double ijet0_long_num_06 =0;
+		double ijet0_long_num_03 =0;
+
+		double ijet0_long_den_1 =0;
+		double ijet0_long_den_06 =0;
+		double ijet0_long_den_03 =0;
+
+		double ijet1_long_num_1 =0;
+                double ijet1_long_num_06 =0;
+                double ijet1_long_num_03 =0;
+
+                double ijet1_long_den_1 =0;
+                double ijet1_long_den_06 =0;
+                double ijet1_long_den_03 =0;
+
+		double ijet0_tran_num_1 =0;
+                double ijet0_tran_num_06 =0;
+                double ijet0_tran_num_03 =0;
+
+                double ijet0_tran_den_1 =0;
+                double ijet0_tran_den_06 =0;
+                double ijet0_tran_den_03 =0;
+
+                double ijet1_tran_num_1 =0;
+                double ijet1_tran_num_06 =0;
+                double ijet1_tran_num_03 =0;
+
+                double ijet1_tran_den_1 =0;
+                double ijet1_tran_den_06 =0;
+                double ijet1_tran_den_03 =0;
+
 
 		std::vector<reco::CandidatePtr> daus((*ak4PFJets)[ireorjt].daughterPtrVector());           
 		std::sort(daus.begin(), daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                                                                                                  
@@ -2542,10 +2666,32 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		   //double z2 =0;
 		   if (isrc==0){
 			if (ijet==0 && cand4v.perp() > 1.0){
+			//Hep3Vector cands4v(cand4v.px() , cand4v.py(), cand4v.pz());
+			//Hep3Vector tmpjts4v(tmpjts4v.px() , tmpjts4v.py(), tmpjts4v.pz());
+			//std::cout<<"trial 1"<<endl;
+			//std::cout<<"cands4v"<<cands4v.perp()<<endl;
 
 			ijet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
 			ijet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
 			ijet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+		 	
+			ijet0_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet0_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			
+			ijet0_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet0_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+	
+			ijet0_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+			ijet0_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+			
+			ijet0_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet0_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+		
+			ijet0_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet0_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			ijet0_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        ijet0_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
 			//ijet0_jetmom_1 = pow(tmp4v.perp(), 1.0);
 			//ijet0_jetmom_06 = pow(tmp4v.perp(), 0.6);
@@ -2587,6 +2733,24 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			ijet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
                         ijet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
                         ijet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+			
+			ijet1_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet1_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        ijet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        ijet1_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        ijet1_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+                        ijet1_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet1_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        ijet1_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet1_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        ijet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        ijet1_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
 			//double jcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
                         //double jcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
@@ -2610,15 +2774,33 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
 	        //z2 = (x1/y1);
-	        if (tmpjt4v[0].perp() > 400){	
-		jetcharge1_1->Fill(ijet0_candsmom_1/(pow(tmpjt4v[0].perp(),1.0)),weighttrg);
-		jetcharge1_06->Fill(ijet0_candsmom_06/(pow(tmpjt4v[0].perp(),0.6)),weighttrg);
-		jetcharge1_03->Fill(ijet0_candsmom_03/(pow(tmpjt4v[0].perp(),0.3)),weighttrg);
+	        //if (tmp4v[0].perp() > 400){	
+		jetcharge1_1->Fill(ijet0_candsmom_1/(pow(recojet0_pt,1.0)),weighttrg);
+		jetcharge1_06->Fill(ijet0_candsmom_06/(pow(recojet0_pt,0.6)),weighttrg);
+		jetcharge1_03->Fill(ijet0_candsmom_03/(pow(recojet0_pt,0.3)),weighttrg);
 
-		jetcharge2_1->Fill(ijet1_candsmom_1/(pow(tmpjt4v[1].perp(),1.0)),weighttrg);
-                jetcharge2_06->Fill(ijet1_candsmom_06/(pow(tmpjt4v[1].perp(),0.6)),weighttrg);
-                jetcharge2_03->Fill(ijet1_candsmom_03/(pow(tmpjt4v[1].perp(),0.3)),weighttrg);
-		}
+		jetcharge2_1->Fill(ijet1_candsmom_1/(pow(recojet1_pt,1.0)),weighttrg);
+                jetcharge2_06->Fill(ijet1_candsmom_06/(pow(recojet1_pt,0.6)),weighttrg);
+                jetcharge2_03->Fill(ijet1_candsmom_03/(pow(recojet1_pt,0.3)),weighttrg);
+		//}
+
+		jetcharge_long1_1->Fill((ijet0_long_num_1/ijet0_long_den_1),weighttrg);
+		jetcharge_long1_06->Fill((ijet0_long_num_06/ijet0_long_den_06),weighttrg);
+		jetcharge_long1_03->Fill((ijet0_long_num_03/ijet0_long_den_03),weighttrg);
+		
+		jetcharge_tran1_1->Fill((ijet0_tran_num_1/ijet0_tran_den_1),weighttrg);
+		jetcharge_tran1_06->Fill((ijet0_tran_num_06/ijet0_tran_den_06),weighttrg);
+		jetcharge_tran1_03->Fill((ijet0_tran_num_03/ijet0_tran_den_03),weighttrg);
+
+		jetcharge_long2_1->Fill((ijet1_long_num_1/ijet1_long_den_1),weighttrg);
+                jetcharge_long2_06->Fill((ijet1_long_num_06/ijet1_long_den_06),weighttrg);
+                jetcharge_long2_03->Fill((ijet1_long_num_03/ijet1_long_den_03),weighttrg);
+
+                jetcharge_tran2_1->Fill((ijet1_tran_num_1/ijet1_tran_den_1),weighttrg);
+                jetcharge_tran2_06->Fill((ijet1_tran_num_06/ijet1_tran_den_06),weighttrg);
+                jetcharge_tran2_03->Fill((ijet1_tran_num_03/ijet1_tran_den_03),weighttrg);
+
+		
 		//  if (isEta && isPt) {ncount++;}
 	   //   } //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet])
 	  //  } // for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++)
@@ -3018,15 +3200,16 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    }
 		  }*/
 		//}
+		double genrecojet0_pt =0 , genrecojet1_pt =0 ;
 		if (isrc==0) { 
 		  if(ijet==0) {
 		    //		    cout<<"Gen Pt= " << avegenpt <<endl;
-		    if (isInEtaRange[iet]) {genjt1_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+		    if (isInEtaRange[iet]) {genjt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); genrecojet0_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {genjt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {genjt1_phi->Fill(tmp4v.phi(), weighttrg);}
 		  } else if(ijet==1){
 		    //		    cout<<"okkkkkkkk" <<endl;
-		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);genrecojet1_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {genjt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {genjt2_phi->Fill(tmp4v.phi(), weighttrg);}
 		    if (isInEtaRange[iet] && ncount==2) {
@@ -3059,6 +3242,39 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 double igenjet1_candsmom_06 =0;
                 double igenjet1_candsmom_03 =0;
 
+		double igenjet0_long_num_1 =0;
+                double igenjet0_long_num_06 =0;
+                double igenjet0_long_num_03 =0;
+
+                double igenjet0_long_den_1 =0;
+                double igenjet0_long_den_06 =0;
+                double igenjet0_long_den_03 =0;
+
+                double igenjet1_long_num_1 =0;
+                double igenjet1_long_num_06 =0;
+                double igenjet1_long_num_03 =0;
+
+                double igenjet1_long_den_1 =0;
+                double igenjet1_long_den_06 =0;
+                double igenjet1_long_den_03 =0;
+
+                double igenjet0_tran_num_1 =0;
+                double igenjet0_tran_num_06 =0;
+                double igenjet0_tran_num_03 =0;
+
+                double igenjet0_tran_den_1 =0;
+                double igenjet0_tran_den_06 =0;
+                double igenjet0_tran_den_03 =0;
+
+                double igenjet1_tran_num_1 =0;
+                double igenjet1_tran_num_06 =0;
+                double igenjet1_tran_num_03 =0;
+
+                double igenjet1_tran_den_1 =0;
+                double igenjet1_tran_den_06 =0;
+                double igenjet1_tran_den_03 =0;
+
+
 		std::vector <const GenParticle*> daus ((*genjets)[igenjt].getGenConstituents ());
 		//std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); }); 
 		
@@ -3076,6 +3292,39 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 double igenjet1_candsmom_1 = 0;
                 double igenjet1_candsmom_06 =0;
                 double igenjet1_candsmom_03 =0;
+
+		double igenjet0_long_num_1 =0;
+                double igenjet0_long_num_06 =0;
+                double igenjet0_long_num_03 =0;
+
+                double igenjet0_long_den_1 =0;
+                double igenjet0_long_den_06 =0;
+                double igenjet0_long_den_03 =0;
+
+                double igenjet1_long_num_1 =0;
+                double igenjet1_long_num_06 =0;
+                double igenjet1_long_num_03 =0;
+
+                double igenjet1_long_den_1 =0;
+                double igenjet1_long_den_06 =0;
+                double igenjet1_long_den_03 =0;
+
+                double igenjet0_tran_num_1 =0;
+                double igenjet0_tran_num_06 =0;
+                double igenjet0_tran_num_03 =0;
+
+                double igenjet0_tran_den_1 =0;
+                double igenjet0_tran_den_06 =0;
+                double igenjet0_tran_den_03 =0;
+
+                double igenjet1_tran_num_1 =0;
+                double igenjet1_tran_num_06 =0;
+                double igenjet1_tran_num_03 =0;
+
+                double igenjet1_tran_den_1 =0;
+                double igenjet1_tran_den_06 =0;
+                double igenjet1_tran_den_03 =0;
+
 						
 		  std::vector<reco::CandidatePtr> daus((*genjets)[igenjt].daughterPtrVector());
 		  std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                               
@@ -3163,6 +3412,25 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         igenjet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
                         igenjet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
                         igenjet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+
+			igenjet0_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet0_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        igenjet0_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet0_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        igenjet0_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet0_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+                        igenjet0_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet0_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        igenjet0_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet0_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        igenjet0_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet0_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
 			//std::cout<< "loop 1"<<endl;
 			//std::cout<<"candspt : "<<cand4v.perp()<<" cahrge : "<<charge<<endl;
 			//double genjcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
@@ -3177,6 +3445,24 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			igenjet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
                         igenjet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
                         igenjet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+	
+			igenjet1_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet1_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        igenjet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        igenjet1_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet1_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+                        igenjet1_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet1_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        igenjet1_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet1_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+                        igenjet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet1_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
 			//double genjcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
                         //double genjcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
@@ -3232,19 +3518,35 @@ else {
 		      }*/
 		    } //if (isrc==0)
 		  } //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
-			if (tmpgen4v[0].perp() > 400){
-			genjetcharge1_1->Fill(igenjet0_candsmom_1/(pow(tmpgen4v[0].perp(),1.0)),weighttrg);	
-			genjetcharge1_06->Fill(igenjet0_candsmom_06/(pow(tmpgen4v[0].perp(),0.6)),weighttrg);
-			genjetcharge1_03->Fill(igenjet0_candsmom_03/(pow(tmpgen4v[0].perp(),0.3)),weighttrg);
+			//if (tmp4v[0].perp() > 400){
+			genjetcharge1_1->Fill(igenjet0_candsmom_1/(pow(genrecojet0_pt,1.0)),weighttrg);	
+			genjetcharge1_06->Fill(igenjet0_candsmom_06/(pow(genrecojet0_pt,0.6)),weighttrg);
+			genjetcharge1_03->Fill(igenjet0_candsmom_03/(pow(genrecojet0_pt,0.3)),weighttrg);
 
-			genjetcharge2_1->Fill(igenjet1_candsmom_1/(pow(tmpgen4v[1].perp(),1.0)),weighttrg);
-			genjetcharge2_06->Fill(igenjet1_candsmom_06/(pow(tmpgen4v[1].perp(),0.6)),weighttrg);
-			genjetcharge2_03->Fill(igenjet1_candsmom_03/(pow(tmpgen4v[1].perp(),0.3)),weighttrg);	
+			genjetcharge2_1->Fill(igenjet1_candsmom_1/(pow(genrecojet1_pt,1.0)),weighttrg);
+			genjetcharge2_06->Fill(igenjet1_candsmom_06/(pow(genrecojet1_pt,0.6)),weighttrg);
+			genjetcharge2_03->Fill(igenjet1_candsmom_03/(pow(genrecojet1_pt,0.3)),weighttrg);	
 			
 			//std::cout<<"Gen sum of cands mom of lead jet : "<<igenjet0_candsmom_1<<endl;
 			//std::cout<<"Gen pt of lead jet : "<<(pow(tmpgen4v[0].perp(),1.0))<<endl;
 			//std::cout<<"Gen jetcharge of lead jet : "<<(igenjet0_candsmom_1/(pow(tmpgen4v[0].perp(),1.0)))<<endl;
-			}
+			//}
+			genjetcharge_long1_1->Fill((igenjet0_long_num_1/igenjet0_long_den_1),weighttrg);
+	                genjetcharge_long1_06->Fill((igenjet0_long_num_06/igenjet0_long_den_06),weighttrg);
+        	        genjetcharge_long1_03->Fill((igenjet0_long_num_03/igenjet0_long_den_03),weighttrg);
+
+                	genjetcharge_tran1_1->Fill((igenjet0_tran_num_1/igenjet0_tran_den_1),weighttrg);
+          	        genjetcharge_tran1_06->Fill((igenjet0_tran_num_06/igenjet0_tran_den_06),weighttrg);
+                	genjetcharge_tran1_03->Fill((igenjet0_tran_num_03/igenjet0_tran_den_03),weighttrg);
+
+	                genjetcharge_long2_1->Fill((igenjet1_long_num_1/igenjet1_long_den_1),weighttrg);
+        	        genjetcharge_long2_06->Fill((igenjet1_long_num_06/igenjet1_long_den_06),weighttrg);
+                	genjetcharge_long2_03->Fill((igenjet1_long_num_03/igenjet1_long_den_03),weighttrg);
+
+	                genjetcharge_tran2_1->Fill((igenjet1_tran_num_1/igenjet1_tran_den_1),weighttrg);
+        	        genjetcharge_tran2_06->Fill((igenjet1_tran_num_06/igenjet1_tran_den_06),weighttrg);
+                	genjetcharge_tran2_03->Fill((igenjet1_tran_num_03/igenjet1_tran_den_03),weighttrg);
+
 		  //  if (isEta && isPt) {ncount++;}
 		} // if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && 
 		//								abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet])
@@ -3724,10 +4026,29 @@ double JetCharge1(int charge, double candspt, double jpt, double k) {
 	return Q1/pow(jpt,k);
 	//return j1;
 }
+// For default definition Q
 double candsmom(int charge, double candspt, double k){	
 	double q = 0.0;
 	q =1.0*( charge*(pow(candspt,k)));
 	return q;
+}
+// For longitudinal definition Q(L)
+double dotproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k) {
+	double dot = 0.0;
+	//double dotresult =0.0;
+	dot = (pow((((candspx*jpx) + (candspy*jpy) + (candspz*jpz))/jpt),k));
+	//dotresult = (charge*(pow(dot,k)));
+	return dot;
+	//return dotresult;
+}
+// For transverse definition Q(T)
+double crossproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k){
+	double cross = 0.0;
+	//double crossresult =0.0;
+	cross = (pow(((sqrt((pow(((candspy*jpz) - (candspz*jpy)),2)) + (pow(((candspz*jpx) - (candspx*jpz)),2)) + (pow(((candspx*jpy) - (candspy*jpx)),2))))/jpt),k));
+	//crossreult = (charge*(pow(cross,k)));
+	return cross;
+	//return crossresult;
 }
 
 //define this as a plug-in
