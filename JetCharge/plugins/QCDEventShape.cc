@@ -494,7 +494,9 @@ double respfun(double a, double b, double c, double x){
 double JetCharge1(int charge, double candspt, double jpt, double k);
 
 double candsmom(int charge, double candspt, double k);
+
 double dotproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k);
+
 double crossproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k);
 
 struct triggervar{
@@ -779,53 +781,70 @@ class QCDEventShape : public edm::EDAnalyzer {
 
   TH1F* counthist;
   
-  // Jet Charge Observable
+  // Default Jet Charge Observable
+  // Leading jet
   TH1F* jetcharge1_1;
   TH1F* jetcharge1_06;
   TH1F* jetcharge1_03;
 
+  // Sub-leading jet
   TH1F* jetcharge2_1;
   TH1F* jetcharge2_06;
   TH1F* jetcharge2_03;
   
+  // Longitudinal Jet Charge Observable
+  // Leading jet
   TH1F* jetcharge_long1_1;
   TH1F* jetcharge_long1_06;
   TH1F* jetcharge_long1_03;
 
-  TH1F* jetcharge_tran1_1;
-  TH1F* jetcharge_tran1_06;
-  TH1F* jetcharge_tran1_03;
-
+  // Sub-leading jet
   TH1F* jetcharge_long2_1;
   TH1F* jetcharge_long2_06;
   TH1F* jetcharge_long2_03;
 
+  // Transverse Jet Charge Observable
+  // Leading jet
+  TH1F* jetcharge_tran1_1;
+  TH1F* jetcharge_tran1_06;
+  TH1F* jetcharge_tran1_03;
+
+  // Sub-leading jet
   TH1F* jetcharge_tran2_1;
   TH1F* jetcharge_tran2_06;
   TH1F* jetcharge_tran2_03;
 
-  //TH1F* jc;
-  
+  // Gen -level
+
+  // Default Jet Charge Observable
+  // Leading jet
   TH1F* genjetcharge1_1;
   TH1F* genjetcharge1_06;
   TH1F* genjetcharge1_03;
-
+  
+  // Sub-leading jet
   TH1F* genjetcharge2_1;
   TH1F* genjetcharge2_06;
   TH1F* genjetcharge2_03;
 
+  // Longitudinal Jet Charge Observable
+  // Leading jet
   TH1F* genjetcharge_long1_1;
   TH1F* genjetcharge_long1_06;
   TH1F* genjetcharge_long1_03;
-
-  TH1F* genjetcharge_tran1_1;
-  TH1F* genjetcharge_tran1_06;
-  TH1F* genjetcharge_tran1_03;
-
+  
+  // Sub-leading jet
   TH1F* genjetcharge_long2_1;
   TH1F* genjetcharge_long2_06;
   TH1F* genjetcharge_long2_03;
 
+  // Transverse Jet Charge Observable
+  // Leading jet
+  TH1F* genjetcharge_tran1_1;
+  TH1F* genjetcharge_tran1_06;
+  TH1F* genjetcharge_tran1_03;
+
+  // Sub-leading jet
   TH1F* genjetcharge_tran2_1;
   TH1F* genjetcharge_tran2_06;
   TH1F* genjetcharge_tran2_03;
@@ -1314,6 +1333,13 @@ edm::LumiReWeighting *LumiWeights_;
   jetcharge_long1_06->Sumw2();
   jetcharge_long1_03 = fs->make<TH1F>("jetcharge_long1_03","Q_{leading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
   jetcharge_long1_03->Sumw2();
+  
+  jetcharge_long2_1 = fs->make<TH1F>("jetcharge_long2_1","Q_{Subleading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
+  jetcharge_long2_1->Sumw2();
+  jetcharge_long2_06 = fs->make<TH1F>("jetcharge_long2_06","Q_{Subleading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
+  jetcharge_long2_06->Sumw2();
+  jetcharge_long2_03 = fs->make<TH1F>("jetcharge_long2_03","Q_{Subleading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
+  jetcharge_long2_03->Sumw2();  
 
   jetcharge_tran1_1 = fs->make<TH1F>("jetcharge_tran1_1","Q_{leading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
   jetcharge_tran1_1->Sumw2(); 
@@ -1321,13 +1347,6 @@ edm::LumiReWeighting *LumiWeights_;
   jetcharge_tran1_06->Sumw2();
   jetcharge_tran1_03 = fs->make<TH1F>("jetcharge_tran1_03","Q_{leading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
   jetcharge_tran1_03->Sumw2();
-
-  jetcharge_long2_1 = fs->make<TH1F>("jetcharge_long2_1","Q_{Subleading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
-  jetcharge_long2_1->Sumw2();
-  jetcharge_long2_06 = fs->make<TH1F>("jetcharge_long2_06","Q_{Subleading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
-  jetcharge_long2_06->Sumw2();
-  jetcharge_long2_03 = fs->make<TH1F>("jetcharge_long2_03","Q_{Subleading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
-  jetcharge_long2_03->Sumw2();
 
   jetcharge_tran2_1 = fs->make<TH1F>("jetcharge_tran2_1","Q_{Subleading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
   jetcharge_tran2_1->Sumw2();
@@ -1499,19 +1518,19 @@ edm::LumiReWeighting *LumiWeights_;
   genjetcharge_long1_03 = fs->make<TH1F>("genjetcharge_long1_03","Q_{leading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
   genjetcharge_long1_03->Sumw2();
 
-  genjetcharge_tran1_1 = fs->make<TH1F>("genjetcharge_tran1_1","Q_{leading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
-  genjetcharge_tran1_1->Sumw2();
-  genjetcharge_tran1_06 = fs->make<TH1F>("genjetcharge_tran1_06","Q_{leading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
-  genjetcharge_tran1_06->Sumw2();
-  genjetcharge_tran1_03 = fs->make<TH1F>("genjetcharge_tran1_03","Q_{leading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
-  genjetcharge_tran1_03->Sumw2();
-
   genjetcharge_long2_1 = fs->make<TH1F>("genjetcharge_long2_1","Q_{Subleading_jet_charge_longitudinal_k=1.0}",20, -1.0, 1.0);
   genjetcharge_long2_1->Sumw2();
   genjetcharge_long2_06 = fs->make<TH1F>("genjetcharge_long2_06","Q_{Subleading_jet_charge_longitudinal_k=0.6}",16, -0.8, 0.8);
   genjetcharge_long2_06->Sumw2();
   genjetcharge_long2_03 = fs->make<TH1F>("genjetcharge_long2_03","Q_{Subleading_jet_charge_longitudinal_k=0.3}",12, -0.6, 0.6);
   genjetcharge_long2_03->Sumw2();
+
+  genjetcharge_tran1_1 = fs->make<TH1F>("genjetcharge_tran1_1","Q_{leading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
+  genjetcharge_tran1_1->Sumw2();
+  genjetcharge_tran1_06 = fs->make<TH1F>("genjetcharge_tran1_06","Q_{leading_jet_charge_transverse_k=0.6}",16, -0.8, 0.8);
+  genjetcharge_tran1_06->Sumw2();
+  genjetcharge_tran1_03 = fs->make<TH1F>("genjetcharge_tran1_03","Q_{leading_jet_charge_transverse_k=0.3}",12, -0.6, 0.6);
+  genjetcharge_tran1_03->Sumw2();
 
   genjetcharge_tran2_1 = fs->make<TH1F>("genjetcharge_tran2_1","Q_{Subleading_jet_charge_transverse_k=1.0}",20, -1.0, 1.0);
   genjetcharge_tran2_1->Sumw2();
@@ -2550,47 +2569,18 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		//double x1=0;
 		//double y1=0;
 
-	        int nchg=0;	
-		double ijet0_candsmom_1 = 0;
-		double ijet0_candsmom_06 =0;
-		double ijet0_candsmom_03 =0;
-
-		double ijet1_candsmom_1 = 0;
-                double ijet1_candsmom_06 =0;
-                double ijet1_candsmom_03 =0;
-
-		double ijet0_long_num_1 =0;
-		double ijet0_long_num_06 =0;
-		double ijet0_long_num_03 =0;
-
-		double ijet0_long_den_1 =0;
-		double ijet0_long_den_06 =0;
-		double ijet0_long_den_03 =0;
-
-		double ijet1_long_num_1 =0;
-                double ijet1_long_num_06 =0;
-                double ijet1_long_num_03 =0;
-
-                double ijet1_long_den_1 =0;
-                double ijet1_long_den_06 =0;
-                double ijet1_long_den_03 =0;
-
-		double ijet0_tran_num_1 =0;
-                double ijet0_tran_num_06 =0;
-                double ijet0_tran_num_03 =0;
-
-                double ijet0_tran_den_1 =0;
-                double ijet0_tran_den_06 =0;
-                double ijet0_tran_den_03 =0;
-
-                double ijet1_tran_num_1 =0;
-                double ijet1_tran_num_06 =0;
-                double ijet1_tran_num_03 =0;
-
-                double ijet1_tran_den_1 =0;
-                double ijet1_tran_den_06 =0;
-                double ijet1_tran_den_03 =0;
-
+	        int nchg=0;
+	
+		double ijet0_candsmom_1 =0 , ijet0_candsmom_06 =0 , ijet0_candsmom_03 =0;
+		double ijet1_candsmom_1 =0 , ijet1_candsmom_06 =0 , ijet1_candsmom_03 =0;
+		double ijet0_long_num_1 =0 , ijet0_long_num_06 =0 , ijet0_long_num_03 =0;
+		double ijet0_long_den_1 =0 , ijet0_long_den_06 =0 , ijet0_long_den_03 =0;
+		double ijet1_long_num_1 =0 , ijet1_long_num_06 =0 , ijet1_long_num_03 =0;
+                double ijet1_long_den_1 =0 , ijet1_long_den_06 =0 , ijet1_long_den_03 =0;
+		double ijet0_tran_num_1 =0 , ijet0_tran_num_06 =0 , ijet0_tran_num_03 =0;
+                double ijet0_tran_den_1 =0 , ijet0_tran_den_06 =0 , ijet0_tran_den_03 =0;
+                double ijet1_tran_num_1 =0 , ijet1_tran_num_06 =0 , ijet1_tran_num_03 =0;
+                double ijet1_tran_den_1 =0 , ijet1_tran_den_06 =0 , ijet1_tran_den_03 =0;
 
 		std::vector<reco::CandidatePtr> daus((*ak4PFJets)[ireorjt].daughterPtrVector());           
 		std::sort(daus.begin(), daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                                                                                                  
@@ -3234,45 +3224,17 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  if (tmpgen4v.size()==3) {genjetpt3bypt2[iet]->Fill(tmpgen4v[2].perp()/tmpgen4v[1].perp(), weight);}
 		}
 #ifdef GENPART
-		double igenjet0_candsmom_1 = 0;
-                double igenjet0_candsmom_06 =0;
-                double igenjet0_candsmom_03 =0;
 
-                double igenjet1_candsmom_1 = 0;
-                double igenjet1_candsmom_06 =0;
-                double igenjet1_candsmom_03 =0;
-
-		double igenjet0_long_num_1 =0;
-                double igenjet0_long_num_06 =0;
-                double igenjet0_long_num_03 =0;
-
-                double igenjet0_long_den_1 =0;
-                double igenjet0_long_den_06 =0;
-                double igenjet0_long_den_03 =0;
-
-                double igenjet1_long_num_1 =0;
-                double igenjet1_long_num_06 =0;
-                double igenjet1_long_num_03 =0;
-
-                double igenjet1_long_den_1 =0;
-                double igenjet1_long_den_06 =0;
-                double igenjet1_long_den_03 =0;
-
-                double igenjet0_tran_num_1 =0;
-                double igenjet0_tran_num_06 =0;
-                double igenjet0_tran_num_03 =0;
-
-                double igenjet0_tran_den_1 =0;
-                double igenjet0_tran_den_06 =0;
-                double igenjet0_tran_den_03 =0;
-
-                double igenjet1_tran_num_1 =0;
-                double igenjet1_tran_num_06 =0;
-                double igenjet1_tran_num_03 =0;
-
-                double igenjet1_tran_den_1 =0;
-                double igenjet1_tran_den_06 =0;
-                double igenjet1_tran_den_03 =0;
+		double igenjet0_candsmom_1 =0 , igenjet0_candsmom_06 =0 , igenjet0_candsmom_03 =0;
+                double igenjet1_candsmom_1 =0 , igenjet1_candsmom_06 =0 , igenjet1_candsmom_03 =0;
+                double igenjet0_long_num_1 =0 , igenjet0_long_num_06 =0 , igenjet0_long_num_03 =0;
+                double igenjet0_long_den_1 =0 , igenjet0_long_den_06 =0 , igenjet0_long_den_03 =0;
+                double igenjet1_long_num_1 =0 , igenjet1_long_num_06 =0 , igenjet1_long_num_03 =0;
+                double igenjet1_long_den_1 =0 , igenjet1_long_den_06 =0 , igenjet1_long_den_03 =0;
+                double igenjet0_tran_num_1 =0 , igenjet0_tran_num_06 =0 , igenjet0_tran_num_03 =0;
+                double igenjet0_tran_den_1 =0 , igenjet0_tran_den_06 =0 , igenjet0_tran_den_03 =0;
+                double igenjet1_tran_num_1 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_03 =0;
+                double igenjet1_tran_den_1 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_03 =0;
 
 
 		std::vector <const GenParticle*> daus ((*genjets)[igenjt].getGenConstituents ());
@@ -3285,45 +3247,16 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  //int pdgid = pfcand->pdgId();
 		 //std::cout<<"GENPART loop"<<endl; 
 #else		
-		double igenjet0_candsmom_1 = 0;
-                double igenjet0_candsmom_06 =0;
-                double igenjet0_candsmom_03 =0;
-
-                double igenjet1_candsmom_1 = 0;
-                double igenjet1_candsmom_06 =0;
-                double igenjet1_candsmom_03 =0;
-
-		double igenjet0_long_num_1 =0;
-                double igenjet0_long_num_06 =0;
-                double igenjet0_long_num_03 =0;
-
-                double igenjet0_long_den_1 =0;
-                double igenjet0_long_den_06 =0;
-                double igenjet0_long_den_03 =0;
-
-                double igenjet1_long_num_1 =0;
-                double igenjet1_long_num_06 =0;
-                double igenjet1_long_num_03 =0;
-
-                double igenjet1_long_den_1 =0;
-                double igenjet1_long_den_06 =0;
-                double igenjet1_long_den_03 =0;
-
-                double igenjet0_tran_num_1 =0;
-                double igenjet0_tran_num_06 =0;
-                double igenjet0_tran_num_03 =0;
-
-                double igenjet0_tran_den_1 =0;
-                double igenjet0_tran_den_06 =0;
-                double igenjet0_tran_den_03 =0;
-
-                double igenjet1_tran_num_1 =0;
-                double igenjet1_tran_num_06 =0;
-                double igenjet1_tran_num_03 =0;
-
-                double igenjet1_tran_den_1 =0;
-                double igenjet1_tran_den_06 =0;
-                double igenjet1_tran_den_03 =0;
+		double igenjet0_candsmom_1 =0 , igenjet0_candsmom_06 =0 , igenjet0_candsmom_03 =0;
+                double igenjet1_candsmom_1 =0 , igenjet1_candsmom_06 =0 , igenjet1_candsmom_03 =0;
+		double igenjet0_long_num_1 =0 , igenjet0_long_num_06 =0 , igenjet0_long_num_03 =0;
+                double igenjet0_long_den_1 =0 , igenjet0_long_den_06 =0 , igenjet0_long_den_03 =0;
+                double igenjet1_long_num_1 =0 , igenjet1_long_num_06 =0 , igenjet1_long_num_03 =0;
+                double igenjet1_long_den_1 =0 , igenjet1_long_den_06 =0 , igenjet1_long_den_03 =0;
+                double igenjet0_tran_num_1 =0 , igenjet0_tran_num_06 =0 , igenjet0_tran_num_03 =0;
+                double igenjet0_tran_den_1 =0 , igenjet0_tran_den_06 =0 , igenjet0_tran_den_03 =0;
+                double igenjet1_tran_num_1 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_03 =0; 
+                double igenjet1_tran_den_1 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_03 =0;
 
 						
 		  std::vector<reco::CandidatePtr> daus((*genjets)[igenjt].daughterPtrVector());
@@ -4000,23 +3933,7 @@ template <class T, class U>
 double deltaR(const T& t, const U& u) {
 return sqrt(pow(t.eta()-u.eta(),2) +pow(PhiInRange(t.phi()-u.phi()),2));
 }
-/*
-//returns the scalar product between two 4 momenta
-double dot_product(std::vector<HepLorentzVector> a, std::vector<HepLorentzVector> b){
-double dot_product(){
-  unsigned int dim = (unsigned int) a.size();
-    if(a.size()!=b.size()){
-        cout<<"ERROR!!! Dimension of input vectors are different! Change that please!"<<endl;
-        return 0;}
-    else{double l_dot_product=a[dim-1]*b[dim-1];
-    	for(unsigned int ij=0; ij<dim-1; ij++){
-        l_dot_product-=a[ij]*b[ij];
-        }
-return l_dot_product;
-        }
-}
-}
-*/
+
 // Default jet charge observable
 double JetCharge1(int charge, double candspt, double jpt, double k) {
 	double Q1 = 0.0;
@@ -4026,12 +3943,14 @@ double JetCharge1(int charge, double candspt, double jpt, double k) {
 	return Q1/pow(jpt,k);
 	//return j1;
 }
+
 // For default definition Q
 double candsmom(int charge, double candspt, double k){	
 	double q = 0.0;
 	q =1.0*( charge*(pow(candspt,k)));
 	return q;
 }
+
 // For longitudinal definition Q(L)
 double dotproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k) {
 	double dot = 0.0;
@@ -4041,6 +3960,7 @@ double dotproduct(double candspx, double candspy, double candspz, double jpx, do
 	return dot;
 	//return dotresult;
 }
+
 // For transverse definition Q(T)
 double crossproduct(double candspx, double candspy, double candspz, double jpx, double jpy, double jpz, double jpt, double k){
 	double cross = 0.0;
