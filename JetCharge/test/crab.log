@@ -4965,3 +4965,286 @@ Traceback (most recent call last):
     raise ConfigurationException(msg)
 ConfigurationException: [91mError[0m: crab_projects/crab_ESVQCD_UL_Ptbinned_3200toinf_tuneCP5_bin_22Aug20 is not a valid CRAB project directory.
 INFO 2020-10-15 10:15:38.219 UTC: 	 Log file is /afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Eventshape_variables/MC_TUnfoldBinning/CMSSW_10_6_12/src/Test/QCDEventShape/test/crab.log
+DEBUG 2021-04-24 13:38:43.469 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-24 13:38:43.470 UTC: 	 Running on: Linux lxplus768.cern.ch 3.10.0-1160.21.1.el7.x86_64 #1 SMP Tue Mar 16 18:28:22 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-24 13:38:43.470 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-24 13:38:43.470 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-24 13:38:43.477 UTC: 	 Checking credentials
+DEBUG 2021-04-24 13:38:43.478 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-24 13:38:43.478 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-24 13:38:44.184 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 42509
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-24 13:38:44.792 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -actimeleft
+ output : 42508
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-24 13:38:44.792 UTC: 	 Proxy lifetime 42509 secs is different from voms extension lifetime 42508 secs for proxy: /tmp/x509up_u124615
+DEBUG 2021-04-24 13:38:44.792 UTC: 	 Proxy valid for 11:48:28 hours
+DEBUG 2021-04-24 13:38:45.397 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u124615 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-24 13:38:45.397 UTC: 	 Command use: checkwrite
+DEBUG 2021-04-24 13:38:45.398 UTC: 	 Options use: ['--site=T2_IN_TIFR']
+DEBUG 2021-04-24 13:38:45.398 UTC: 	 Instance is None
+DEBUG 2021-04-24 13:38:45.398 UTC: 	 Server base url is None
+DEBUG 2021-04-24 13:38:45.398 UTC: 	 Retrieving username ...
+DEBUG 2021-04-24 13:38:45.398 UTC: 	 Retrieving username from CRIC...
+DEBUG 2021-04-24 13:38:46.127 UTC: 	 username is sobarman
+INFO 2021-04-24 13:38:46.127 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2021-04-24 13:38:46.127 UTC: 	 Validating LFN /store/user/sobarman...
+INFO 2021-04-24 13:38:46.127 UTC: 	 LFN /store/user/sobarman is valid.
+INFO 2021-04-24 13:38:46.139 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2021-04-24 13:38:46.141 UTC: 	 Will check write permission in /store/user/sobarman on site T2_IN_TIFR
+INFO 2021-04-24 13:38:48.529 UTC: 	 Will use PFN: gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210424_153846/crab3checkwrite_20210424_153846.tmp
+INFO 2021-04-24 13:38:48.530 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20210424_153846 and copy (dummy) file crab3checkwrite_20210424_153846.tmp to /store/user/sobarman
+
+INFO 2021-04-24 13:38:48.534 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/crab3checkwrite_20210424_153846.tmp 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210424_153846/crab3checkwrite_20210424_153846.tmp'
+INFO 2021-04-24 13:38:48.534 UTC: 	 Please wait...
+INFO 2021-04-24 13:42:18.801 UTC: 	 Failed running copy command
+INFO 2021-04-24 13:42:18.802 UTC: 	   Stderr:
+    Command timed out after 180 seconds!
+    
+INFO 2021-04-24 13:42:18.803 UTC: 	 
+Checkwrite Result:
+INFO 2021-04-24 13:42:18.803 UTC: 	 Unable to check write permission in /store/user/sobarman on site T2_IN_TIFR
+Please try again later or contact the site administrators sending them the 'crab checkwrite' output as printed above.
+INFO 2021-04-24 13:42:18.803 UTC: 	 Note: You cannot write to a site if you did not ask permission.
+DEBUG 2021-04-26 07:54:17.916 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-26 07:54:17.917 UTC: 	 Running on: Linux lxplus731.cern.ch 3.10.0-1160.24.1.el7.x86_64 #1 SMP Thu Apr 8 19:51:47 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-26 07:54:17.917 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-26 07:54:17.917 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-26 07:54:17.925 UTC: 	 Checking credentials
+DEBUG 2021-04-26 07:54:17.925 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-26 07:54:17.925 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-26 07:54:18.530 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 43122
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-26 07:54:19.136 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -actimeleft
+ output : 43121
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-26 07:54:19.136 UTC: 	 Proxy lifetime 43122 secs is different from voms extension lifetime 43121 secs for proxy: /tmp/x509up_u124615
+DEBUG 2021-04-26 07:54:19.136 UTC: 	 Proxy valid for 11:58:41 hours
+DEBUG 2021-04-26 07:54:19.741 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u124615 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Command use: checkwrite
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Options use: ['--site', 'T2_IN_TIFR']
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Instance is None
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Server base url is None
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Retrieving username ...
+DEBUG 2021-04-26 07:54:19.742 UTC: 	 Retrieving username from CRIC...
+DEBUG 2021-04-26 07:54:20.505 UTC: 	 username is sobarman
+INFO 2021-04-26 07:54:20.506 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2021-04-26 07:54:20.506 UTC: 	 Validating LFN /store/user/sobarman...
+INFO 2021-04-26 07:54:20.506 UTC: 	 LFN /store/user/sobarman is valid.
+INFO 2021-04-26 07:54:20.516 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2021-04-26 07:54:20.517 UTC: 	 Will check write permission in /store/user/sobarman on site T2_IN_TIFR
+INFO 2021-04-26 07:54:26.067 UTC: 	 Will use PFN: gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210426_095420/crab3checkwrite_20210426_095420.tmp
+INFO 2021-04-26 07:54:26.068 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20210426_095420 and copy (dummy) file crab3checkwrite_20210426_095420.tmp to /store/user/sobarman
+
+INFO 2021-04-26 07:54:26.072 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/crab3checkwrite_20210426_095420.tmp 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210426_095420/crab3checkwrite_20210426_095420.tmp'
+INFO 2021-04-26 07:54:26.072 UTC: 	 Please wait...
+INFO 2021-04-26 07:57:56.411 UTC: 	 Failed running copy command
+INFO 2021-04-26 07:57:56.412 UTC: 	   Stderr:
+    Command timed out after 180 seconds!
+    
+INFO 2021-04-26 07:57:56.415 UTC: 	 
+Checkwrite Result:
+INFO 2021-04-26 07:57:56.415 UTC: 	 Unable to check write permission in /store/user/sobarman on site T2_IN_TIFR
+Please try again later or contact the site administrators sending them the 'crab checkwrite' output as printed above.
+INFO 2021-04-26 07:57:56.415 UTC: 	 Note: You cannot write to a site if you did not ask permission.
+DEBUG 2021-04-27 16:10:19.540 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-27 16:10:19.541 UTC: 	 Running on: Linux lxplus766.cern.ch 3.10.0-1160.24.1.el7.x86_64 #1 SMP Thu Apr 8 19:51:47 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-27 16:10:19.541 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-27 16:10:19.541 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-27 16:10:19.548 UTC: 	 Checking credentials
+DEBUG 2021-04-27 16:10:19.548 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-27 16:10:19.548 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-27 16:10:20.258 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 41061
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-27 16:10:20.865 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -actimeleft
+ output : 41061
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-27 16:10:20.865 UTC: 	 Proxy valid for 11:24:21 hours
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u124615 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Command use: checkwrite
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Options use: ['--site', 'T2_IN_TIFR']
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Instance is None
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Server base url is None
+DEBUG 2021-04-27 16:10:21.475 UTC: 	 Retrieving username ...
+DEBUG 2021-04-27 16:10:21.476 UTC: 	 Retrieving username from CRIC...
+DEBUG 2021-04-27 16:10:22.237 UTC: 	 username is sobarman
+INFO 2021-04-27 16:10:22.237 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2021-04-27 16:10:22.238 UTC: 	 Validating LFN /store/user/sobarman...
+INFO 2021-04-27 16:10:22.238 UTC: 	 LFN /store/user/sobarman is valid.
+INFO 2021-04-27 16:10:22.256 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2021-04-27 16:10:22.256 UTC: 	 Will check write permission in /store/user/sobarman on site T2_IN_TIFR
+INFO 2021-04-27 16:10:25.754 UTC: 	 Will use PFN: gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/crab3checkwrite_20210427_181022.tmp
+INFO 2021-04-27 16:10:25.754 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20210427_181022 and copy (dummy) file crab3checkwrite_20210427_181022.tmp to /store/user/sobarman
+
+INFO 2021-04-27 16:10:25.762 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/crab3checkwrite_20210427_181022.tmp 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/crab3checkwrite_20210427_181022.tmp'
+INFO 2021-04-27 16:10:25.762 UTC: 	 Please wait...
+INFO 2021-04-27 16:10:56.031 UTC: 	 
+Successfully created directory crab3checkwrite_20210427_181022 and copied file crab3checkwrite_20210427_181022.tmp to /store/user/sobarman
+INFO 2021-04-27 16:10:56.031 UTC: 	 
+Attempting to delete file gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/crab3checkwrite_20210427_181022.tmp
+
+INFO 2021-04-27 16:10:56.031 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/crab3checkwrite_20210427_181022.tmp'
+INFO 2021-04-27 16:10:56.031 UTC: 	 Please wait...
+INFO 2021-04-27 16:10:59.274 UTC: 	 
+Successfully deleted file gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/crab3checkwrite_20210427_181022.tmp
+INFO 2021-04-27 16:10:59.274 UTC: 	 
+Attempting to delete directory gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/
+
+INFO 2021-04-27 16:10:59.275 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -r -v -t 180 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/'
+INFO 2021-04-27 16:10:59.275 UTC: 	 Please wait...
+INFO 2021-04-27 16:11:04.037 UTC: 	 
+Successfully deleted directory gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210427_181022/
+INFO 2021-04-27 16:11:04.039 UTC: 	 
+Checkwrite Result:
+INFO 2021-04-27 16:11:04.039 UTC: 	 Success: Able to write in /store/user/sobarman on site T2_IN_TIFR
+DEBUG 2021-04-29 15:42:03.956 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-29 15:42:03.957 UTC: 	 Running on: Linux lxplus7106.cern.ch 3.10.0-1160.24.1.el7.x86_64 #1 SMP Thu Apr 8 19:51:47 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-29 15:42:03.957 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-29 15:42:03.957 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-29 15:42:03.975 UTC: 	 Checking credentials
+DEBUG 2021-04-29 15:42:03.976 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-29 15:42:03.976 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-29 15:42:05.721 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 42935
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:42:07.252 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -actimeleft
+ output : 42932
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:42:07.252 UTC: 	 Proxy lifetime 42935 secs is different from voms extension lifetime 42932 secs for proxy: /tmp/x509up_u124615
+DEBUG 2021-04-29 15:42:07.252 UTC: 	 Proxy valid for 11:55:32 hours
+DEBUG 2021-04-29 15:42:08.984 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u124615 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Command use: checkwrite
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Options use: ['--site=T2_IN_TIFR']
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Instance is None
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Server base url is None
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Retrieving username ...
+DEBUG 2021-04-29 15:42:08.985 UTC: 	 Retrieving username from CRIC...
+ERROR 2021-04-29 15:43:34.102 UTC: 	 Keyboard Interrupted
+DEBUG 2021-04-29 15:44:27.236 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-29 15:44:27.236 UTC: 	 Running on: Linux lxplus795.cern.ch 3.10.0-1160.24.1.el7.x86_64 #1 SMP Thu Apr 8 19:51:47 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-29 15:44:27.236 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-29 15:44:27.237 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-29 15:44:27.249 UTC: 	 Checking credentials
+DEBUG 2021-04-29 15:44:27.250 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-29 15:44:27.250 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-29 15:44:28.057 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 43191
+
+ error: 
+ retcode : 0
+ERROR 2021-04-29 15:44:29.004 UTC: 	 Keyboard Interrupted
+INFO 2021-04-29 15:44:29.022 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/crab.log
+DEBUG 2021-04-29 15:44:33.499 UTC: 	 CRAB Client version: v3.210323
+DEBUG 2021-04-29 15:44:33.499 UTC: 	 Running on: Linux lxplus795.cern.ch 3.10.0-1160.24.1.el7.x86_64 #1 SMP Thu Apr 8 19:51:47 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-04-29 15:44:33.499 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2021-04-29 15:44:33.499 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2021-04-29 15:44:33.509 UTC: 	 Checking credentials
+DEBUG 2021-04-29 15:44:33.509 UTC: 	 Found proxy file /tmp/x509up_u124615
+DEBUG 2021-04-29 15:44:33.509 UTC: 	 Getting proxy life time left
+DEBUG 2021-04-29 15:44:34.219 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -timeleft
+ output : 43184
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:44:34.926 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u124615 -actimeleft
+ output : 43184
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:44:34.926 UTC: 	 Proxy valid for 11:59:44 hours
+DEBUG 2021-04-29 15:44:35.637 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u124615 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Command use: checkwrite
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Options use: ['--site=T2_IN_TIFR']
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Instance is None
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Server base url is None
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Retrieving username ...
+DEBUG 2021-04-29 15:44:35.638 UTC: 	 Retrieving username from CRIC...
+DEBUG 2021-04-29 15:44:36.420 UTC: 	 username is sobarman
+INFO 2021-04-29 15:44:36.420 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2021-04-29 15:44:36.420 UTC: 	 Validating LFN /store/user/sobarman...
+INFO 2021-04-29 15:44:36.420 UTC: 	 LFN /store/user/sobarman is valid.
+INFO 2021-04-29 15:44:36.436 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2021-04-29 15:44:36.437 UTC: 	 Will check write permission in /store/user/sobarman on site T2_IN_TIFR
+INFO 2021-04-29 15:44:39.886 UTC: 	 Will use PFN: gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/crab3checkwrite_20210429_174436.tmp
+INFO 2021-04-29 15:44:39.887 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20210429_174436 and copy (dummy) file crab3checkwrite_20210429_174436.tmp to /store/user/sobarman
+
+INFO 2021-04-29 15:44:39.891 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/crab3checkwrite_20210429_174436.tmp 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/crab3checkwrite_20210429_174436.tmp'
+INFO 2021-04-29 15:44:39.891 UTC: 	 Please wait...
+INFO 2021-04-29 15:44:45.199 UTC: 	 
+Successfully created directory crab3checkwrite_20210429_174436 and copied file crab3checkwrite_20210429_174436.tmp to /store/user/sobarman
+INFO 2021-04-29 15:44:45.200 UTC: 	 
+Attempting to delete file gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/crab3checkwrite_20210429_174436.tmp
+
+INFO 2021-04-29 15:44:45.200 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/crab3checkwrite_20210429_174436.tmp'
+INFO 2021-04-29 15:44:45.200 UTC: 	 Please wait...
+INFO 2021-04-29 15:44:48.635 UTC: 	 
+Successfully deleted file gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/crab3checkwrite_20210429_174436.tmp
+INFO 2021-04-29 15:44:48.636 UTC: 	 
+Attempting to delete directory gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/
+
+INFO 2021-04-29 15:44:48.636 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -r -v -t 180 'gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/'
+INFO 2021-04-29 15:44:48.636 UTC: 	 Please wait...
+INFO 2021-04-29 15:44:53.048 UTC: 	 
+Successfully deleted directory gsiftp://se01.indiacms.res.in:2811/dpm/indiacms.res.in/home/cms/store/user/sobarman/crab3checkwrite_20210429_174436/
+INFO 2021-04-29 15:44:53.491 UTC: 	 
+Checkwrite Result:
+INFO 2021-04-29 15:44:53.491 UTC: 	 Success: Able to write in /store/user/sobarman on site T2_IN_TIFR

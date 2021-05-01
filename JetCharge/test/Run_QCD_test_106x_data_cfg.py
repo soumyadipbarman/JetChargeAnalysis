@@ -46,8 +46,8 @@ process.source = cms.Source("PoolSource",
 
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
@@ -65,8 +65,8 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_ReReco_EOY17_v6')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_v11')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'102X_dataRun2_v12')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v28')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v32')
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v28')
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v32')
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
