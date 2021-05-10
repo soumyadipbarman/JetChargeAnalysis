@@ -11,11 +11,7 @@ cd QCDEventShape
 cd plugin
 ```
 **In QCDEventShape folder, put the codes in plugin,test from those folders,
-https://github.com/Sumankkundu/ChargedParticle/tree/master/QCDEventShape/2017/MC
-
- plugin : QCDEventShape.cc(Replace existing one) , EventShape_vector.cc(Copy)& EventShape_vector.h(copy) 
- 
- test : All python files
+https://github.com/soumyadipbarman/JetChargeAnalysis/tree/master/JetCharge
 
  ### To complile and Run
  ```
