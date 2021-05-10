@@ -1,4 +1,0 @@
-DEBUG 2021-05-03 07:07:18.738 UTC: 	 CRAB Client version: v3.210323
-DEBUG 2021-05-03 07:07:18.738 UTC: 	 Running on: Linux lxplus733.cern.ch 3.10.0-1160.15.2.el7.x86_64 #1 SMP Wed Feb 3 15:06:38 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
-DEBUG 2021-05-03 07:07:18.738 UTC: 	 Executing command: 'resubmit'
-DEBUG 2021-05-03 07:07:18.739 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
