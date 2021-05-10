@@ -21,7 +21,7 @@ https://github.com/soumyadipbarman/JetChargeAnalysis/tree/master/JetCharge
  cmsRun Run_QCD_test_106x_mc_cfg.py
 ```
 
-### For TUnFolding
+### For TUnFold
  ```
 1. Create a scram toolfile rootunfold.xml with content:
    <tool name="rootunfold" version="6.14.09">
