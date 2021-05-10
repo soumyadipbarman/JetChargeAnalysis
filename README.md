@@ -2,8 +2,8 @@
 
 ### How to run :
 ```
-cmsrel  CMSSW_10_6_19
-cd  CMSSW_10_6_19/src
+cmsrel  CMSSW_10_6_20
+cd  CMSSW_10_6_20/src
 cmsenv
 mkdir Test
 mkedanlzr QCDEventShape
@@ -22,7 +22,7 @@ https://github.com/Sumankkundu/ChargedParticle/tree/master/QCDEventShape/2017/MC
  cd QCDEventShape
  scramv1 b    
  cd test 
- cmsRun Run_QCD_test_miaod_v2_76x_mc_cfg.py
+ cmsRun Run_QCD_test_106x_mc_cfg.py
 ```
 
 ### For TUnFolding
