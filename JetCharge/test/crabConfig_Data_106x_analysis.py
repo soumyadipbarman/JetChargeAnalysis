@@ -12,7 +12,9 @@ config = config()
 #config.General.requestName = 'JetCharge_Data_analysis_Run2017C-UL_29042021'
 #config.General.requestName = 'JetCharge_Data_analysis_Run2017D-UL_29042021'
 #config.General.requestName = 'JetCharge_Data_analysis_Run2017E-UL_29042021'
-config.General.requestName = 'JetCharge_Data_analysis_Run2017F-UL_29042021'
+#config.General.requestName = 'JetCharge_Data_analysis_Run2017F-UL_29042021'
+
+config.General.requestName = 'JetCharge_Data_analysis_Run2017E-UL_29042021_fix_spike_SF'
 
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
@@ -30,8 +32,8 @@ config.JobType.inputFiles= [#"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMS
 #"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/DataMC17UL_V4/Summer19UL17_RunF_V4_DATA_UncertaintySources_AK4PFchs.txt",
 #"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/DataMC17UL_V4/Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt",
 #"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/DataMC17UL_V4/Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/Summer19UL17_RunF_V4_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/Summer19UL17_RunE_V4_DATA_UncertaintySources_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/Summer19UL17_JRV3_DATA_PtResolution_AK4PFchs.txt",
 "/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v1/CMSSW_10_6_19/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt",
 ]
 
@@ -47,8 +49,8 @@ config.JobType.inputFiles= [#"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMS
 #config.Data.inputDataset = '/JetHT/Run2017B-09Aug2019_UL2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-09Aug2019_UL2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017D-09Aug2019_UL2017-v1/MINIAOD'
-#config.Data.inputDataset = '/JetHT/Run2017E-09Aug2019_UL2017-v1/MINIAOD'
-config.Data.inputDataset = '/JetHT/Run2017F-09Aug2019_UL2017-v1/MINIAOD'
+config.Data.inputDataset = '/JetHT/Run2017E-09Aug2019_UL2017-v1/MINIAOD'
+#config.Data.inputDataset = '/JetHT/Run2017F-09Aug2019_UL2017-v1/MINIAOD'
 
 #config.Data.inputDataset = '/JetHT/Run2015D-PromptReco-v4/MINIAOD'
 
@@ -71,11 +73,15 @@ config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Coll
 #config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
 config.Data.publication = False
+
 #config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017B_UL2017_29042021'
 #config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017C_UL2017_29042021'
 #config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017D_UL2017_29042021'
 #config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017E_UL2017_29042021'
-config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017F_UL2017_29042021'
+#config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017F_UL2017_29042021'
+
+config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017E_UL2017_29042021_fix_spike_SF'
+
 #config.Data.publishDataName = 'May2015_Data_analysis'
 
 config.Site.storageSite = 'T2_IN_TIFR'
