@@ -18,7 +18,8 @@ https://github.com/soumyadipbarman/JetChargeAnalysis/tree/master/JetCharge
  cd QCDEventShape
  scramv1 b    
  cd test 
- cmsRun Run_QCD_test_106x_mc_cfg.py
+ cmsRun Run_QCD_test_106x_mc_cfg.py    ## For MC
+ cmsRun Run_QCD_test_106x_data_cfg.py  ## For DATA
 ```
 
 ### For TUnFold
