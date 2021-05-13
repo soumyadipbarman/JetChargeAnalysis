@@ -22,8 +22,8 @@
 #define DIJETAVE 
 
 ////for data
-#define JETENERGY
-#define TRIGGER
+//#define JETENERGY
+//#define TRIGGER
 
 // //for Madgraph
 //#define LHAPDF
@@ -32,8 +32,8 @@
 //#define TRIGGER
 
 ////for Pythia8 & Herwig7
-//#define JETRESO
-//#define TRIGGER
+#define JETRESO
+#define TRIGGER
 
 //For Flat
 #define FLAT
@@ -303,7 +303,7 @@ double binrngs1[nvar][nmxbins+1]={{},{},{},
 
 //----------------------------------------HT2 Binning For 2D unfold 
 //double recohtbins[nHLTmx+1] = {83, 109, 172, 241, 309, 377, 462, 570, 3000.0};
-double recohtbins[nHLTmx+1] = {92, 119, 185, 253, 320, 389, 469, 522, 583, 670, 3000.0};
+double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0};
 
 //---------------------------------------------------------------------------------------------------------
 const int nusedvar=5;
@@ -388,7 +388,7 @@ const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v
 
 //double leadingPtThreshold[njetptmn+1] ={90.0, 120.0, 180.0, 250.0, 320.0, 400.0, 480.0, 600.0, 2000.0};
 //double leadingPtThreshold[njetptmn+1] ={83, 109, 172, 241, 309, 377, 462, 570, 3000.0}; //Fit Value dijet trigger
-double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 253, 320, 389, 469, 522, 583, 670, 3000.0}; //trigger turn on for 2017 UL JetHT sample
+double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
 
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
@@ -613,9 +613,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -1935,7 +1935,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	if (abs((*ak4PFJets)[ij].eta())>etarange[iet]) { isInEtaRange[iet] = false;}
       }
       
-      //Jet ID ================= 2017 jetID recomendation 
+      //Jet ID ================= 2017 & 2018 UL jetID recomendation 
       double NHF = (*ak4PFJets)[ij].neutralHadronEnergyFraction();
       double NEMF = (*ak4PFJets)[ij].neutralEmEnergyFraction();
       double CHF = (*ak4PFJets)[ij].chargedHadronEnergyFraction();
@@ -2300,8 +2300,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #if defined(JETRESO)&&(!defined(JETENERGY))
       // resolution file 
       JME::JetResolution resolution;
-      resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
-      //resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
+      //resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
+      resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
       //resolution = JME::JetResolution("Fall17_V2_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall17_V3b_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt");
@@ -2309,8 +2309,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       // Scalefactor file
       JME::JetResolutionScaleFactor res_sf;
       //cout<<"Filename="<<scalefile<<endl;
-      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
-      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
+      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
+      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V3b_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V2_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall15_25nsV2_MC_SF_AK4PFchs.txt");
@@ -3754,10 +3754,10 @@ QCDEventShape::beginJob() {
 #ifdef JETENERGY
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
-    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunE_V4_DATA_UncertaintySources_AK4PFchs.txt", name);  // data 
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall15_25nsV2_DATA_UncertaintySources_AK4PF.txt", name);      
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017F_V6_DATA_UncertaintySources_AK4PFchs.txt", name); 
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
+    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
     //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt", name);          
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
