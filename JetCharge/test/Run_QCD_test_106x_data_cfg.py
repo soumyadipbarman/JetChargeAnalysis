@@ -17,9 +17,11 @@ process.source = cms.Source("PoolSource",
 #'/store/data/Run2016F/JetHT/MINIAOD/21Feb2020_UL2016-v1/20000/0F71E50E-4F98-1446-B14A-A8600DDA6537.root',
 #'/store/data/Run2017B/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FFEEECDB-9680-6749-976A-F2CF385F8489.root',
 #'/store/data/Run2017B/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FEA84480-5EB1-DB42-B4C6-2F9229725E3C.root',
-'/store/data/Run2017E/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/016BE62D-1105-AC4F-8A58-59BD14326D8B.root',
+#'/store/data/Run2017C/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/00A34209-0E6A-9241-A53F-AB5EBCEB10F0.root',
+#'/store/data/Run2017D/JetHT/MINIAOD/09Aug2019_UL2017-v1/00000/4EAE67FC-658E-1647-B91F-A978348DA634.root',
+#'/store/data/Run2017E/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/016BE62D-1105-AC4F-8A58-59BD14326D8B.root',
 #'/store/data/Run2017E/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/02CD90CE-110C-1B4C-BC0C-4BA10C64EFE2.root',
-#'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FF1B7616-113A-F14B-A97A-4939F16CB1B5.root',
+'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FF1B7616-113A-F14B-A97A-4939F16CB1B5.root',
 #'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FE81D290-531D-9044-BEC0-428C277EA7C6.root',
 #'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FD6F6891-A1F9-534E-9B4C-6D49F8620D0B.root',
 #'/store/data/Run2017B/JetHT/MINIAOD/31Mar2018-v1/90000/E87B6957-7139-E811-86AC-0CC47A78A468.root',
@@ -45,8 +47,8 @@ process.source = cms.Source("PoolSource",
 )
 
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
@@ -110,7 +112,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 
 
 process.TFileService=cms.Service("TFileService",
-    fileName=cms.string("Test_Data2017UL_09Aug2019.root")
+    fileName=cms.string("Test_Data_2017UL.root")
 )
 print "test1"
 process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",

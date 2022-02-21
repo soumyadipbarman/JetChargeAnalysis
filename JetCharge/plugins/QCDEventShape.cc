@@ -22,21 +22,21 @@
 #define DIJETAVE 
 
 ////for data
-#define JETENERGY
-#define TRIGGER
+//#define JETENERGY
+//#define TRIGGER
 
 // //for Madgraph
-//#define LHAPDF
-//#define JETRESO
-//#define TRACKSYS
-//#define TRIGGER
+#define LHAPDF
+#define JETRESO
+#define TRACKSYS
+#define TRIGGER
 
 ////for Pythia8 & Herwig7
 //#define JETRESO
 //#define TRIGGER
 
 //For Flat
-#define FLAT
+//#define FLAT
 
 
 ////For GenParticle only
@@ -155,10 +155,13 @@ using namespace CLHEP;
 using namespace trigger;
 using namespace math;
 static const int nvar=32;
+//static const int njcvar=3; // 3 definitions of jet charge observables
 static const int nhist=10;
 static const int typen=2;
 //static const int nHLTmx=8; 
 static const int nHLTmx=10;
+double recojet0_pt, recojet1_pt, genrecojet0_pt, genrecojet1_pt;
+//const char* jcvarname[njcvar]={"Default", "Longitudinal", "Transverse"}; // jet charge
 
 const char* varname[nvar]={"y3anti", "y3ceanti", "y3cranti", "thrustc", "thrustce", "thrustcr",
                            "minorc", "minorce", "minorcr", "tmass", "tmasse", "tmassr",
@@ -303,7 +306,7 @@ double binrngs1[nvar][nmxbins+1]={{},{},{},
 
 //----------------------------------------HT2 Binning For 2D unfold 
 //double recohtbins[nHLTmx+1] = {83, 109, 172, 241, 309, 377, 462, 570, 3000.0};
-double recohtbins[nHLTmx+1] = {92, 119, 185, 253, 320, 389, 469, 522, 583, 670, 3000.0};
+double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0};
 
 //---------------------------------------------------------------------------------------------------------
 const int nusedvar=5;
@@ -388,7 +391,7 @@ const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v
 
 //double leadingPtThreshold[njetptmn+1] ={90.0, 120.0, 180.0, 250.0, 320.0, 400.0, 480.0, 600.0, 2000.0};
 //double leadingPtThreshold[njetptmn+1] ={83, 109, 172, 241, 309, 377, 462, 570, 3000.0}; //Fit Value dijet trigger
-double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 253, 320, 389, 469, 522, 583, 670, 3000.0}; //trigger turn on for 2017 UL JetHT sample
+double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
 
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
@@ -410,8 +413,10 @@ double prescl[nHLTmx];
 
 #ifdef TRACKSYS
 const int ntype=3;
+//const int ijet=2; 
 #else
 const int ntype=2;
+//const int ijet=2;
 #endif
 
 const int njetetamn=1; // GMA 4;
@@ -460,8 +465,10 @@ double particlept[4]={0.0, 0.25, 0.50, 1.00};
 
 #ifdef TRACKSYS
 const char* typname[ntype]={"Jets", "Charged Particles"};
+//const char* jetname[ijet]={"Jet1", "Jet2"};
 #else
 const char* typname[ntype]={"Jets", "Charged Particles"};
+//const char* jetname[ijet]={"Jet1", "Jet2"};
 #endif
 static const int njetmx =30;
 
@@ -564,7 +571,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   bool   isOtherAlgo; // store Kt4 and ak7 variables or not
   double weight=1; //weight for histogramme fit
   double weight2=1;
-
+ 
   std::string m_resolutions_file;
   std::string scalefile;
 
@@ -593,6 +600,151 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH2F* h_2ht;
 
   TH1F* vec_anglex[nhist];
+  
+//TH1F* h_jetcharge_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k1[njetptmn][njetetamn];  // jet charge
+  TH1F* h_jetcharge_D1_j1_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k4[njetptmn][njetetamn]; 
+  TH1F* h_jetcharge_D1_j1_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j1_k9[njetptmn][njetetamn];  
+  TH1F* h_jetcharge_D1_j1_k10[njetptmn][njetetamn];
+ 
+  TH1F* h_jetcharge_D1_j2_k1[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k4[njetptmn][njetetamn];  
+  TH1F* h_jetcharge_D1_j2_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k9[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D1_j2_k10[njetptmn][njetetamn];
+
+  TH1F* h_jetcharge_D2_j1_k1[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k4[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k9[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j1_k10[njetptmn][njetetamn];
+
+  TH1F* h_jetcharge_D2_j2_k1[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k4[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k9[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D2_j2_k10[njetptmn][njetetamn];
+
+  TH1F* h_jetcharge_D3_j1_k1[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k4[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k9[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j1_k10[njetptmn][njetetamn];
+
+  TH1F* h_jetcharge_D3_j2_k1[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k2[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k3[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k4[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k5[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k6[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k7[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k8[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k9[njetptmn][njetetamn];
+  TH1F* h_jetcharge_D3_j2_k10[njetptmn][njetetamn];
+
+  TH1F* h_jetcharge_j1_k01_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k02_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k03_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k04_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k05_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k06_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k07_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k08_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k09_test[njetptmn][njetetamn];
+  TH1F* h_jetcharge_j1_k10_test[njetptmn][njetetamn];
+
+//
+  TH1F* h_genjetcharge_D1_j1_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j1_k10[njetptmn][njetetamn];
+
+  TH1F* h_genjetcharge_D1_j2_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D1_j2_k10[njetptmn][njetetamn];
+
+  TH1F* h_genjetcharge_D2_j1_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j1_k10[njetptmn][njetetamn];
+
+  TH1F* h_genjetcharge_D2_j2_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D2_j2_k10[njetptmn][njetetamn];
+
+  TH1F* h_genjetcharge_D3_j1_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j1_k10[njetptmn][njetetamn];
+
+  TH1F* h_genjetcharge_D3_j2_k1[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k2[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k3[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k4[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k5[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k6[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k7[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k8[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k9[njetptmn][njetetamn];
+  TH1F* h_genjetcharge_D3_j2_k10[njetptmn][njetetamn];
 
   //static const int njetmx =30;
   int npfjets;
@@ -606,7 +758,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   int irunhlt, l1pres[nHLTmx],  hltpres[nHLTmx], compres[nHLTmx]; 
   static const int nprimx=150;
   int nprim, ntkpm[nprimx];
-  //  float  primdx[nprimx], primdy[nprimx], primdz[nprimx], 
+  //float  primdx[nprimx], primdy[nprimx], primdz[nprimx], 
   float primpr[nprimx];
   int irun, ilumi, ibrnc;
   unsigned int ievt;
@@ -619,6 +771,7 @@ class QCDEventShape : public edm::EDAnalyzer {
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
+   
   //=============****=========================
 
 //----------------------------------------------------------------TunfoldBinning -----------------------------
@@ -630,13 +783,13 @@ class QCDEventShape : public edm::EDAnalyzer {
 
    TH1* h_recovar_2D[ntype][njetetamn][nvar]; //Reco
    TH1* h_recofake_2D[ntype][njetetamn][nvar];//For fake
-   // TH1* h_recofakeOutE_2D[type][njetetamn][nvar];//For fake
-   // TH1* h_recofakeOutHT_2D[type][njetetamn][nvar];//For fake
+   //TH1* h_recofakeOutE_2D[type][njetetamn][nvar];//For fake
+   //TH1* h_recofakeOutHT_2D[type][njetetamn][nvar];//For fake
 
    TH1* h_genvar_2D[ntype][njetetamn][nvar]; //Gen
    TH1* h_genmiss_2D[ntype][njetetamn][nvar]; //For Miss
-   //  TH1* h_genmissOutE_2D[type][njetetamn][nvar]; //For Miss
-   //  TH1* h_genmissOutHT_2D[type][njetetamn][nvar]; //For Miss
+   //TH1* h_genmissOutE_2D[type][njetetamn][nvar]; //For Miss
+   //TH1* h_genmissOutHT_2D[type][njetetamn][nvar]; //For Miss
 
    TH2* RM_2D[ntype][njetetamn][nvar];
 
@@ -689,7 +842,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recochg3_phi;
 
   //===============****==============================
-  //  TH1F* genjt_hist;
+  //TH1F* genjt_hist;
   TH1F* genjt_pt[njetetamn];
   TH1F* genjt_eta;
   TH1F* genjt_phi;
@@ -713,7 +866,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* genjetpt2bypt1[njetetamn];
   TH1F* genjetpt3bypt2[njetetamn];
 
-  // TH1F* genchg_hist;
+  //TH1F* genchg_hist;
   TH1F* genchg_pt;
   TH1F* genchg_eta;
   TH1F* genchg_phi;
@@ -730,7 +883,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* genchg3_eta;
   TH1F* genchg3_phi;
 /*
-  // TH1F* genneu_hist;
+  //TH1F* genneu_hist;
   TH1F* genneu_pt;
   TH1F* genneu_eta;
   TH1F* genneu_phi;
@@ -739,12 +892,12 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* genjt_oth_eta;
   TH1F* genjt_oth_phi;
 
-  //  TH1F* genchg_oth_hist;
+  //TH1F* genchg_oth_hist;
   TH1F* genchg_oth_pt;
   TH1F* genchg_oth_eta;
   TH1F* genchg_oth_phi;
 
-  //  TH1F* genneu_oth_hist;
+  //TH1F* genneu_oth_hist;
   TH1F* genneu_oth_pt;
   TH1F* genneu_oth_eta;
   TH1F* genneu_oth_phi;
@@ -801,6 +954,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* jetcharge1_06;
   TH1F* jetcharge1_03;
 
+  //TH1F* jc;
   // Sub-leading jet
   TH1F* jetcharge2_1;
   TH1F* jetcharge2_06;
@@ -958,6 +1112,7 @@ edm::LumiReWeighting *LumiWeights_;
   theHLTTag = iConfig.getUntrackedParameter<string>("HLTTag", "HLT");
   theRootFileName = iConfig.getUntrackedParameter<string>("RootFileName");
   
+
   //theFile = new TFile(theRootFileName.c_str(), "RECREATE");
   //theFile->cd();
   //T1 = new TTree("T1", "QCDEvt");
@@ -969,18 +1124,17 @@ edm::LumiReWeighting *LumiWeights_;
   //T1->Branch("nsicls", &nsicls, "nsicls/I");  //to pf neutral paritcle (excluding HF)
   //T1->Branch("ntottrk", &ntottrk, "ntottrk/I");  //total pfcharged particle (HF)
 
-  //  //T1->Branch("jetpt", &jetpt, "jetpt/F");
-  //  //T1->Branch("jeteta", &jeteta, "jeteta/F");
-  //  //T1->Branch("jetphi", &jetphi, "jetphi/F");
+  //T1->Branch("jetpt", &jetpt, "jetpt/F");
+  //T1->Branch("jeteta", &jeteta, "jeteta/F");
+  //T1->Branch("jetphi", &jetphi, "jetphi/F");
 
   //T1->Branch("nallpf", &nallpf, "nallpf/I");
   //T1->Branch("ncharged", &ncharged, "ncharged/I");
-  //  //T1->Branch("jtthan",&jtthan,"jtthan/F");
-  //  //T1->Branch("thphi",thphi,"thphi[10]/F");
+  //T1->Branch("jtthan",&jtthan,"jtthan/F");
+  //T1->Branch("thphi",thphi,"thphi[10]/F");
 
   //T1->Branch("thrust",thrust,"thrust[10]/F");
-
-  //  //T1->Branch("anglex",anglex,"anglex[10]/F");
+  //T1->Branch("anglex",anglex,"anglex[10]/F");
 
   //cout << "Testing 1 ==== " <<njecmx<< endl;
 
@@ -1085,6 +1239,693 @@ edm::LumiReWeighting *LumiWeights_;
           }
         }
       }
+
+
+//------------------------------- JET CHARGE HISTOGRAM
+for (int ipt=0; ipt<njetptmn; ipt++) {
+      for (int iet=0; iet<njetetamn; iet++) {
+	if (isReconstruct) {
+              
+ 		// Default              
+		sprintf(name, "reco_jetcharge_D1_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
+                h_jetcharge_D1_j1_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
+                h_jetcharge_D1_j1_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 40, -4.0, 4.0);
+                h_jetcharge_D1_j1_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 30, -3.0, 3.0);
+                h_jetcharge_D1_j1_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j1_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j1_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j1_k7[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j1_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D1_j1_k9[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+		h_jetcharge_D1_j1_k10[ipt][iet]->Sumw2();
+
+		
+
+		sprintf(name, "reco_jetcharge_D1_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
+                h_jetcharge_D1_j2_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
+                h_jetcharge_D1_j2_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 40, -4.0, 4.0);
+                h_jetcharge_D1_j2_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 30, -3.0, 3.0);
+                h_jetcharge_D1_j2_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j2_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j2_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j2_k7[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_D1_j2_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D1_j2_k9[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D1_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D1_j2_k10[ipt][iet]->Sumw2();
+
+           
+		// longitudinal
+
+		sprintf(name, "reco_jetcharge_D2_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k7[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k9[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_longitudinal_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j1_k10[ipt][iet]->Sumw2();
+
+		
+		sprintf(name, "reco_jetcharge_D2_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k7[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k9[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D2_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_longitudinal_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D2_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D2_j2_k10[ipt][iet]->Sumw2();
+
+              
+		// transverse
+
+		sprintf(name, "reco_jetcharge_D3_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k7[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k9[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_transverse_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j1_k10[ipt][iet]->Sumw2();
+
+		
+		sprintf(name, "reco_jetcharge_D3_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k1[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k3[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k4[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k5[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k6[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k7[ipt][iet]->Sumw2();
+		
+		sprintf(name, "reco_jetcharge_D3_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k8[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D3_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k9[ipt][iet]->Sumw2();
+		
+		sprintf(name, "reco_jetcharge_D3_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{sub-leading_jet_charge_transverse_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_D3_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_D3_j2_k10[ipt][iet]->Sumw2();
+
+               
+		//test
+		sprintf(name, "reco_jetcharge_j1_k01_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k01_test[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
+                h_jetcharge_j1_k01_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k02_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k02_test[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
+                h_jetcharge_j1_k02_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k03_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k03_test[ipt][iet] = fs->make<TH1F>(name, title, 40, -4.0, 4.0);
+                h_jetcharge_j1_k03_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k04_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k04_test[ipt][iet] = fs->make<TH1F>(name, title, 30, -3.0, 3.0);
+                h_jetcharge_j1_k04_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k05_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k05_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_j1_k05_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k06_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k06_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_j1_k06_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k07_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k07_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_j1_k07_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k08_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k08_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_jetcharge_j1_k08_test[ipt][iet]->Sumw2();
+ 		
+		sprintf(name, "reco_jetcharge_j1_k09_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k09_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_j1_k09_test[ipt][iet]->Sumw2();
+
+                sprintf(name, "reco_jetcharge_j1_k10_test_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Reco Q_{leading_jet_charge_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_jetcharge_j1_k10_test[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_jetcharge_j1_k10_test[ipt][iet]->Sumw2();
+		
+		}
+
+		// GEN
+		//Default
+
+		sprintf(name, "gen_jetcharge_D1_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
+                h_genjetcharge_D1_j1_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
+                h_genjetcharge_D1_j1_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 40, -4.0, 4.0);
+                h_genjetcharge_D1_j1_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 30, -3.0, 3.0);
+                h_genjetcharge_D1_j1_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j1_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j1_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j1_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j1_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D1_j1_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D1_j1_k10[ipt][iet]->Sumw2();
+
+		
+		sprintf(name, "gen_jetcharge_D1_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
+                h_genjetcharge_D1_j2_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
+                h_genjetcharge_D1_j2_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 40, -4.0, 4.0);
+                h_genjetcharge_D1_j2_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 30, -3.0, 3.0);
+                h_genjetcharge_D1_j2_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j2_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j2_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j2_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -2.0, 2.0);
+                h_genjetcharge_D1_j2_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D1_j2_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D1_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D1_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D1_j2_k10[ipt][iet]->Sumw2();
+
+		
+		//longitudinal
+		
+		sprintf(name, "gen_jetcharge_D2_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_longitudinal_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j1_k10[ipt][iet]->Sumw2();
+
+
+		sprintf(name, "gen_jetcharge_D2_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D2_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_longitudinal_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D2_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D2_j2_k10[ipt][iet]->Sumw2();
+
+
+		// transverse
+
+		sprintf(name, "gen_jetcharge_D3_j1_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j1_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{leading_jet_charge_transverse_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j1_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j1_k10[ipt][iet]->Sumw2();
+
+
+		sprintf(name, "gen_jetcharge_D3_j2_k1_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k1[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k1[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k2_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k2[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k2[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k3_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k3[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k3[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k4_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.4} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k4[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k4[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k5_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.5} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k5[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k5[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k6_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.6} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k6[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k6[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k7_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.7} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k7[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k8_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k8[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k9_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=0.9} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k9[ipt][iet]->Sumw2();
+
+                sprintf(name, "gen_jetcharge_D3_j2_k10_pt%i_eta%i", ipt, iet);
+                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
+                h_genjetcharge_D3_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 20, -1.0, 1.0);
+                h_genjetcharge_D3_j2_k10[ipt][iet]->Sumw2();
+
+	}
+}
+		
 //-----------------------------------------Root Histogram
   for (int ityp=0; ityp<ntype; ityp++) {
     for (int ipt=0; ipt<njetptmn; ipt++) {
@@ -1327,12 +2168,15 @@ edm::LumiReWeighting *LumiWeights_;
   recochg3_phi = fs->make<TH1F>("recochg3_phi","#phi_{recocharge_jet3}",100,-M_PI, M_PI);
   recochg3_phi->Sumw2();
 
-  jetcharge1_1 = fs->make<TH1F>("jetcharge1_1","Q_{leading_jet_charge_k=1.0}",20, -1.0, 1.0);
+  jetcharge1_1 = fs->make<TH1F>("jetcharge1_1","Q_{leading_jet_charge_k=1.0}",40, -8.0, 8.0);
   jetcharge1_1->Sumw2();
   jetcharge1_06 = fs->make<TH1F>("jetcharge1_06","Q_{leading_jet_charge_k=0.6}",40, -2.0, 2.0);
   jetcharge1_06->Sumw2();
   jetcharge1_03 = fs->make<TH1F>("jetcharge1_03","Q_{leading_jet_charge_k=0.3}",60, -3.0, 3.0);
   jetcharge1_03->Sumw2();
+
+  //jc = fs->make<TH1F>("jc","Q_{leading_jet_charge_k=1.0}",20, -1.0, 1.0);
+  //jc->Sumw2();
 
   jetcharge2_1 = fs->make<TH1F>("jetcharge2_1","Q_{Subleading_jet_charge_k=1.0}",20, -1.0, 1.0);
   jetcharge2_1->Sumw2();
@@ -1814,8 +2658,50 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   std::vector<HepLorentzVector> tmpgen4v;                                                                                             
   std::vector<HepLorentzVector> genmom[nGenReso][ntype][njetetamn];
   vector<double> genvar;
+  
+  double ijet0_candsmom_01 =0 , ijet0_candsmom_02 =0 , ijet0_candsmom_03 =0 , ijet0_candsmom_04 =0 , ijet0_candsmom_05 =0 , ijet0_candsmom_06 =0 , ijet0_candsmom_07 =0 , ijet0_candsmom_08 =0 , ijet0_candsmom_09 =0 , ijet0_candsmom_10 =0;
+ 
+  double ijet1_candsmom_01 =0 , ijet1_candsmom_02 =0 , ijet1_candsmom_03 =0 , ijet1_candsmom_04 =0 , ijet1_candsmom_05 =0 , ijet1_candsmom_06 =0 , ijet1_candsmom_07 =0 , ijet1_candsmom_08 =0 , ijet1_candsmom_09 =0 , ijet1_candsmom_10 =0;
 
-  //====================*****===========================================        
+  double ijet0_long_num_01 =0 , ijet0_long_num_02 =0 , ijet0_long_num_03 =0 , ijet0_long_num_04 =0 , ijet0_long_num_05 =0 , ijet0_long_num_06 =0 , ijet0_long_num_07 =0 , ijet0_long_num_08 =0 , ijet0_long_num_09 =0 , ijet0_long_num_10 =0;
+
+  double ijet0_long_den_01 =0 , ijet0_long_den_02 =0 , ijet0_long_den_03 =0 , ijet0_long_den_04 =0 , ijet0_long_den_05 =0 , ijet0_long_den_06 =0 , ijet0_long_den_07 =0 , ijet0_long_den_08 =0 , ijet0_long_den_09 =0 , ijet0_long_den_10 =0;
+
+  double ijet1_long_num_01 =0 , ijet1_long_num_02 =0 , ijet1_long_num_03 =0 , ijet1_long_num_04 =0 , ijet1_long_num_05 =0 , ijet1_long_num_06 =0 , ijet1_long_num_07 =0 , ijet1_long_num_08 =0 , ijet1_long_num_09 =0 , ijet1_long_num_10 =0;
+
+  double ijet1_long_den_01 =0 , ijet1_long_den_02 =0 , ijet1_long_den_03 =0 , ijet1_long_den_04 =0 , ijet1_long_den_05 =0 , ijet1_long_den_06 =0 , ijet1_long_den_07 =0 , ijet1_long_den_08 =0 , ijet1_long_den_09 =0 , ijet1_long_den_10 =0;
+
+  double ijet0_tran_num_01 =0 , ijet0_tran_num_02 =0 , ijet0_tran_num_03 =0 , ijet0_tran_num_04 =0 , ijet0_tran_num_05 =0 , ijet0_tran_num_06 =0 , ijet0_tran_num_07 =0 , ijet0_tran_num_08 =0 , ijet0_tran_num_09 =0 , ijet0_tran_num_10 =0;
+
+  double ijet0_tran_den_01 =0 , ijet0_tran_den_02 =0 , ijet0_tran_den_03 =0 , ijet0_tran_den_04 =0 , ijet0_tran_den_05 =0 , ijet0_tran_den_06 =0 , ijet0_tran_den_07 =0 , ijet0_tran_den_08 =0 , ijet0_tran_den_09 =0 , ijet0_tran_den_10 =0;
+
+  double ijet1_tran_num_01 =0 , ijet1_tran_num_02 =0 , ijet1_tran_num_03 =0 , ijet1_tran_num_04 =0 , ijet1_tran_num_05 =0 , ijet1_tran_num_06 =0 , ijet1_tran_num_07 =0 , ijet1_tran_num_08 =0 , ijet1_tran_num_09 =0 , ijet1_tran_num_10 =0;
+
+  double ijet1_tran_den_01 =0 , ijet1_tran_den_02 =0 , ijet1_tran_den_03 =0 , ijet1_tran_den_04 =0 , ijet1_tran_den_05 =0 , ijet1_tran_den_06 =0 , ijet1_tran_den_07 =0 , ijet1_tran_den_08 =0 , ijet1_tran_den_09 =0 , ijet1_tran_den_10 =0;
+
+
+
+  double igenjet0_candsmom_01 =0 , igenjet0_candsmom_02 =0 , igenjet0_candsmom_03 =0 , igenjet0_candsmom_04 =0 , igenjet0_candsmom_05 =0 , igenjet0_candsmom_06 =0 , igenjet0_candsmom_07 =0 , igenjet0_candsmom_08 =0 , igenjet0_candsmom_09 =0 , igenjet0_candsmom_10 =0;
+
+  double igenjet1_candsmom_01 =0 , igenjet1_candsmom_02 =0 , igenjet1_candsmom_03 =0 , igenjet1_candsmom_04 =0 , igenjet1_candsmom_05 =0 , igenjet1_candsmom_06 =0 , igenjet1_candsmom_07 =0 , igenjet1_candsmom_08 =0 , igenjet1_candsmom_09 =0 , igenjet1_candsmom_10 =0;
+
+  double igenjet0_long_num_01 =0 , igenjet0_long_num_02 =0 , igenjet0_long_num_03 =0 , igenjet0_long_num_04 =0 , igenjet0_long_num_05 =0 , igenjet0_long_num_06 =0 , igenjet0_long_num_07 =0 , igenjet0_long_num_08 =0 , igenjet0_long_num_09 =0 , igenjet0_long_num_10 =0;
+
+  double igenjet0_long_den_01 =0 , igenjet0_long_den_02 =0 , igenjet0_long_den_03 =0 , igenjet0_long_den_04 =0 , igenjet0_long_den_05 =0 , igenjet0_long_den_06 =0 , igenjet0_long_den_07 =0 , igenjet0_long_den_08 =0 , igenjet0_long_den_09 =0 , igenjet0_long_den_10 =0;
+
+  double igenjet1_long_num_01 =0 , igenjet1_long_num_02 =0 , igenjet1_long_num_03 =0 , igenjet1_long_num_04 =0 , igenjet1_long_num_05 =0 , igenjet1_long_num_06 =0 , igenjet1_long_num_07 =0 , igenjet1_long_num_08 =0 , igenjet1_long_num_09 =0 , igenjet1_long_num_10 =0;
+
+  double igenjet1_long_den_01 =0 , igenjet1_long_den_02 =0 , igenjet1_long_den_03 =0 , igenjet1_long_den_04 =0 , igenjet1_long_den_05 =0 , igenjet1_long_den_06 =0 , igenjet1_long_den_07 =0 , igenjet1_long_den_08 =0 , igenjet1_long_den_09 =0 , igenjet1_long_den_10 =0;
+
+  double igenjet0_tran_num_01 =0 , igenjet0_tran_num_02 =0 , igenjet0_tran_num_03 =0 , igenjet0_tran_num_04 =0 , igenjet0_tran_num_05 =0 , igenjet0_tran_num_06 =0 , igenjet0_tran_num_07 =0 , igenjet0_tran_num_08 =0 , igenjet0_tran_num_09 =0 , igenjet0_tran_num_10 =0;
+
+  double igenjet0_tran_den_01 =0 , igenjet0_tran_den_02 =0 , igenjet0_tran_den_03 =0 , igenjet0_tran_den_04 =0 , igenjet0_tran_den_05 =0 , igenjet0_tran_den_06 =0 , igenjet0_tran_den_07 =0 , igenjet0_tran_den_08 =0 , igenjet0_tran_den_09 =0 , igenjet0_tran_den_10 =0;
+
+  double igenjet1_tran_num_01 =0 , igenjet1_tran_num_02 =0 , igenjet1_tran_num_03 =0 , igenjet1_tran_num_04 =0 , igenjet1_tran_num_05 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_07 =0 , igenjet1_tran_num_08 =0 , igenjet1_tran_num_09 =0 , igenjet1_tran_num_10 =0;
+
+  double igenjet1_tran_den_01 =0 , igenjet1_tran_den_02 =0 , igenjet1_tran_den_03 =0 , igenjet1_tran_den_04 =0 , igenjet1_tran_den_05 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_07 =0 , igenjet1_tran_den_08 =0 , igenjet1_tran_den_09 =0 , igenjet1_tran_den_10 =0;
+  
+	//====================*****===========================================        
 
   wtfact=1.0;
   //  double px=0;
@@ -1912,7 +2798,12 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double aveleadingpt =0;  // ESVs (dijet)
   double leadingpt = 0;    // jet charge (single jet)
   bool isInEtaRange[njetetamn]={0}; //GMA{0,0,0,0};
-
+  
+  recojet0_pt = 0;
+  recojet1_pt = 0;
+ 
+  genrecojet0_pt = 0;
+  genrecojet1_pt = 0; 
 #ifndef GENPART
   edm::Handle<pat::JetCollection> ak4PFJets;
   if (isReconstruct) { 
@@ -1935,7 +2826,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	if (abs((*ak4PFJets)[ij].eta())>etarange[iet]) { isInEtaRange[iet] = false;}
       }
       
-      //Jet ID ================= 2017 jetID recomendation 
+      //Jet ID ================= 2017 & 2018 UL jetID recomendation 
       double NHF = (*ak4PFJets)[ij].neutralHadronEnergyFraction();
       double NEMF = (*ak4PFJets)[ij].neutralEmEnergyFraction();
       double CHF = (*ak4PFJets)[ij].chargedHadronEnergyFraction();
@@ -1955,7 +2846,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       //if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0)  TightJetID =true;
       if (abs((*ak4PFJets)[ij].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) { TightJetID =true;} 
       else {TightJetID =false;}
-      if (abs((*ak4PFJets)[ij].eta())>2.6) {TightJetID = false;}
+      if (abs((*ak4PFJets)[ij].eta())>2.5) {TightJetID = false;}  // 2.5 or 2.6
       if ((*ak4PFJets)[ij].pt()<30.0) {TightJetID = false;}
 
       if (TightJetID) { aveleadingpt +=(*ak4PFJets)[ij].pt();
@@ -2300,8 +3191,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #if defined(JETRESO)&&(!defined(JETENERGY))
       // resolution file 
       JME::JetResolution resolution;
-      resolution = JME::JetResolution("Summer19UL17_JRV3_DATA_PtResolution_AK4PFchs.txt");      // for DATA
-      //resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
+      //resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
+      resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
       //resolution = JME::JetResolution("Fall17_V2_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall17_V3b_MC_PtResolution_AK4PFchs.txt");
       //resolution = JME::JetResolution("Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt");
@@ -2309,8 +3200,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       // Scalefactor file
       JME::JetResolutionScaleFactor res_sf;
       //cout<<"Filename="<<scalefile<<endl;
-      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
-      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");        // for MC
+      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
+      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V3b_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall17_V2_MC_SF_AK4PFchs.txt");
       //res_sf = JME::JetResolutionScaleFactor("Fall15_25nsV2_MC_SF_AK4PFchs.txt");
@@ -2460,7 +3351,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 if (abs((*ak4PFJets)[ireorjt].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) {TightJetID =true;}
       		else {TightJetID =false;}
 
-                if (abs((*ak4PFJets)[ireorjt].eta())>2.6) {TightJetID = false;}
+                if (abs((*ak4PFJets)[ireorjt].eta())>2.5) {TightJetID = false;}
                 if ((*ak4PFJets)[ireorjt].pt()<30.0) {TightJetID = false;}
 		
 		if( ireorjt<=1 && !TightJetID) break;
@@ -2541,10 +3432,11 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    }
 		  }*/
 		//}
-		double recojet0_pt =0, recojet1_pt =0;
+		
+		double recojet0_pt_test =0;
 		if (isrc==0) { 
 		  if(ijet==0) { 
-		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet0_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet0_pt = tmp4v.perp(); recojet0_pt_test=tmp4v.perp();}
 		    if (isPt && iet==0) {recojt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {recojt1_phi->Fill(tmp4v.phi(), weighttrg);}
 		  } else if(ijet==1){
@@ -2579,14 +3471,22 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  
 		  if (tmpjt4v.size()==3) {hjetpt3bypt2[iet]->Fill(tmpjt4v[2].perp()/tmpjt4v[1].perp(), weighttrg);}
 		  } //if (isrc==0) {
-
+		/* 
+		if (ijet==0) {
+			if (isInEtaRange[iet]) {recojet0_pt = tmp4v.perp();
+				cout << "check0 :"<<recojet0_pt<<endl;}
+			}
+		if (ijet==1){ 
+			if (isInEtaRange[iet]) {recojet1_pt = tmp4v.perp();}
+			}
+		*/
 		//double jcharge1_1=0;
 		//double z2 =0;
 		//double x1=0;
 		//double y1=0;
 
-	        int nchg=0;
-	
+	       
+/*	
 		double ijet0_candsmom_1 =0 , ijet0_candsmom_06 =0 , ijet0_candsmom_03 =0;
 		double ijet1_candsmom_1 =0 , ijet1_candsmom_06 =0 , ijet1_candsmom_03 =0;
 		double ijet0_long_num_1 =0 , ijet0_long_num_06 =0 , ijet0_long_num_03 =0;
@@ -2597,6 +3497,10 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 double ijet0_tran_den_1 =0 , ijet0_tran_den_06 =0 , ijet0_tran_den_03 =0;
                 double ijet1_tran_num_1 =0 , ijet1_tran_num_06 =0 , ijet1_tran_num_03 =0;
                 double ijet1_tran_den_1 =0 , ijet1_tran_den_06 =0 , ijet1_tran_den_03 =0;
+*/
+		double ijet0_candsmom_01_test =0 ,ijet0_candsmom_02_test = 0, ijet0_candsmom_03_test =0 ,ijet0_candsmom_04_test = 0, ijet0_candsmom_05_test =0 ,ijet0_candsmom_06_test = 0, ijet0_candsmom_07_test =0 ,ijet0_candsmom_08_test = 0, ijet0_candsmom_09_test =0 ,ijet0_candsmom_10_test = 0;
+
+		int nchg=0;
 
 		std::vector<reco::CandidatePtr> daus((*ak4PFJets)[ireorjt].daughterPtrVector());           
 		std::sort(daus.begin(), daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                                                                                                  
@@ -2665,40 +3569,98 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    }//if (isrc==0) {
 		     //  }
 
-		   // jet charge observable
-		   //double x1 =0;
-		   //double y1 =0;
-		   //double z1 =0;
-		   //double z2 =0;
+		   // jet charge observables
+
 		   if (isrc==0){
-			if (ijet==0 && cand4v.perp() > 1.0){
-			//Hep3Vector cands4v(cand4v.px() , cand4v.py(), cand4v.pz());
-			//Hep3Vector tmpjts4v(tmpjts4v.px() , tmpjts4v.py(), tmpjts4v.pz());
+		   if (ijet==0 && cand4v.perp() > 1.0){
 			//std::cout<<"trial 1"<<endl;
 			//std::cout<<"cands4v"<<cands4v.perp()<<endl;
+			//ijet_test += candsmom(charge, cand4v.perp(), 0.4);
+			ijet0_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
+			ijet0_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
+			ijet0_candsmom_03 += candsmom(charge, cand4v.perp(), 0.3);
+			ijet0_candsmom_04 += candsmom(charge, cand4v.perp(), 0.4);
+			ijet0_candsmom_05 += candsmom(charge, cand4v.perp(), 0.5);
+			ijet0_candsmom_06 += candsmom(charge, cand4v.perp(), 0.6);
+			ijet0_candsmom_07 += candsmom(charge, cand4v.perp(), 0.7);
+			ijet0_candsmom_08 += candsmom(charge, cand4v.perp(), 0.8);
+			ijet0_candsmom_09 += candsmom(charge, cand4v.perp(), 0.9);
+			ijet0_candsmom_10 += candsmom(charge, cand4v.perp(), 1.0);
+			//cout << "check1:" <<ijet0_candsmom_1 <<endl;
 
-			ijet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
-			ijet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
-			ijet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
-		 	
-			ijet0_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        ijet0_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
-			
+		        ijet0_candsmom_01_test += candsmom(charge, cand4v.perp(), 0.1);
+                        ijet0_candsmom_02_test += candsmom(charge, cand4v.perp(), 0.2);
+                        ijet0_candsmom_03_test += candsmom(charge, cand4v.perp(), 0.3);
+                        ijet0_candsmom_04_test += candsmom(charge, cand4v.perp(), 0.4);
+                        ijet0_candsmom_05_test += candsmom(charge, cand4v.perp(), 0.5);
+                        ijet0_candsmom_06_test += candsmom(charge, cand4v.perp(), 0.6);
+                        ijet0_candsmom_07_test += candsmom(charge, cand4v.perp(), 0.7);
+                        ijet0_candsmom_08_test += candsmom(charge, cand4v.perp(), 0.8);
+                        ijet0_candsmom_09_test += candsmom(charge, cand4v.perp(), 0.9);
+                        ijet0_candsmom_10_test += candsmom(charge, cand4v.perp(), 1.0);
+	
+			ijet0_long_num_01 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        ijet0_long_den_01 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
+
+			ijet0_long_num_02 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        ijet0_long_den_02 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
+
+			ijet0_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        ijet0_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+			ijet0_long_num_04 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        ijet0_long_den_04 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+			ijet0_long_num_05 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        ijet0_long_den_05 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
+
 			ijet0_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
                         ijet0_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
-	
-			ijet0_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
-			ijet0_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+			ijet0_long_num_07 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        ijet0_long_den_07 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+			ijet0_long_num_08 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        ijet0_long_den_08 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+			ijet0_long_num_09 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        ijet0_long_den_09 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			ijet0_long_num_10 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet0_long_den_10 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
 			
-			ijet0_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        ijet0_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
-		
-			ijet0_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
-                        ijet0_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+				
+			
+			ijet0_tran_num_01 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        ijet0_tran_den_01 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
+
+			ijet0_tran_num_02 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        ijet0_tran_den_02 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
 
 			ijet0_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
                         ijet0_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
+			ijet0_tran_num_04 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        ijet0_tran_den_04 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+			ijet0_tran_num_05 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        ijet0_tran_den_05 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
+
+			ijet0_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet0_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			ijet0_tran_num_07 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        ijet0_tran_den_07 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+			ijet0_tran_num_08 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        ijet0_tran_den_08 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+			ijet0_tran_num_09 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        ijet0_tran_den_09 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			ijet0_tran_num_10 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet0_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+		
 			//ijet0_jetmom_1 = pow(tmp4v.perp(), 1.0);
 			//ijet0_jetmom_06 = pow(tmp4v.perp(), 0.6);
 			//ijet0_jetmom_03 = pow(tmp4v.perp(), 0.3);
@@ -2711,10 +3673,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         //double jcharge1_1 = 0;
                         //double jcharge1_06 = 0;
                         //double jcharge1_03 = 0;
-			//x1 += 1.0*(charge*(pow(cand4v.perp(),0.3)));
-			//x1 += candmom(charge, cand4v.perp(), 0.3);
-			//y1 = pow(tmp4v.perp(), 0.3);
-			//z1 =(x1/y1);
+			
 			//jcharge1_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
                         //jcharge1_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
                         //jcharge1_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
@@ -2727,86 +3686,138 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         //std::cout<<"charge1 : "<<charge<<endl;
                         //std::cout<<"candspt1 : "<<cand4v.perp()<< "charge1 : "<<charge<<endl;
 			//std::cout<<"jetcharge :"<<jcharge1_1<<endl;
-			//std::cout<<"z1 :"<< z1<<endl;
-			//}
+			//}			
+			}
 			
-				}
-			//double z2 = (x1/y1);
-			//std::cout<<"z2 :"<< z2<<endl;
 			if (ijet==1 && cand4v.perp() > 1.0){
-			//if (ijet==1 && cand4v.perp()>1){
-
-			ijet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
-                        ijet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
-                        ijet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
 			
-			ijet1_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        ijet1_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			//recojet1_pt = tmp4v.perp();
+			ijet1_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
+			ijet1_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
+			ijet1_candsmom_03 += candsmom(charge, cand4v.perp(), 0.3);
+			ijet1_candsmom_04 += candsmom(charge, cand4v.perp(), 0.4);
+			ijet1_candsmom_05 += candsmom(charge, cand4v.perp(), 0.5);
+			ijet1_candsmom_06 += candsmom(charge, cand4v.perp(), 0.6);
+			ijet1_candsmom_07 += candsmom(charge, cand4v.perp(), 0.7);
+			ijet1_candsmom_08 += candsmom(charge, cand4v.perp(), 0.8);
+			ijet1_candsmom_09 += candsmom(charge, cand4v.perp(), 0.9);
+			ijet1_candsmom_10 += candsmom(charge, cand4v.perp(), 1.0);
+		
 
-                        ijet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
-                        ijet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+			ijet1_long_num_01 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        ijet1_long_den_01 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
 
-                        ijet1_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+			ijet1_long_num_02 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        ijet1_long_den_02 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
+
+			ijet1_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
                         ijet1_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
-                        ijet1_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        ijet1_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			ijet1_long_num_04 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        ijet1_long_den_04 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
 
-                        ijet1_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
-                        ijet1_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+			ijet1_long_num_05 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        ijet1_long_den_05 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
 
-                        ijet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+			ijet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			ijet1_long_num_07 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        ijet1_long_den_07 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+			ijet1_long_num_08 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        ijet1_long_den_08 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+			ijet1_long_num_09 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        ijet1_long_den_09 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			ijet1_long_num_10 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet1_long_den_10 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+                        
+			ijet1_tran_num_01 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        ijet1_tran_den_01 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
+
+			ijet1_tran_num_02 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        ijet1_tran_den_02 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
+
+			ijet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
                         ijet1_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
-			//double jcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
-                        //double jcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
-                        //double jcharge2_03 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.3);
+			ijet1_tran_num_04 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        ijet1_tran_den_04 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
 
-                        //jetcharge2_1->Fill(jcharge2_1,weighttrg);
-                        //jetcharge2_06->Fill(jcharge2_06,weighttrg);
-                        //jetcharge2_03->Fill(jcharge2_03,weighttrg);
-			//float c2 = 0;
-			//float jet2 =0;
-			//float Q1 =0;
-			//c2 += (charge*(pow(cand4v.perp(),1)));
-			//jet2 = (pow(tmp4v.perp(),1));
-			//Q1 = (c2/jet2);
-			//jc->Fill(Q1,weighttrg);
+			ijet1_tran_num_05 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        ijet1_tran_den_05 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
+
+			ijet1_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        ijet1_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			ijet1_tran_num_07 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        ijet1_tran_den_07 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+			ijet1_tran_num_08 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        ijet1_tran_den_08 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+			ijet1_tran_num_09 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        ijet1_tran_den_09 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+                        ijet1_tran_num_10 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        ijet1_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
 			//std::cout<< "jetpt2 : "<<tmp4v.perp()<<endl;
 			//std::cout<<"charge2 : "<<charge<<endl;
 			//std::cout<<"candspt2 : "<<cand4v.perp()<<"charge2 : "<<charge<<endl;
 				}
 			}
-
 		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
-	        //z2 = (x1/y1);
-	        //if (tmp4v[0].perp() > 400){	
-		jetcharge1_1->Fill(ijet0_candsmom_1/(pow(recojet0_pt,1.0)),weighttrg);
+	        
+                //t_jetcharge_test = (ijet_test/(pow(recojet_test,0.4)));
+                //cout << "check1:" <<recojet0_pt<<endl;
+		jetcharge1_1->Fill(ijet0_candsmom_01/(pow(recojet0_pt,0.1)),weighttrg);	
 		jetcharge1_06->Fill(ijet0_candsmom_06/(pow(recojet0_pt,0.6)),weighttrg);
 		jetcharge1_03->Fill(ijet0_candsmom_03/(pow(recojet0_pt,0.3)),weighttrg);
 
-		jetcharge2_1->Fill(ijet1_candsmom_1/(pow(recojet1_pt,1.0)),weighttrg);
+		jetcharge2_1->Fill(ijet1_candsmom_10/(pow(recojet1_pt,1.0)),weighttrg);
                 jetcharge2_06->Fill(ijet1_candsmom_06/(pow(recojet1_pt,0.6)),weighttrg);
                 jetcharge2_03->Fill(ijet1_candsmom_03/(pow(recojet1_pt,0.3)),weighttrg);
-		//}
 
-		jetcharge_long1_1->Fill((ijet0_long_num_1/ijet0_long_den_1),weighttrg);
+		jetcharge_long1_1->Fill((ijet0_long_num_10/ijet0_long_den_10),weighttrg);
 		jetcharge_long1_06->Fill((ijet0_long_num_06/ijet0_long_den_06),weighttrg);
 		jetcharge_long1_03->Fill((ijet0_long_num_03/ijet0_long_den_03),weighttrg);
 		
-		jetcharge_tran1_1->Fill((ijet0_tran_num_1/ijet0_tran_den_1),weighttrg);
+		jetcharge_tran1_1->Fill((ijet0_tran_num_10/ijet0_tran_den_10),weighttrg);
 		jetcharge_tran1_06->Fill((ijet0_tran_num_06/ijet0_tran_den_06),weighttrg);
 		jetcharge_tran1_03->Fill((ijet0_tran_num_03/ijet0_tran_den_03),weighttrg);
 
-		jetcharge_long2_1->Fill((ijet1_long_num_1/ijet1_long_den_1),weighttrg);
+		jetcharge_long2_1->Fill((ijet1_long_num_10/ijet1_long_den_10),weighttrg);
                 jetcharge_long2_06->Fill((ijet1_long_num_06/ijet1_long_den_06),weighttrg);
                 jetcharge_long2_03->Fill((ijet1_long_num_03/ijet1_long_den_03),weighttrg);
 
-                jetcharge_tran2_1->Fill((ijet1_tran_num_1/ijet1_tran_den_1),weighttrg);
+                jetcharge_tran2_1->Fill((ijet1_tran_num_10/ijet1_tran_den_10),weighttrg);
                 jetcharge_tran2_06->Fill((ijet1_tran_num_06/ijet1_tran_den_06),weighttrg);
                 jetcharge_tran2_03->Fill((ijet1_tran_num_03/ijet1_tran_den_03),weighttrg);
-
-		
+                	
+		for (int iet=0; iet<njetetamn; iet++){
+                if (isReconstruct) {
+                        for (int isrc=0; isrc<njecmx; isrc++) {
+                                if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+                                if (isrc==0) {
+					h_jetcharge_j1_k01_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_01_test/(pow(recojet0_pt_test,0.1)),weighttrg);
+                                        h_jetcharge_j1_k02_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_02_test/(pow(recojet0_pt_test,0.2)),weighttrg);
+                                        h_jetcharge_j1_k03_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_03_test/(pow(recojet0_pt_test,0.3)),weighttrg);
+                                        h_jetcharge_j1_k04_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_04_test/(pow(recojet0_pt_test,0.4)),weighttrg);
+                                        h_jetcharge_j1_k05_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_05_test/(pow(recojet0_pt_test,0.5)),weighttrg);
+                                        h_jetcharge_j1_k06_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_06_test/(pow(recojet0_pt_test,0.6)),weighttrg);
+                                        h_jetcharge_j1_k07_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_07_test/(pow(recojet0_pt_test,0.7)),weighttrg);
+                                        h_jetcharge_j1_k08_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_08_test/(pow(recojet0_pt_test,0.8)),weighttrg);
+                                        h_jetcharge_j1_k09_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_09_test/(pow(recojet0_pt_test,0.9)),weighttrg);
+                                        h_jetcharge_j1_k10_test[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_10_test/(pow(recojet0_pt_test,1.0)),weighttrg);
+					}
+				}
+			}
+		}
+	}
 		//  if (isEta && isPt) {ncount++;}
 	   //   } //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet])
 	  //  } // for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++)
@@ -3206,7 +4217,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    }
 		  }*/
 		//}
-		double genrecojet0_pt =0 , genrecojet1_pt =0 ;
+		//double genrecojet0_pt =0 , genrecojet1_pt =0 ;
 		if (isrc==0) { 
 		  if(ijet==0) {
 		    //		    cout<<"Gen Pt= " << avegenpt <<endl;
@@ -3240,7 +4251,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  if (tmpgen4v.size()==3) {genjetpt3bypt2[iet]->Fill(tmpgen4v[2].perp()/tmpgen4v[1].perp(), weight);}
 		}
 #ifdef GENPART
-
+/*
 		double igenjet0_candsmom_1 =0 , igenjet0_candsmom_06 =0 , igenjet0_candsmom_03 =0;
                 double igenjet1_candsmom_1 =0 , igenjet1_candsmom_06 =0 , igenjet1_candsmom_03 =0;
                 double igenjet0_long_num_1 =0 , igenjet0_long_num_06 =0 , igenjet0_long_num_03 =0;
@@ -3251,7 +4262,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 double igenjet0_tran_den_1 =0 , igenjet0_tran_den_06 =0 , igenjet0_tran_den_03 =0;
                 double igenjet1_tran_num_1 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_03 =0;
                 double igenjet1_tran_den_1 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_03 =0;
-
+*/
 
 		std::vector <const GenParticle*> daus ((*genjets)[igenjt].getGenConstituents ());
 		//std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); }); 
@@ -3263,6 +4274,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  //int pdgid = pfcand->pdgId();
 		 //std::cout<<"GENPART loop"<<endl; 
 #else		
+/*
 		double igenjet0_candsmom_1 =0 , igenjet0_candsmom_06 =0 , igenjet0_candsmom_03 =0;
                 double igenjet1_candsmom_1 =0 , igenjet1_candsmom_06 =0 , igenjet1_candsmom_03 =0;
 		double igenjet0_long_num_1 =0 , igenjet0_long_num_06 =0 , igenjet0_long_num_03 =0;
@@ -3273,7 +4285,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                 double igenjet0_tran_den_1 =0 , igenjet0_tran_den_06 =0 , igenjet0_tran_den_03 =0;
                 double igenjet1_tran_num_1 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_03 =0; 
                 double igenjet1_tran_den_1 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_03 =0;
-
+*/
 						
 		  std::vector<reco::CandidatePtr> daus((*genjets)[igenjt].daughterPtrVector());
 		  std::sort(daus.begin(),daus.end(), [](const reco::CandidatePtr &p1, const reco::CandidatePtr &p2) { return p1->pt() > p2->pt(); });                               
@@ -3358,27 +4370,79 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		      }//if (charge !=0) { 
                      
 		      if (ijet==0 && cand4v.perp()>1.0){
-                        igenjet0_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
-                        igenjet0_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
-                        igenjet0_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+                        igenjet0_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
+                        igenjet0_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
+                        igenjet0_candsmom_03 += candsmom(charge, cand4v.perp(), 0.3);
+			igenjet0_candsmom_04 += candsmom(charge, cand4v.perp(), 0.4);
+                        igenjet0_candsmom_05 += candsmom(charge, cand4v.perp(), 0.5);
+                        igenjet0_candsmom_06 += candsmom(charge, cand4v.perp(), 0.6);
+			igenjet0_candsmom_07 += candsmom(charge, cand4v.perp(), 0.7);
+                        igenjet0_candsmom_08 += candsmom(charge, cand4v.perp(), 0.8);
+                        igenjet0_candsmom_09 += candsmom(charge, cand4v.perp(), 0.9);
+			igenjet0_candsmom_10 += candsmom(charge, cand4v.perp(), 1.0);
+			
 
-			igenjet0_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        igenjet0_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			igenjet0_long_num_01 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        igenjet0_long_den_01 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
 
-                        igenjet0_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
-                        igenjet0_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+                        igenjet0_long_num_02 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        igenjet0_long_den_02 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
 
                         igenjet0_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
                         igenjet0_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
-                        igenjet0_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        igenjet0_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+                        igenjet0_long_num_04 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        igenjet0_long_den_04 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+                        igenjet0_long_num_05 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        igenjet0_long_den_05 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
+
+                        igenjet0_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet0_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			igenjet0_long_num_07 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        igenjet0_long_den_07 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+                        igenjet0_long_num_08 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        igenjet0_long_den_08 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+                        igenjet0_long_num_09 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        igenjet0_long_den_09 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			igenjet0_long_num_10 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet0_long_den_10 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+			
+			igenjet0_tran_num_01 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        igenjet0_tran_den_01 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
+
+                        igenjet0_tran_num_02 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        igenjet0_tran_den_02 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
+
+                        igenjet0_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet0_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+			igenjet0_tran_num_04 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        igenjet0_tran_den_04 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+                        igenjet0_tran_num_05 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        igenjet0_tran_den_05 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
 
                         igenjet0_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
                         igenjet0_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
 
-                        igenjet0_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
-                        igenjet0_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+			igenjet0_tran_num_07 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        igenjet0_tran_den_07 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+                        igenjet0_tran_num_08 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        igenjet0_tran_den_08 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+                        igenjet0_tran_num_09 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        igenjet0_tran_den_09 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			igenjet0_tran_num_10 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet0_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
 
 			//std::cout<< "loop 1"<<endl;
 			//std::cout<<"candspt : "<<cand4v.perp()<<" cahrge : "<<charge<<endl;
@@ -3391,27 +4455,77 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         //genjetcharge1_03->Fill(genjcharge1_03,weighttrg);
 			}
 		      if (ijet==1 && cand4v.perp()>1.0){
-			igenjet1_candsmom_1 += candsmom(charge, cand4v.perp(), 1.0);
-                        igenjet1_candsmom_06 +=candsmom(charge, cand4v.perp(), 0.6);
-                        igenjet1_candsmom_03 +=candsmom(charge, cand4v.perp(), 0.3);
+			igenjet1_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
+                        igenjet1_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
+                        igenjet1_candsmom_03 += candsmom(charge, cand4v.perp(), 0.3);
+			igenjet1_candsmom_04 += candsmom(charge, cand4v.perp(), 0.4);
+                        igenjet1_candsmom_05 += candsmom(charge, cand4v.perp(), 0.5);
+                        igenjet1_candsmom_06 += candsmom(charge, cand4v.perp(), 0.6);
+			igenjet1_candsmom_07 += candsmom(charge, cand4v.perp(), 0.7);
+                        igenjet1_candsmom_08 += candsmom(charge, cand4v.perp(), 0.8);
+                        igenjet1_candsmom_09 += candsmom(charge, cand4v.perp(), 0.9);
+			igenjet1_candsmom_10 += candsmom(charge, cand4v.perp(), 1.0);
 	
-			igenjet1_long_num_1 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        igenjet1_long_den_1 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			igenjet1_long_num_01 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        igenjet1_long_den_01 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
 
-                        igenjet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
-                        igenjet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+                        igenjet1_long_num_02 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        igenjet1_long_den_02 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
 
                         igenjet1_long_num_03 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
                         igenjet1_long_den_03 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
 
-                        igenjet1_tran_num_1 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
-                        igenjet1_tran_den_1 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+			igenjet1_long_num_04 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        igenjet1_long_den_04 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+                        igenjet1_long_num_05 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        igenjet1_long_den_05 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
+
+                        igenjet1_long_num_06 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
+                        igenjet1_long_den_06 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
+
+			igenjet1_long_num_07 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        igenjet1_long_den_07 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+                        igenjet1_long_num_08 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        igenjet1_long_den_08 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+                        igenjet1_long_num_09 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        igenjet1_long_den_09 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			igenjet1_long_num_10 += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet1_long_den_10 += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
+
+
+                        igenjet1_tran_num_01 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1)));
+                        igenjet1_tran_den_01 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.1));
+
+                        igenjet1_tran_num_02 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2)));
+                        igenjet1_tran_den_02 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.2));
+
+                        igenjet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
+                        igenjet1_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+
+			igenjet1_tran_num_04 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4)));
+                        igenjet1_tran_den_04 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.4));
+
+                        igenjet1_tran_num_05 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5)));
+                        igenjet1_tran_den_05 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.5));
 
                         igenjet1_tran_num_06 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6)));
                         igenjet1_tran_den_06 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.6));
 
-                        igenjet1_tran_num_03 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3)));
-                        igenjet1_tran_den_03 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.3));
+			igenjet1_tran_num_07 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7)));
+                        igenjet1_tran_den_07 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.7));
+
+                        igenjet1_tran_num_08 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8)));
+                        igenjet1_tran_den_08 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.8));
+
+                        igenjet1_tran_num_09 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9)));
+                        igenjet1_tran_den_09 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 0.9));
+
+			igenjet1_tran_num_10 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
+                        igenjet1_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
 
 			//double genjcharge2_1 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 1.0);
                         //double genjcharge2_06 = JetCharge1(charge, cand4v.perp(), tmp4v.perp(), 0.6);
@@ -3468,11 +4582,11 @@ else {
 		    } //if (isrc==0)
 		  } //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
 			//if (tmp4v[0].perp() > 400){
-			genjetcharge1_1->Fill(igenjet0_candsmom_1/(pow(genrecojet0_pt,1.0)),weighttrg);	
+			genjetcharge1_1->Fill(igenjet0_candsmom_10/(pow(genrecojet0_pt,1.0)),weighttrg);	
 			genjetcharge1_06->Fill(igenjet0_candsmom_06/(pow(genrecojet0_pt,0.6)),weighttrg);
 			genjetcharge1_03->Fill(igenjet0_candsmom_03/(pow(genrecojet0_pt,0.3)),weighttrg);
 
-			genjetcharge2_1->Fill(igenjet1_candsmom_1/(pow(genrecojet1_pt,1.0)),weighttrg);
+			genjetcharge2_1->Fill(igenjet1_candsmom_10/(pow(genrecojet1_pt,1.0)),weighttrg);
 			genjetcharge2_06->Fill(igenjet1_candsmom_06/(pow(genrecojet1_pt,0.6)),weighttrg);
 			genjetcharge2_03->Fill(igenjet1_candsmom_03/(pow(genrecojet1_pt,0.3)),weighttrg);	
 			
@@ -3480,19 +4594,19 @@ else {
 			//std::cout<<"Gen pt of lead jet : "<<(pow(tmpgen4v[0].perp(),1.0))<<endl;
 			//std::cout<<"Gen jetcharge of lead jet : "<<(igenjet0_candsmom_1/(pow(tmpgen4v[0].perp(),1.0)))<<endl;
 			//}
-			genjetcharge_long1_1->Fill((igenjet0_long_num_1/igenjet0_long_den_1),weighttrg);
+			genjetcharge_long1_1->Fill((igenjet0_long_num_10/igenjet0_long_den_10),weighttrg);
 	                genjetcharge_long1_06->Fill((igenjet0_long_num_06/igenjet0_long_den_06),weighttrg);
         	        genjetcharge_long1_03->Fill((igenjet0_long_num_03/igenjet0_long_den_03),weighttrg);
 
-                	genjetcharge_tran1_1->Fill((igenjet0_tran_num_1/igenjet0_tran_den_1),weighttrg);
+                	genjetcharge_tran1_1->Fill((igenjet0_tran_num_10/igenjet0_tran_den_10),weighttrg);
           	        genjetcharge_tran1_06->Fill((igenjet0_tran_num_06/igenjet0_tran_den_06),weighttrg);
                 	genjetcharge_tran1_03->Fill((igenjet0_tran_num_03/igenjet0_tran_den_03),weighttrg);
 
-	                genjetcharge_long2_1->Fill((igenjet1_long_num_1/igenjet1_long_den_1),weighttrg);
+	                genjetcharge_long2_1->Fill((igenjet1_long_num_10/igenjet1_long_den_10),weighttrg);
         	        genjetcharge_long2_06->Fill((igenjet1_long_num_06/igenjet1_long_den_06),weighttrg);
                 	genjetcharge_long2_03->Fill((igenjet1_long_num_03/igenjet1_long_den_03),weighttrg);
 
-	                genjetcharge_tran2_1->Fill((igenjet1_tran_num_1/igenjet1_tran_den_1),weighttrg);
+	                genjetcharge_tran2_1->Fill((igenjet1_tran_num_10/igenjet1_tran_den_10),weighttrg);
         	        genjetcharge_tran2_06->Fill((igenjet1_tran_num_06/igenjet1_tran_den_06),weighttrg);
                 	genjetcharge_tran2_03->Fill((igenjet1_tran_num_03/igenjet1_tran_den_03),weighttrg);
 
@@ -3565,7 +4679,165 @@ else {
       /*double rand=gRandom->Uniform();
       int k = rand/0.1;
       //cout << "Rand Number " << k << endl;*/
-  
+ 
+//-----------------------------------------------Calculate And Fill Jet Charge Obserables------------------------------------
+
+	for (int iet=0; iet<njetetamn; iet++){
+		if (isReconstruct) {
+			for (int isrc=0; isrc<njecmx; isrc++) {
+				if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+				if (isrc==0) {
+                                      
+					h_jetcharge_D1_j1_k1[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_01/(pow(recojet0_pt,0.1)),weighttrg);
+                                        h_jetcharge_D1_j1_k2[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_02/(pow(recojet0_pt,0.2)),weighttrg);
+                                        h_jetcharge_D1_j1_k3[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_03/(pow(recojet0_pt,0.3)),weighttrg);
+                                        h_jetcharge_D1_j1_k4[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_04/(pow(recojet0_pt,0.4)),weighttrg);
+                                        h_jetcharge_D1_j1_k5[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_05/(pow(recojet0_pt,0.5)),weighttrg);
+                                        h_jetcharge_D1_j1_k6[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_06/(pow(recojet0_pt,0.6)),weighttrg);
+                                        h_jetcharge_D1_j1_k7[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_07/(pow(recojet0_pt,0.7)),weighttrg);
+                                        h_jetcharge_D1_j1_k8[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_08/(pow(recojet0_pt,0.8)),weighttrg);
+                                        h_jetcharge_D1_j1_k9[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_09/(pow(recojet0_pt,0.9)),weighttrg);
+                                        h_jetcharge_D1_j1_k10[irecohtjec[isrc]][iet]->Fill(ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
+
+					h_jetcharge_D1_j2_k1[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_01/(pow(recojet1_pt,0.1)),weighttrg);
+					h_jetcharge_D1_j2_k2[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_02/(pow(recojet1_pt,0.2)),weighttrg);
+					h_jetcharge_D1_j2_k3[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_03/(pow(recojet1_pt,0.3)),weighttrg);
+					h_jetcharge_D1_j2_k4[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_04/(pow(recojet1_pt,0.4)),weighttrg);
+					h_jetcharge_D1_j2_k5[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_05/(pow(recojet1_pt,0.5)),weighttrg);
+					h_jetcharge_D1_j2_k6[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_06/(pow(recojet1_pt,0.6)),weighttrg);
+					h_jetcharge_D1_j2_k7[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_07/(pow(recojet1_pt,0.7)),weighttrg);
+					h_jetcharge_D1_j2_k8[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_08/(pow(recojet1_pt,0.8)),weighttrg);
+					h_jetcharge_D1_j2_k9[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_09/(pow(recojet1_pt,0.9)),weighttrg);
+                			h_jetcharge_D1_j2_k10[irecohtjec[isrc]][iet]->Fill(ijet1_candsmom_10/(pow(recojet1_pt,1.0)),weighttrg);
+
+					h_jetcharge_D2_j1_k1[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_01/ijet0_long_den_01),weighttrg);
+					h_jetcharge_D2_j1_k2[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_02/ijet0_long_den_02),weighttrg);
+					h_jetcharge_D2_j1_k3[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_03/ijet0_long_den_03),weighttrg);
+					h_jetcharge_D2_j1_k4[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_04/ijet0_long_den_04),weighttrg);
+					h_jetcharge_D2_j1_k5[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_05/ijet0_long_den_05),weighttrg);
+					h_jetcharge_D2_j1_k6[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_06/ijet0_long_den_06),weighttrg);
+					h_jetcharge_D2_j1_k7[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_07/ijet0_long_den_07),weighttrg);
+					h_jetcharge_D2_j1_k8[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_08/ijet0_long_den_08),weighttrg);
+					h_jetcharge_D2_j1_k9[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_09/ijet0_long_den_09),weighttrg);
+					h_jetcharge_D2_j1_k10[irecohtjec[isrc]][iet]->Fill((ijet0_long_num_10/ijet0_long_den_10),weighttrg);
+					
+					h_jetcharge_D2_j2_k1[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_01/ijet1_long_den_01),weighttrg);
+					h_jetcharge_D2_j2_k2[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_02/ijet1_long_den_02),weighttrg);
+					h_jetcharge_D2_j2_k3[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_03/ijet1_long_den_03),weighttrg);
+					h_jetcharge_D2_j2_k4[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_04/ijet1_long_den_04),weighttrg);
+					h_jetcharge_D2_j2_k5[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_05/ijet1_long_den_05),weighttrg);
+					h_jetcharge_D2_j2_k6[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_06/ijet1_long_den_06),weighttrg);
+					h_jetcharge_D2_j2_k7[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_07/ijet1_long_den_07),weighttrg);
+					h_jetcharge_D2_j2_k8[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_08/ijet1_long_den_08),weighttrg);
+					h_jetcharge_D2_j2_k9[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_09/ijet1_long_den_09),weighttrg);
+					h_jetcharge_D2_j2_k10[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_10/ijet1_long_den_10),weighttrg);
+
+					h_jetcharge_D3_j1_k1[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_01/ijet0_tran_den_01),weighttrg);
+					h_jetcharge_D3_j1_k2[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_02/ijet0_tran_den_02),weighttrg);
+					h_jetcharge_D3_j1_k3[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_03/ijet0_tran_den_03),weighttrg);
+					h_jetcharge_D3_j1_k4[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_04/ijet0_tran_den_04),weighttrg);
+					h_jetcharge_D3_j1_k5[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_05/ijet0_tran_den_05),weighttrg);
+					h_jetcharge_D3_j1_k6[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_06/ijet0_tran_den_06),weighttrg);
+					h_jetcharge_D3_j1_k7[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_07/ijet0_tran_den_07),weighttrg);
+					h_jetcharge_D3_j1_k8[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_08/ijet0_tran_den_08),weighttrg);
+					h_jetcharge_D3_j1_k9[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_09/ijet0_tran_den_09),weighttrg);
+					h_jetcharge_D3_j1_k10[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_10/ijet0_tran_den_10),weighttrg);
+
+					h_jetcharge_D3_j2_k1[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_01/ijet1_tran_den_01),weighttrg);
+					h_jetcharge_D3_j2_k2[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_02/ijet1_tran_den_02),weighttrg);
+					h_jetcharge_D3_j2_k3[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_03/ijet1_tran_den_03),weighttrg);
+					h_jetcharge_D3_j2_k4[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_04/ijet1_tran_den_04),weighttrg);
+					h_jetcharge_D3_j2_k5[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_05/ijet1_tran_den_05),weighttrg);
+					h_jetcharge_D3_j2_k6[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_06/ijet1_tran_den_06),weighttrg);
+					h_jetcharge_D3_j2_k7[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_07/ijet1_tran_den_07),weighttrg);
+					h_jetcharge_D3_j2_k8[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_08/ijet1_tran_den_08),weighttrg);
+					h_jetcharge_D3_j2_k9[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_09/ijet1_tran_den_09),weighttrg);
+                			h_jetcharge_D3_j2_k10[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_10/ijet1_tran_den_10),weighttrg);
+					
+					} // (isrc==0)
+				}
+			}
+		}
+		if(isMC){
+			for (int isrc=0; isrc<nGenReso; isrc++) {
+				if (igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+				if(isrc==0){
+					
+					h_genjetcharge_D1_j1_k1[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_01/(pow(genrecojet0_pt,0.1)),weighttrg);
+                                        h_genjetcharge_D1_j1_k2[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_02/(pow(genrecojet0_pt,0.2)),weighttrg);
+                                        h_genjetcharge_D1_j1_k3[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_03/(pow(genrecojet0_pt,0.3)),weighttrg);
+                                        h_genjetcharge_D1_j1_k4[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_04/(pow(genrecojet0_pt,0.4)),weighttrg);
+                                        h_genjetcharge_D1_j1_k5[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_05/(pow(genrecojet0_pt,0.5)),weighttrg);
+                                        h_genjetcharge_D1_j1_k6[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_06/(pow(genrecojet0_pt,0.6)),weighttrg);
+                                        h_genjetcharge_D1_j1_k7[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_07/(pow(genrecojet0_pt,0.7)),weighttrg);
+                                        h_genjetcharge_D1_j1_k8[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_08/(pow(genrecojet0_pt,0.8)),weighttrg);
+                                        h_genjetcharge_D1_j1_k9[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_09/(pow(genrecojet0_pt,0.9)),weighttrg);
+                                        h_genjetcharge_D1_j1_k10[igenhtres[isrc]][iet]->Fill(igenjet0_candsmom_10/(pow(genrecojet0_pt,1.0)),weighttrg);
+
+                                        h_genjetcharge_D1_j2_k1[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_01/(pow(genrecojet1_pt,0.1)),weighttrg);
+                                        h_genjetcharge_D1_j2_k2[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_02/(pow(genrecojet1_pt,0.2)),weighttrg);
+                                        h_genjetcharge_D1_j2_k3[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_03/(pow(genrecojet1_pt,0.3)),weighttrg);
+                                        h_genjetcharge_D1_j2_k4[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_04/(pow(genrecojet1_pt,0.4)),weighttrg);
+                                        h_genjetcharge_D1_j2_k5[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_05/(pow(genrecojet1_pt,0.5)),weighttrg);
+                                        h_genjetcharge_D1_j2_k6[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_06/(pow(genrecojet1_pt,0.6)),weighttrg);
+                                        h_genjetcharge_D1_j2_k7[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_07/(pow(genrecojet1_pt,0.7)),weighttrg);
+                                        h_genjetcharge_D1_j2_k8[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_08/(pow(genrecojet1_pt,0.8)),weighttrg);
+                                        h_genjetcharge_D1_j2_k9[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_09/(pow(genrecojet1_pt,0.9)),weighttrg);
+                                        h_genjetcharge_D1_j2_k10[igenhtres[isrc]][iet]->Fill(igenjet1_candsmom_10/(pow(genrecojet1_pt,1.0)),weighttrg);
+
+                                        h_genjetcharge_D2_j1_k1[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_01/igenjet0_long_den_01),weighttrg);
+                                        h_genjetcharge_D2_j1_k2[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_02/igenjet0_long_den_02),weighttrg);
+                                        h_genjetcharge_D2_j1_k3[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_03/igenjet0_long_den_03),weighttrg);
+                                        h_genjetcharge_D2_j1_k4[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_04/igenjet0_long_den_04),weighttrg);
+                                        h_genjetcharge_D2_j1_k5[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_05/igenjet0_long_den_05),weighttrg);
+                                        h_genjetcharge_D2_j1_k6[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_06/igenjet0_long_den_06),weighttrg);
+                                        h_genjetcharge_D2_j1_k7[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_07/igenjet0_long_den_07),weighttrg);
+                                        h_genjetcharge_D2_j1_k8[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_08/igenjet0_long_den_08),weighttrg);
+                                        h_genjetcharge_D2_j1_k9[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_09/igenjet0_long_den_09),weighttrg);
+                                        h_genjetcharge_D2_j1_k10[igenhtres[isrc]][iet]->Fill((igenjet0_long_num_10/igenjet0_long_den_10),weighttrg);
+					
+					h_genjetcharge_D2_j2_k1[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_01/igenjet1_long_den_01),weighttrg);
+                                        h_genjetcharge_D2_j2_k2[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_02/igenjet1_long_den_02),weighttrg);
+                                        h_genjetcharge_D2_j2_k3[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_03/igenjet1_long_den_03),weighttrg);
+                                        h_genjetcharge_D2_j2_k4[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_04/igenjet1_long_den_04),weighttrg);
+                                        h_genjetcharge_D2_j2_k5[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_05/igenjet1_long_den_05),weighttrg);
+                                        h_genjetcharge_D2_j2_k6[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_06/igenjet1_long_den_06),weighttrg);
+                                        h_genjetcharge_D2_j2_k7[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_07/igenjet1_long_den_07),weighttrg);
+                                        h_genjetcharge_D2_j2_k8[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_08/igenjet1_long_den_08),weighttrg);
+                                        h_genjetcharge_D2_j2_k9[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_09/igenjet1_long_den_09),weighttrg);
+                                        h_genjetcharge_D2_j2_k10[igenhtres[isrc]][iet]->Fill((igenjet1_long_num_10/igenjet1_long_den_10),weighttrg);
+
+                                        h_genjetcharge_D3_j1_k1[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_01/igenjet0_tran_den_01),weighttrg);
+                                        h_genjetcharge_D3_j1_k2[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_02/igenjet0_tran_den_02),weighttrg);
+                                        h_genjetcharge_D3_j1_k3[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_03/igenjet0_tran_den_03),weighttrg);
+                                        h_genjetcharge_D3_j1_k4[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_04/igenjet0_tran_den_04),weighttrg);
+                                        h_genjetcharge_D3_j1_k5[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_05/igenjet0_tran_den_05),weighttrg);
+                                        h_genjetcharge_D3_j1_k6[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_06/igenjet0_tran_den_06),weighttrg);
+                                        h_genjetcharge_D3_j1_k7[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_07/igenjet0_tran_den_07),weighttrg);
+                                        h_genjetcharge_D3_j1_k8[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_08/igenjet0_tran_den_08),weighttrg);
+                                        h_genjetcharge_D3_j1_k9[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_09/igenjet0_tran_den_09),weighttrg);
+                                        h_genjetcharge_D3_j1_k10[igenhtres[isrc]][iet]->Fill((igenjet0_tran_num_10/igenjet0_tran_den_10),weighttrg);
+
+                                        h_genjetcharge_D3_j2_k1[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_01/igenjet1_tran_den_01),weighttrg);
+                                        h_genjetcharge_D3_j2_k2[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_02/igenjet1_tran_den_02),weighttrg);
+                                        h_genjetcharge_D3_j2_k3[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_03/igenjet1_tran_den_03),weighttrg);
+                                        h_genjetcharge_D3_j2_k4[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_04/igenjet1_tran_den_04),weighttrg);
+                                        h_genjetcharge_D3_j2_k5[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_05/igenjet1_tran_den_05),weighttrg);
+                                        h_genjetcharge_D3_j2_k6[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_06/igenjet1_tran_den_06),weighttrg);
+                                        h_genjetcharge_D3_j2_k7[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_07/igenjet1_tran_den_07),weighttrg);
+                                        h_genjetcharge_D3_j2_k8[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_08/igenjet1_tran_den_08),weighttrg);
+                                        h_genjetcharge_D3_j2_k9[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_09/igenjet1_tran_den_09),weighttrg);
+                                        h_genjetcharge_D3_j2_k10[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_10/igenjet1_tran_den_10),weighttrg);										
+					}	
+				}	
+			}
+		}
+		
+	}
+//cout<<"copy2"<<endl;
+//cout <<"check2:" <<ijet0_candsmom_1<<endl;
+//cout << "output:"<<recojet0_pt<<endl;
+//jc->Fill(ijet0_candsmom_1/(pow(recojet0_pt,1.0)),weighttrg); 
 //-----------------------------------------------Calculate And Fill the  EventShape Variables--------------------------------
       for(int itp=0; itp<ntype; itp++) {
 	for (int iet=0; iet<njetetamn; iet++) {
@@ -3724,7 +4996,7 @@ else {
       } //for (int itp=0; itp<ntype; itp++) 
       
       //if (nevt%1000==1) { std::cout <<"nevt "<<nevt<<" naa "<<naa<<" nbb "<<nbb<<" ncc "<<ncc<< std::endl;}
-      if(nevt==100){cout <<igenht <<endl;}
+      //if(nevt==100){cout <<igenht <<endl;}
 
       // cout <<"end event" << endl;
       }
@@ -3754,11 +5026,11 @@ QCDEventShape::beginJob() {
 #ifdef JETENERGY
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall15_25nsV2_DATA_UncertaintySources_AK4PF.txt", name);      // mc file suman
-    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunE_V4_DATA_UncertaintySources_AK4PFchs.txt", name);  // data 
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt", name);    
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc  
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017F_V6_DATA_UncertaintySources_AK4PFchs.txt", name);    
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall15_25nsV2_DATA_UncertaintySources_AK4PF.txt", name);      
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017F_V6_DATA_UncertaintySources_AK4PFchs.txt", name); 
+    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt", name);          
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
     vsrc.push_back(unc);
@@ -3950,7 +5222,7 @@ double deltaR(const T& t, const U& u) {
 return sqrt(pow(t.eta()-u.eta(),2) +pow(PhiInRange(t.phi()-u.phi()),2));
 }
 
-// Default jet charge observable
+// Default jet charge observable NOT USED
 double JetCharge1(int charge, double candspt, double jpt, double k) {
 	double Q1 = 0.0;
 	//double j1 = 0.0;

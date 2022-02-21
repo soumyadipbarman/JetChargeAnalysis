@@ -1,0 +1,5 @@
+crab status -d crab_JetCharge_Data_analysis_Run2017B-UL_29012022
+crab status -d crab_JetCharge_Data_analysis_Run2017C-UL_29012022
+crab status -d crab_JetCharge_Data_analysis_Run2017D-UL_29012022
+crab status -d crab_JetCharge_Data_analysis_Run2017E-UL_29012022
+crab status -d crab_JetCharge_Data_analysis_Run2017F-UL_29012022
