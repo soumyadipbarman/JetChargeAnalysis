@@ -6,6 +6,7 @@ cmsrel  CMSSW_10_6_20
 cd  CMSSW_10_6_20/src
 cmsenv
 mkdir Test
+cd Test
 mkedanlzr QCDEventShape
 cd QCDEventShape
 cd plugin

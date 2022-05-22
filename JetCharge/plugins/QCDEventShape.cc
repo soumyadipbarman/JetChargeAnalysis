@@ -161,6 +161,9 @@ static const int nhist=10;
 static const int typen=2;
 //static const int nHLTmx=8; 
 static const int nHLTmx=10;
+
+const int nkappa=10;
+double kappa[nkappa]={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
 double recojet0_pt, recojet1_pt, genrecojet0_pt, genrecojet1_pt;
 //const char* jcvarname[njcvar]={"Default", "Longitudinal", "Transverse"}; // jet charge
 
@@ -229,6 +232,44 @@ int rnbinsx1[nvar]={0,0,0,20,0,0,
 */
 //-----------------------------------For Reco Level
 const int rnmxbins=32;  //Maximum Bins in bellow array
+/*
+int jcbins[60]={40,40,40,30,20,20,20,20,20,20,
+		40,40,40,30,20,20,20,20,20,20,
+		20,20,20,20,20,20,20,20,20,20,
+		20,20,20,20,20,20,20,20,20,20,
+		20,20,20,20,20,20,20,20,20,20,
+		20,20,20,20,20,20,20,20,20,20};
+
+double jcminran[60]={-8.0,-5.0,-4.0,-3.0,-2.0,-2.0,-2.0,-2.0,-1.0,-1.0,
+		     -8.0,-5.0,-4.0,-3.0,-2.0,-2.0,-2.0,-2.0,-1.0,-1.0,
+		     -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,
+		     -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,
+		     -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,
+		     -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,};
+
+double jcmaxran[60]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0,
+		     8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0,
+		     1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+		     1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+		     1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+	             1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,};
+*/
+int recojcd1bins[nkappa]={40,40,40,30,20,20,20,20,20,20};
+double recojcd1minran[nkappa]={-8.0,-5.0,-4.0,-3.0,-2.0,-2.0,-2.0,-2.0,-1.0,-1.0};
+double recojcd1maxran[nkappa]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0};
+
+int recojcd23bins[nkappa]={20,20,20,20,20,20,20,20,20,20};
+double recojcd23minran[nkappa]={-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd23maxran[nkappa]={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
+
+int genjcd1bins[nkappa]={20,20,20,15,10,10,10,10,10,10};
+double genjcd1minran[nkappa]={-8.0,-5.0,-4.0,-3.0,-2.0,-2.0,-2.0,-2.0,-1.0,-1.0};
+double genjcd1maxran[nkappa]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0};
+
+int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
+double genjcd23minran[nkappa]={-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd23maxran[nkappa]={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
+
 int rnbinsx0[nvar]={0,0,0,32,0,0,0,0,0,
                   32,0,0,0,0,0,14,0,
                   0,24,0,0,0,0,0,26,
@@ -385,7 +426,6 @@ unsigned int mypow_2[32];
 //const bool m_trigeff = true;
 const int njetptmn=nHLTmx; // 8; //10
 const int njetptbin=120;
-
 #ifdef DIJETAVE
 //const char* jethlt_name[nHLTmx]={"HLT_DiPFJetAve60_v","HLT_DiPFJetAve80_v", "HLT_DiPFJetAve140_v", "HLT_DiPFJetAve200_v", "HLT_DiPFJetAve260_v", "HLT_DiPFJetAve320_v", "HLT_DiPFJetAve400_v", "HLT_DiPFJetAve500_v"};
 const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v","HLT_PFJet200_v","HLT_PFJet260_v","HLT_PFJet320_v","HLT_PFJet400_v","HLT_PFJet450_v","HLT_PFJet500_v","HLT_PFJet550_v"};
@@ -590,16 +630,62 @@ class QCDEventShape : public edm::EDAnalyzer {
   //TH1F* h_recoevtvar[10][ntype][njetptmn][njetetamn][nvar];
   TH1F* h_recoevtvar[ntype][njetptmn][njetetamn][nvar];
   TH1F* h_recoevtfake[ntype][njetptmn][njetetamn][nvar];  //For fake
-  TH1F* h_genevtmiss[ntype][njetptmn][njetetamn][nvar];  //For miss
+  TH1F* h_genevtmiss[ntype][njetptmn][njetetamn][nvar];   //For miss
 
-  TH1F* h_genevtvar[ntype][njetptmn][njetetamn][nvar];  //For Gen
+  TH1F* h_genevtvar[ntype][njetptmn][njetetamn][nvar];    //For Gen
   TH1F* h_genevtvar2[ntype][njetptmn][njetetamn][nvar];
   
-  TH2F* h_2devtvar[ntype][njetptmn][njetetamn][nvar];  //For RM
+  TH2F* h_2devtvar[ntype][njetptmn][njetetamn][nvar];     //For RM
   TH2F* h_2ht;
 
   TH1F* vec_anglex[nhist];
 
+  TH1F* h_recojc_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_D3J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genjc_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genjc_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genjc_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genjc_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genjc_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genjc_D3J2[nkappa][njetptmn][njetetamn];
+
+  TH2F* h_RM_D1J1[nkappa][njetptmn][njetetamn];
+  TH2F* h_RM_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH2F* h_RM_D2J1[nkappa][njetptmn][njetetamn];
+  TH2F* h_RM_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH2F* h_RM_D3J1[nkappa][njetptmn][njetetamn];
+  TH2F* h_RM_D3J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recofake_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recofake_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recofake_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recofake_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recofake_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recofake_D3J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genmiss_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genmiss_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genmiss_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genmiss_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_genmiss_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_genmiss_D3J2[nkappa][njetptmn][njetetamn];
+
+/*
   TH2F* h_RM_D1_j1_k1[njetptmn][njetetamn];  // RM Default
   TH2F* h_RM_D1_j1_k2[njetptmn][njetetamn];
   TH2F* h_RM_D1_j1_k3[njetptmn][njetetamn];
@@ -629,6 +715,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH2F* h_RM_D2_j1_k4[njetptmn][njetetamn];
   TH2F* h_RM_D2_j1_k5[njetptmn][njetetamn];
   TH2F* h_RM_D2_j1_k6[njetptmn][njetetamn];
+  TH2F* h_RM_D2_j1_k7[njetptmn][njetetamn];
   TH2F* h_RM_D2_j1_k7[njetptmn][njetetamn];
   TH2F* h_RM_D2_j1_k8[njetptmn][njetetamn];
   TH2F* h_RM_D2_j1_k9[njetptmn][njetetamn];
@@ -881,7 +968,6 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_genjetcharge_D1_j1_k3[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D1_j1_k4[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D1_j1_k5[njetptmn][njetetamn];
-  TH1F* h_genjetcharge_D1_j1_k6[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D1_j1_k7[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D1_j1_k8[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D1_j1_k9[njetptmn][njetetamn];
@@ -941,7 +1027,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_genjetcharge_D3_j2_k8[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D3_j2_k9[njetptmn][njetetamn];
   TH1F* h_genjetcharge_D3_j2_k10[njetptmn][njetetamn];
-
+*/
   TH2F* test[njetetamn];
   
   TProfile* hprof;
@@ -973,30 +1059,529 @@ class QCDEventShape : public edm::EDAnalyzer {
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
    
-  //=============****=========================
+  //====================****=========================
 
 //----------------------------------------------------------------TunfoldBinning -----------------------------
-  //----------------------------------2D Bining using TUnfoldBinning
-   TUnfoldBinning *binsRec2D[ntype][njetetamn][nvar];
-   TUnfoldBinning *RecoBinning2D[ntype][njetetamn][nvar];
-   TUnfoldBinning *binsGen2D[ntype][njetetamn][nvar];
-   TUnfoldBinning *GenBinning2D[ntype][njetetamn][nvar];
 
-   TH1* h_recovar_2D[ntype][njetetamn][nvar]; //Reco
-   TH1* h_recofake_2D[ntype][njetetamn][nvar];//For fake
-   //TH1* h_recofakeOutE_2D[type][njetetamn][nvar];//For fake
-   //TH1* h_recofakeOutHT_2D[type][njetetamn][nvar];//For fake
+  //----------------------------------2D Bining using TUnfoldBinning ESV
+  TUnfoldBinning *binsRec2D[ntype][njetetamn][nvar];
+  TUnfoldBinning *RecoBinning2D[ntype][njetetamn][nvar];
+  TUnfoldBinning *binsGen2D[ntype][njetetamn][nvar];
+  TUnfoldBinning *GenBinning2D[ntype][njetetamn][nvar];
+
+  //----------------------------------2D Bining using TUnfoldBinning Jet Charge
+  TUnfoldBinning *binsRec2D_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_D3J2[nkappa][njetetamn];
+ 
+  TUnfoldBinning *binsGen2D_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsGen2D_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsGen2D_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsGen2D_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsGen2D_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsGen2D_D3J2[nkappa][njetetamn]; 
+
+
+  TUnfoldBinning *RecoBinning2D_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3J2[nkappa][njetetamn];
+
+
+  TUnfoldBinning *GenBinning2D_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *GenBinning2D_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *GenBinning2D_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *GenBinning2D_D3J2[nkappa][njetetamn];
+
+/*
+  
+  TUnfoldBinning *binsRec2D_D1_j1_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsRec2D_D1_j2_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D1_j2_k10[njetetamn];
+
+  TUnfoldBinning *binsRec2D_D2_j1_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsRec2D_D2_j2_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D2_j2_k10[njetetamn];
+
+  TUnfoldBinning *binsRec2D_D3_j1_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsRec2D_D3_j2_k1[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k2[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k3[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k4[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k5[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k6[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k7[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k8[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k9[njetetamn];
+  TUnfoldBinning *binsRec2D_D3_j2_k10[njetetamn];
+
+
+  TUnfoldBinning *binsGen2D_D1_j1_k1[njetetamn];  // GEN
+  TUnfoldBinning *binsGen2D_D1_j1_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsGen2D_D1_j2_k1[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D1_j2_k10[njetetamn];
+
+  TUnfoldBinning *binsGen2D_D2_j1_k1[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsGen2D_D2_j2_k1[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D2_j2_k10[njetetamn];
+
+  TUnfoldBinning *binsGen2D_D3_j1_k1[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j1_k10[njetetamn];
+
+  TUnfoldBinning *binsGen2D_D3_j2_k1[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k2[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k3[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k4[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k5[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k6[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k7[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k8[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k9[njetetamn];
+  TUnfoldBinning *binsGen2D_D3_j2_k10[njetetamn];
+
+  
+  TUnfoldBinning *RecoBinning2D_D1_j1_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k9[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j1_k10[njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D1_j2_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k9[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D1_j2_k10[njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D2_j1_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k9[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j1_k10[njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D2_j2_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k9[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D2_j2_k10[njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D3_j1_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k9[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j1_k10[njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_D3_j2_k1[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k2[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k3[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k4[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k5[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k6[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k7[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k8[njetetamn];
+  TUnfoldBinning *RecoBinning2D_D3_j2_k10[njetetamn];
+
+
+  TUnfoldBinning *GenBinning2D_D1_j1_k1[njetetamn];  // GEN
+  TUnfoldBinning *GenBinning2D_D1_j1_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j1_k10[njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D1_j2_k1[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D1_j2_k10[njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D2_j1_k1[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j1_k10[njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D2_j2_k1[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D2_j2_k10[njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D3_j1_k1[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j1_k10[njetetamn];
+
+  TUnfoldBinning *GenBinning2D_D3_j2_k1[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k2[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k3[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k4[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k5[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k6[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k7[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k8[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k9[njetetamn];
+  TUnfoldBinning *GenBinning2D_D3_j2_k10[njetetamn];
+*/
+
+
+  //--------------------------------- ESV 2D TUnfoldBinning Histograms
+  TH1* h_recovar_2D[ntype][njetetamn][nvar]; //Reco
+  TH1* h_recofake_2D[ntype][njetetamn][nvar];//For fake
+  //TH1* h_recofakeOutE_2D[type][njetetamn][nvar];//For fake
+  //TH1* h_recofakeOutHT_2D[type][njetetamn][nvar];//For fake
    
-   //TH1* h_JC_recovar_2D[njetetamn]; // JC Reco
+  TH1* h_genvar_2D[ntype][njetetamn][nvar]; //Gen
+  TH1* h_genmiss_2D[ntype][njetetamn][nvar]; //For Miss
+  //TH1* h_genmissOutE_2D[type][njetetamn][nvar]; //For Miss
+  //TH1* h_genmissOutHT_2D[type][njetetamn][nvar]; //For Miss
 
-   TH1* h_genvar_2D[ntype][njetetamn][nvar]; //Gen
-   TH1* h_genmiss_2D[ntype][njetetamn][nvar]; //For Miss
-   //TH1* h_genmissOutE_2D[type][njetetamn][nvar]; //For Miss
-   //TH1* h_genmissOutHT_2D[type][njetetamn][nvar]; //For Miss
+  TH2* RM_2D[ntype][njetetamn][nvar];
 
-   TH2* RM_2D[ntype][njetetamn][nvar];
+  //--------------------------------- Jet Charge 2D TUnfoldBinning Histograms
+  //TH1* h_recovartest_2D_[5][4][12][2];
+  //TUnfoldBinning *binsRectest2D[5][4][12][2];
+  //TUnfoldBinning *RecoBinningtest2D[5][4][12][2];
+  //TH1* h_recovartest_2D[5][4][12][2];
+  //TUnfoldBinning *binsRec2D[5][4][12][2];
+  //TUnfoldBinning RecoBinningtest2D[5][4][12][2];
+  //TH1* h_recovartest_2D[5][4][12][2];
 
-  //=============****=========================
+  TH1* h_recovar_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_2D_D3J2[nkappa][njetetamn];
+
+  TH1* h_genvar_2D_D1J1[nkappa][njetetamn];
+  TH1* h_genvar_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_genvar_2D_D2J1[nkappa][njetetamn];
+  TH1* h_genvar_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_genvar_2D_D3J1[nkappa][njetetamn];
+  TH1* h_genvar_2D_D3J2[nkappa][njetetamn];
+
+
+  TH1* h_recofake_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recofake_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recofake_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recofake_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recofake_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recofake_2D_D3J2[nkappa][njetetamn];
+
+  TH1* h_genmiss_2D_D1J1[nkappa][njetetamn];
+  TH1* h_genmiss_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_genmiss_2D_D2J1[nkappa][njetetamn];
+  TH1* h_genmiss_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_genmiss_2D_D3J1[nkappa][njetetamn];
+  TH1* h_genmiss_2D_D3J2[nkappa][njetetamn];
+
+  TH2* RM_2D_D1J1[nkappa][njetetamn];
+  TH2* RM_2D_D1J2[nkappa][njetetamn];
+
+  TH2* RM_2D_D2J1[nkappa][njetetamn];
+  TH2* RM_2D_D2J2[nkappa][njetetamn];
+
+  TH2* RM_2D_D3J1[nkappa][njetetamn];
+  TH2* RM_2D_D3J2[nkappa][njetetamn];
+/*
+ 
+  TH1* h_recovar_2D_D1_j1_k1[njetetamn]; // JC Reco
+  TH1* h_recovar_2D_D1_j1_k2[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k3[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k4[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k5[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k6[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k7[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k8[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k9[njetetamn];
+  TH1* h_recovar_2D_D1_j1_k10[njetetamn];
+
+  TH1* h_recovar_2D_D1_j2_k1[njetetamn]; 
+  TH1* h_recovar_2D_D1_j2_k2[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k3[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k4[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k5[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k6[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k7[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k8[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k9[njetetamn];
+  TH1* h_recovar_2D_D1_j2_k10[njetetamn];
+
+  TH1* h_recovar_2D_D2_j1_k1[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k2[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k3[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k4[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k5[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k6[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k7[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k8[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k9[njetetamn];
+  TH1* h_recovar_2D_D2_j1_k10[njetetamn];
+
+  TH1* h_recovar_2D_D2_j2_k1[njetetamn]; 
+  TH1* h_recovar_2D_D2_j2_k2[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k3[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k4[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k5[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k6[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k7[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k8[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k9[njetetamn];
+  TH1* h_recovar_2D_D2_j2_k10[njetetamn];
+
+  TH1* h_recovar_2D_D3_j1_k1[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k2[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k3[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k4[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k5[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k6[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k7[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k8[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k9[njetetamn];
+  TH1* h_recovar_2D_D3_j1_k10[njetetamn];
+
+  TH1* h_recovar_2D_D3_j2_k1[njetetamn]; 
+  TH1* h_recovar_2D_D3_j2_k2[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k3[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k4[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k5[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k6[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k7[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k8[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k9[njetetamn];
+  TH1* h_recovar_2D_D3_j2_k10[njetetamn];
+
+
+  TH1* h_genvar_2D_D1_j1_k1[njetetamn]; // JC Gen
+  TH1* h_genvar_2D_D1_j1_k2[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k3[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k4[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k5[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k6[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k7[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k8[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k9[njetetamn];
+  TH1* h_genvar_2D_D1_j1_k10[njetetamn];
+
+  TH1* h_genvar_2D_D1_j2_k1[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k2[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k3[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k4[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k5[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k6[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k7[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k8[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k9[njetetamn];
+  TH1* h_genvar_2D_D1_j2_k10[njetetamn];
+
+  TH1* h_genvar_2D_D2_j1_k1[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k2[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k3[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k4[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k5[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k6[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k7[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k8[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k9[njetetamn];
+  TH1* h_genvar_2D_D2_j1_k10[njetetamn];
+
+  TH1* h_genvar_2D_D2_j2_k1[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k2[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k3[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k4[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k5[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k6[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k7[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k8[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k9[njetetamn];
+  TH1* h_genvar_2D_D2_j2_k10[njetetamn];
+
+  TH1* h_genvar_2D_D3_j1_k1[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k2[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k3[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k4[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k5[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k6[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k7[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k8[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k9[njetetamn];
+  TH1* h_genvar_2D_D3_j1_k10[njetetamn];
+
+  TH1* h_genvar_2D_D3_j2_k1[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k2[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k3[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k4[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k5[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k6[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k7[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k8[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k9[njetetamn];
+  TH1* h_genvar_2D_D3_j2_k10[njetetamn];
+  */
+  //=====================****=========================
   //TH1F* recojt_hist;
   //TH1F* recojt_pt[njetetamn][nHLTmx];
   TH1F* recojt_pt[njetetamn];
@@ -1044,7 +1629,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recochg3_eta;
   TH1F* recochg3_phi;
 
-  //===============****==============================
+  //====================****==============================
   //TH1F* genjt_hist;
   TH1F* genjt_pt[njetetamn];
   TH1F* genjt_eta;
@@ -1054,6 +1639,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* genjt1_pt[njetetamn];
   TH1F* genjt1_eta;
   TH1F* genjt1_phi;
+
 
   TH1F* genjt2_pt[njetetamn];
   TH1F* genjt2_eta;
@@ -1274,7 +1860,8 @@ edm::LumiReWeighting *LumiWeights_;
 
 //===============================
 
-//--------------------------------------------Define TUnfoldBinning--------------------------
+                                                                                                                                                                        
+//--------------------------------------------Define TUnfoldBinning ESV--------------------------
   char RecoBinName[100], GenBinName[100], Axisname[100]; 
    for (int ityp=0; ityp<ntype; ityp++) {
       for (int iet=0; iet<njetetamn; iet++) {
@@ -1308,6 +1895,47 @@ edm::LumiReWeighting *LumiWeights_;
       }
     }
 
+/*
+	for (int iet=0; iet<njetetamn; iet++) {
+		for (int id=1; id<2; id++){
+			for (int ij=1; ij<2; ij++){
+				for (int ik=1; ik<12; ik++){
+					sprintf(RecoBinName, "Detector2d_D%i_j%i_k%i_eta%i", id, ij, ik, iet);
+					binsRectest2D[id][ij][ik][iet] = new TUnfoldBinning(RecoBinName);
+					cout <<"RecoBinName"<<RecoBinName<<endl;
+
+					sprintf(RecoBinName, "Recobin2d_D%i_j%i_k%i_eta%i",id, ij, ik, iet);
+					RecoBinningtest2D[id][ij][ik][iet]= binsRectest2D[id][ij][ik][iet]->AddBinning(RecoBinName);
+					cout<<"RecoBinName"<<RecoBinName<<endl;				
+			
+					sprintf(Axisname, "var_%i_%i_%i", id, ij, ik);
+					cout<<"Axisname"<<Axisname<<endl;
+					RecoBinningtest2D[id][ij][ik][iet]->AddAxis(Axisname, jcbins[ik], jcminran[ik], jcmaxran[ik] ,false,false);
+					sprintf(Axisname, "ht");
+		        		RecoBinningtest2D[id][ij][ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false,false);		
+					}
+				}
+			}
+		}
+
+char name1[200], title1[200];
+	for (int iet=0; iet<njetetamn; iet++) {
+		for (int id=1; id<2; id++){
+			for (int ij=1; ij<2; ij++){
+				for (int ik=1; ik<12; ik++){
+                			if (isReconstruct) {
+                        			sprintf(name1, "dd_reco_D%i_j%i_k%i_eta%i", id, ij, ik, iet);
+						cout<<"name1"<<name1<<endl;
+                        			sprintf(title1, "2D Reco Q_{D%i,}_{j%i}^{k=%i} %g", id, ij, ik, etarange[iet]);
+						cout<<"title1"<<title1<<endl;
+                        			h_recovartest_2D[id][ij][ik][iet] = binsRectest2D[id][ij][ik][iet]->CreateHistogram(name1,false,0,title1); //false : global bin ID
+                        			h_recovartest_2D[id][ij][ik][iet]->Sumw2();
+						}
+					}
+				}
+			}
+		}
+*/
 
   char name[200];
   char title[200];
@@ -1328,22 +1956,8 @@ edm::LumiReWeighting *LumiWeights_;
               h_recofake_2D[ityp][iet][ij]->Sumw2();             
  
 	     }
-/*
-// Test 2D Unfolding scheme for Jet Charge
-  for (int iet=0; iet<njetetamn; iet++) {
-	if (isReconstruct) {
-	      sprintf(name, "dd_reco_eta%i", iet);
-              sprintf(title, "2D Reco %g", etarange[iet]);
-              h_JC_recovar_2D[iet] = binsRec2D[iet]->CreateHistogram(name,false,0,title); //false : global bin ID
-              h_JC_recovar_2D[iet]->Sumw2();
 
-		//sprintf(name, "reco_jetcharge_D1_j1_k1_pt%i_eta%i", ipt, iet);
-                //sprintf(title, "Reco Q_{leading_jet_charge_k=0.1} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
-                //h_jetcharge_D1_j1_k1[ipt][iet] = fs->make<TH1F>(name, title, 40, -8.0, 8.0);
-                //h_jetcharge_D1_j1_k1[ipt][iet]->Sumw2();
-	      }
-	}
-*/
+
 #ifdef  LHAPDF
             for (int ix=1; ix<nnnmx; ix++) {
              sprintf(name, "dd_genpdf_typ_%i_eta%i_%i_%i", ityp, iet, ij, ix);
@@ -1372,7 +1986,6 @@ edm::LumiReWeighting *LumiWeights_;
               h_genvar_2D[ityp][iet][ij] = binsGen2D[ityp][iet][ij]->CreateHistogram(name,false,0,title);//false : global bin ID
               h_genvar_2D[ityp][iet][ij]->Sumw2();              
 
-	      sprintf(name, "dd_miss_gen_typ_%i_eta%i_%i", ityp, iet, ij);
               sprintf(title, "Miss Gen %s %g %s", typname[ityp], etarange[iet], vartitle[ij]);
 	      h_genmiss_2D[ityp][iet][ij] = binsGen2D[ityp][iet][ij]->CreateHistogram(name,false,0,title); //false : global bin ID
               h_genmiss_2D[ityp][iet][ij]->Sumw2();              
@@ -1390,7 +2003,2080 @@ edm::LumiReWeighting *LumiWeights_;
       }
 
 
+//-------------------------------------------- Define TUnfoldBinning Jet Charge --------------------------	
+/*	for (int iet=0; iet<njetetamn; iet++) {				//Default 1
+                sprintf(RecoBinName, "Detector2d_D1_j1_k1_eta%i", iet);
+                binsRec2D_D1_j1_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k1_eta%i",iet);
+                RecoBinning2D_D1_j1_k1[iet]= binsRec2D_D1_j1_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k1");
+                RecoBinning2D_D1_j1_k1[iet]->AddAxis(Axisname,40,-8.0,8.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k2_eta%i", iet);
+                binsRec2D_D1_j1_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k2_eta%i",iet);
+                RecoBinning2D_D1_j1_k2[iet]= binsRec2D_D1_j1_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k2");
+                RecoBinning2D_D1_j1_k2[iet]->AddAxis(Axisname,40,-5.0,5.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k3_eta%i", iet);
+                binsRec2D_D1_j1_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k3_eta%i",iet);
+                RecoBinning2D_D1_j1_k3[iet]= binsRec2D_D1_j1_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k3");
+                RecoBinning2D_D1_j1_k3[iet]->AddAxis(Axisname,40,-4.0,4.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k4_eta%i", iet);
+                binsRec2D_D1_j1_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k4_eta%i",iet);
+                RecoBinning2D_D1_j1_k4[iet]= binsRec2D_D1_j1_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k4");
+                RecoBinning2D_D1_j1_k4[iet]->AddAxis(Axisname,30,-3.0,3.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k5_eta%i", iet);
+                binsRec2D_D1_j1_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k5_eta%i",iet);
+                RecoBinning2D_D1_j1_k5[iet]= binsRec2D_D1_j1_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k5");
+                RecoBinning2D_D1_j1_k5[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k6_eta%i", iet);
+                binsRec2D_D1_j1_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k6_eta%i",iet);
+                RecoBinning2D_D1_j1_k6[iet]= binsRec2D_D1_j1_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k6");
+                RecoBinning2D_D1_j1_k6[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k7_eta%i", iet);
+                binsRec2D_D1_j1_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k7_eta%i",iet);
+                RecoBinning2D_D1_j1_k7[iet]= binsRec2D_D1_j1_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k7");
+                RecoBinning2D_D1_j1_k7[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k8_eta%i", iet);
+                binsRec2D_D1_j1_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k8_eta%i",iet);
+                RecoBinning2D_D1_j1_k8[iet]= binsRec2D_D1_j1_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k8");
+                RecoBinning2D_D1_j1_k8[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k9_eta%i", iet);
+                binsRec2D_D1_j1_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k9_eta%i",iet);
+                RecoBinning2D_D1_j1_k9[iet]= binsRec2D_D1_j1_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k9");
+                RecoBinning2D_D1_j1_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(RecoBinName, "Detector2d_D1_j1_k10_eta%i", iet);
+                binsRec2D_D1_j1_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k10_eta%i",iet);
+                RecoBinning2D_D1_j1_k10[iet]= binsRec2D_D1_j1_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k10");
+                RecoBinning2D_D1_j1_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D1_j2_k1_eta%i", iet);   // Default 2
+                binsRec2D_D1_j2_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k1_eta%i",iet);
+                RecoBinning2D_D1_j2_k1[iet]= binsRec2D_D1_j2_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k1");
+                RecoBinning2D_D1_j2_k1[iet]->AddAxis(Axisname,40,-8.0,8.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k2_eta%i", iet);
+                binsRec2D_D1_j2_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k2_eta%i",iet);
+                RecoBinning2D_D1_j2_k2[iet]= binsRec2D_D1_j2_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k2");
+                RecoBinning2D_D1_j2_k2[iet]->AddAxis(Axisname,40,-5.0,5.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k3_eta%i", iet);
+                binsRec2D_D1_j2_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k3_eta%i",iet);
+                RecoBinning2D_D1_j2_k3[iet]= binsRec2D_D1_j2_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k3");
+                RecoBinning2D_D1_j2_k3[iet]->AddAxis(Axisname,40,-4.0,4.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k4_eta%i", iet);
+                binsRec2D_D1_j2_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k4_eta%i",iet);
+                RecoBinning2D_D1_j2_k4[iet]= binsRec2D_D1_j2_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k4");
+                RecoBinning2D_D1_j2_k4[iet]->AddAxis(Axisname,30,-3.0,3.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k5_eta%i", iet);
+                binsRec2D_D1_j2_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k5_eta%i",iet);
+                RecoBinning2D_D1_j2_k5[iet]= binsRec2D_D1_j2_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k5");
+                RecoBinning2D_D1_j2_k5[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k6_eta%i", iet);
+                binsRec2D_D1_j2_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k6_eta%i",iet);
+                RecoBinning2D_D1_j2_k6[iet]= binsRec2D_D1_j2_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k6");
+                RecoBinning2D_D1_j2_k6[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k7_eta%i", iet);
+                binsRec2D_D1_j2_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k7_eta%i",iet);
+                RecoBinning2D_D1_j2_k7[iet]= binsRec2D_D1_j2_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k7");
+                RecoBinning2D_D1_j2_k7[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k8_eta%i", iet);
+                binsRec2D_D1_j2_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k8_eta%i",iet);
+                RecoBinning2D_D1_j2_k8[iet]= binsRec2D_D1_j2_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k8");
+                RecoBinning2D_D1_j2_k8[iet]->AddAxis(Axisname,20,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k9_eta%i", iet);
+                binsRec2D_D1_j2_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k9_eta%i",iet);
+                RecoBinning2D_D1_j2_k9[iet]= binsRec2D_D1_j2_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k9");
+                RecoBinning2D_D1_j2_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D1_j2_k10_eta%i", iet);
+                binsRec2D_D1_j2_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k10_eta%i",iet);
+                RecoBinning2D_D1_j2_k10[iet]= binsRec2D_D1_j2_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k10");
+                RecoBinning2D_D1_j2_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		
+		sprintf(RecoBinName, "Detector2d_D2_j1_k1_eta%i", iet);  // Long 1
+                binsRec2D_D2_j1_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k1_eta%i",iet);
+                RecoBinning2D_D2_j1_k1[iet]= binsRec2D_D2_j1_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k1");
+                RecoBinning2D_D2_j1_k1[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k2_eta%i", iet);
+                binsRec2D_D2_j1_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k2_eta%i",iet);
+                RecoBinning2D_D2_j1_k2[iet]= binsRec2D_D2_j1_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k2");
+                RecoBinning2D_D2_j1_k2[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k3_eta%i", iet);
+                binsRec2D_D2_j1_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k3_eta%i",iet);
+                RecoBinning2D_D2_j1_k3[iet]= binsRec2D_D2_j1_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k3");
+                RecoBinning2D_D2_j1_k3[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k4_eta%i", iet);
+                binsRec2D_D2_j1_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k4_eta%i",iet);
+                RecoBinning2D_D2_j1_k4[iet]= binsRec2D_D2_j1_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k4");
+                RecoBinning2D_D2_j1_k4[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k5_eta%i", iet);
+                binsRec2D_D2_j1_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k5_eta%i",iet);
+                RecoBinning2D_D2_j1_k5[iet]= binsRec2D_D2_j1_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k5");
+                RecoBinning2D_D2_j1_k5[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k6_eta%i", iet);
+                binsRec2D_D2_j1_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k6_eta%i",iet);
+                RecoBinning2D_D2_j1_k6[iet]= binsRec2D_D2_j1_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k6");
+                RecoBinning2D_D2_j1_k6[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k7_eta%i", iet);
+                binsRec2D_D2_j1_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k7_eta%i",iet);
+                RecoBinning2D_D2_j1_k7[iet]= binsRec2D_D2_j1_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k7");
+                RecoBinning2D_D2_j1_k7[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k8_eta%i", iet);
+                binsRec2D_D2_j1_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k8_eta%i",iet);
+                RecoBinning2D_D2_j1_k8[iet]= binsRec2D_D2_j1_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k8");
+                RecoBinning2D_D2_j1_k8[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k9_eta%i", iet);
+                binsRec2D_D2_j1_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k9_eta%i",iet);
+                RecoBinning2D_D2_j1_k9[iet]= binsRec2D_D2_j1_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k9");
+                RecoBinning2D_D2_j1_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j1_k10_eta%i", iet);
+                binsRec2D_D2_j1_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k10_eta%i",iet);
+                RecoBinning2D_D2_j1_k10[iet]= binsRec2D_D2_j1_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k10");
+                RecoBinning2D_D2_j1_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D2_j2_k1_eta%i", iet);   // Long 2
+                binsRec2D_D2_j2_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k1_eta%i",iet);
+                RecoBinning2D_D2_j2_k1[iet]= binsRec2D_D2_j2_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k1");
+                RecoBinning2D_D2_j2_k1[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k2_eta%i", iet);
+                binsRec2D_D2_j2_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k2_eta%i",iet);
+                RecoBinning2D_D2_j2_k2[iet]= binsRec2D_D2_j2_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k2");
+                RecoBinning2D_D2_j2_k2[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k3_eta%i", iet);
+                binsRec2D_D2_j2_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k3_eta%i",iet);
+                RecoBinning2D_D2_j2_k3[iet]= binsRec2D_D2_j2_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k3");
+                RecoBinning2D_D2_j2_k3[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k4_eta%i", iet);
+                binsRec2D_D2_j2_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k4_eta%i",iet);
+                RecoBinning2D_D2_j2_k4[iet]= binsRec2D_D2_j2_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k4");
+                RecoBinning2D_D2_j2_k4[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k5_eta%i", iet);
+                binsRec2D_D2_j2_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k5_eta%i",iet);
+                RecoBinning2D_D2_j2_k5[iet]= binsRec2D_D2_j2_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k5");
+                RecoBinning2D_D2_j2_k5[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k6_eta%i", iet);
+                binsRec2D_D2_j2_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k6_eta%i",iet);
+                RecoBinning2D_D2_j2_k6[iet]= binsRec2D_D2_j2_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k6");
+                RecoBinning2D_D2_j2_k6[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k7_eta%i", iet);
+                binsRec2D_D2_j2_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k7_eta%i",iet);
+                RecoBinning2D_D2_j2_k7[iet]= binsRec2D_D2_j2_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k7");
+                RecoBinning2D_D2_j2_k7[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k8_eta%i", iet);
+                binsRec2D_D2_j2_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k8_eta%i",iet);
+                RecoBinning2D_D2_j2_k8[iet]= binsRec2D_D2_j2_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k8");
+                RecoBinning2D_D2_j2_k8[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k9_eta%i", iet);
+                binsRec2D_D2_j2_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k9_eta%i",iet);
+                RecoBinning2D_D2_j2_k9[iet]= binsRec2D_D2_j2_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k9");
+                RecoBinning2D_D2_j2_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k10_eta%i", iet);
+                binsRec2D_D2_j2_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k10_eta%i",iet);
+                RecoBinning2D_D2_j2_k10[iet]= binsRec2D_D2_j2_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k10");
+                RecoBinning2D_D2_j2_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D3_j1_k1_eta%i", iet);  // Trans 1
+                binsRec2D_D3_j1_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k1_eta%i",iet);
+                RecoBinning2D_D3_j1_k1[iet]= binsRec2D_D3_j1_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k1");
+                RecoBinning2D_D3_j1_k1[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k2_eta%i", iet);
+                binsRec2D_D3_j1_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k2_eta%i",iet);
+                RecoBinning2D_D3_j1_k2[iet]= binsRec2D_D3_j1_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k2");
+                RecoBinning2D_D3_j1_k2[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k3_eta%i", iet);
+                binsRec2D_D3_j1_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k3_eta%i",iet);
+                RecoBinning2D_D3_j1_k3[iet]= binsRec2D_D3_j1_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k3");
+                RecoBinning2D_D3_j1_k3[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k4_eta%i", iet);
+                binsRec2D_D3_j1_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k4_eta%i",iet);
+                RecoBinning2D_D3_j1_k4[iet]= binsRec2D_D3_j1_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k4");
+                RecoBinning2D_D3_j1_k4[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k5_eta%i", iet);
+                binsRec2D_D3_j1_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k5_eta%i",iet);
+                RecoBinning2D_D3_j1_k5[iet]= binsRec2D_D3_j1_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k5");
+                RecoBinning2D_D3_j1_k5[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k6_eta%i", iet);
+                binsRec2D_D3_j1_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k6_eta%i",iet);
+                RecoBinning2D_D3_j1_k6[iet]= binsRec2D_D3_j1_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k6");
+                RecoBinning2D_D3_j1_k6[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k7_eta%i", iet);
+                binsRec2D_D3_j1_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k7_eta%i",iet);
+                RecoBinning2D_D3_j1_k7[iet]= binsRec2D_D3_j1_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k7");
+                RecoBinning2D_D3_j1_k7[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k8_eta%i", iet);
+                binsRec2D_D3_j1_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k8_eta%i",iet);
+                RecoBinning2D_D3_j1_k8[iet]= binsRec2D_D3_j1_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k8");
+                RecoBinning2D_D3_j1_k8[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k9_eta%i", iet);
+                binsRec2D_D3_j1_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k9_eta%i",iet);
+                RecoBinning2D_D3_j1_k9[iet]= binsRec2D_D3_j1_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k9");
+                RecoBinning2D_D3_j1_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j1_k10_eta%i", iet);
+                binsRec2D_D3_j1_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k10_eta%i",iet);
+                RecoBinning2D_D3_j1_k10[iet]= binsRec2D_D3_j1_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k10");
+                RecoBinning2D_D3_j1_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D3_j2_k1_eta%i", iet);   // Trans 2
+                binsRec2D_D3_j2_k1[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k1_eta%i",iet);
+                RecoBinning2D_D3_j2_k1[iet]= binsRec2D_D3_j2_k1[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k1");
+                RecoBinning2D_D3_j2_k1[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k2_eta%i", iet);
+                binsRec2D_D3_j2_k2[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k2_eta%i",iet);
+                RecoBinning2D_D3_j2_k2[iet]= binsRec2D_D3_j2_k2[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k2");
+                RecoBinning2D_D3_j2_k2[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k3_eta%i", iet);
+                binsRec2D_D3_j2_k3[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k3_eta%i",iet);
+                RecoBinning2D_D3_j2_k3[iet]= binsRec2D_D3_j2_k3[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k3");
+                RecoBinning2D_D3_j2_k3[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k4_eta%i", iet);
+                binsRec2D_D3_j2_k4[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k4_eta%i",iet);
+                RecoBinning2D_D3_j2_k4[iet]= binsRec2D_D3_j2_k4[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k4");
+                RecoBinning2D_D3_j2_k4[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k5_eta%i", iet);
+                binsRec2D_D3_j2_k5[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k5_eta%i",iet);
+                RecoBinning2D_D3_j2_k5[iet]= binsRec2D_D3_j2_k5[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k5");
+                RecoBinning2D_D3_j2_k5[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k6_eta%i", iet);
+                binsRec2D_D3_j2_k6[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k6_eta%i",iet);
+                RecoBinning2D_D3_j2_k6[iet]= binsRec2D_D3_j2_k6[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k6");
+                RecoBinning2D_D3_j2_k6[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k7_eta%i", iet);
+                binsRec2D_D3_j2_k7[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k7_eta%i",iet);
+                RecoBinning2D_D3_j2_k7[iet]= binsRec2D_D3_j2_k7[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k7");
+                RecoBinning2D_D3_j2_k7[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k8_eta%i", iet);
+                binsRec2D_D3_j2_k8[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k8_eta%i",iet);
+                RecoBinning2D_D3_j2_k8[iet]= binsRec2D_D3_j2_k8[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k8");
+                RecoBinning2D_D3_j2_k8[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k9_eta%i", iet);
+                binsRec2D_D3_j2_k9[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k9_eta%i",iet);
+                RecoBinning2D_D3_j2_k9[iet]= binsRec2D_D3_j2_k9[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k9");
+                RecoBinning2D_D3_j2_k9[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k10_eta%i", iet);
+                binsRec2D_D3_j2_k10[iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k10_eta%i",iet);
+                RecoBinning2D_D3_j2_k10[iet]= binsRec2D_D3_j2_k10[iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k10");
+                RecoBinning2D_D3_j2_k10[iet]->AddAxis(Axisname,20,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+
+		// Gen
+                sprintf(GenBinName, "Generator2d_D1_j1_k1_eta%i", iet);    // default 1
+                binsGen2D_D1_j1_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k1_eta%i",iet);
+                GenBinning2D_D1_j1_k1[iet]= binsGen2D_D1_j1_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k1");
+                GenBinning2D_D1_j1_k1[iet]->AddAxis(Axisname,20,-8.0,8.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k2_eta%i", iet);   
+                binsGen2D_D1_j1_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k2_eta%i",iet);
+                GenBinning2D_D1_j1_k2[iet]= binsGen2D_D1_j1_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k2");
+                GenBinning2D_D1_j1_k2[iet]->AddAxis(Axisname,20,-5.0,5.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k3_eta%i", iet);    
+                binsGen2D_D1_j1_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k3_eta%i",iet);
+                GenBinning2D_D1_j1_k3[iet]= binsGen2D_D1_j1_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k3");
+                GenBinning2D_D1_j1_k3[iet]->AddAxis(Axisname,20,-4.0,4.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k4_eta%i", iet);
+                binsGen2D_D1_j1_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k4_eta%i",iet);
+                GenBinning2D_D1_j1_k4[iet]= binsGen2D_D1_j1_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k4");
+                GenBinning2D_D1_j1_k4[iet]->AddAxis(Axisname,15,-3.0,3.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k5_eta%i", iet);
+                binsGen2D_D1_j1_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k5_eta%i",iet);
+                GenBinning2D_D1_j1_k5[iet]= binsGen2D_D1_j1_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k5");
+                GenBinning2D_D1_j1_k5[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k6_eta%i", iet);
+                binsGen2D_D1_j1_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k6_eta%i",iet);
+                GenBinning2D_D1_j1_k6[iet]= binsGen2D_D1_j1_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k6");
+                GenBinning2D_D1_j1_k6[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k7_eta%i", iet);
+                binsGen2D_D1_j1_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k7_eta%i",iet);
+                GenBinning2D_D1_j1_k7[iet]= binsGen2D_D1_j1_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k7");
+                GenBinning2D_D1_j1_k7[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k8_eta%i", iet);
+                binsGen2D_D1_j1_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k8_eta%i",iet);
+                GenBinning2D_D1_j1_k8[iet]= binsGen2D_D1_j1_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k8");
+                GenBinning2D_D1_j1_k8[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+       		sprintf(GenBinName, "Generator2d_D1_j1_k9_eta%i", iet);
+                binsGen2D_D1_j1_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k9_eta%i",iet);
+                GenBinning2D_D1_j1_k9[iet]= binsGen2D_D1_j1_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k9");
+                GenBinning2D_D1_j1_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k10_eta%i", iet);
+                binsGen2D_D1_j1_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k10_eta%i",iet);
+                GenBinning2D_D1_j1_k10[iet]= binsGen2D_D1_j1_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k10");
+                GenBinning2D_D1_j1_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(GenBinName, "Generator2d_D1_j2_k1_eta%i", iet);    // default 1
+                binsGen2D_D1_j2_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k1_eta%i",iet);
+                GenBinning2D_D1_j2_k1[iet]= binsGen2D_D1_j2_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k1");
+                GenBinning2D_D1_j2_k1[iet]->AddAxis(Axisname,20,-8.0,8.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k2_eta%i", iet);
+                binsGen2D_D1_j2_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k2_eta%i",iet);
+                GenBinning2D_D1_j2_k2[iet]= binsGen2D_D1_j2_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k2");
+                GenBinning2D_D1_j2_k2[iet]->AddAxis(Axisname,20,-5.0,5.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k3_eta%i", iet);
+                binsGen2D_D1_j2_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k3_eta%i",iet);
+                GenBinning2D_D1_j2_k3[iet]= binsGen2D_D1_j2_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k3");
+                GenBinning2D_D1_j2_k3[iet]->AddAxis(Axisname,20,-4.0,4.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k4_eta%i", iet);
+                binsGen2D_D1_j2_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k4_eta%i",iet);
+                GenBinning2D_D1_j2_k4[iet]= binsGen2D_D1_j2_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k4");
+                GenBinning2D_D1_j2_k4[iet]->AddAxis(Axisname,15,-3.0,3.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k5_eta%i", iet);
+                binsGen2D_D1_j2_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k5_eta%i",iet);
+                GenBinning2D_D1_j2_k5[iet]= binsGen2D_D1_j2_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k5");
+                GenBinning2D_D1_j2_k5[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k6_eta%i", iet);
+                binsGen2D_D1_j2_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k6_eta%i",iet);
+                GenBinning2D_D1_j2_k6[iet]= binsGen2D_D1_j2_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k6");
+                GenBinning2D_D1_j2_k6[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k7_eta%i", iet);
+                binsGen2D_D1_j2_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k7_eta%i",iet);
+                GenBinning2D_D1_j2_k7[iet]= binsGen2D_D1_j2_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k7");
+                GenBinning2D_D1_j2_k7[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k8_eta%i", iet);
+                binsGen2D_D1_j2_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k8_eta%i",iet);
+                GenBinning2D_D1_j2_k8[iet]= binsGen2D_D1_j2_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k8");
+                GenBinning2D_D1_j2_k8[iet]->AddAxis(Axisname,10,-2.0,2.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k9_eta%i", iet);
+                binsGen2D_D1_j2_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k9_eta%i",iet);
+                GenBinning2D_D1_j2_k9[iet]= binsGen2D_D1_j2_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k9");
+                GenBinning2D_D1_j2_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k10_eta%i", iet);
+                binsGen2D_D1_j2_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k10_eta%i",iet);
+                GenBinning2D_D1_j2_k10[iet]= binsGen2D_D1_j2_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k10");
+                GenBinning2D_D1_j2_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+		sprintf(Axisname, "ht");
+		GenBinning2D_D1_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+	        sprintf(GenBinName, "Generator2d_D2_j1_k1_eta%i", iet);    // Long 1
+                binsGen2D_D2_j1_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k1_eta%i",iet);
+                GenBinning2D_D2_j1_k1[iet]= binsGen2D_D2_j1_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k1");
+                GenBinning2D_D2_j1_k1[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k2_eta%i", iet);
+                binsGen2D_D2_j1_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k2_eta%i",iet);
+                GenBinning2D_D2_j1_k2[iet]= binsGen2D_D2_j1_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k2");
+                GenBinning2D_D2_j1_k2[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k3_eta%i", iet);
+                binsGen2D_D2_j1_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k3_eta%i",iet);
+                GenBinning2D_D2_j1_k3[iet]= binsGen2D_D2_j1_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k3");
+                GenBinning2D_D2_j1_k3[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k4_eta%i", iet);
+                binsGen2D_D2_j1_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k4_eta%i",iet);
+                GenBinning2D_D2_j1_k4[iet]= binsGen2D_D2_j1_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k4");
+                GenBinning2D_D2_j1_k4[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k5_eta%i", iet);
+                binsGen2D_D2_j1_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k5_eta%i",iet);
+                GenBinning2D_D2_j1_k5[iet]= binsGen2D_D2_j1_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k5");
+                GenBinning2D_D2_j1_k5[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k6_eta%i", iet);
+                binsGen2D_D2_j1_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k6_eta%i",iet);
+                GenBinning2D_D2_j1_k6[iet]= binsGen2D_D2_j1_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k6");
+                GenBinning2D_D2_j1_k6[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k7_eta%i", iet);
+                binsGen2D_D2_j1_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k7_eta%i",iet);
+                GenBinning2D_D2_j1_k7[iet]= binsGen2D_D2_j1_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k7");
+                GenBinning2D_D2_j1_k7[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k8_eta%i", iet);
+                binsGen2D_D2_j1_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k8_eta%i",iet);
+                GenBinning2D_D2_j1_k8[iet]= binsGen2D_D2_j1_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k8");
+                GenBinning2D_D2_j1_k8[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k9_eta%i", iet);
+                binsGen2D_D2_j1_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k9_eta%i",iet);
+                GenBinning2D_D2_j1_k9[iet]= binsGen2D_D2_j1_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k9");
+                GenBinning2D_D2_j1_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j1_k10_eta%i", iet);
+                binsGen2D_D2_j1_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k10_eta%i",iet);
+                GenBinning2D_D2_j1_k10[iet]= binsGen2D_D2_j1_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k10");
+                GenBinning2D_D2_j1_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(GenBinName, "Generator2d_D2_j2_k1_eta%i", iet);    // Long 2
+                binsGen2D_D2_j2_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k1_eta%i",iet);
+                GenBinning2D_D2_j2_k1[iet]= binsGen2D_D2_j2_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k1");
+                GenBinning2D_D2_j2_k1[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k2_eta%i", iet);
+                binsGen2D_D2_j2_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k2_eta%i",iet);
+                GenBinning2D_D2_j2_k2[iet]= binsGen2D_D2_j2_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k2");
+                GenBinning2D_D2_j2_k2[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k3_eta%i", iet);
+                binsGen2D_D2_j2_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k3_eta%i",iet);
+                GenBinning2D_D2_j2_k3[iet]= binsGen2D_D2_j2_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k3");
+                GenBinning2D_D2_j2_k3[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k4_eta%i", iet);
+                binsGen2D_D2_j2_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k4_eta%i",iet);
+                GenBinning2D_D2_j2_k4[iet]= binsGen2D_D2_j2_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k4");
+                GenBinning2D_D2_j2_k4[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k5_eta%i", iet);
+                binsGen2D_D2_j2_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k5_eta%i",iet);
+                GenBinning2D_D2_j2_k5[iet]= binsGen2D_D2_j2_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k5");
+                GenBinning2D_D2_j2_k5[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k6_eta%i", iet);
+                binsGen2D_D2_j2_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k6_eta%i",iet);
+                GenBinning2D_D2_j2_k6[iet]= binsGen2D_D2_j2_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k6");
+                GenBinning2D_D2_j2_k6[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k7_eta%i", iet);
+                binsGen2D_D2_j2_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k7_eta%i",iet);
+                GenBinning2D_D2_j2_k7[iet]= binsGen2D_D2_j2_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k7");
+                GenBinning2D_D2_j2_k7[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k8_eta%i", iet);
+                binsGen2D_D2_j2_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k8_eta%i",iet);
+                GenBinning2D_D2_j2_k8[iet]= binsGen2D_D2_j2_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k8");
+                GenBinning2D_D2_j2_k8[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k9_eta%i", iet);
+                binsGen2D_D2_j2_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k9_eta%i",iet);
+                GenBinning2D_D2_j2_k9[iet]= binsGen2D_D2_j2_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k9");
+                GenBinning2D_D2_j2_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k10_eta%i", iet);
+                binsGen2D_D2_j2_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k10_eta%i",iet);
+                GenBinning2D_D2_j2_k10[iet]= binsGen2D_D2_j2_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k10");
+                GenBinning2D_D2_j2_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+	
+
+		sprintf(GenBinName, "Generator2d_D3_j1_k1_eta%i", iet);    // Trans 1
+                binsGen2D_D3_j1_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k1_eta%i",iet);
+                GenBinning2D_D3_j1_k1[iet]= binsGen2D_D3_j1_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k1");
+                GenBinning2D_D3_j1_k1[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k2_eta%i", iet);
+                binsGen2D_D3_j1_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k2_eta%i",iet);
+                GenBinning2D_D3_j1_k2[iet]= binsGen2D_D3_j1_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k2");
+                GenBinning2D_D3_j1_k2[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k3_eta%i", iet);
+                binsGen2D_D3_j1_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k3_eta%i",iet);
+                GenBinning2D_D3_j1_k3[iet]= binsGen2D_D3_j1_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k3");
+                GenBinning2D_D3_j1_k3[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k4_eta%i", iet);
+                binsGen2D_D3_j1_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k4_eta%i",iet);
+                GenBinning2D_D3_j1_k4[iet]= binsGen2D_D3_j1_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k4");
+                GenBinning2D_D3_j1_k4[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k5_eta%i", iet);
+                binsGen2D_D3_j1_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k5_eta%i",iet);
+                GenBinning2D_D3_j1_k5[iet]= binsGen2D_D3_j1_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k5");
+                GenBinning2D_D3_j1_k5[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k6_eta%i", iet);
+                binsGen2D_D3_j1_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k6_eta%i",iet);
+                GenBinning2D_D3_j1_k6[iet]= binsGen2D_D3_j1_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k6");
+                GenBinning2D_D3_j1_k6[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k7_eta%i", iet);
+                binsGen2D_D3_j1_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k7_eta%i",iet);
+                GenBinning2D_D3_j1_k7[iet]= binsGen2D_D3_j1_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k7");
+                GenBinning2D_D3_j1_k7[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k8_eta%i", iet);
+                binsGen2D_D3_j1_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k8_eta%i",iet);
+                GenBinning2D_D3_j1_k8[iet]= binsGen2D_D3_j1_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k8");
+                GenBinning2D_D3_j1_k8[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k9_eta%i", iet);
+                binsGen2D_D3_j1_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k9_eta%i",iet);
+                GenBinning2D_D3_j1_k9[iet]= binsGen2D_D3_j1_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k9");
+                GenBinning2D_D3_j1_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j1_k10_eta%i", iet);
+                binsGen2D_D3_j1_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k10_eta%i",iet);
+                GenBinning2D_D3_j1_k10[iet]= binsGen2D_D3_j1_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k10");
+                GenBinning2D_D3_j1_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j1_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(GenBinName, "Generator2d_D3_j2_k1_eta%i", iet);    // Trans 2
+                binsGen2D_D3_j2_k1[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k1_eta%i",iet);
+                GenBinning2D_D3_j2_k1[iet]= binsGen2D_D3_j2_k1[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k1");
+                GenBinning2D_D3_j2_k1[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k1[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k2_eta%i", iet);
+                binsGen2D_D3_j2_k2[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k2_eta%i",iet);
+                GenBinning2D_D3_j2_k2[iet]= binsGen2D_D3_j2_k2[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k2");
+                GenBinning2D_D3_j2_k2[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k2[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k3_eta%i", iet);
+                binsGen2D_D3_j2_k3[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k3_eta%i",iet);
+                GenBinning2D_D3_j2_k3[iet]= binsGen2D_D3_j2_k3[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k3");
+                GenBinning2D_D3_j2_k3[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k3[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k4_eta%i", iet);
+                binsGen2D_D3_j2_k4[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k4_eta%i",iet);
+                GenBinning2D_D3_j2_k4[iet]= binsGen2D_D3_j2_k4[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k4");
+                GenBinning2D_D3_j2_k4[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k4[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k5_eta%i", iet);
+                binsGen2D_D3_j2_k5[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k5_eta%i",iet);
+                GenBinning2D_D3_j2_k5[iet]= binsGen2D_D3_j2_k5[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k5");
+                GenBinning2D_D3_j2_k5[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                GenBinning2D_D3_j2_k5[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k6_eta%i", iet);
+                binsGen2D_D3_j2_k6[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k6_eta%i",iet);
+                GenBinning2D_D3_j2_k6[iet]= binsGen2D_D3_j2_k6[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k6");
+                GenBinning2D_D3_j2_k6[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k6[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k7_eta%i", iet);
+                binsGen2D_D3_j2_k7[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k7_eta%i",iet);
+                GenBinning2D_D3_j2_k7[iet]= binsGen2D_D3_j2_k7[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k7");
+                GenBinning2D_D3_j2_k7[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k7[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k8_eta%i", iet);
+                binsGen2D_D3_j2_k8[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k8_eta%i",iet);
+                GenBinning2D_D3_j2_k8[iet]= binsGen2D_D3_j2_k8[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k8");
+                GenBinning2D_D3_j2_k8[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k8[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k9_eta%i", iet);
+                binsGen2D_D3_j2_k9[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k9_eta%i",iet);
+                GenBinning2D_D3_j2_k9[iet]= binsGen2D_D3_j2_k9[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k9");
+                GenBinning2D_D3_j2_k9[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k9[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D3_j2_k10_eta%i", iet);
+                binsGen2D_D3_j2_k10[iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k10_eta%i",iet);
+                GenBinning2D_D3_j2_k10[iet]= binsGen2D_D3_j2_k10[iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k10");
+                GenBinning2D_D3_j2_k10[iet]->AddAxis(Axisname,10,-1.0,1.0, false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3_j2_k10[iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		}
+*/
+for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
+	for (int ik=0; ik<10; ik++){
+                sprintf(RecoBinName, "Detector2d_D1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_D1J1[ik][iet]= binsRec2D_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j1_k%i", ik);
+                RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D1_j2_k%i_eta%i", ik, iet);
+                binsRec2D_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D1_j2_k%i_eta%i",ik, iet);
+                RecoBinning2D_D1J2[ik][iet]= binsRec2D_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D1_j2_k%i", ik);
+                RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		
+		sprintf(RecoBinName, "Detector2d_D2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_D2J1[ik][iet]= binsRec2D_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j1_k%i", ik);
+                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D2_j2_k%i_eta%i", ik, iet);
+                binsRec2D_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D2_j2_k%i_eta%i",ik, iet);
+                RecoBinning2D_D2J2[ik][iet]= binsRec2D_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D2_j2_k%i", ik);
+                RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(RecoBinName, "Detector2d_D3_j1_k%i_eta%i", ik, iet);
+                binsRec2D_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_D3J1[ik][iet]= binsRec2D_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j1_k%i", ik);
+                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(RecoBinName, "Detector2d_D3_j2_k%i_eta%i", ik, iet);
+                binsRec2D_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_D3_j2_k%i_eta%i",ik, iet);
+                RecoBinning2D_D3J2[ik][iet]= binsRec2D_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "D3_j2_k%i", ik);
+                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+
+		sprintf(GenBinName, "Generator2d_D1_j1_k%i_eta%i", ik, iet);
+                binsGen2D_D1J1[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j1_k%i_eta%i",ik, iet);
+                GenBinning2D_D1J1[ik][iet]= binsGen2D_D1J1[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j1_k%i", ik);
+                GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D1_j2_k%i_eta%i", ik, iet);
+                binsGen2D_D1J2[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D1_j2_k%i_eta%i",ik, iet);
+                GenBinning2D_D1J2[ik][iet]= binsGen2D_D1J2[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D1_j2_k%i", ik);
+                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D2_j1_k%i_eta%i", ik, iet);
+                binsGen2D_D2J1[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j1_k%i_eta%i",ik, iet);
+                GenBinning2D_D2J1[ik][iet]= binsGen2D_D2J1[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j1_k%i", ik);
+                GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+                sprintf(GenBinName, "Generator2d_D2_j2_k%i_eta%i", ik, iet);
+                binsGen2D_D2J2[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D2_j2_k%i_eta%i",ik, iet);
+                GenBinning2D_D2J2[ik][iet]= binsGen2D_D2J2[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D2_j2_k%i", ik);
+                GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+
+		sprintf(GenBinName, "Generator2d_D3_j1_k%i_eta%i", ik, iet);
+                binsGen2D_D3J1[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j1_k%i_eta%i",ik, iet);
+                GenBinning2D_D3J1[ik][iet]= binsGen2D_D3J1[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j1_k%i", ik);
+                GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+        
+                sprintf(GenBinName, "Generator2d_D3_j2_k%i_eta%i", ik, iet);
+                binsGen2D_D3J2[ik][iet] = new TUnfoldBinning(GenBinName);
+                sprintf(GenBinName, "Genbin2d_D3_j2_k%i_eta%i",ik, iet);
+                GenBinning2D_D3J2[ik][iet]= binsGen2D_D3J2[ik][iet]->AddBinning(GenBinName);
+                sprintf(Axisname, "D3_j2_k%i", ik);
+                GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
+                sprintf(Axisname, "ht");
+                GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		}
+}
+
+
+for (int iet=0; iet<njetetamn; iet++) {
+	for (int ik=0; ik<10; ik++){
+                if (isReconstruct) {
+			sprintf(name, "dd_reco_D1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D1J1[ik][iet] = binsRec2D_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_2D_D1J1[ik][iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D1J2[ik][iet] = binsRec2D_D1J2[ik][iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1J2[ik][iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D2J1[ik][iet] = binsRec2D_D2J1[ik][iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D2J2[ik][iet] = binsRec2D_D2J2[ik][iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D2J2[ik][iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D3_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D3J1[ik][iet] = binsRec2D_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_2D_D3J2[ik][iet] = binsRec2D_D3J2[ik][iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D3J2[ik][iet]->Sumw2();
+	
+			
+	     		sprintf(name, "dd_recofake_D1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D1J1[ik][iet] = binsRec2D_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recofake_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_recofake_D1_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D1J2[ik][iet] = binsRec2D_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recofake_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_recofake_D2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D2J1[ik][iet] = binsRec2D_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recofake_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_recofake_D2_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D2J2[ik][iet] = binsRec2D_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recofake_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_recofake_D3_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D3J1[ik][iet] = binsRec2D_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recofake_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_recofake_D3_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco Fake Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recofake_2D_D3J2[ik][iet] = binsRec2D_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recofake_2D_D3J2[ik][iet]->Sumw2();
+
+		
+			}
+
+			sprintf(name, "dd_gen_D1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D1J1[ik][iet] = binsGen2D_D1J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D1J2[ik][iet] = binsGen2D_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D2J1[ik][iet] = binsGen2D_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D2J2[ik][iet] = binsGen2D_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D3J1[ik][iet] = binsGen2D_D3J1[ik][iet]->CreateHistogram(name,false,0,title); 
+                        h_genvar_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genvar_2D_D3J2[ik][iet] = binsGen2D_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3J2[ik][iet]->Sumw2();
+
+			sprintf(name, "dd_genmiss_D1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D1J1[ik][iet] = binsGen2D_D1J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_genmiss_D1_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D1J2[ik][iet] = binsGen2D_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_genmiss_D2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D2J1[ik][iet] = binsGen2D_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_genmiss_D2_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D2J2[ik][iet] = binsGen2D_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_genmiss_D3_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D3J1[ik][iet] = binsGen2D_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_genmiss_D3_j2_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Gen Miss Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_genmiss_2D_D3J2[ik][iet] = binsGen2D_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_genmiss_2D_D3J2[ik][iet]->Sumw2();
+
+		
+			if (isReconstruct) {
+              			sprintf(name, "dd_corr_D1_j1_k%i_eta%i", ik , iet);
+              			sprintf(title, "Gen_Reco Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+              			RM_2D_D1J1[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D1J1[ik][iet], binsGen2D_D1J1[ik][iet], name ,0,0, title);
+              			RM_2D_D1J1[ik][iet]->Sumw2();
+
+				sprintf(name, "dd_corr_D1_j2_k%i_eta%i", ik , iet);
+                                sprintf(title, "Gen_Reco Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                                RM_2D_D1J2[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D1J2[ik][iet], binsGen2D_D1J2[ik][iet], name ,0,0, title);
+                                RM_2D_D1J2[ik][iet]->Sumw2();
+
+				sprintf(name, "dd_corr_D2_j1_k%i_eta%i", ik , iet);
+                                sprintf(title, "Gen_Reco Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                                RM_2D_D2J1[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D2J1[ik][iet], binsGen2D_D2J1[ik][iet], name ,0,0, title);
+                                RM_2D_D2J1[ik][iet]->Sumw2();
+
+                                sprintf(name, "dd_corr_D2_j2_k%i_eta%i", ik , iet);
+                                sprintf(title, "Gen_Reco Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                                RM_2D_D2J2[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D2J2[ik][iet], binsGen2D_D2J2[ik][iet], name ,0,0, title);
+                                RM_2D_D2J2[ik][iet]->Sumw2();
+
+				sprintf(name, "dd_corr_D3_j1_k%i_eta%i", ik , iet);
+                                sprintf(title, "Gen_Reco Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                                RM_2D_D3J1[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D3J1[ik][iet], binsGen2D_D3J1[ik][iet], name ,0,0, title);
+                                RM_2D_D3J1[ik][iet]->Sumw2();
+
+                                sprintf(name, "dd_corr_D3_j2_k%i_eta%i", ik , iet);
+                                sprintf(title, "Gen_Reco Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                                RM_2D_D3J2[ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D_D3J2[ik][iet], binsGen2D_D3J2[ik][iet], name ,0,0, title);
+                                RM_2D_D3J2[ik][iet]->Sumw2();
+
+
+
+
+              }
+	}
+}
+/*
+// Test 2D Unfolding scheme for Jet Charge
+	for (int iet=0; iet<njetetamn; iet++) {
+        	if (isReconstruct) {
+              		sprintf(name, "dd_reco_D1_j1_k1_eta%i", iet);
+        	if (isReconstruct) {
+              		sprintf(name, "dd_reco_D1_j1_k1_eta%i", iet);
+              		sprintf(title, "2D Reco Q_{1}^{k=0.1} %g", etarange[iet]);
+              		h_recovar_2D_D1_j1_k1[iet] = binsRec2D_D1_j1_k1[iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+              		h_recovar_2D_D1_j1_k1[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k2[iet] = binsRec2D_D1_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j1_k2[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k3[iet] = binsRec2D_D1_j1_k3[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k3[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k4[iet] = binsRec2D_D1_j1_k4[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k4[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k5[iet] = binsRec2D_D1_j1_k5[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k5[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k6[iet] = binsRec2D_D1_j1_k6[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k6[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k7[iet] = binsRec2D_D1_j1_k7[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k7[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k8[iet] = binsRec2D_D1_j1_k8[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k8[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k9[iet] = binsRec2D_D1_j1_k9[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k9[iet]->Sumw2();
+
+			sprintf(name, "dd_reco_D1_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D1_j1_k10[iet] = binsRec2D_D1_j1_k10[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D1_j1_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_reco_D1_j2_k1_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.1} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k1[iet] = binsRec2D_D1_j2_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k2[iet] = binsRec2D_D1_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k3[iet] = binsRec2D_D1_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k4[iet] = binsRec2D_D1_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k5[iet] = binsRec2D_D1_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k6[iet] = binsRec2D_D1_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k7[iet] = binsRec2D_D1_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k8[iet] = binsRec2D_D1_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k9[iet] = binsRec2D_D1_j2_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D1_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D1_j2_k10[iet] = binsRec2D_D1_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D1_j2_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_reco_D2_j1_k1_eta%i", iet);    // Longitudinal
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.1} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k1[iet] = binsRec2D_D2_j1_k1[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D2_j1_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k2[iet] = binsRec2D_D2_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k3[iet] = binsRec2D_D2_j1_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k4[iet] = binsRec2D_D2_j1_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k5[iet] = binsRec2D_D2_j1_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k6[iet] = binsRec2D_D2_j1_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k7[iet] = binsRec2D_D2_j1_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k8[iet] = binsRec2D_D2_j1_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k9[iet] = binsRec2D_D2_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1L}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D2_j1_k10[iet] = binsRec2D_D2_j1_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j1_k10[iet]->Sumw2();
+
+
+                        sprintf(name, "dd_reco_D2_j2_k1_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.1} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k1[iet] = binsRec2D_D2_j2_k1[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D2_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k2[iet] = binsRec2D_D2_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k3[iet] = binsRec2D_D2_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k4[iet] = binsRec2D_D2_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k5[iet] = binsRec2D_D2_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k6[iet] = binsRec2D_D2_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k7[iet] = binsRec2D_D2_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k8[iet] = binsRec2D_D2_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k9[iet] = binsRec2D_D2_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D2_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2L}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D2_j2_k10[iet] = binsRec2D_D2_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D2_j2_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_reco_D3_j1_k1_eta%i", iet);    // Transverse
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.1} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k1[iet] = binsRec2D_D3_j1_k1[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D3_j1_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k2[iet] = binsRec2D_D3_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k3[iet] = binsRec2D_D3_j1_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k4[iet] = binsRec2D_D3_j1_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k5[iet] = binsRec2D_D3_j1_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k6[iet] = binsRec2D_D3_j1_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k7[iet] = binsRec2D_D3_j1_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k8[iet] = binsRec2D_D3_j1_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k9[iet] = binsRec2D_D3_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{1T}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D3_j1_k10[iet] = binsRec2D_D3_j1_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j1_k10[iet]->Sumw2();
+
+
+                        sprintf(name, "dd_reco_D3_j2_k1_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.1} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k1[iet] = binsRec2D_D3_j2_k1[iet]->CreateHistogram(name,false,0,title); 
+                        h_recovar_2D_D3_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.2} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k2[iet] = binsRec2D_D3_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.3} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k3[iet] = binsRec2D_D3_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.4} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k4[iet] = binsRec2D_D3_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.5} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k5[iet] = binsRec2D_D3_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.6} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k6[iet] = binsRec2D_D3_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.7} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k7[iet] = binsRec2D_D3_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.8} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k8[iet] = binsRec2D_D3_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=0.9} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k9[iet] = binsRec2D_D3_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_D3_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Reco Q_{2T}^{k=1.0} %g", etarange[iet]);
+                        h_recovar_2D_D3_j2_k10[iet] = binsRec2D_D3_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_2D_D3_j2_k10[iet]->Sumw2();
+
+
+			}//if (isReconstruct) {
+
+			sprintf(name, "dd_gen_D1_j1_k1_eta%i", iet);    //Default 1
+                        sprintf(title, "2D Gen Q_{1}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k1[iet] = binsGen2D_D1_j1_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k2[iet] = binsGen2D_D1_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k3[iet] = binsGen2D_D1_j1_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k4[iet] = binsGen2D_D1_j1_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k5[iet] = binsGen2D_D1_j1_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k6[iet] = binsGen2D_D1_j1_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k7[iet] = binsGen2D_D1_j1_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k8[iet] = binsGen2D_D1_j1_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k9_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=0.9} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k9[iet] = binsGen2D_D1_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D1_j1_k10[iet] = binsGen2D_D1_j1_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j1_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_gen_D1_j2_k1_eta%i", iet);    //Default 2
+                        sprintf(title, "2D Gen Q_{2}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k1[iet] = binsGen2D_D1_j2_k1[iet]->CreateHistogram(name,false,0,title); 
+                        h_genvar_2D_D1_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k2[iet] = binsGen2D_D1_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k3[iet] = binsGen2D_D1_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k4[iet] = binsGen2D_D1_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k5[iet] = binsGen2D_D1_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k6[iet] = binsGen2D_D1_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k7[iet] = binsGen2D_D1_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k8[iet] = binsGen2D_D1_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=0.9} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k9[iet] = binsGen2D_D1_j2_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D1_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D1_j2_k10[iet] = binsGen2D_D1_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D1_j2_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_gen_D2_j1_k1_eta%i", iet);    //Long 1
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k1[iet] = binsGen2D_D2_j1_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k2[iet] = binsGen2D_D2_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k3[iet] = binsGen2D_D2_j1_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k4[iet] = binsGen2D_D2_j1_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k5[iet] = binsGen2D_D2_j1_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k6[iet] = binsGen2D_D2_j1_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k7[iet] = binsGen2D_D2_j1_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k8[iet] = binsGen2D_D2_j1_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k9_eta%i", iet);
+			sprintf(title, "2D Gen Q_{1L}^{k=0.9} %g", etarange[iet]);
+			h_genvar_2D_D2_j1_k9[iet] = binsGen2D_D2_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1L}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D2_j1_k10[iet] = binsGen2D_D2_j1_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j1_k10[iet]->Sumw2();
+	
+
+			sprintf(name, "dd_gen_D2_j2_k1_eta%i", iet);    //Long 2
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k1[iet] = binsGen2D_D2_j2_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k2[iet] = binsGen2D_D2_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k3[iet] = binsGen2D_D2_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k4[iet] = binsGen2D_D2_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k5[iet] = binsGen2D_D2_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k6[iet] = binsGen2D_D2_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k7[iet] = binsGen2D_D2_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k8[iet] = binsGen2D_D2_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=0.9} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k9[iet] = binsGen2D_D2_j2_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D2_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2L}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D2_j2_k10[iet] = binsGen2D_D2_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D2_j2_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_gen_D3_j1_k1_eta%i", iet);    //Trans 1
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k1[iet] = binsGen2D_D3_j1_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k2[iet] = binsGen2D_D3_j1_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k3[iet] = binsGen2D_D3_j1_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k4[iet] = binsGen2D_D3_j1_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k5[iet] = binsGen2D_D3_j1_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k6[iet] = binsGen2D_D3_j1_k6[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k6[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k7[iet] = binsGen2D_D3_j1_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k8[iet] = binsGen2D_D3_j1_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k9_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=0.9} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k9[iet] = binsGen2D_D3_j1_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j1_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{1T}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D3_j1_k10[iet] = binsGen2D_D3_j1_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j1_k10[iet]->Sumw2();
+
+
+			sprintf(name, "dd_gen_D3_j2_k1_eta%i", iet);    // Trans 2
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.1} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k1[iet] = binsGen2D_D3_j2_k1[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k1[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k2_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.2} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k2[iet] = binsGen2D_D3_j2_k2[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k2[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k3_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.3} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k3[iet] = binsGen2D_D3_j2_k3[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k3[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k4_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.4} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k4[iet] = binsGen2D_D3_j2_k4[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k4[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k5_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.5} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k5[iet] = binsGen2D_D3_j2_k5[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k5[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k6_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.6} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k6[iet] = binsGen2D_D3_j2_k6[iet]->CreateHistogram(name,false,0,title);
+                        sprintf(name, "dd_gen_D3_j2_k7_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.7} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k7[iet] = binsGen2D_D3_j2_k7[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k7[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k8_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.8} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k8[iet] = binsGen2D_D3_j2_k8[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k8[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k9_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=0.9} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k9[iet] = binsGen2D_D3_j2_k9[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k9[iet]->Sumw2();
+
+                        sprintf(name, "dd_gen_D3_j2_k10_eta%i", iet);
+                        sprintf(title, "2D Gen Q_{2T}^{k=1.0} %g", etarange[iet]);
+                        h_genvar_2D_D3_j2_k10[iet] = binsGen2D_D3_j2_k10[iet]->CreateHistogram(name,false,0,title);
+                        h_genvar_2D_D3_j2_k10[iet]->Sumw2();
+	
+		}
+*/
 //------------------------------- JET CHARGE HISTOGRAM
+for (int ipt=0; ipt<njetptmn; ipt++) {
+	for (int iet=0; iet<njetetamn; iet++) {
+		//for (int ij=1; ij<11; ij++){
+			for (int ik=0; ik<10; ik++){
+        		if (isReconstruct) {
+				sprintf(name, "reco_jc_D1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+        	        	sprintf(title, "Reco Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+				h_recojc_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);	
+				h_recojc_D1J1[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "reco_jc_D1_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_D1J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "reco_jc_D2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_D2_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_D2J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "reco_jc_D3_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_D3_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_D3J2[ik][ipt][iet]->Sumw2();
+
+				}
+
+				sprintf(name, "gen_jc_D1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                                h_genjc_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "gen_jc_D1_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                                h_genjc_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "gen_jc_D2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genjc_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "gen_jc_D2_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genjc_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "gen_jc_D3_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genjc_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "gen_jc_D3_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_genjc_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genjc_D3J2[ik][ipt][iet]->Sumw2();
+
+			}	
+		}
+	}
+//}
+
+/*
+
+
 for (int ipt=0; ipt<njetptmn; ipt++) {
       for (int iet=0; iet<njetetamn; iet++) {
 	if (isReconstruct) {
@@ -1405,6 +4091,8 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
                 sprintf(title, "Reco Q_{leading_jet_charge_k=0.2} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
                 h_jetcharge_D1_j1_k2[ipt][iet] = fs->make<TH1F>(name, title, 40, -5.0, 5.0);
                 h_jetcharge_D1_j1_k2[ipt][iet]->Sumw2();
+
+		sprintf(name, "reco_jetcharge_D1_j1_k3_pt%i_eta%i", ipt, iet);
 
 		sprintf(name, "reco_jetcharge_D1_j1_k3_pt%i_eta%i", ipt, iet);
                 sprintf(title, "Reco Q_{leading_jet_charge_k=0.3} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
@@ -2015,14 +4703,12 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
                 h_genjetcharge_D3_j2_k9[ipt][iet] = fs->make<TH1F>(name, title, 10, -1.0, 1.0);
                 h_genjetcharge_D3_j2_k9[ipt][iet]->Sumw2();
 
-                sprintf(name, "gen_jetcharge_D3_j2_k10_pt%i_eta%i", ipt, iet);
-                sprintf(title, "Gen Q_{sub-leading_jet_charge_transverse_k=1.0} %i %g", int(leadingPtThreshold[ipt]), etarange[iet]);
                 h_genjetcharge_D3_j2_k10[ipt][iet] = fs->make<TH1F>(name, title, 10, -1.0, 1.0);
                 h_genjetcharge_D3_j2_k10[ipt][iet]->Sumw2();
 
 	}
 }
-		
+*/		
 //-----------------------------------------Root Histogram
   for (int ityp=0; ityp<ntype; ityp++) {
     for (int ipt=0; ipt<njetptmn; ipt++) {
@@ -2065,6 +4751,8 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
 #elif defined(JETRESO)
 	    for (int ix=1; ix<njecmx; ix++ ) {
 	      sprintf(name, "recoreso_typ_%i_pt%i_eta%i_%i_%i", ityp, ipt, iet, ij, ix);
+	      sprintf(title, "Recoreso %s %i %g %s %i", typname[ityp], int(leadingPtThreshold[ipt]), etarange[iet], vartitle[ij], ix);
+              h_recoevtvarres[ityp][ipt][iet][ij][ix] = fs->make<TH1F>(name, title, (ityp==0) ? rnbinsx0[ij] : rnbinsx1[ij] , (ityp==0) ? rbinrngs0[ij] : rbinrngs1[ij]);
 	      sprintf(title, "Recoreso %s %i %g %s %i", typname[ityp], int(leadingPtThreshold[ipt]), etarange[iet], vartitle[ij], ix);
               h_recoevtvarres[ityp][ipt][iet][ij][ix] = fs->make<TH1F>(name, title, (ityp==0) ? rnbinsx0[ij] : rnbinsx1[ij] , (ityp==0) ? rbinrngs0[ij] : rbinrngs1[ij]);
               //h_recoevtvarres[ityp][ipt][iet][ij][ix] = fs->make<TH1F>(name, title, (ityp==0) ? nbinsx0[ij] : nbinsx1[ij] , (ityp==0) ? binrngs0[ij] : binrngs1[ij]);
@@ -2118,6 +4806,115 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
  h_2ht=fs->make<TH2F>(name, title, 8, leadingPtThreshold, 8, leadingPtThreshold);
 
  // RM
+ 
+for(int ipt=0; ipt<njetptmn; ipt++){
+        for(int iet=0; iet<njetetamn; iet++){
+		for (int ik=0; ik<10; ik++){
+                	if (isReconstruct){
+				sprintf(name, "RM_jc_D1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+	                        sprintf(title, "RM Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+        	                h_RM_D1J1[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                	        h_RM_D1J1[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "RM_jc_D1_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "RM Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_RM_D1J2[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                                h_RM_D1J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "RM_jc_D2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "RM Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_RM_D2J1[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_RM_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "RM_jc_D2_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "RM Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_RM_D2J2[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_RM_D2J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "RM_jc_D3_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "RM Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_RM_D3J1[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_RM_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "RM_jc_D3_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "RM Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_RM_D3J2[ik][ipt][iet] = fs->make<TH2F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_RM_D3J2[ik][ipt][iet]->Sumw2();
+
+			}
+		}
+	}
+}
+
+
+for(int ipt=0; ipt<njetptmn; ipt++){
+	for(int iet=0; iet<njetetamn; iet++){
+		for (int ik=0; ik<10; ik++){
+        		if (isReconstruct){
+				sprintf(name, "recofake_jc_D1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+	                        sprintf(title, "Reco Fake Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+        	                h_recofake_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                	        h_recofake_D1J1[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "recofake_jc_D1_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Fake Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_recofake_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recofake_D1J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "recofake_jc_D2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Fake Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_recofake_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recofake_D2J1[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "recofake_jc_D2_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Fake Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_recofake_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recofake_D2J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "recofake_jc_D3_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Fake Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_recofake_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recofake_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "recofake_jc_D3_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco Fake Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_recofake_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recofake_D3J2[ik][ipt][iet]->Sumw2();
+
+
+				sprintf(name, "genmiss_jc_D1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Miss Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                                h_genmiss_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "genmiss_jc_D1_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Miss Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik]);
+                                h_genmiss_D1J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "genmiss_jc_D2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Miss Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genmiss_D2J1[ik][ipt][iet]->Sumw2();
+                                sprintf(title, "Gen Miss Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genmiss_D2J2[ik][ipt][iet]->Sumw2();
+
+				sprintf(name, "genmiss_jc_D3_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Miss Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genmiss_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "genmiss_jc_D3_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Gen Miss Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                h_genmiss_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
+                                h_genmiss_D3J2[ik][ipt][iet]->Sumw2();				
+				}
+			}
+		}
+	}
+
+/*
  for(int ipt=0; ipt<njetptmn; ipt++){
 	for(int iet=0; iet<njetetamn; iet++){
 		if (isReconstruct){
@@ -2157,6 +4954,8 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
                         h_RM_D1_j1_k7[ipt][iet] = fs->make<TH2F>(name, title, 20, -2.0, 2.0, 10, -2.0, 2.0);
                         h_RM_D1_j1_k7[ipt][iet]->Sumw2();
 
+			sprintf(name, "RM_D1_j1_k8_pt%i_eta%i", ipt, iet);
+                        sprintf(title, "RM Q_{1}^{k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet] );
 			sprintf(name, "RM_D1_j1_k8_pt%i_eta%i", ipt, iet);
                         sprintf(title, "RM Q_{1}^{k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet] );
                         h_RM_D1_j1_k8[ipt][iet] = fs->make<TH2F>(name, title, 20, -2.0, 2.0, 10, -2.0, 2.0);
@@ -3045,8 +5844,6 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
                         h_genmiss_D3_j2_k7[ipt][iet] = fs->make<TH1F>(name, title, 10, -1.0, 1.0);
                         h_genmiss_D3_j2_k7[ipt][iet]->Sumw2();
 
-                        sprintf(name, "genmiss_D3_j2_k8_pt%i_eta%i", ipt, iet);
-                        sprintf(title, "Gen Miss Q_{2T}^{k=0.8} %i %g", int(leadingPtThreshold[ipt]), etarange[iet] );
                         h_genmiss_D3_j2_k8[ipt][iet] = fs->make<TH1F>(name, title, 10, -1.0, 1.0);
                         h_genmiss_D3_j2_k8[ipt][iet]->Sumw2();
 
@@ -3063,6 +5860,7 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
 		}
 	}
 }
+*/
   //==============****================================  
 #ifndef GENPART                     
   //recojt_hist = fs->make<TH1F>("recojt_hist","# of recojets",20,-0.5, 19.5);
@@ -3128,6 +5926,9 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
     recojt2_pt[jk]->Sumw2();
 
     sprintf(name, "recojet3_pt_%i",jk);
+    sprintf(title, "Et_{recojets3}_%g", etarange[jk]);
+    recojt3_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt3_pt[jk]->Sumw2();
     sprintf(title, "Et_{recojets3}_%g", etarange[jk]);
     recojt3_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt3_pt[jk]->Sumw2();
@@ -3620,8 +6421,79 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   std::vector<HepLorentzVector> tmpgen4v;                                                                                             
   std::vector<HepLorentzVector> genmom[nGenReso][ntype][njetetamn];
   vector<double> genvar;
- 
+
+  //vector<double> ijet1candsmom[nkappa];
+/*  double ijet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+*/
+
+  double igenjet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet1_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet1_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet1_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet1_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet2_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet2_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+
+  double ijet1candsmom[nkappa];
+
+  double ijet1_long_num[nkappa];
+  double ijet1_long_den[nkappa];
+
+  double ijet1_tran_num[nkappa];
+  double ijet1_tran_den[nkappa];
+
+  double ijet2candsmom[nkappa];
+
+  double ijet2_long_num[nkappa];
+  double ijet2_long_den[nkappa];
+
+  double ijet2_tran_num[nkappa];
+  double ijet2_tran_den[nkappa];
+
+/*
+  double igenjet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet1_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet1_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet1_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet1_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet2_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double igenjet2_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double igenjet2_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+*/
+  //double ijet0candsmom[nkappa];
+
 // RECO 
+/*
   double ijet0_candsmom_01 =0 , ijet0_candsmom_02 =0 , ijet0_candsmom_03 =0 , ijet0_candsmom_04 =0 , ijet0_candsmom_05 =0 , ijet0_candsmom_06 =0 , ijet0_candsmom_07 =0 , ijet0_candsmom_08 =0 , ijet0_candsmom_09 =0 , ijet0_candsmom_10 =0;
  
   double ijet1_candsmom_01 =0 , ijet1_candsmom_02 =0 , ijet1_candsmom_03 =0 , ijet1_candsmom_04 =0 , ijet1_candsmom_05 =0 , ijet1_candsmom_06 =0 , ijet1_candsmom_07 =0 , ijet1_candsmom_08 =0 , ijet1_candsmom_09 =0 , ijet1_candsmom_10 =0;
@@ -3663,7 +6535,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double igenjet1_tran_num_01 =0 , igenjet1_tran_num_02 =0 , igenjet1_tran_num_03 =0 , igenjet1_tran_num_04 =0 , igenjet1_tran_num_05 =0 , igenjet1_tran_num_06 =0 , igenjet1_tran_num_07 =0 , igenjet1_tran_num_08 =0 , igenjet1_tran_num_09 =0 , igenjet1_tran_num_10 =0;
 
   double igenjet1_tran_den_01 =0 , igenjet1_tran_den_02 =0 , igenjet1_tran_den_03 =0 , igenjet1_tran_den_04 =0 , igenjet1_tran_den_05 =0 , igenjet1_tran_den_06 =0 , igenjet1_tran_den_07 =0 , igenjet1_tran_den_08 =0 , igenjet1_tran_den_09 =0 , igenjet1_tran_den_10 =0;
-  
+  */
   //====================*****===========================================        
 
   wtfact=1.0;
@@ -4510,6 +7382,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		   // jet charge observables
 
 		   if (isrc==0){
+/*
 		   if (ijet==0 && cand4v.perp() > 1.0){
 			ijet0_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
 			ijet0_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
@@ -4584,9 +7457,35 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 			ijet0_tran_num_10 += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0)));
                         ijet0_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
-				
-			}
 			
+			}
+*/
+			for (int ik=0; ik<10; ik++){
+				if (ijet==0 && cand4v.perp() > 1.0){
+					//cout<<"testing 1"<<endl;
+                                        ijet1candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+					//ijet1candsmom[ik].push_back(candsmom(charge, cand4v.perp(), kappa[ik]));
+
+					ijet1_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+					ijet1_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+					ijet1_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+		                        ijet1_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        //cout <<"optimization 1"<<endl;
+					}
+				if (ijet==1 && cand4v.perp() > 1.0){
+					ijet2candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+					ijet2_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+					}
+				}
+
+			
+/*			
 			if (ijet==1 && cand4v.perp() > 1.0){
 			
 			ijet1_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
@@ -4663,6 +7562,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         ijet1_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
 
 				}
+*/
 			}
 		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2
                 	
@@ -5192,7 +8092,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                       }
 
 		      }//if (charge !=0) { 
-                     
+  /*                   
 		      if (ijet==0 && cand4v.perp()>1.0){
                         igenjet0_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
                         igenjet0_candsmom_02 += candsmom(charge, cand4v.perp(), 0.2);
@@ -5268,6 +8168,28 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         igenjet0_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
 			
 			}
+*/
+		for (int ik=0; ik<10; ik++){
+			if (ijet==0 && cand4v.perp() > 1.0){
+				igenjet1candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+					
+				igenjet1_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                igenjet1_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                igenjet1_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                igenjet1_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+				}
+			if (ijet==1 && cand4v.perp() > 1.0){
+                                igenjet2candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                igenjet2_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                igenjet2_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                igenjet2_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                igenjet2_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+		}
+/*
 		      
 			if (ijet==1 && cand4v.perp()>1.0){
 			igenjet1_candsmom_01 += candsmom(charge, cand4v.perp(), 0.1);
@@ -5343,7 +8265,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                         igenjet1_tran_den_10 += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), 1.0));
 
 			}
- 
+*/ 
                     /*if (isEta) {
                         if (charge !=0) {
                           genchg_pt->Fill(tmp4v.perp(), weighttrg);
@@ -5461,13 +8383,199 @@ else {
       //cout << "Rand Number " << k << endl;*/
  
 //-----------------------------------------------Calculate And Fill Jet Charge Obserables------------------------------------
+/*
+	for (int iet=0; iet<njetetamn; iet++){
+		test[iet]->Fill(recojet0_pt,ijet0_candsmom_01/(pow(recojet0_pt,0.1)),weighttrg);
+		}
 
-for (int iet=0; iet<njetetamn; iet++){
-	test[iet]->Fill(recojet0_pt,ijet0_candsmom_01/(pow(recojet0_pt,0.1)),weighttrg);
-	}
-hprof->Fill(recojet0_pt,ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
-hchpt->Fill(recojet0_pt,nchg,weighttrg);
+	// Profile histograms
+	hprof->Fill(recojet0_pt,ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
+	hchpt->Fill(recojet0_pt,nchg,weighttrg);
+*/
 
+	for (int iet=0; iet<njetetamn; iet++){
+		for (int ik=0; ik<10; ik++){
+                	if (isReconstruct) {
+                        	for (int isrc=0; isrc<njecmx; isrc++) {
+                                	if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+                                		if (isrc==0) {
+							//cout<<"testing 2"<<endl;
+							h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
+							h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
+
+							h_recojc_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
+                                                        h_recojc_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
+
+							h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
+                                                        h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
+
+					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
+					h_recovar_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, weighttrg);
+					
+					int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);	
+					h_recovar_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, weighttrg);
+							
+					int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+					h_recovar_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, weighttrg);
+
+					int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+                                        h_recovar_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, weighttrg);
+
+					int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+                                        h_recovar_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, weighttrg);
+
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+                                        h_recovar_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
+							
+			//int irecbin_D1_j2_k1 = RecoBinning2D_D1_j2_k1[iet]->GetGlobalBinNumber(ijet1_candsmom_01/(pow(recojet0_pt,0.1)),leadingptjec[isrc]);				
+							//cout <<"optimization 2"<<endl;   
+							}//if (isrc==0)
+						}//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+					}//for (int isrc=0; isrc<njecmx; isrc++) {
+				}//if (isReconstruct) {
+			                
+			if(isMC){
+                        	for (int isrc=0; isrc<nGenReso; isrc++) {
+                                	if (igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
+                                		if(isrc==0) {
+							h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
+							h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
+
+							h_genjc_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                        h_genjc_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+
+							h_genjc_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                        h_genjc_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
+
+					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
+					h_genvar_2D_D1J1[ik][iet]->Fill(igenbin_D1J1, weighttrg);
+
+					int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
+                                        h_genvar_2D_D1J2[ik][iet]->Fill(igenbin_D1J2, weighttrg);
+
+					int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+                                        h_genvar_2D_D2J1[ik][iet]->Fill(igenbin_D2J1, weighttrg);
+
+					int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+                                        h_genvar_2D_D2J2[ik][iet]->Fill(igenbin_D2J2, weighttrg);
+
+					int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+                                        h_genvar_2D_D3J1[ik][iet]->Fill(igenbin_D3J1, weighttrg);
+
+                                        int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
+                                        h_genvar_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
+
+							}//if(isrc==0)
+				if (isrc==0 && isReconstruct){
+				        if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+                                		h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))),weighttrg);
+						h_RM_D1J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))),(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))),weighttrg);
+						
+						h_RM_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),(igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                h_RM_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),(igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+			
+						h_RM_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),(igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                h_RM_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),(igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
+
+
+				//		int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+                                  //              int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
+                         
+                                    //            RM_2D[itp][iet][ij]->Fill(irecbin, igenbin, weighttrg);
+
+				        int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
+       					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
+						RM_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, igenbin_D1J1, weighttrg);
+
+                                        int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
+                                	int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);     
+						RM_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, igenbin_D1J2, weighttrg);
+
+                                        int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+                                	int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+						RM_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, igenbin_D2J1, weighttrg);
+
+                                        int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+                                	int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+						RM_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, igenbin_D2J2, weighttrg);
+
+                                        int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+                                    	int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+						RM_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, igenbin_D3J1, weighttrg);
+
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+  					int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);                 						RM_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, igenbin_D3J2, weighttrg);                   
+						
+								}//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+				else {
+					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+						h_recofake_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
+						h_recofake_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
+
+                                                h_recofake_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
+                                                h_recofake_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
+
+                                                h_recofake_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
+                                                h_recofake_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
+			
+					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
+                                        h_recofake_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, weighttrg);
+
+                                        int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
+                                        h_recofake_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, weighttrg);
+
+                                        int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+                                        h_recofake_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, weighttrg);
+
+                                        int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+                                        h_recofake_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, weighttrg);
+
+                                        int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+                                        h_recofake_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, weighttrg);
+
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+                                        h_recofake_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
+
+					}
+					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+						h_genmiss_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
+						h_genmiss_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
+
+                                                h_genmiss_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                h_genmiss_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+
+                                                h_genmiss_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                h_genmiss_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
+
+					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
+                                        h_genmiss_2D_D1J1[ik][iet]->Fill(igenbin_D1J1, weighttrg);
+
+                                        int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
+                                        h_genmiss_2D_D1J2[ik][iet]->Fill(igenbin_D1J2, weighttrg);
+
+                                        int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+                                        h_genmiss_2D_D2J1[ik][iet]->Fill(igenbin_D2J1, weighttrg);
+
+                                        int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+                                        h_genmiss_2D_D2J2[ik][iet]->Fill(igenbin_D2J2, weighttrg);
+
+                                        int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+                                        h_genmiss_2D_D3J1[ik][iet]->Fill(igenbin_D3J1, weighttrg);
+
+                                        int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
+                                        h_genmiss_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
+
+					}
+				}
+							}//if (isrc==0 && isReconstruct){
+						}//if (igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
+					}//for (int isrc=0; isrc<nGenReso; isrc++) {
+				}//if(isMC){
+			}//for (int ik=0; ik<10; ik++){
+		}//for (int iet=0; iet<njetetamn; iet++){
+/*
+	
+	//if (h_test=true){
 	for (int iet=0; iet<njetetamn; iet++){
 		if (isReconstruct) {
 			for (int isrc=0; isrc<njecmx; isrc++) {
@@ -5539,6 +8647,133 @@ hchpt->Fill(recojet0_pt,nchg,weighttrg);
 					h_jetcharge_D3_j2_k8[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_08/ijet1_tran_den_08),weighttrg);
 					h_jetcharge_D3_j2_k9[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_09/ijet1_tran_den_09),weighttrg);
                 			h_jetcharge_D3_j2_k10[irecohtjec[isrc]][iet]->Fill((ijet1_tran_num_10/ijet1_tran_den_10),weighttrg);
+
+					int irecbin_D1_j1_k1 = RecoBinning2D_D1_j1_k1[iet]->GetGlobalBinNumber(ijet0_candsmom_01/(pow(recojet0_pt,0.1)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k2 = RecoBinning2D_D1_j1_k2[iet]->GetGlobalBinNumber(ijet0_candsmom_02/(pow(recojet0_pt,0.2)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k3 = RecoBinning2D_D1_j1_k3[iet]->GetGlobalBinNumber(ijet0_candsmom_03/(pow(recojet0_pt,0.3)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k4 = RecoBinning2D_D1_j1_k4[iet]->GetGlobalBinNumber(ijet0_candsmom_04/(pow(recojet0_pt,0.4)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k5 = RecoBinning2D_D1_j1_k5[iet]->GetGlobalBinNumber(ijet0_candsmom_05/(pow(recojet0_pt,0.5)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k6 = RecoBinning2D_D1_j1_k6[iet]->GetGlobalBinNumber(ijet0_candsmom_06/(pow(recojet0_pt,0.6)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k7 = RecoBinning2D_D1_j1_k7[iet]->GetGlobalBinNumber(ijet0_candsmom_07/(pow(recojet0_pt,0.7)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k8 = RecoBinning2D_D1_j1_k8[iet]->GetGlobalBinNumber(ijet0_candsmom_08/(pow(recojet0_pt,0.8)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k9 = RecoBinning2D_D1_j1_k9[iet]->GetGlobalBinNumber(ijet0_candsmom_09/(pow(recojet0_pt,0.9)),leadingptjec[isrc]);
+					int irecbin_D1_j1_k10 = RecoBinning2D_D1_j1_k10[iet]->GetGlobalBinNumber(ijet0_candsmom_10/(pow(recojet0_pt,1.0)),leadingptjec[isrc]);	
+                                        h_recovar_2D_D1_j1_k1[iet]->Fill(irecbin_D1_j1_k1, weighttrg);
+					h_recovar_2D_D1_j1_k2[iet]->Fill(irecbin_D1_j1_k2, weighttrg);
+					h_recovar_2D_D1_j1_k3[iet]->Fill(irecbin_D1_j1_k3, weighttrg);
+					h_recovar_2D_D1_j1_k4[iet]->Fill(irecbin_D1_j1_k4, weighttrg);
+					h_recovar_2D_D1_j1_k5[iet]->Fill(irecbin_D1_j1_k5, weighttrg);
+					h_recovar_2D_D1_j1_k6[iet]->Fill(irecbin_D1_j1_k6, weighttrg);
+					h_recovar_2D_D1_j1_k7[iet]->Fill(irecbin_D1_j1_k7, weighttrg);
+					h_recovar_2D_D1_j1_k8[iet]->Fill(irecbin_D1_j1_k8, weighttrg);
+					h_recovar_2D_D1_j1_k9[iet]->Fill(irecbin_D1_j1_k9, weighttrg);
+					h_recovar_2D_D1_j1_k10[iet]->Fill(irecbin_D1_j1_k10, weighttrg);
+
+					int irecbin_D1_j2_k1 = RecoBinning2D_D1_j2_k1[iet]->GetGlobalBinNumber(ijet1_candsmom_01/(pow(recojet0_pt,0.1)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k2 = RecoBinning2D_D1_j2_k2[iet]->GetGlobalBinNumber(ijet1_candsmom_02/(pow(recojet0_pt,0.2)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k3 = RecoBinning2D_D1_j2_k3[iet]->GetGlobalBinNumber(ijet1_candsmom_03/(pow(recojet0_pt,0.3)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k4 = RecoBinning2D_D1_j2_k4[iet]->GetGlobalBinNumber(ijet1_candsmom_04/(pow(recojet0_pt,0.4)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k5 = RecoBinning2D_D1_j2_k5[iet]->GetGlobalBinNumber(ijet1_candsmom_05/(pow(recojet0_pt,0.5)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k6 = RecoBinning2D_D1_j2_k6[iet]->GetGlobalBinNumber(ijet1_candsmom_06/(pow(recojet0_pt,0.6)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k7 = RecoBinning2D_D1_j2_k7[iet]->GetGlobalBinNumber(ijet1_candsmom_07/(pow(recojet0_pt,0.7)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k8 = RecoBinning2D_D1_j2_k8[iet]->GetGlobalBinNumber(ijet1_candsmom_08/(pow(recojet0_pt,0.8)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k9 = RecoBinning2D_D1_j2_k9[iet]->GetGlobalBinNumber(ijet1_candsmom_09/(pow(recojet0_pt,0.9)),leadingptjec[isrc]);
+                                        int irecbin_D1_j2_k10 = RecoBinning2D_D1_j2_k10[iet]->GetGlobalBinNumber(ijet1_candsmom_10/(pow(recojet0_pt,1.0)),leadingptjec[isrc]);
+                                        h_recovar_2D_D1_j2_k1[iet]->Fill(irecbin_D1_j2_k1, weighttrg);
+                                        h_recovar_2D_D1_j2_k2[iet]->Fill(irecbin_D1_j2_k2, weighttrg);
+                                        h_recovar_2D_D1_j2_k3[iet]->Fill(irecbin_D1_j2_k3, weighttrg);
+                                        h_recovar_2D_D1_j2_k4[iet]->Fill(irecbin_D1_j2_k4, weighttrg);
+                                        h_recovar_2D_D1_j2_k5[iet]->Fill(irecbin_D1_j2_k5, weighttrg);
+                                        h_recovar_2D_D1_j2_k6[iet]->Fill(irecbin_D1_j2_k6, weighttrg);
+                                        h_recovar_2D_D1_j2_k7[iet]->Fill(irecbin_D1_j2_k7, weighttrg);
+                                        h_recovar_2D_D1_j2_k8[iet]->Fill(irecbin_D1_j2_k8, weighttrg);
+                                        h_recovar_2D_D1_j2_k9[iet]->Fill(irecbin_D1_j2_k9, weighttrg);
+                                        h_recovar_2D_D1_j2_k10[iet]->Fill(irecbin_D1_j2_k10, weighttrg);
+
+					int irecbin_D2_j1_k1 = RecoBinning2D_D2_j1_k1[iet]->GetGlobalBinNumber(ijet0_long_num_01/ijet0_long_den_01,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k2 = RecoBinning2D_D2_j1_k2[iet]->GetGlobalBinNumber(ijet0_long_num_02/ijet0_long_den_02,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k3 = RecoBinning2D_D2_j1_k3[iet]->GetGlobalBinNumber(ijet0_long_num_03/ijet0_long_den_03,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k4 = RecoBinning2D_D2_j1_k4[iet]->GetGlobalBinNumber(ijet0_long_num_04/ijet0_long_den_04,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k5 = RecoBinning2D_D2_j1_k5[iet]->GetGlobalBinNumber(ijet0_long_num_05/ijet0_long_den_05,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k6 = RecoBinning2D_D2_j1_k6[iet]->GetGlobalBinNumber(ijet0_long_num_06/ijet0_long_den_06,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k7 = RecoBinning2D_D2_j1_k7[iet]->GetGlobalBinNumber(ijet0_long_num_07/ijet0_long_den_07,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k8 = RecoBinning2D_D2_j1_k8[iet]->GetGlobalBinNumber(ijet0_long_num_08/ijet0_long_den_08,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k9 = RecoBinning2D_D2_j1_k9[iet]->GetGlobalBinNumber(ijet0_long_num_09/ijet0_long_den_09,leadingptjec[isrc]);
+                                        int irecbin_D2_j1_k10 = RecoBinning2D_D2_j1_k10[iet]->GetGlobalBinNumber(ijet0_long_num_10/ijet0_long_den_10,leadingptjec[isrc]);
+                                        h_recovar_2D_D2_j1_k1[iet]->Fill(irecbin_D2_j1_k1, weighttrg);
+                                        h_recovar_2D_D2_j1_k2[iet]->Fill(irecbin_D2_j1_k2, weighttrg);
+                                        h_recovar_2D_D2_j1_k3[iet]->Fill(irecbin_D2_j1_k3, weighttrg);
+                                        h_recovar_2D_D2_j1_k4[iet]->Fill(irecbin_D2_j1_k4, weighttrg);
+                                        h_recovar_2D_D2_j1_k5[iet]->Fill(irecbin_D2_j1_k5, weighttrg);
+                                        h_recovar_2D_D2_j1_k6[iet]->Fill(irecbin_D2_j1_k6, weighttrg);
+                                        h_recovar_2D_D2_j1_k7[iet]->Fill(irecbin_D2_j1_k7, weighttrg);
+                                        h_recovar_2D_D2_j1_k8[iet]->Fill(irecbin_D2_j1_k8, weighttrg);
+                                        h_recovar_2D_D2_j1_k9[iet]->Fill(irecbin_D2_j1_k9, weighttrg);
+                                        h_recovar_2D_D2_j1_k10[iet]->Fill(irecbin_D2_j1_k10, weighttrg);
+
+					int irecbin_D2_j2_k1 = RecoBinning2D_D2_j2_k1[iet]->GetGlobalBinNumber(ijet1_long_num_01/ijet1_long_den_01,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k2 = RecoBinning2D_D2_j2_k2[iet]->GetGlobalBinNumber(ijet1_long_num_02/ijet1_long_den_02,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k3 = RecoBinning2D_D2_j2_k3[iet]->GetGlobalBinNumber(ijet1_long_num_03/ijet1_long_den_03,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k4 = RecoBinning2D_D2_j2_k4[iet]->GetGlobalBinNumber(ijet1_long_num_04/ijet1_long_den_04,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k5 = RecoBinning2D_D2_j2_k5[iet]->GetGlobalBinNumber(ijet1_long_num_05/ijet1_long_den_05,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k6 = RecoBinning2D_D2_j2_k6[iet]->GetGlobalBinNumber(ijet1_long_num_06/ijet1_long_den_06,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k7 = RecoBinning2D_D2_j2_k7[iet]->GetGlobalBinNumber(ijet1_long_num_07/ijet1_long_den_07,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k8 = RecoBinning2D_D2_j2_k8[iet]->GetGlobalBinNumber(ijet1_long_num_08/ijet1_long_den_08,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k9 = RecoBinning2D_D2_j2_k9[iet]->GetGlobalBinNumber(ijet1_long_num_09/ijet1_long_den_09,leadingptjec[isrc]);
+                                        int irecbin_D2_j2_k10 = RecoBinning2D_D2_j2_k10[iet]->GetGlobalBinNumber(ijet1_long_num_10/ijet1_long_den_10,leadingptjec[isrc]);
+                                        h_recovar_2D_D2_j2_k1[iet]->Fill(irecbin_D2_j2_k1, weighttrg);
+                                        h_recovar_2D_D2_j2_k2[iet]->Fill(irecbin_D2_j2_k2, weighttrg);
+                                        h_recovar_2D_D2_j2_k3[iet]->Fill(irecbin_D2_j2_k3, weighttrg);
+                                        h_recovar_2D_D2_j2_k4[iet]->Fill(irecbin_D2_j2_k4, weighttrg);
+                                        h_recovar_2D_D2_j2_k5[iet]->Fill(irecbin_D2_j2_k5, weighttrg);
+                                        h_recovar_2D_D2_j2_k6[iet]->Fill(irecbin_D2_j2_k6, weighttrg);
+                                        h_recovar_2D_D2_j2_k7[iet]->Fill(irecbin_D2_j2_k7, weighttrg);
+                                        h_recovar_2D_D2_j2_k8[iet]->Fill(irecbin_D2_j2_k8, weighttrg);
+                                        h_recovar_2D_D2_j2_k9[iet]->Fill(irecbin_D2_j2_k9, weighttrg);
+                                        h_recovar_2D_D2_j2_k10[iet]->Fill(irecbin_D2_j2_k10, weighttrg);
+
+
+					int irecbin_D3_j1_k1 = RecoBinning2D_D3_j1_k1[iet]->GetGlobalBinNumber(ijet0_tran_num_01/ijet0_tran_den_01,leadingptjec[isrc]);
+					int irecbin_D3_j1_k2 = RecoBinning2D_D3_j1_k2[iet]->GetGlobalBinNumber(ijet0_tran_num_02/ijet0_tran_den_02,leadingptjec[isrc]);
+					int irecbin_D3_j1_k3 = RecoBinning2D_D3_j1_k3[iet]->GetGlobalBinNumber(ijet0_tran_num_03/ijet0_tran_den_03,leadingptjec[isrc]);
+					int irecbin_D3_j1_k4 = RecoBinning2D_D3_j1_k4[iet]->GetGlobalBinNumber(ijet0_tran_num_04/ijet0_tran_den_04,leadingptjec[isrc]);
+					int irecbin_D3_j1_k5 = RecoBinning2D_D3_j1_k5[iet]->GetGlobalBinNumber(ijet0_tran_num_05/ijet0_tran_den_05,leadingptjec[isrc]);
+					int irecbin_D3_j1_k6 = RecoBinning2D_D3_j1_k6[iet]->GetGlobalBinNumber(ijet0_tran_num_06/ijet0_tran_den_06,leadingptjec[isrc]);
+					int irecbin_D3_j1_k7 = RecoBinning2D_D3_j1_k7[iet]->GetGlobalBinNumber(ijet0_tran_num_07/ijet0_tran_den_07,leadingptjec[isrc]);
+					int irecbin_D3_j1_k8 = RecoBinning2D_D3_j1_k8[iet]->GetGlobalBinNumber(ijet0_tran_num_08/ijet0_tran_den_08,leadingptjec[isrc]);
+					int irecbin_D3_j1_k9 = RecoBinning2D_D3_j1_k9[iet]->GetGlobalBinNumber(ijet0_tran_num_09/ijet0_tran_den_09,leadingptjec[isrc]);
+					int irecbin_D3_j1_k10 = RecoBinning2D_D3_j1_k10[iet]->GetGlobalBinNumber(ijet0_tran_num_10/ijet0_tran_den_10,leadingptjec[isrc]);
+					h_recovar_2D_D3_j1_k1[iet]->Fill(irecbin_D3_j1_k1, weighttrg);
+                                        h_recovar_2D_D3_j1_k2[iet]->Fill(irecbin_D3_j1_k2, weighttrg);
+                                        h_recovar_2D_D3_j1_k3[iet]->Fill(irecbin_D3_j1_k3, weighttrg);
+                                        h_recovar_2D_D3_j1_k4[iet]->Fill(irecbin_D3_j1_k4, weighttrg);
+                                        h_recovar_2D_D3_j1_k5[iet]->Fill(irecbin_D3_j1_k5, weighttrg);
+                                        h_recovar_2D_D3_j1_k6[iet]->Fill(irecbin_D3_j1_k6, weighttrg);
+                                        h_recovar_2D_D3_j1_k7[iet]->Fill(irecbin_D3_j1_k7, weighttrg);
+                                        h_recovar_2D_D3_j1_k8[iet]->Fill(irecbin_D3_j1_k8, weighttrg);
+                                        h_recovar_2D_D3_j1_k9[iet]->Fill(irecbin_D3_j1_k9, weighttrg);
+                                        h_recovar_2D_D3_j1_k10[iet]->Fill(irecbin_D3_j1_k10, weighttrg);
+
+					int irecbin_D3_j2_k1 = RecoBinning2D_D3_j2_k1[iet]->GetGlobalBinNumber(ijet1_tran_num_01/ijet1_tran_den_01,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k2 = RecoBinning2D_D3_j2_k2[iet]->GetGlobalBinNumber(ijet1_tran_num_02/ijet1_tran_den_02,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k3 = RecoBinning2D_D3_j2_k3[iet]->GetGlobalBinNumber(ijet1_tran_num_03/ijet1_tran_den_03,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k4 = RecoBinning2D_D3_j2_k4[iet]->GetGlobalBinNumber(ijet1_tran_num_04/ijet1_tran_den_04,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k5 = RecoBinning2D_D3_j2_k5[iet]->GetGlobalBinNumber(ijet1_tran_num_05/ijet1_tran_den_05,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k6 = RecoBinning2D_D3_j2_k6[iet]->GetGlobalBinNumber(ijet1_tran_num_06/ijet1_tran_den_06,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k7 = RecoBinning2D_D3_j2_k7[iet]->GetGlobalBinNumber(ijet1_tran_num_07/ijet1_tran_den_07,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k8 = RecoBinning2D_D3_j2_k8[iet]->GetGlobalBinNumber(ijet1_tran_num_08/ijet1_tran_den_08,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k9 = RecoBinning2D_D3_j2_k9[iet]->GetGlobalBinNumber(ijet1_tran_num_09/ijet1_tran_den_09,leadingptjec[isrc]);
+                                        int irecbin_D3_j2_k10 = RecoBinning2D_D3_j2_k10[iet]->GetGlobalBinNumber(ijet1_tran_num_10/ijet1_tran_den_10,leadingptjec[isrc]);
+                                        h_recovar_2D_D3_j2_k1[iet]->Fill(irecbin_D3_j2_k1, weighttrg);
+                                        h_recovar_2D_D3_j2_k2[iet]->Fill(irecbin_D3_j2_k2, weighttrg);
+                                        h_recovar_2D_D3_j2_k3[iet]->Fill(irecbin_D3_j2_k3, weighttrg);
+                                        h_recovar_2D_D3_j2_k4[iet]->Fill(irecbin_D3_j2_k4, weighttrg);
+                                        h_recovar_2D_D3_j2_k5[iet]->Fill(irecbin_D3_j2_k5, weighttrg);
+                                        h_recovar_2D_D3_j2_k6[iet]->Fill(irecbin_D3_j2_k6, weighttrg);
+                                        h_recovar_2D_D3_j2_k7[iet]->Fill(irecbin_D3_j2_k7, weighttrg);
+                                        h_recovar_2D_D3_j2_k8[iet]->Fill(irecbin_D3_j2_k8, weighttrg);
+                                        h_recovar_2D_D3_j2_k9[iet]->Fill(irecbin_D3_j2_k9, weighttrg);
+                                        h_recovar_2D_D3_j2_k10[iet]->Fill(irecbin_D3_j2_k10, weighttrg);
 					
 					}//if (isrc==0) {
 				}//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
@@ -5613,8 +8848,140 @@ hchpt->Fill(recojet0_pt,nchg,weighttrg);
                                         h_genjetcharge_D3_j2_k7[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_07/igenjet1_tran_den_07),weighttrg);
                                         h_genjetcharge_D3_j2_k8[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_08/igenjet1_tran_den_08),weighttrg);
                                         h_genjetcharge_D3_j2_k9[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_09/igenjet1_tran_den_09),weighttrg);
-                                        h_genjetcharge_D3_j2_k10[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_10/igenjet1_tran_den_10),weighttrg);										
-					}//if(isrc==0){
+                                        h_genjetcharge_D3_j2_k10[igenhtres[isrc]][iet]->Fill((igenjet1_tran_num_10/igenjet1_tran_den_10),weighttrg);		
+
+
+					int igenbin_D1_j1_k1 = GenBinning2D_D1_j1_k1[iet]->GetGlobalBinNumber(igenjet0_candsmom_01/(pow(genrecojet0_pt,0.1)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k2 = GenBinning2D_D1_j1_k2[iet]->GetGlobalBinNumber(igenjet0_candsmom_02/(pow(genrecojet0_pt,0.2)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k3 = GenBinning2D_D1_j1_k3[iet]->GetGlobalBinNumber(igenjet0_candsmom_03/(pow(genrecojet0_pt,0.3)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k4 = GenBinning2D_D1_j1_k4[iet]->GetGlobalBinNumber(igenjet0_candsmom_04/(pow(genrecojet0_pt,0.4)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k5 = GenBinning2D_D1_j1_k5[iet]->GetGlobalBinNumber(igenjet0_candsmom_05/(pow(genrecojet0_pt,0.5)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k6 = GenBinning2D_D1_j1_k6[iet]->GetGlobalBinNumber(igenjet0_candsmom_06/(pow(genrecojet0_pt,0.6)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k7 = GenBinning2D_D1_j1_k7[iet]->GetGlobalBinNumber(igenjet0_candsmom_07/(pow(genrecojet0_pt,0.7)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k8 = GenBinning2D_D1_j1_k8[iet]->GetGlobalBinNumber(igenjet0_candsmom_08/(pow(genrecojet0_pt,0.8)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k9 = GenBinning2D_D1_j1_k9[iet]->GetGlobalBinNumber(igenjet0_candsmom_09/(pow(genrecojet0_pt,0.9)),leadgenptres[isrc]);
+                                        int igenbin_D1_j1_k10 = GenBinning2D_D1_j1_k10[iet]->GetGlobalBinNumber(igenjet0_candsmom_10/(pow(genrecojet0_pt,1.0)),leadgenptres[isrc]);
+                                        h_genvar_2D_D1_j1_k1[iet]->Fill(igenbin_D1_j1_k1, weighttrg);
+                                        h_genvar_2D_D1_j1_k2[iet]->Fill(igenbin_D1_j1_k2, weighttrg);
+                                        h_genvar_2D_D1_j1_k3[iet]->Fill(igenbin_D1_j1_k3, weighttrg);
+                                        h_genvar_2D_D1_j1_k4[iet]->Fill(igenbin_D1_j1_k4, weighttrg);
+                                        h_genvar_2D_D1_j1_k5[iet]->Fill(igenbin_D1_j1_k5, weighttrg);
+                                        h_genvar_2D_D1_j1_k6[iet]->Fill(igenbin_D1_j1_k6, weighttrg);
+                                        h_genvar_2D_D1_j1_k7[iet]->Fill(igenbin_D1_j1_k7, weighttrg);
+                                        h_genvar_2D_D1_j1_k8[iet]->Fill(igenbin_D1_j1_k8, weighttrg);
+                                        h_genvar_2D_D1_j1_k9[iet]->Fill(igenbin_D1_j1_k9, weighttrg);
+                                        h_genvar_2D_D1_j1_k10[iet]->Fill(igenbin_D1_j1_k10, weighttrg);							
+
+
+					int igenbin_D1_j2_k1 = GenBinning2D_D1_j2_k1[iet]->GetGlobalBinNumber(igenjet1_candsmom_01/(pow(genrecojet0_pt,0.1)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k2 = GenBinning2D_D1_j2_k2[iet]->GetGlobalBinNumber(igenjet1_candsmom_02/(pow(genrecojet0_pt,0.2)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k3 = GenBinning2D_D1_j2_k3[iet]->GetGlobalBinNumber(igenjet1_candsmom_03/(pow(genrecojet0_pt,0.3)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k4 = GenBinning2D_D1_j2_k4[iet]->GetGlobalBinNumber(igenjet1_candsmom_04/(pow(genrecojet0_pt,0.4)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k5 = GenBinning2D_D1_j2_k5[iet]->GetGlobalBinNumber(igenjet1_candsmom_05/(pow(genrecojet0_pt,0.5)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k6 = GenBinning2D_D1_j2_k6[iet]->GetGlobalBinNumber(igenjet1_candsmom_06/(pow(genrecojet0_pt,0.6)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k7 = GenBinning2D_D1_j2_k7[iet]->GetGlobalBinNumber(igenjet1_candsmom_07/(pow(genrecojet0_pt,0.7)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k8 = GenBinning2D_D1_j2_k8[iet]->GetGlobalBinNumber(igenjet1_candsmom_08/(pow(genrecojet0_pt,0.8)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k9 = GenBinning2D_D1_j2_k9[iet]->GetGlobalBinNumber(igenjet1_candsmom_09/(pow(genrecojet0_pt,0.9)),leadgenptres[isrc]);
+                                        int igenbin_D1_j2_k10 = GenBinning2D_D1_j2_k10[iet]->GetGlobalBinNumber(igenjet1_candsmom_10/(pow(genrecojet0_pt,1.0)),leadgenptres[isrc]);
+                                        h_genvar_2D_D1_j2_k1[iet]->Fill(igenbin_D1_j2_k1, weighttrg);
+                                        h_genvar_2D_D1_j2_k2[iet]->Fill(igenbin_D1_j2_k2, weighttrg);
+                                        h_genvar_2D_D1_j2_k3[iet]->Fill(igenbin_D1_j2_k3, weighttrg);
+                                        h_genvar_2D_D1_j2_k4[iet]->Fill(igenbin_D1_j2_k4, weighttrg);
+                                        h_genvar_2D_D1_j2_k5[iet]->Fill(igenbin_D1_j2_k5, weighttrg);
+                                        h_genvar_2D_D1_j2_k6[iet]->Fill(igenbin_D1_j2_k6, weighttrg);
+                                        h_genvar_2D_D1_j2_k7[iet]->Fill(igenbin_D1_j2_k7, weighttrg);
+                                        h_genvar_2D_D1_j2_k8[iet]->Fill(igenbin_D1_j2_k8, weighttrg);
+                                        h_genvar_2D_D1_j2_k9[iet]->Fill(igenbin_D1_j2_k9, weighttrg);
+                                        h_genvar_2D_D1_j2_k10[iet]->Fill(igenbin_D1_j2_k10, weighttrg);
+
+
+					int igenbin_D2_j1_k1 = GenBinning2D_D2_j1_k1[iet]->GetGlobalBinNumber(igenjet0_long_num_01/igenjet0_long_den_01,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k2 = GenBinning2D_D2_j1_k2[iet]->GetGlobalBinNumber(igenjet0_long_num_02/igenjet0_long_den_02,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k3 = GenBinning2D_D2_j1_k3[iet]->GetGlobalBinNumber(igenjet0_long_num_03/igenjet0_long_den_03,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k4 = GenBinning2D_D2_j1_k4[iet]->GetGlobalBinNumber(igenjet0_long_num_04/igenjet0_long_den_04,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k5 = GenBinning2D_D2_j1_k5[iet]->GetGlobalBinNumber(igenjet0_long_num_05/igenjet0_long_den_05,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k6 = GenBinning2D_D2_j1_k6[iet]->GetGlobalBinNumber(igenjet0_long_num_06/igenjet0_long_den_06,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k7 = GenBinning2D_D2_j1_k7[iet]->GetGlobalBinNumber(igenjet0_long_num_07/igenjet0_long_den_07,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k8 = GenBinning2D_D2_j1_k8[iet]->GetGlobalBinNumber(igenjet0_long_num_08/igenjet0_long_den_08,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k9 = GenBinning2D_D2_j1_k9[iet]->GetGlobalBinNumber(igenjet0_long_num_09/igenjet0_long_den_09,leadgenptres[isrc]);
+                                        int igenbin_D2_j1_k10 = GenBinning2D_D2_j1_k10[iet]->GetGlobalBinNumber(igenjet0_long_num_10/igenjet0_long_den_10,leadgenptres[isrc]);
+                                        h_genvar_2D_D2_j1_k1[iet]->Fill(igenbin_D2_j1_k1, weighttrg);
+                                        h_genvar_2D_D2_j1_k2[iet]->Fill(igenbin_D2_j1_k2, weighttrg);
+                                        h_genvar_2D_D2_j1_k3[iet]->Fill(igenbin_D2_j1_k3, weighttrg);
+                                        h_genvar_2D_D2_j1_k4[iet]->Fill(igenbin_D2_j1_k4, weighttrg);
+                                        h_genvar_2D_D2_j1_k5[iet]->Fill(igenbin_D2_j1_k5, weighttrg);
+                                        h_genvar_2D_D2_j1_k6[iet]->Fill(igenbin_D2_j1_k6, weighttrg);
+                                        h_genvar_2D_D2_j1_k7[iet]->Fill(igenbin_D2_j1_k7, weighttrg);
+                                        h_genvar_2D_D2_j1_k8[iet]->Fill(igenbin_D2_j1_k8, weighttrg);
+                                        h_genvar_2D_D2_j1_k9[iet]->Fill(igenbin_D2_j1_k9, weighttrg);
+                                        h_genvar_2D_D2_j1_k10[iet]->Fill(igenbin_D2_j1_k10, weighttrg);
+
+                                        int igenbin_D2_j2_k1 = GenBinning2D_D2_j2_k1[iet]->GetGlobalBinNumber(igenjet1_long_num_01/igenjet1_long_den_01,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k2 = GenBinning2D_D2_j2_k2[iet]->GetGlobalBinNumber(igenjet1_long_num_02/igenjet1_long_den_02,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k3 = GenBinning2D_D2_j2_k3[iet]->GetGlobalBinNumber(igenjet1_long_num_03/igenjet1_long_den_03,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k4 = GenBinning2D_D2_j2_k4[iet]->GetGlobalBinNumber(igenjet1_long_num_04/igenjet1_long_den_04,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k5 = GenBinning2D_D2_j2_k5[iet]->GetGlobalBinNumber(igenjet1_long_num_05/igenjet1_long_den_05,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k6 = GenBinning2D_D2_j2_k6[iet]->GetGlobalBinNumber(igenjet1_long_num_06/igenjet1_long_den_06,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k7 = GenBinning2D_D2_j2_k7[iet]->GetGlobalBinNumber(igenjet1_long_num_07/igenjet1_long_den_07,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k8 = GenBinning2D_D2_j2_k8[iet]->GetGlobalBinNumber(igenjet1_long_num_08/igenjet1_long_den_08,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k9 = GenBinning2D_D2_j2_k9[iet]->GetGlobalBinNumber(igenjet1_long_num_09/igenjet1_long_den_09,leadgenptres[isrc]);
+                                        int igenbin_D2_j2_k10 = GenBinning2D_D2_j2_k10[iet]->GetGlobalBinNumber(igenjet1_long_num_10/igenjet1_long_den_10,leadgenptres[isrc]);
+                                        h_genvar_2D_D2_j2_k1[iet]->Fill(igenbin_D2_j2_k1, weighttrg);
+                                        h_genvar_2D_D2_j2_k2[iet]->Fill(igenbin_D2_j2_k2, weighttrg);
+                                        h_genvar_2D_D2_j2_k3[iet]->Fill(igenbin_D2_j2_k3, weighttrg);
+                                        h_genvar_2D_D2_j2_k4[iet]->Fill(igenbin_D2_j2_k4, weighttrg);
+                                        h_genvar_2D_D2_j2_k5[iet]->Fill(igenbin_D2_j2_k5, weighttrg);
+                                        h_genvar_2D_D2_j2_k6[iet]->Fill(igenbin_D2_j2_k6, weighttrg);
+                                        h_genvar_2D_D2_j2_k7[iet]->Fill(igenbin_D2_j2_k7, weighttrg);
+                                        h_genvar_2D_D2_j2_k8[iet]->Fill(igenbin_D2_j2_k8, weighttrg);
+                                        h_genvar_2D_D2_j2_k9[iet]->Fill(igenbin_D2_j2_k9, weighttrg);
+                                        h_genvar_2D_D2_j2_k10[iet]->Fill(igenbin_D2_j2_k10, weighttrg);
+
+
+					int igenbin_D3_j1_k1 = GenBinning2D_D3_j1_k1[iet]->GetGlobalBinNumber(igenjet0_tran_num_01/igenjet0_tran_den_01,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k2 = GenBinning2D_D3_j1_k2[iet]->GetGlobalBinNumber(igenjet0_tran_num_02/igenjet0_tran_den_02,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k3 = GenBinning2D_D3_j1_k3[iet]->GetGlobalBinNumber(igenjet0_tran_num_03/igenjet0_tran_den_03,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k4 = GenBinning2D_D3_j1_k4[iet]->GetGlobalBinNumber(igenjet0_tran_num_04/igenjet0_tran_den_04,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k5 = GenBinning2D_D3_j1_k5[iet]->GetGlobalBinNumber(igenjet0_tran_num_05/igenjet0_tran_den_05,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k6 = GenBinning2D_D3_j1_k6[iet]->GetGlobalBinNumber(igenjet0_tran_num_06/igenjet0_tran_den_06,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k7 = GenBinning2D_D3_j1_k7[iet]->GetGlobalBinNumber(igenjet0_tran_num_07/igenjet0_tran_den_07,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k8 = GenBinning2D_D3_j1_k8[iet]->GetGlobalBinNumber(igenjet0_tran_num_08/igenjet0_tran_den_08,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k9 = GenBinning2D_D3_j1_k9[iet]->GetGlobalBinNumber(igenjet0_tran_num_09/igenjet0_tran_den_09,leadgenptres[isrc]);
+                                        int igenbin_D3_j1_k10 = GenBinning2D_D3_j1_k10[iet]->GetGlobalBinNumber(igenjet0_tran_num_10/igenjet0_tran_den_10,leadgenptres[isrc]);
+                                        h_genvar_2D_D3_j1_k1[iet]->Fill(igenbin_D3_j1_k1, weighttrg);
+                                        h_genvar_2D_D3_j1_k2[iet]->Fill(igenbin_D3_j1_k2, weighttrg);
+                                        h_genvar_2D_D3_j1_k3[iet]->Fill(igenbin_D3_j1_k3, weighttrg);
+                                        h_genvar_2D_D3_j1_k4[iet]->Fill(igenbin_D3_j1_k4, weighttrg);
+                                        h_genvar_2D_D3_j1_k5[iet]->Fill(igenbin_D3_j1_k5, weighttrg);
+                                        h_genvar_2D_D3_j1_k6[iet]->Fill(igenbin_D3_j1_k6, weighttrg);
+                                        h_genvar_2D_D3_j1_k7[iet]->Fill(igenbin_D3_j1_k7, weighttrg);
+                                        h_genvar_2D_D3_j1_k8[iet]->Fill(igenbin_D3_j1_k8, weighttrg);
+                                        h_genvar_2D_D3_j1_k9[iet]->Fill(igenbin_D3_j1_k9, weighttrg);
+                                        h_genvar_2D_D3_j1_k10[iet]->Fill(igenbin_D3_j1_k10, weighttrg);
+
+                                        int igenbin_D3_j2_k1 = GenBinning2D_D3_j2_k1[iet]->GetGlobalBinNumber(igenjet1_tran_num_01/igenjet1_tran_den_01,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k2 = GenBinning2D_D3_j2_k2[iet]->GetGlobalBinNumber(igenjet1_tran_num_02/igenjet1_tran_den_02,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k3 = GenBinning2D_D3_j2_k3[iet]->GetGlobalBinNumber(igenjet1_tran_num_03/igenjet1_tran_den_03,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k4 = GenBinning2D_D3_j2_k4[iet]->GetGlobalBinNumber(igenjet1_tran_num_04/igenjet1_tran_den_04,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k5 = GenBinning2D_D3_j2_k5[iet]->GetGlobalBinNumber(igenjet1_tran_num_05/igenjet1_tran_den_05,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k6 = GenBinning2D_D3_j2_k6[iet]->GetGlobalBinNumber(igenjet1_tran_num_06/igenjet1_tran_den_06,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k7 = GenBinning2D_D3_j2_k7[iet]->GetGlobalBinNumber(igenjet1_tran_num_07/igenjet1_tran_den_07,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k8 = GenBinning2D_D3_j2_k8[iet]->GetGlobalBinNumber(igenjet1_tran_num_08/igenjet1_tran_den_08,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k9 = GenBinning2D_D3_j2_k9[iet]->GetGlobalBinNumber(igenjet1_tran_num_09/igenjet1_tran_den_09,leadgenptres[isrc]);
+                                        int igenbin_D3_j2_k10 = GenBinning2D_D3_j2_k10[iet]->GetGlobalBinNumber(igenjet1_tran_num_10/igenjet1_tran_den_10,leadgenptres[isrc]);
+                                        h_genvar_2D_D3_j2_k1[iet]->Fill(igenbin_D3_j2_k1, weighttrg);
+                                        h_genvar_2D_D3_j2_k2[iet]->Fill(igenbin_D3_j2_k2, weighttrg);
+                                        h_genvar_2D_D3_j2_k3[iet]->Fill(igenbin_D3_j2_k3, weighttrg);
+                                        h_genvar_2D_D3_j2_k4[iet]->Fill(igenbin_D3_j2_k4, weighttrg);
+                                        h_genvar_2D_D3_j2_k5[iet]->Fill(igenbin_D3_j2_k5, weighttrg);
+                                        h_genvar_2D_D3_j2_k6[iet]->Fill(igenbin_D3_j2_k6, weighttrg);
+                                        h_genvar_2D_D3_j2_k7[iet]->Fill(igenbin_D3_j2_k7, weighttrg);
+                                        h_genvar_2D_D3_j2_k8[iet]->Fill(igenbin_D3_j2_k8, weighttrg);
+                                        h_genvar_2D_D3_j2_k9[iet]->Fill(igenbin_D3_j2_k9, weighttrg);
+                                        h_genvar_2D_D3_j2_k10[iet]->Fill(igenbin_D3_j2_k10, weighttrg);
+
+
+				}//if(isrc==0){
 		// RM & Reco Fake & Gen Miss
 		if (isrc==0 && isReconstruct){
 			if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){	
@@ -5734,7 +9101,7 @@ hchpt->Fill(recojet0_pt,nchg,weighttrg);
                                         h_recofake_D2_j2_k10[irecohtjec[isrc]][iet]->Fill((ijet1_long_num_10/ijet1_long_den_10),weighttrg);
 
 					
-				
+					h_recofake_D3_j1_k1[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_01/ijet0_tran_den_01),weighttrg);	
                                         h_recofake_D3_j1_k2[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_02/ijet0_tran_den_02),weighttrg);
                                         h_recofake_D3_j1_k3[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_03/ijet0_tran_den_03),weighttrg);
                                         h_recofake_D3_j1_k4[irecohtjec[isrc]][iet]->Fill((ijet0_tran_num_04/ijet0_tran_den_04),weighttrg);
@@ -5831,8 +9198,9 @@ hchpt->Fill(recojet0_pt,nchg,weighttrg);
 		}//for (int isrc=0; isrc<nGenReso; isrc++) {
 	} //isMC
 }//for (int iet=0; iet<njetetamn; iet++){
-
-//-----------------------------------------------Calculate And Fill the  EventShape Variables--------------------------------
+//}
+*/
+//-----------------------------------------------Calculate And Fill the EventShape Variables--------------------------------
 
       for(int itp=0; itp<ntype; itp++) {
 	for (int iet=0; iet<njetetamn; iet++) {
@@ -6039,6 +9407,8 @@ QCDEventShape::endJob()
 {
 
      TUnfoldBinng2D->cd();
+
+     // TUnfoldBinning ESV
      for (int ityp=0; ityp<ntype; ityp++) {
       for (int iet=0; iet<njetetamn; iet++) {
         for (int ij=0; ij<nvar; ij++) {
@@ -6069,6 +9439,189 @@ QCDEventShape::endJob()
   //myfile1->Close();
   //fs->Write();
   //fs->Close();
+  
+  // TUnfoldBinning Jet Charge
+  for (int iet=0; iet<njetetamn; iet++) {
+	for(int ik=0; ik<10; ik++){
+		h_recovar_2D_D1J1[ik][iet]->Write();
+		h_recovar_2D_D1J2[ik][iet]->Write();
+		h_recovar_2D_D2J1[ik][iet]->Write();
+                h_recovar_2D_D2J2[ik][iet]->Write();
+		h_recovar_2D_D3J1[ik][iet]->Write();
+                h_recovar_2D_D3J2[ik][iet]->Write();
+
+		h_genvar_2D_D1J1[ik][iet]->Write();
+                h_genvar_2D_D1J2[ik][iet]->Write();
+                h_genvar_2D_D2J1[ik][iet]->Write();
+                h_genvar_2D_D2J2[ik][iet]->Write();
+                h_genvar_2D_D3J1[ik][iet]->Write();
+                h_genvar_2D_D3J2[ik][iet]->Write();
+
+		h_recofake_2D_D1J1[ik][iet]->Write();
+		h_recofake_2D_D1J2[ik][iet]->Write();
+
+		h_recofake_2D_D2J1[ik][iet]->Write();
+                h_recofake_2D_D2J2[ik][iet]->Write();
+
+		h_recofake_2D_D3J1[ik][iet]->Write();
+                h_recofake_2D_D3J2[ik][iet]->Write();
+
+ 		h_genmiss_2D_D1J1[ik][iet]->Write();
+		h_genmiss_2D_D1J2[ik][iet]->Write();
+
+		h_genmiss_2D_D2J1[ik][iet]->Write();
+                h_genmiss_2D_D2J2[ik][iet]->Write();
+
+		h_genmiss_2D_D3J1[ik][iet]->Write();
+                h_genmiss_2D_D3J2[ik][iet]->Write();
+
+
+		RM_2D_D1J1[ik][iet]->Write();
+		RM_2D_D1J2[ik][iet]->Write();
+
+		RM_2D_D2J1[ik][iet]->Write();
+                RM_2D_D2J2[ik][iet]->Write();
+			
+		RM_2D_D3J1[ik][iet]->Write();
+                RM_2D_D3J2[ik][iet]->Write();
+		
+		}
+/*	
+	h_recovar_2D_D1_j1_k1[iet]->Write();
+	h_recovar_2D_D1_j1_k2[iet]->Write();
+	h_recovar_2D_D1_j1_k3[iet]->Write();
+	h_recovar_2D_D1_j1_k4[iet]->Write();
+	h_recovar_2D_D1_j1_k5[iet]->Write();
+	h_recovar_2D_D1_j1_k6[iet]->Write();
+	h_recovar_2D_D1_j1_k7[iet]->Write();
+	h_recovar_2D_D1_j1_k8[iet]->Write();
+	h_recovar_2D_D1_j1_k9[iet]->Write();
+	h_recovar_2D_D1_j1_k10[iet]->Write();
+
+	h_recovar_2D_D1_j2_k1[iet]->Write();
+        h_recovar_2D_D1_j2_k2[iet]->Write();
+        h_recovar_2D_D1_j2_k3[iet]->Write();
+        h_recovar_2D_D1_j2_k4[iet]->Write();
+        h_recovar_2D_D1_j2_k5[iet]->Write();
+        h_recovar_2D_D1_j2_k6[iet]->Write();
+        h_recovar_2D_D1_j2_k7[iet]->Write();
+        h_recovar_2D_D1_j2_k8[iet]->Write();
+        h_recovar_2D_D1_j2_k9[iet]->Write();
+        h_recovar_2D_D1_j2_k10[iet]->Write();
+
+	h_recovar_2D_D2_j1_k1[iet]->Write();
+        h_recovar_2D_D2_j1_k2[iet]->Write();
+        h_recovar_2D_D2_j1_k3[iet]->Write();
+        h_recovar_2D_D2_j1_k4[iet]->Write();
+        h_recovar_2D_D2_j1_k5[iet]->Write();
+        h_recovar_2D_D2_j1_k6[iet]->Write();
+        h_recovar_2D_D2_j1_k7[iet]->Write();
+        h_recovar_2D_D2_j1_k8[iet]->Write();
+        h_recovar_2D_D2_j1_k9[iet]->Write();
+        h_recovar_2D_D2_j1_k10[iet]->Write();
+  
+        h_recovar_2D_D2_j2_k1[iet]->Write();
+        h_recovar_2D_D2_j2_k2[iet]->Write();
+        h_recovar_2D_D2_j2_k3[iet]->Write();
+        h_recovar_2D_D2_j2_k4[iet]->Write();
+        h_recovar_2D_D2_j2_k5[iet]->Write();
+        h_recovar_2D_D2_j2_k6[iet]->Write();
+        h_recovar_2D_D2_j2_k7[iet]->Write();
+        h_recovar_2D_D2_j2_k8[iet]->Write();
+        h_recovar_2D_D2_j2_k9[iet]->Write();
+        h_recovar_2D_D2_j2_k10[iet]->Write();
+
+	h_recovar_2D_D3_j1_k1[iet]->Write();
+        h_recovar_2D_D3_j1_k2[iet]->Write();
+        h_recovar_2D_D3_j1_k3[iet]->Write();
+        h_recovar_2D_D3_j1_k4[iet]->Write();
+        h_recovar_2D_D3_j1_k5[iet]->Write();
+        h_recovar_2D_D3_j1_k6[iet]->Write();
+        h_recovar_2D_D3_j1_k7[iet]->Write();
+        h_recovar_2D_D3_j1_k8[iet]->Write();
+        h_recovar_2D_D3_j1_k9[iet]->Write();
+        h_recovar_2D_D3_j1_k10[iet]->Write();
+  
+        h_recovar_2D_D3_j2_k1[iet]->Write();
+        h_recovar_2D_D3_j2_k2[iet]->Write();
+        h_recovar_2D_D3_j2_k3[iet]->Write();
+        h_recovar_2D_D3_j2_k4[iet]->Write();
+        h_recovar_2D_D3_j2_k5[iet]->Write();
+        h_recovar_2D_D3_j2_k6[iet]->Write();
+        h_recovar_2D_D3_j2_k7[iet]->Write();
+        h_recovar_2D_D3_j2_k8[iet]->Write();
+        h_recovar_2D_D3_j2_k9[iet]->Write();
+        h_recovar_2D_D3_j2_k10[iet]->Write();
+
+
+	h_genvar_2D_D1_j1_k1[iet]->Write();
+        h_genvar_2D_D1_j1_k2[iet]->Write();
+        h_genvar_2D_D1_j1_k3[iet]->Write();
+        h_genvar_2D_D1_j1_k4[iet]->Write();
+        h_genvar_2D_D1_j1_k5[iet]->Write();
+        h_genvar_2D_D1_j1_k6[iet]->Write();
+        h_genvar_2D_D1_j1_k7[iet]->Write();
+        h_genvar_2D_D1_j1_k8[iet]->Write();
+        h_genvar_2D_D1_j1_k9[iet]->Write();
+        h_genvar_2D_D1_j1_k10[iet]->Write();
+
+        h_genvar_2D_D1_j2_k1[iet]->Write();
+        h_genvar_2D_D1_j2_k2[iet]->Write();
+        h_genvar_2D_D1_j2_k3[iet]->Write();
+        h_genvar_2D_D1_j2_k4[iet]->Write();
+        h_genvar_2D_D1_j2_k5[iet]->Write();
+        h_genvar_2D_D1_j2_k6[iet]->Write();
+        h_genvar_2D_D1_j2_k7[iet]->Write();
+        h_genvar_2D_D1_j2_k8[iet]->Write();
+        h_genvar_2D_D1_j2_k9[iet]->Write();
+        h_genvar_2D_D1_j2_k10[iet]->Write();
+
+        h_genvar_2D_D2_j1_k1[iet]->Write();
+        h_genvar_2D_D2_j1_k2[iet]->Write();
+        h_genvar_2D_D2_j1_k3[iet]->Write();
+        h_genvar_2D_D2_j1_k4[iet]->Write();
+        h_genvar_2D_D2_j1_k5[iet]->Write();
+        h_genvar_2D_D2_j1_k6[iet]->Write();
+        h_genvar_2D_D2_j1_k7[iet]->Write();
+        h_genvar_2D_D2_j1_k8[iet]->Write();
+        h_genvar_2D_D2_j1_k9[iet]->Write();
+        h_genvar_2D_D2_j1_k10[iet]->Write();
+
+        h_genvar_2D_D2_j2_k1[iet]->Write();
+        h_genvar_2D_D2_j2_k2[iet]->Write();
+        h_genvar_2D_D2_j2_k3[iet]->Write();
+        h_genvar_2D_D2_j2_k4[iet]->Write();
+        h_genvar_2D_D2_j2_k5[iet]->Write();
+        h_genvar_2D_D2_j2_k6[iet]->Write();
+        h_genvar_2D_D2_j2_k7[iet]->Write();
+        h_genvar_2D_D2_j2_k8[iet]->Write();
+        h_genvar_2D_D2_j2_k9[iet]->Write();
+        h_genvar_2D_D2_j2_k10[iet]->Write();
+
+        h_genvar_2D_D3_j1_k1[iet]->Write();
+        h_genvar_2D_D3_j1_k2[iet]->Write();
+        h_genvar_2D_D3_j1_k3[iet]->Write();
+        h_genvar_2D_D3_j1_k4[iet]->Write();
+        h_genvar_2D_D3_j1_k5[iet]->Write();
+        h_genvar_2D_D3_j1_k6[iet]->Write();
+        h_genvar_2D_D3_j1_k7[iet]->Write();
+        h_genvar_2D_D3_j1_k8[iet]->Write();
+        h_genvar_2D_D3_j1_k9[iet]->Write();
+        h_genvar_2D_D3_j1_k10[iet]->Write();
+
+        h_genvar_2D_D3_j2_k1[iet]->Write();
+        h_genvar_2D_D3_j2_k2[iet]->Write();
+        h_genvar_2D_D3_j2_k3[iet]->Write();
+        h_genvar_2D_D3_j2_k4[iet]->Write();
+        h_genvar_2D_D3_j2_k5[iet]->Write();
+        h_genvar_2D_D3_j2_k6[iet]->Write();
+        h_genvar_2D_D3_j2_k7[iet]->Write();
+        h_genvar_2D_D3_j2_k8[iet]->Write();
+        h_genvar_2D_D3_j2_k9[iet]->Write();
+        h_genvar_2D_D3_j2_k10[iet]->Write();
+
+*/
+	}
 }
 
 // ------------ method called when starting to processes a run  ------------
@@ -6258,13 +9811,6 @@ DEFINE_FWK_MODULE(QCDEventShape);
 /*
 L1_ZeroBias 	29989	5327	5327	5327	5327	1601	801	801	801	801	801	801	801
 17	L1_SingleJet52 	3000	10000	6000	4000	3000	1500	800	500	400	300	150	100	262139
-18	L1_SingleJet68 	1500	1500	1000	750	500	300	150	100	75	50	30	15	262139
-19	L1_SingleJet92 	3000	3000	2000	2000	1500	800	400	300	200	150	80	40	262139
-20	L1_SingleJet128 1000	1000	1	1	1	1	1	1	1	1	1	1	262139
-21	L1_SingleJet176 300	300	1	1	1	1	1	1	1	1	1	1	262139
-
-66	HLT_DiPFJetAve40_v2 (2013430) 	25 	25 	16 	12 	8 	5 	3 	2 	1 	1 	1 	1 	0 	L1_ZeroBias
-69	HLT_DiPFJetAve60_v2 (2013431) 	1 	1 	1 	1 	1 	1 	1 	1 	1 	1 	1 	1 	0 	L1_ZeroBias
 71	HLT_DiPFJetAve80_v2 (2013432) 	7 	7 	7 	7 	7 	7 	7 	7 	7 	7 	7 	7 	7 	L1_SingleJet52
 58	HLT_DiPFJetAve140_v2 (2013433) 	2 	2 	2 	2 	1 	1 	1 	1 	1 	1 	1 	1 	1 	L1_SingleJet92
 60	HLT_DiPFJetAve200_v2 (2013434) 	250 	250 	125 	85 	60 	35 	16 	12 	9 	6 	4 	2 	1 	L1_SingleJet128
