@@ -626,6 +626,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   //std::ofstream myfile;
   //myfile.open("txt.log");
   TDirectoryFile *TUnfoldBinng2D =new TDirectoryFile("analyzeBasicPat2D","TUnfoldBinning 1D Historgams");
+  //TDirectoryFile *binning2D =new TDirectoryFile("Binning2D","Binning");
 
   //TH1F* h_recoevtvar[10][ntype][njetptmn][njetetamn][nvar];
   TH1F* h_recoevtvar[ntype][njetptmn][njetetamn][nvar];
@@ -1788,7 +1789,9 @@ for(int ipt=0; ipt<njetptmn; ipt++){
                                 sprintf(title, "Gen Miss Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
                                 h_genmiss_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
                                 h_genmiss_D2J1[ik][ipt][iet]->Sumw2();
-                                sprintf(title, "Gen Miss Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
+                                
+				sprintf(name, "genmiss_jc_D2_j2_k%i_pt%i_eta%i", ik, ipt, iet);
+				sprintf(title, "Gen Miss Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
                                 h_genmiss_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik]);
                                 h_genmiss_D2J2[ik][ipt][iet]->Sumw2();
 
@@ -4004,7 +4007,7 @@ else {
 			                
 			if(isMC){
                         	for (int isrc=0; isrc<nGenReso; isrc++) {
-                                	if (igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
+                                	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
                                 		if(isrc==0) {
 							h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
 							h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
@@ -4034,6 +4037,7 @@ else {
                                         h_genvar_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
 
 							}//if(isrc==0)
+						}//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
 				if (isrc==0 && isReconstruct){
 				        if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
                                 		h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))),weighttrg);
@@ -4130,8 +4134,7 @@ else {
 
 					}
 				}
-							}//if (isrc==0 && isReconstruct){
-						}//if (igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
+						}//if (isrc==0 && isReconstruct){
 					}//for (int isrc=0; isrc<nGenReso; isrc++) {
 				}//if(isMC){
 			}//for (int ik=0; ik<10; ik++){
@@ -4425,6 +4428,30 @@ QCDEventShape::endJob()
 		
 		}//for(int ik=0; ik<10; ik++){
 	}//for (int iet=0; iet<njetetamn; iet++) {
+/*	
+	binning2D->cd();
+	for (int iet=0; iet<njetetamn; iet++) {
+	        for(int ik=0; ik<10; ik++){
+			binsRec2D_D1J1[ik][iet]->Write();
+			binsRec2D_D1J2[ik][iet]->Write();
+
+			binsRec2D_D2J1[ik][iet]->Write();
+                        binsRec2D_D2J2[ik][iet]->Write();
+
+			binsRec2D_D3J1[ik][iet]->Write();
+                        binsRec2D_D3J2[ik][iet]->Write();
+
+			binsGen2D_D1J1[ik][iet]->Write();
+			binsGen2D_D1J2[ik][iet]->Write();			
+
+			binsGen2D_D2J1[ik][iet]->Write();
+                        binsGen2D_D2J2[ik][iet]->Write();
+
+			binsGen2D_D3J1[ik][iet]->Write();
+                        binsGen2D_D3J2[ik][iet]->Write();
+			}
+		}
+*/	
 }
 
 // ------------ method called when starting to processes a run  ------------

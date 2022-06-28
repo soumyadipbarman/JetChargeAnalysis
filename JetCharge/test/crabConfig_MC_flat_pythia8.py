@@ -2,7 +2,7 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName ='JetCharge_TuneCP5_Flat_13TeV_pythia8_29012022'
+config.General.requestName ='JetCharge_TuneCP5_Flat_13TeV_pythia8_22062022'
 
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
@@ -17,9 +17,9 @@ config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
 #config.JobType.numCores = 4
 
 config.JobType.inputFiles= [
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_SF_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"
 ]
 
 config.Data.inputDataset ='/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6_ext2-v2/MINIAODSIM'
@@ -35,7 +35,7 @@ config.Data.unitsPerJob = 1  #For Filebased or Lumibased
 #config.Data.outLFNDirBase = '/store/user/%s/' % (sukundu)
 config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
 config.Data.publication = False
-config.Data.outputDatasetTag = 'JetCharge_MC_UL2017_Pythia8_flat_29012022'
+config.Data.outputDatasetTag = 'JetCharge_MC_UL2017_Pythia8_flat_22062022'
 config.JobType.allowUndistributedCMSSW = True
-#config.Site.storageSite ='T2_IN_TIFR'
-config.Site.storageSite ='T3_US_FNALLPC'
+config.Site.storageSite ='T2_IN_TIFR'
+#config.Site.storageSite ='T3_US_FNALLPC'
