@@ -66,26 +66,21 @@ def main():
                 config.General.transferOutputs = True
                 config.General.transferLogs = True
                 config.JobType.pluginName = 'Analysis'
-                config.JobType.psetName = 'Run_QCD_test_miaod_v2_94x_mc_cfg.py'
+                config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
 #               config.Data.ignoreLocality = True
                 config.Data.inputDBS = 'global'
 		config.JobType.inputFiles= [
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/MC17_12Apr2018/Fall17_V3b_MC_PtResolution_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/MC17_12Apr2018/Fall17_V3b_MC_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/MC17_12Apr2018/Fall17_17Nov2017_V32_MC_Uncertainty_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sukundu/private/ESV_charge_CMSSW/Uncertainty2017/MC17_12Apr2018/Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt"]
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_SF_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"]
 
-                config.JobType.maxMemoryMB = 2500
+
+#               config.JobType.maxMemoryMB = 2500
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
-                config.Data.useParent = True
+#               config.Data.useParent = True
                 config.Data.inputDataset = None
 #               config.Data.splitting = 'LumiBased'
 #               config.Data.splitting = 'Automatic'
@@ -94,9 +89,11 @@ def main():
                 config.Data.outputDatasetTag = None
 #                config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 #               config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
-                config.Data.publication = True
+		config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
+                config.Data.publication = False
                 config.JobType.allowUndistributedCMSSW = True
-                config.Site.storageSite = 'T2_IN_TIFR'
+                #config.Site.storageSite = 'T2_IN_TIFR'
+		config.Site.storageSite = 'T3_US_FNALLPC'
 
             # Will submit one task for each of these input datasets.
                 inputDatasets = [

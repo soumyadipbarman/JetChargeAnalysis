@@ -2,7 +2,7 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName ='JetCharge_TuneCP5_Flat_13TeV_pythia8_22062022'
+config.General.requestName ='JetCharge_TuneCP5_Flat_13TeV_pythia8_02072022'
 
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
@@ -35,7 +35,7 @@ config.Data.unitsPerJob = 1  #For Filebased or Lumibased
 #config.Data.outLFNDirBase = '/store/user/%s/' % (sukundu)
 config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
 config.Data.publication = False
-config.Data.outputDatasetTag = 'JetCharge_MC_UL2017_Pythia8_flat_22062022'
+config.Data.outputDatasetTag = 'JetCharge_MC_UL2017_Pythia8_flat_02072022'
 config.JobType.allowUndistributedCMSSW = True
 config.Site.storageSite ='T2_IN_TIFR'
 #config.Site.storageSite ='T3_US_FNALLPC'

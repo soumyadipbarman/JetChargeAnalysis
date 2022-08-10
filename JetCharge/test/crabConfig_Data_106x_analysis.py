@@ -1,11 +1,11 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-#config.General.requestName = 'JetCharge_Data_analysis_Run2017B-UL_29012022'
-#config.General.requestName = 'JetCharge_Data_analysis_Run2017C-UL_29012022'
-#config.General.requestName = 'JetCharge_Data_analysis_Run2017D-UL_29012022'
-#config.General.requestName = 'JetCharge_Data_analysis_Run2017E-UL_29012022'
-config.General.requestName = 'JetCharge_Data_analysis_Run2017F-UL_29012022'
+#config.General.requestName = 'JetHT_Run2017B_UL2017'
+#config.General.requestName = 'JetHT_Run2017C_UL2017'
+#config.General.requestName = 'JetHT_Run2017D_UL2017'
+#config.General.requestName = 'JetHT_Run2017E_UL2017'
+config.General.requestName = 'JetHT_Run2017F_UL2017'
 
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
@@ -14,9 +14,13 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.psetName = 'Run_QCD_test_106x_data_cfg.py'
 
-config.JobType.inputFiles= ["/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v2/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt",
+config.JobType.inputFiles= ["/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunE_V5_DATA_UncertaintySources_AK4PFchs.txt",
+"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt",
 ]
 
 #config.Data.inputDataset = '/JetHT/Run2017B-09Aug2019_UL2017-v1/MINIAOD'
@@ -33,11 +37,11 @@ config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Coll
 config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
 config.Data.publication = False
 
-#config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017B_UL2017_29012022'
-#config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017C_UL2017_29012022'
-#config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017D_UL2017_29012022'
-#config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017E_UL2017_29012022'
-config.Data.outputDatasetTag = 'JetCharge_JetHT_Run2017F_UL2017_29012022'
+#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017B_UL2017'
+#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017C_UL2017'
+#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017D_UL2017'
+#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017E_UL2017'
+config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017F_UL2017'
 
 #config.Data.publishDataName = 'May2015_Data_analysis'
 
