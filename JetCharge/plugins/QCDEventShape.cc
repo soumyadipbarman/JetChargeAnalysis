@@ -26,14 +26,14 @@
 //#define TRIGGER
 
 // //for Madgraph
-#define LHAPDF
-#define JETRESO
-#define TRACKSYS
-#define TRIGGER
+//#define LHAPDF
+//#define JETRESO
+//#define TRACKSYS
+//#define TRIGGER
 
 ////for Pythia8 & Herwig7
-//#define JETRESO
-//#define TRIGGER
+#define JETRESO
+#define TRIGGER
 
 //For Flat
 //#define FLAT
@@ -155,6 +155,7 @@ using namespace std;
 using namespace CLHEP;
 using namespace trigger;
 using namespace math;
+
 static const int nvar=32;
 //static const int njcvar=3; // 3 definitions of jet charge observables
 static const int nhist=10;
@@ -212,7 +213,6 @@ double endx[nvar]={10.0, 10.0, 10.0, 8.0, 12.0, 12.0,
                    6.0, 5.0, 5.0, 8.0, 8.0, 8.0,
                    7.0, 8.0, 8.0, 12.0, 12.0, 8.0,
                    0.0, 0.0};
-//--------------------------------------------------------------------
 /*
 //-------------------------No. of Bins For Reco Level for Fixed Bin
 //For Jet 
@@ -254,6 +254,9 @@ double jcmaxran[60]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0,
 		     1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
 	             1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,};
 */
+//----------------------------------------------
+
+/*
 int recojcd1bins[nkappa]={40,40,40,40,20,20,20,20,20,20};
 double recojcd1minran[nkappa]={-8.0,-5.0,-4.0,-3.0,-2.0,-2.0,-2.0,-2.0,-1.0,-1.0};
 double recojcd1maxran[nkappa]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0};
@@ -269,6 +272,26 @@ double genjcd1maxran[nkappa]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0};
 int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 double genjcd23minran[nkappa]={-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
+*/
+
+//Reco level
+int recojcd1bins[nkappa]={32,32,32,20,20,20,20,20,20,20};
+double recojcd1minran[nkappa]={-6.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd1maxran[nkappa]={6.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int recojcd23bins[nkappa]={20,20,20,20,20,20,20,20,20,20};
+double recojcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+
+//Gen level
+int genjcd1bins[nkappa]={16,16,16,10,10,10,10,10,10,10};
+double genjcd1minran[nkappa]={-6.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd1maxran[nkappa]={6.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
+double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+//--------------------------------------------------
 
 int rnbinsx0[nvar]={0,0,0,32,0,0,0,0,0,
                   32,0,0,0,0,0,14,0,
@@ -350,6 +373,9 @@ double binrngs1[nvar][nmxbins+1]={{},{},{},
 //double recohtbins[nHLTmx+1] = {83, 109, 172, 241, 309, 377, 462, 570, 3000.0};
 double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0};
 
+int recohtnbins[nkappa]={10,10,10,10,10,10,10,10,10,10};
+double recohtbinsmin[nkappa] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669};
+double recohtbinsmax[nkappa] = {119, 185, 251, 319, 388, 467, 518, 579, 669, 3000};
 //---------------------------------------------------------------------------------------------------------
 const int nusedvar=5;
 double usedvars[nusedvar]={3, 9, 15, 18, 24};
@@ -596,6 +622,8 @@ class QCDEventShape : public edm::EDAnalyzer {
   bool isTrigger;
   bool isRECO[ntype][njetetamn];
   bool isMC;
+  //bool isRECOJC;
+  //bool isGENJC;
   //  bool isParticle; //Do we want particle level informations, other than jets ?
   //  bool isGenParticle; //Do we want Simulated particle level informations, other than jets ?
   bool isReconstruct; // otherwise Only generator level informations  
@@ -625,7 +653,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   //ifstream myfile ("example.txt");
   //std::ofstream myfile;
   //myfile.open("txt.log");
-  TDirectoryFile *TUnfoldBinng2D =new TDirectoryFile("analyzeBasicPat2D","TUnfoldBinning 1D Historgams");
+  TDirectoryFile *TUnfoldBinng2D =new TDirectoryFile("analyzeBasicPat2D","2D Unfolding Historgams");
   //TDirectoryFile *binning2D =new TDirectoryFile("Binning2D","Binning");
 
   //TH1F* h_recoevtvar[10][ntype][njetptmn][njetetamn][nvar];
@@ -708,9 +736,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -1246,19 +1274,21 @@ char name1[200], title1[200];
         }
       }
 
-
 //-------------------------------------------- Define TUnfoldBinning Jet Charge --------------------------	
 
 for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
 	for (int ik=0; ik<10; ik++){
                 sprintf(RecoBinName, "Detector2d_d0_j0_k%i_eta%i", ik, iet);
                 binsRec2D_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
-                sprintf(RecoBinName, "Recobin2d_d0_j0_k%i_eta%i",ik, iet);
+                
+		sprintf(RecoBinName, "Recobin2d_d0_j0_k%i_eta%i",ik, iet);
                 RecoBinning2D_D1J1[ik][iet]= binsRec2D_D1J1[ik][iet]->AddBinning(RecoBinName);
-                sprintf(Axisname, "d0_j0_k%i", ik);
+                
+		sprintf(Axisname, "d0_j0_k%i", ik);
                 RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 
 		sprintf(RecoBinName, "Detector2d_d0_j1_k%i_eta%i", ik, iet);
@@ -1267,8 +1297,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D1J2[ik][iet]= binsRec2D_D1J2[ik][iet]->AddBinning(RecoBinName);
                 sprintf(Axisname, "d0_j1_k%i", ik);
                 RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		
 		sprintf(RecoBinName, "Detector2d_d1_j0_k%i_eta%i", ik, iet);
@@ -1277,8 +1308,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D2J1[ik][iet]= binsRec2D_D2J1[ik][iet]->AddBinning(RecoBinName);
                 sprintf(Axisname, "d1_j0_k%i", ik);
                 RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -1286,8 +1318,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D2J2[ik][iet]= binsRec2D_D2J2[ik][iet]->AddBinning(RecoBinName);
                 sprintf(Axisname, "d1_j1_k%i", ik);
                 RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 
 		sprintf(RecoBinName, "Detector2d_d2_j0_k%i_eta%i", ik, iet);
@@ -1296,8 +1329,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D3J1[ik][iet]= binsRec2D_D3J1[ik][iet]->AddBinning(RecoBinName);
                 sprintf(Axisname, "d2_j0_k%i", ik);
                 RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -1305,8 +1339,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D3J2[ik][iet]= binsRec2D_D3J2[ik][iet]->AddBinning(RecoBinName);
                 sprintf(Axisname, "d2_j1_k%i", ik);
                 RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 
 		sprintf(GenBinName, "Generator2d_d0_j0_k%i_eta%i", ik, iet);
@@ -1315,8 +1350,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D1J1[ik][iet]= binsGen2D_D1J1[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d0_j0_k%i", ik);
                 GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(GenBinName, "Generator2d_d0_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D1J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1324,8 +1360,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D1J2[ik][iet]= binsGen2D_D1J2[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d0_j1_k%i", ik);
                 GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(GenBinName, "Generator2d_d1_j0_k%i_eta%i", ik, iet);
                 binsGen2D_D2J1[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1333,8 +1370,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D2J1[ik][iet]= binsGen2D_D2J1[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d1_j0_k%i", ik);
                 GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(GenBinName, "Generator2d_d1_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D2J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1342,8 +1380,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D2J2[ik][iet]= binsGen2D_D2J2[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d1_j1_k%i", ik);
                 GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(GenBinName, "Generator2d_d2_j0_k%i_eta%i", ik, iet);
                 binsGen2D_D3J1[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1351,8 +1390,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D3J1[ik][iet]= binsGen2D_D3J1[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d2_j0_k%i", ik);
                 GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
         
                 sprintf(GenBinName, "Generator2d_d2_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D3J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1360,8 +1400,9 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 GenBinning2D_D3J2[ik][iet]= binsGen2D_D3J2[ik][iet]->AddBinning(GenBinName);
                 sprintf(Axisname, "d2_j1_k%i", ik);
                 GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
-                sprintf(Axisname, "ht");
-                GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                sprintf(Axisname, "pt");
+                //GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 		}
 }
 
@@ -1773,7 +1814,7 @@ for(int ipt=0; ipt<njetptmn; ipt++){
                                 sprintf(title, "Reco Fake Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
                                 h_recofake_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
                                 h_recofake_D3J2[ik][ipt][iet]->Sumw2();
-
+			}
 
 				sprintf(name, "genmiss_jc_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
                                 sprintf(title, "Gen Miss Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet] );
@@ -1807,7 +1848,6 @@ for(int ipt=0; ipt<njetptmn; ipt++){
 				}
 			}
 		}
-	}
 
   //==============****================================  
 #ifndef GENPART                     
@@ -2362,6 +2402,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   std::vector<HepLorentzVector> tmpjt4v; 
   std::vector<HepLorentzVector> tmpcand4v;                
   std::vector<HepLorentzVector> tmpgen4v;                                                                                             
+  
   std::vector<HepLorentzVector> genmom[nGenReso][ntype][njetetamn];
   vector<double> genvar;
 
@@ -2516,11 +2557,11 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double leadingpt = 0;    // jet charge (single jet)
   bool isInEtaRange[njetetamn]={0}; //GMA{0,0,0,0};
   
-  recojet0_pt = 0;
-  recojet1_pt = 0;
+  recojet0_pt = 0.0;
+  recojet1_pt = 0.0;
  
-  genrecojet0_pt = 0;
-  genrecojet1_pt = 0; 
+  genrecojet0_pt = 0.0;
+  genrecojet1_pt = 0.0; 
 #ifndef GENPART
   edm::Handle<pat::JetCollection> ak4PFJets;
   if (isReconstruct) { 
@@ -3023,8 +3064,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    //for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
 	    
 	    for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
-	      //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet]) {
-	      if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet]) {   // check here
+	      if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet]) {
+	      //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet]) {   // check here
 		int ireorjt = jetindx[isrc][ijet];
 		
 		double pt = jetptx[isrc][ijet];
@@ -3959,18 +4000,23 @@ else {
       //cout << "Rand Number " << k << endl;*/
  
 //-----------------------------------------------Calculate And Fill Jet Charge Obserables------------------------------------
-
 	// Profile histograms
 	//hprof->Fill(recojet0_pt,ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
 	hchpt->Fill(recojet0_pt,nchg,weighttrg);
-
+//for(int itp=0; itp<1; itp++){
 	for (int iet=0; iet<njetetamn; iet++){
 		for (int ik=0; ik<10; ik++){
                 	if (isReconstruct) {
                         	for (int isrc=0; isrc<njecmx; isrc++) {
+					//if(isrc==0){isRECOJC = false;}
+					//isRECOJC = false;
                                 	if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+						//isRECOJC = true;
                                 		if (isrc==0) {
+							//isRECOJC = true;
 							//cout<<"testing 2"<<endl;
+							//test1[ik]=(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])));
 							h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
 							h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
 
@@ -4007,8 +4053,14 @@ else {
 			                
 			if(isMC){
                         	for (int isrc=0; isrc<nGenReso; isrc++) {
-                                	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
+					//if(isrc==0){isRECOJC = false;}
+					//isGENJC = false;
+					if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                	//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
+						//isGENJC = true;
                                 		if(isrc==0) {
+							//isGENJC = true;
+							//test2[ik]=(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])));
 							h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
 							h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
 
@@ -4039,8 +4091,13 @@ else {
 							}//if(isrc==0)
 						}//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
 				if (isrc==0 && isReconstruct){
-				        if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
-                                		h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))),weighttrg);
+				if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+			        //if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1 && genmom[isrc][itp][iet].size()>1){
+				//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){	
+				//if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+						//if((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) && (igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])))){
+						//if(test1 && test2){
+                                		h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))),weighttrg);//}
 						h_RM_D1J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))),(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))),weighttrg);
 						
 						h_RM_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),(igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
@@ -4052,7 +4109,9 @@ else {
 
 				        int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
        					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
-						RM_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, igenbin_D1J1, weighttrg);
+					//if((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) && (igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])))){
+					//if(test1[ik] && test2[ik]){
+						RM_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, igenbin_D1J1, weighttrg);//}
 
                                         int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
                                 	int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);     
@@ -4076,6 +4135,8 @@ else {
 								}//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				else {
 					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+					//if(isRECOJC && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
 						h_recofake_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
 						h_recofake_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
 
@@ -4105,6 +4166,8 @@ else {
 
 					}
 					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+					//if(isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
+					//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 						h_genmiss_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
 						h_genmiss_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
 
@@ -4139,8 +4202,7 @@ else {
 				}//if(isMC){
 			}//for (int ik=0; ik<10; ik++){
 		}//for (int iet=0; iet<njetetamn; iet++){
-
-	
+//	}
 //-----------------------------------------------Calculate And Fill the EventShape Variables--------------------------------
 
       for(int itp=0; itp<ntype; itp++) {
