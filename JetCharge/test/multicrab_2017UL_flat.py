@@ -92,7 +92,8 @@ def main():
 		config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
                 config.Data.publication = False
                 config.JobType.allowUndistributedCMSSW = True
-                config.Site.storageSite = 'T2_IN_TIFR'
+                #config.Site.storageSite = 'T2_IN_TIFR'
+		config.Site.storageSite = 'T3_US_FNALLPC'
 
             # Will submit one task for each of these input datasets.
                 inputDatasets = [
