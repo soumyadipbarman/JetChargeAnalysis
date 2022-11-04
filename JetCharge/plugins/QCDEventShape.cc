@@ -25,17 +25,17 @@
 //#define JETENERGY
 //#define TRIGGER
 
-// //for Madgraph
-#define LHAPDF
-#define JETRESO
-#define TRACKSYS
-#define TRIGGER
-
-////for Pythia8 & Herwig7
+////for Madgraph
+//#define LHAPDF
 //#define JETRESO
+//#define TRACKSYS
 //#define TRIGGER
 
-//For Flat
+////for Pythia8 & Herwig7
+#define JETRESO
+#define TRIGGER
+
+////For Flat
 //#define FLAT
 
 
@@ -165,7 +165,25 @@ static const int nHLTmx=10;
 
 const int nkappa=10;
 double kappa[nkappa]={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-double recojet0_pt, recojet1_pt, genrecojet0_pt, genrecojet1_pt;
+
+double recojet1_pt; 
+double recojet1g_pt, recojet1qg_pt, recojet1ag_pt;
+double recojet1b_pt, recojet1qb_pt, recojet1ab_pt;
+double recojet1c_pt, recojet1qc_pt, recojet1ac_pt;
+double recojet1s_pt, recojet1qs_pt, recojet1as_pt;
+double recojet1u_pt, recojet1qu_pt, recojet1au_pt;
+double recojet1d_pt, recojet1qd_pt, recojet1ad_pt; 
+
+double recojet2_pt; 
+double recojet2g_pt, recojet2qg_pt, recojet2ag_pt; 
+double recojet2b_pt, recojet2qb_pt, recojet2ab_pt;
+double recojet2c_pt, recojet2qc_pt, recojet2ac_pt;
+double recojet2s_pt, recojet2qs_pt, recojet2as_pt;
+double recojet2u_pt, recojet2qu_pt, recojet2au_pt;
+double recojet2d_pt, recojet2qd_pt, recojet2ad_pt;
+
+double genrecojet1_pt, genrecojet1g_pt, genrecojet1b_pt, genrecojet1c_pt, genrecojet1s_pt, genrecojet1u_pt, genrecojet1d_pt; 
+double genrecojet2_pt, genrecojet2g_pt, genrecojet2b_pt, genrecojet2c_pt, genrecojet2s_pt, genrecojet2u_pt, genrecojet2d_pt; 
 //const char* jcvarname[njcvar]={"Default", "Longitudinal", "Transverse"}; // jet charge
 
 //-------------------------------------------
@@ -680,6 +698,171 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_recojc_D3J1[nkappa][njetptmn][njetetamn];
   TH1F* h_recojc_D3J2[nkappa][njetptmn][njetetamn];
 
+  //Reco Gluon jet
+  TH1F* h_recojc_gjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_gjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_gjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_gjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_gjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_gjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qgjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qgjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qgjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qgjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qgjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qgjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_agjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_agjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_agjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_agjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_agjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_agjt_D3J2[nkappa][njetptmn][njetetamn];
+  //Reco b jet
+  TH1F* h_recojc_bjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_bjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_bjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_bjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_bjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_bjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qbjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qbjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qbjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qbjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qbjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qbjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_abjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_abjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_abjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_abjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_abjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_abjt_D3J2[nkappa][njetptmn][njetetamn];
+
+  //Reco c jet
+  TH1F* h_recojc_cjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_cjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_cjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_cjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_cjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_cjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qcjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qcjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qcjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qcjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qcjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qcjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_acjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_acjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_acjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_acjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_acjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_acjt_D3J2[nkappa][njetptmn][njetetamn];
+
+  //Reco s jet
+  TH1F* h_recojc_sjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_sjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_sjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_sjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_sjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_sjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qsjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qsjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qsjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qsjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qsjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qsjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_asjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_asjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_asjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_asjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_asjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_asjt_D3J2[nkappa][njetptmn][njetetamn];
+  //Reco u jet
+  TH1F* h_recojc_ujt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_ujt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_ujt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_ujt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_ujt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_ujt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qujt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qujt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qujt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qujt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qujt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qujt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_aujt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_aujt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_aujt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_aujt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_aujt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_aujt_D3J2[nkappa][njetptmn][njetetamn];
+  //Reco d jet
+  TH1F* h_recojc_djt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_djt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_djt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_djt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_djt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_djt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_qdjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qdjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qdjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qdjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_qdjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_qdjt_D3J2[nkappa][njetptmn][njetetamn];
+  //
+  TH1F* h_recojc_adjt_D1J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_adjt_D1J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_adjt_D2J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_adjt_D2J2[nkappa][njetptmn][njetetamn];
+
+  TH1F* h_recojc_adjt_D3J1[nkappa][njetptmn][njetetamn];
+  TH1F* h_recojc_adjt_D3J2[nkappa][njetptmn][njetetamn];
+
   //Gen
   TH1F* h_genjc_D1J1[nkappa][njetptmn][njetetamn];
   TH1F* h_genjc_D1J2[nkappa][njetptmn][njetetamn];
@@ -744,9 +927,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -767,7 +950,175 @@ class QCDEventShape : public edm::EDAnalyzer {
 
   TUnfoldBinning *binsRec2D_D3J1[nkappa][njetetamn];
   TUnfoldBinning *binsRec2D_D3J2[nkappa][njetetamn];
-  
+
+  // g jets
+  TUnfoldBinning *binsRec2D_gjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_gjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_gjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_gjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_gjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_gjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qgjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qgjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qgjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qgjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qgjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qgjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_agjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_agjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_agjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_agjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_agjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_agjt_D3J2[nkappa][njetetamn];
+
+  // b jets
+  TUnfoldBinning *binsRec2D_bjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_bjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_bjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_bjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_bjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_bjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qbjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qbjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qbjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qbjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qbjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qbjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_abjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_abjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_abjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_abjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_abjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_abjt_D3J2[nkappa][njetetamn];
+
+  // c jets
+  TUnfoldBinning *binsRec2D_cjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_cjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_cjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_cjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_cjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_cjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qcjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qcjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qcjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qcjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qcjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qcjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_acjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_acjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_acjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_acjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_acjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_acjt_D3J2[nkappa][njetetamn];
+
+  // s jets
+  TUnfoldBinning *binsRec2D_sjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_sjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_sjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_sjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_sjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_sjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qsjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qsjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qsjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qsjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qsjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qsjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_asjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_asjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_asjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_asjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_asjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_asjt_D3J2[nkappa][njetetamn];
+
+  // u jets
+  TUnfoldBinning *binsRec2D_ujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_ujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_ujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_ujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_ujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_ujt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qujt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_aujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_aujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_aujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_aujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_aujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_aujt_D3J2[nkappa][njetetamn];
+
+  // d jets
+  TUnfoldBinning *binsRec2D_djt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_djt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_djt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_djt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_djt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_djt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_qdjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qdjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qdjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qdjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_qdjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_qdjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *binsRec2D_adjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_adjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_adjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_adjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *binsRec2D_adjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *binsRec2D_adjt_D3J2[nkappa][njetetamn];
+
   //Gen
   TUnfoldBinning *binsGen2D_D1J1[nkappa][njetetamn];
   TUnfoldBinning *binsGen2D_D1J2[nkappa][njetetamn];
@@ -787,6 +1138,175 @@ class QCDEventShape : public edm::EDAnalyzer {
 
   TUnfoldBinning *RecoBinning2D_D3J1[nkappa][njetetamn];
   TUnfoldBinning *RecoBinning2D_D3J2[nkappa][njetetamn];
+
+  // g jets
+  TUnfoldBinning *RecoBinning2D_gjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_gjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_gjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_gjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_gjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_gjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qgjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qgjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qgjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qgjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qgjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qgjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_agjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_agjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_agjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_agjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_agjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_agjt_D3J2[nkappa][njetetamn];
+
+
+  // b jets
+  TUnfoldBinning *RecoBinning2D_bjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_bjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_bjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_bjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_bjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_bjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qbjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qbjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qbjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qbjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qbjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qbjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_abjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_abjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_abjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_abjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_abjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_abjt_D3J2[nkappa][njetetamn];
+
+  // c jets
+  TUnfoldBinning *RecoBinning2D_cjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_cjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_cjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_cjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_cjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_cjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qcjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qcjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qcjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qcjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qcjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qcjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_acjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_acjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_acjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_acjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_acjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_acjt_D3J2[nkappa][njetetamn];
+
+  // s jets
+  TUnfoldBinning *RecoBinning2D_sjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_sjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_sjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_sjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_sjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_sjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qsjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qsjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qsjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qsjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qsjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qsjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_asjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_asjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_asjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_asjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_asjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_asjt_D3J2[nkappa][njetetamn];
+
+  // u jets
+  TUnfoldBinning *RecoBinning2D_ujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_ujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_ujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_ujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_ujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_ujt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qujt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_aujt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_aujt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_aujt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_aujt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_aujt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_aujt_D3J2[nkappa][njetetamn];
+
+  // d jets
+  TUnfoldBinning *RecoBinning2D_djt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_djt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_djt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_djt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_djt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_djt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_qdjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qdjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qdjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qdjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_qdjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_qdjt_D3J2[nkappa][njetetamn];
+  //
+  TUnfoldBinning *RecoBinning2D_adjt_D1J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_adjt_D1J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_adjt_D2J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_adjt_D2J2[nkappa][njetetamn];
+
+  TUnfoldBinning *RecoBinning2D_adjt_D3J1[nkappa][njetetamn];
+  TUnfoldBinning *RecoBinning2D_adjt_D3J2[nkappa][njetetamn];
 
   //Gen
   TUnfoldBinning *GenBinning2D_D1J1[nkappa][njetetamn];
@@ -820,6 +1340,177 @@ class QCDEventShape : public edm::EDAnalyzer {
 
   TH1* h_recovar_2D_D3J1[nkappa][njetetamn];
   TH1* h_recovar_2D_D3J2[nkappa][njetetamn];
+  
+  //Gluon Jet
+  TH1* h_recovar_gjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_gjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_gjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_gjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_gjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_gjt_2D_D3J2[nkappa][njetetamn];
+
+  //
+  TH1* h_recovar_qgjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qgjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qgjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qgjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qgjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qgjt_2D_D3J2[nkappa][njetetamn];
+
+  //
+  TH1* h_recovar_agjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_agjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_agjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_agjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_agjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_agjt_2D_D3J2[nkappa][njetetamn];
+
+  // b jets
+  TH1* h_recovar_bjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_bjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_bjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_bjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_bjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_bjt_2D_D3J2[nkappa][njetetamn];
+  
+  //
+  TH1* h_recovar_qbjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qbjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qbjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qbjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qbjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qbjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_abjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_abjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_abjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_abjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_abjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_abjt_2D_D3J2[nkappa][njetetamn];
+
+  // c jets
+  TH1* h_recovar_cjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_cjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_cjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_cjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_cjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_cjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_qcjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qcjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qcjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qcjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qcjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qcjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_acjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_acjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_acjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_acjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_acjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_acjt_2D_D3J2[nkappa][njetetamn];
+
+  // s jets
+  TH1* h_recovar_sjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_sjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_sjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_sjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_sjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_sjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_qsjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qsjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qsjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qsjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qsjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qsjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_asjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_asjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_asjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_asjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_asjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_asjt_2D_D3J2[nkappa][njetetamn];
+
+  // d jets
+  TH1* h_recovar_djt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_djt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_djt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_djt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_djt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_djt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_qdjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qdjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qdjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qdjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qdjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qdjt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_adjt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_adjt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_adjt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_adjt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_adjt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_adjt_2D_D3J2[nkappa][njetetamn];
+
+  // u jets
+  TH1* h_recovar_ujt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_ujt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_ujt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_ujt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_ujt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_ujt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_qujt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_qujt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qujt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_qujt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_qujt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_qujt_2D_D3J2[nkappa][njetetamn];
+  //
+  TH1* h_recovar_aujt_2D_D1J1[nkappa][njetetamn];
+  TH1* h_recovar_aujt_2D_D1J2[nkappa][njetetamn];
+
+  TH1* h_recovar_aujt_2D_D2J1[nkappa][njetetamn];
+  TH1* h_recovar_aujt_2D_D2J2[nkappa][njetetamn];
+
+  TH1* h_recovar_aujt_2D_D3J1[nkappa][njetetamn];
+  TH1* h_recovar_aujt_2D_D3J2[nkappa][njetetamn];
 
   //Gen
   TH1* h_genvar_2D_D1J1[nkappa][njetetamn];
@@ -867,6 +1558,78 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recojt_eta;
   TH1F* recojt_phi;
 
+  TH1F* recojtg_pt[njetetamn];
+  TH1F* recojtg_eta;
+  TH1F* recojtg_phi;
+
+  TH1F* recojtqg_pt[njetetamn];
+  TH1F* recojtqg_eta;
+  TH1F* recojtqg_phi;
+
+  TH1F* recojtag_pt[njetetamn];
+  TH1F* recojtag_eta;
+  TH1F* recojtag_phi;
+
+  TH1F* recojtb_pt[njetetamn];
+  TH1F* recojtb_eta;
+  TH1F* recojtb_phi;
+
+  TH1F* recojtqb_pt[njetetamn];
+  TH1F* recojtqb_eta;
+  TH1F* recojtqb_phi;
+
+  TH1F* recojtab_pt[njetetamn];
+  TH1F* recojtab_eta;
+  TH1F* recojtab_phi;
+
+  TH1F* recojtc_pt[njetetamn];
+  TH1F* recojtc_eta;
+  TH1F* recojtc_phi;
+
+  TH1F* recojtqc_pt[njetetamn];
+  TH1F* recojtqc_eta;
+  TH1F* recojtqc_phi;
+
+  TH1F* recojtac_pt[njetetamn];
+  TH1F* recojtac_eta;
+  TH1F* recojtac_phi;
+
+  TH1F* recojts_pt[njetetamn];
+  TH1F* recojts_eta;
+  TH1F* recojts_phi;
+
+  TH1F* recojtqs_pt[njetetamn];
+  TH1F* recojtqs_eta;
+  TH1F* recojtqs_phi;
+
+  TH1F* recojtas_pt[njetetamn];
+  TH1F* recojtas_eta;
+  TH1F* recojtas_phi;
+
+  TH1F* recojtu_pt[njetetamn];
+  TH1F* recojtu_eta;
+  TH1F* recojtu_phi;
+
+  TH1F* recojtqu_pt[njetetamn];
+  TH1F* recojtqu_eta;
+  TH1F* recojtqu_phi;
+
+  TH1F* recojtau_pt[njetetamn];
+  TH1F* recojtau_eta;
+  TH1F* recojtau_phi;
+
+  TH1F* recojtd_pt[njetetamn];
+  TH1F* recojtd_eta;
+  TH1F* recojtd_phi;
+
+  TH1F* recojtqd_pt[njetetamn];
+  TH1F* recojtqd_eta;
+  TH1F* recojtqd_phi;
+
+  TH1F* recojtad_pt[njetetamn];
+  TH1F* recojtad_eta;
+  TH1F* recojtad_phi;
+
   TH1F* recojtallave_pt[njetetamn];
   TH1F* recojtallavewt1_pt[njetetamn];
 
@@ -875,10 +1638,155 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recojt1_pt[njetetamn];
   TH1F* recojt1_eta;
   TH1F* recojt1_phi;
+ 
+  TH1F* recojt1g_pt[njetetamn];
+  TH1F* recojt1g_eta;
+  TH1F* recojt1g_phi;
+
+  TH1F* recojt1qg_pt[njetetamn];
+  TH1F* recojt1qg_eta;
+  TH1F* recojt1qg_phi;
+
+  TH1F* recojt1ag_pt[njetetamn];
+  TH1F* recojt1ag_eta;
+  TH1F* recojt1ag_phi;
+
+  TH1F* recojt1b_pt[njetetamn];
+  TH1F* recojt1b_eta;
+  TH1F* recojt1b_phi;
+
+  TH1F* recojt1qb_pt[njetetamn];
+  TH1F* recojt1qb_eta;
+  TH1F* recojt1qb_phi;
+
+  TH1F* recojt1ab_pt[njetetamn];
+  TH1F* recojt1ab_eta;
+  TH1F* recojt1ab_phi;
+
+  TH1F* recojt1c_pt[njetetamn];
+  TH1F* recojt1c_eta;
+  TH1F* recojt1c_phi;
+
+  TH1F* recojt1qc_pt[njetetamn];
+  TH1F* recojt1qc_eta;
+  TH1F* recojt1qc_phi;
+
+  TH1F* recojt1ac_pt[njetetamn];
+  TH1F* recojt1ac_eta;
+  TH1F* recojt1ac_phi;
+
+  TH1F* recojt1s_pt[njetetamn];
+  TH1F* recojt1s_eta;
+  TH1F* recojt1s_phi;
+
+  TH1F* recojt1qs_pt[njetetamn];
+  TH1F* recojt1qs_eta;
+  TH1F* recojt1qs_phi;
+  
+  TH1F* recojt1as_pt[njetetamn];
+  TH1F* recojt1as_eta;
+  TH1F* recojt1as_phi;
+
+  TH1F* recojt1u_pt[njetetamn];
+  TH1F* recojt1u_eta;
+  TH1F* recojt1u_phi;
+
+  TH1F* recojt1qu_pt[njetetamn];
+  TH1F* recojt1qu_eta;
+  TH1F* recojt1qu_phi;
+ 
+  TH1F* recojt1au_pt[njetetamn];
+  TH1F* recojt1au_eta;
+  TH1F* recojt1au_phi;
+
+  TH1F* recojt1d_pt[njetetamn];
+  TH1F* recojt1d_eta;
+  TH1F* recojt1d_phi;
+  
+  TH1F* recojt1qd_pt[njetetamn];
+  TH1F* recojt1qd_eta;
+  TH1F* recojt1qd_phi;
+
+  TH1F* recojt1ad_pt[njetetamn];
+  TH1F* recojt1ad_eta;
+  TH1F* recojt1ad_phi;
+
 
   TH1F* recojt2_pt[njetetamn];
   TH1F* recojt2_eta;
   TH1F* recojt2_phi;
+  
+  TH1F* recojt2g_pt[njetetamn];
+  TH1F* recojt2g_eta;
+  TH1F* recojt2g_phi;
+
+  TH1F* recojt2qg_pt[njetetamn];
+  TH1F* recojt2qg_eta;
+  TH1F* recojt2qg_phi;
+
+  TH1F* recojt2ag_pt[njetetamn];
+  TH1F* recojt2ag_eta;
+  TH1F* recojt2ag_phi;
+
+  TH1F* recojt2b_pt[njetetamn];
+  TH1F* recojt2b_eta;
+  TH1F* recojt2b_phi;
+
+  TH1F* recojt2qb_pt[njetetamn];
+  TH1F* recojt2qb_eta;
+  TH1F* recojt2qb_phi;
+
+  TH1F* recojt2ab_pt[njetetamn];
+  TH1F* recojt2ab_eta;
+  TH1F* recojt2ab_phi;
+
+  TH1F* recojt2c_pt[njetetamn];
+  TH1F* recojt2c_eta;
+  TH1F* recojt2c_phi;
+
+  TH1F* recojt2qc_pt[njetetamn];
+  TH1F* recojt2qc_eta;
+  TH1F* recojt2qc_phi;
+
+  TH1F* recojt2ac_pt[njetetamn];
+  TH1F* recojt2ac_eta;
+  TH1F* recojt2ac_phi;
+
+  TH1F* recojt2s_pt[njetetamn];
+  TH1F* recojt2s_eta;
+  TH1F* recojt2s_phi;
+
+  TH1F* recojt2qs_pt[njetetamn];
+  TH1F* recojt2qs_eta;
+  TH1F* recojt2qs_phi;
+
+  TH1F* recojt2as_pt[njetetamn];
+  TH1F* recojt2as_eta;
+  TH1F* recojt2as_phi;
+
+  TH1F* recojt2u_pt[njetetamn];
+  TH1F* recojt2u_eta;
+  TH1F* recojt2u_phi;
+
+  TH1F* recojt2qu_pt[njetetamn];
+  TH1F* recojt2qu_eta;
+  TH1F* recojt2qu_phi;
+
+  TH1F* recojt2au_pt[njetetamn];
+  TH1F* recojt2au_eta;
+  TH1F* recojt2au_phi;
+
+  TH1F* recojt2d_pt[njetetamn];
+  TH1F* recojt2d_eta;
+  TH1F* recojt2d_phi;
+
+  TH1F* recojt2qd_pt[njetetamn];
+  TH1F* recojt2qd_eta;
+  TH1F* recojt2qd_phi;
+
+  TH1F* recojt2ad_pt[njetetamn];
+  TH1F* recojt2ad_eta;
+  TH1F* recojt2ad_phi;
 
   TH1F* recojt3_pt[njetetamn];
   TH1F* recojt3_eta;
@@ -1334,6 +2242,1001 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 //RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
                 RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
+		// g jets
+		sprintf(RecoBinName, "Detector2d_gjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D1J1[ik][iet]= binsRec2D_gjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d0_j0_k%i", ik);
+                RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		sprintf(RecoBinName, "Detector2d_gjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D1J2[ik][iet]= binsRec2D_gjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d0_j1_k%i", ik);
+                RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		sprintf(RecoBinName, "Detector2d_gjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D2J1[ik][iet]= binsRec2D_gjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d1_j0_k%i", ik);
+                RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+          
+		sprintf(RecoBinName, "Detector2d_gjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D2J2[ik][iet]= binsRec2D_gjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d1_j1_k%i", ik);
+                RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                
+		sprintf(RecoBinName, "Detector2d_gjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D3J1[ik][iet]= binsRec2D_gjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d2_j0_k%i", ik);
+                RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		sprintf(RecoBinName, "Detector2d_gjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_gjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_gjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_gjt_D3J2[ik][iet]= binsRec2D_gjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "gjt_d2_j1_k%i", ik);
+                RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+      		//
+      		sprintf(RecoBinName, "Detector2d_qgjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D1J1[ik][iet]= binsRec2D_qgjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d0_j0_k%i", ik);
+                RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qgjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D1J2[ik][iet]= binsRec2D_qgjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d0_j1_k%i", ik);
+                RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qgjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D2J1[ik][iet]= binsRec2D_qgjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d1_j0_k%i", ik);
+                RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qgjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D2J2[ik][iet]= binsRec2D_qgjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d1_j1_k%i", ik);
+                RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qgjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D3J1[ik][iet]= binsRec2D_qgjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d2_j0_k%i", ik);
+                RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qgjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qgjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qgjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qgjt_D3J2[ik][iet]= binsRec2D_qgjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qgjt_d2_j1_k%i", ik);
+                RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_agjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D1J1[ik][iet]= binsRec2D_agjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d0_j0_k%i", ik);
+                RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_agjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D1J2[ik][iet]= binsRec2D_agjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d0_j1_k%i", ik);
+                RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_agjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D2J1[ik][iet]= binsRec2D_agjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d1_j0_k%i", ik);
+                RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_agjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D2J2[ik][iet]= binsRec2D_agjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d1_j1_k%i", ik);
+                RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_agjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D3J1[ik][iet]= binsRec2D_agjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d2_j0_k%i", ik);
+                RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_agjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_agjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_agjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_agjt_D3J2[ik][iet]= binsRec2D_agjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "agjt_d2_j1_k%i", ik);
+                RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		
+		// b jets
+		sprintf(RecoBinName, "Detector2d_bjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D1J1[ik][iet]= binsRec2D_bjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d0_j0_k%i", ik);
+                RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_bjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D1J2[ik][iet]= binsRec2D_bjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d0_j1_k%i", ik);
+                RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_bjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D2J1[ik][iet]= binsRec2D_bjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d1_j0_k%i", ik);
+                RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_bjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D2J2[ik][iet]= binsRec2D_bjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d1_j1_k%i", ik);
+                RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_bjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D3J1[ik][iet]= binsRec2D_bjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d2_j0_k%i", ik);
+                RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_bjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_bjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_bjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_bjt_D3J2[ik][iet]= binsRec2D_bjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d2_j1_k%i", ik);
+                RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_qbjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D1J1[ik][iet]= binsRec2D_qbjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qbjt_d0_j0_k%i", ik);
+                RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qbjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D1J2[ik][iet]= binsRec2D_qbjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qbjt_d0_j1_k%i", ik);
+                RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qbjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D2J1[ik][iet]= binsRec2D_qbjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qbjt_d1_j0_k%i", ik);
+                RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qbjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D2J2[ik][iet]= binsRec2D_qbjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qbjt_d1_j1_k%i", ik);
+                RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qbjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D3J1[ik][iet]= binsRec2D_qbjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qbjt_d2_j0_k%i", ik);
+                RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qbjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qbjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qbjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qbjt_D3J2[ik][iet]= binsRec2D_qbjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "bjt_d2_j1_k%i", ik);
+                RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_abjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D1J1[ik][iet]= binsRec2D_abjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d0_j0_k%i", ik);
+                RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_abjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D1J2[ik][iet]= binsRec2D_abjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d0_j1_k%i", ik);
+                RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_abjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D2J1[ik][iet]= binsRec2D_abjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d1_j0_k%i", ik);
+                RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_abjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D2J2[ik][iet]= binsRec2D_abjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d1_j1_k%i", ik);
+                RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_abjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D3J1[ik][iet]= binsRec2D_abjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d2_j0_k%i", ik);
+                RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_abjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_abjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_abjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_abjt_D3J2[ik][iet]= binsRec2D_abjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "abjt_d2_j1_k%i", ik);
+                RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		
+		// c jets
+		sprintf(RecoBinName, "Detector2d_cjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D1J1[ik][iet]= binsRec2D_cjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d0_j0_k%i", ik);
+                RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_cjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D1J2[ik][iet]= binsRec2D_cjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d0_j1_k%i", ik);
+                RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_cjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D2J1[ik][iet]= binsRec2D_cjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d1_j0_k%i", ik);
+                RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_cjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D2J2[ik][iet]= binsRec2D_cjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d1_j1_k%i", ik);
+                RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_cjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D3J1[ik][iet]= binsRec2D_cjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d2_j0_k%i", ik);
+                RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_cjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_cjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_cjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_cjt_D3J2[ik][iet]= binsRec2D_cjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "cjt_d2_j1_k%i", ik);
+                RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_qcjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D1J1[ik][iet]= binsRec2D_qcjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d0_j0_k%i", ik);
+                RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qcjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D1J2[ik][iet]= binsRec2D_qcjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d0_j1_k%i", ik);
+                RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qcjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D2J1[ik][iet]= binsRec2D_qcjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d1_j0_k%i", ik);
+                RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qcjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D2J2[ik][iet]= binsRec2D_qcjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d1_j1_k%i", ik);
+                RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qcjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D3J1[ik][iet]= binsRec2D_qcjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d2_j0_k%i", ik);
+                RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qcjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qcjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qcjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qcjt_D3J2[ik][iet]= binsRec2D_qcjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qcjt_d2_j1_k%i", ik);
+                RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_acjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D1J1[ik][iet]= binsRec2D_acjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d0_j0_k%i", ik);
+                RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_acjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D1J2[ik][iet]= binsRec2D_acjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d0_j1_k%i", ik);
+                RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_acjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D2J1[ik][iet]= binsRec2D_acjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d1_j0_k%i", ik);
+                RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_acjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D2J2[ik][iet]= binsRec2D_acjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d1_j1_k%i", ik);
+                RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_acjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D3J1[ik][iet]= binsRec2D_acjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d2_j0_k%i", ik);
+                RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_acjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_acjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_acjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_acjt_D3J2[ik][iet]= binsRec2D_acjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "acjt_d2_j1_k%i", ik);
+                RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+
+		// s jets
+		sprintf(RecoBinName, "Detector2d_sjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D1J1[ik][iet]= binsRec2D_sjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d0_j0_k%i", ik);
+                RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_sjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D1J2[ik][iet]= binsRec2D_sjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d0_j1_k%i", ik);
+                RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_sjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D2J1[ik][iet]= binsRec2D_sjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d1_j0_k%i", ik);
+                RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_sjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D2J2[ik][iet]= binsRec2D_sjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d1_j1_k%i", ik);
+                RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_sjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D3J1[ik][iet]= binsRec2D_sjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d2_j0_k%i", ik);
+                RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_sjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_sjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_sjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_sjt_D3J2[ik][iet]= binsRec2D_sjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "sjt_d2_j1_k%i", ik);
+                RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_qsjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D1J1[ik][iet]= binsRec2D_qsjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d0_j0_k%i", ik);
+                RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qsjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D1J2[ik][iet]= binsRec2D_qsjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d0_j1_k%i", ik);
+                RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qsjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D2J1[ik][iet]= binsRec2D_qsjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d1_j0_k%i", ik);
+                RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qsjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D2J2[ik][iet]= binsRec2D_qsjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d1_j1_k%i", ik);
+                RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qsjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D3J1[ik][iet]= binsRec2D_qsjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d2_j0_k%i", ik);
+                RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qsjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qsjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qsjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qsjt_D3J2[ik][iet]= binsRec2D_qsjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qsjt_d2_j1_k%i", ik);
+                RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_asjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D1J1[ik][iet]= binsRec2D_asjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d0_j0_k%i", ik);
+                RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_asjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D1J2[ik][iet]= binsRec2D_asjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d0_j1_k%i", ik);
+                RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_asjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D2J1[ik][iet]= binsRec2D_asjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d1_j0_k%i", ik);
+                RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_asjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D2J2[ik][iet]= binsRec2D_asjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d1_j1_k%i", ik);
+                RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_asjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D3J1[ik][iet]= binsRec2D_asjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d2_j0_k%i", ik);
+                RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_asjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_asjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_asjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_asjt_D3J2[ik][iet]= binsRec2D_asjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "asjt_d2_j1_k%i", ik);
+                RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		// d jets
+		sprintf(RecoBinName, "Detector2d_djt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D1J1[ik][iet]= binsRec2D_djt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d0_j0_k%i", ik);
+                RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_djt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D1J2[ik][iet]= binsRec2D_djt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d0_j1_k%i", ik);
+                RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_djt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D2J1[ik][iet]= binsRec2D_djt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d1_j0_k%i", ik);
+                RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_djt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D2J2[ik][iet]= binsRec2D_djt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d1_j1_k%i", ik);
+                RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_djt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D3J1[ik][iet]= binsRec2D_djt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d2_j0_k%i", ik);
+                RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_djt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_djt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_djt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_djt_D3J2[ik][iet]= binsRec2D_djt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "djt_d2_j1_k%i", ik);
+                RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_qdjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D1J1[ik][iet]= binsRec2D_qdjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d0_j0_k%i", ik);
+                RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qdjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D1J2[ik][iet]= binsRec2D_qdjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d0_j1_k%i", ik);
+                RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qdjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D2J1[ik][iet]= binsRec2D_qdjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d1_j0_k%i", ik);
+                RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qdjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D2J2[ik][iet]= binsRec2D_qdjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d1_j1_k%i", ik);
+                RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qdjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D3J1[ik][iet]= binsRec2D_qdjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d2_j0_k%i", ik);
+                RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qdjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qdjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qdjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qdjt_D3J2[ik][iet]= binsRec2D_qdjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qdjt_d2_j1_k%i", ik);
+                RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_adjt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D1J1[ik][iet]= binsRec2D_adjt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d0_j0_k%i", ik);
+                RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_adjt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D1J2[ik][iet]= binsRec2D_adjt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d0_j1_k%i", ik);
+                RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_adjt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D2J1[ik][iet]= binsRec2D_adjt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d1_j0_k%i", ik);
+                RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_adjt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D2J2[ik][iet]= binsRec2D_adjt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d1_j1_k%i", ik);
+                RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_adjt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D3J1[ik][iet]= binsRec2D_adjt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d2_j0_k%i", ik);
+                RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_adjt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_adjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_adjt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_adjt_D3J2[ik][iet]= binsRec2D_adjt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "adjt_d2_j1_k%i", ik);
+                RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		
+		// u jets
+		sprintf(RecoBinName, "Detector2d_ujt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D1J1[ik][iet]= binsRec2D_ujt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d0_j0_k%i", ik);
+                RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_ujt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D1J2[ik][iet]= binsRec2D_ujt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d0_j1_k%i", ik);
+                RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_ujt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D2J1[ik][iet]= binsRec2D_ujt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d1_j0_k%i", ik);
+                RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_ujt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D2J2[ik][iet]= binsRec2D_ujt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d1_j1_k%i", ik);
+                RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_ujt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D3J1[ik][iet]= binsRec2D_ujt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d2_j0_k%i", ik);
+                RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_ujt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_ujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_ujt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_ujt_D3J2[ik][iet]= binsRec2D_ujt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "ujt_d2_j1_k%i", ik);
+                RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_qujt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D1J1[ik][iet]= binsRec2D_qujt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d0_j0_k%i", ik);
+                RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qujt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D1J2[ik][iet]= binsRec2D_qujt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d0_j1_k%i", ik);
+                RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qujt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D2J1[ik][iet]= binsRec2D_qujt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d1_j0_k%i", ik);
+                RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qujt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D2J2[ik][iet]= binsRec2D_qujt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d1_j1_k%i", ik);
+                RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qujt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D3J1[ik][iet]= binsRec2D_qujt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d2_j0_k%i", ik);
+                RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_qujt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_qujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_qujt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_qujt_D3J2[ik][iet]= binsRec2D_qujt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "qujt_d2_j1_k%i", ik);
+                RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+		//
+		sprintf(RecoBinName, "Detector2d_aujt_d0_j0_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d0_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D1J1[ik][iet]= binsRec2D_aujt_D1J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d0_j0_k%i", ik);
+                RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_aujt_d0_j1_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d0_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D1J2[ik][iet]= binsRec2D_aujt_D1J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d0_j1_k%i", ik);
+                RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_aujt_d1_j0_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d1_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D2J1[ik][iet]= binsRec2D_aujt_D2J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d1_j0_k%i", ik);
+                RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_aujt_d1_j1_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d1_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D2J2[ik][iet]= binsRec2D_aujt_D2J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d1_j1_k%i", ik);
+                RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_aujt_d2_j0_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d2_j0_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D3J1[ik][iet]= binsRec2D_aujt_D3J1[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d2_j0_k%i", ik);
+                RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+                sprintf(RecoBinName, "Detector2d_aujt_d2_j1_k%i_eta%i", ik, iet);
+                binsRec2D_aujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
+                sprintf(RecoBinName, "Recobin2d_aujt_d2_j1_k%i_eta%i",ik, iet);
+                RecoBinning2D_aujt_D3J2[ik][iet]= binsRec2D_aujt_D3J2[ik][iet]->AddBinning(RecoBinName);
+                sprintf(Axisname, "aujt_d2_j1_k%i", ik);
+                RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
+                sprintf(Axisname, "pt");
+                RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+
+
 		//Gen
 		sprintf(GenBinName, "Generator2d_d0_j0_k%i_eta%i", ik, iet);
                 binsGen2D_D1J1[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -1430,7 +3333,565 @@ for (int iet=0; iet<njetetamn; iet++) {
                         sprintf(title, "2D Reco Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
                         h_recovar_2D_D3J2[ik][iet] = binsRec2D_D3J2[ik][iet]->CreateHistogram(name,false,0,title); 
                         h_recovar_2D_D3J2[ik][iet]->Sumw2();
+
+                        //Gluon Jet
+                        sprintf(name, "dd_reco_gjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D1J1[ik][iet] = binsRec2D_gjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_gjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_gjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D1J2[ik][iet] = binsRec2D_gjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_gjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_gjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D2J1[ik][iet] = binsRec2D_gjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_gjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_gjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D2J2[ik][iet] = binsRec2D_gjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_gjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_gjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D3J1[ik][iet] = binsRec2D_gjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_gjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_gjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco gJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_gjt_2D_D3J2[ik][iet] = binsRec2D_gjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_gjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qgjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D1J1[ik][iet] = binsRec2D_qgjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qgjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qgjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D1J2[ik][iet] = binsRec2D_qgjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qgjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qgjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D2J1[ik][iet] = binsRec2D_qgjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qgjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qgjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D2J2[ik][iet] = binsRec2D_qgjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qgjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qgjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D3J1[ik][iet] = binsRec2D_qgjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qgjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qgjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qgJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qgjt_2D_D3J2[ik][iet] = binsRec2D_qgjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qgjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_agjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D1J1[ik][iet] = binsRec2D_agjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_agjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_agjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D1J2[ik][iet] = binsRec2D_agjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_agjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_agjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D2J1[ik][iet] = binsRec2D_agjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_agjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_agjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D2J2[ik][iet] = binsRec2D_agjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_agjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_agjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D3J1[ik][iet] = binsRec2D_agjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_agjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_agjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco agJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_agjt_2D_D3J2[ik][iet] = binsRec2D_agjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_agjt_2D_D3J2[ik][iet]->Sumw2();
 	
+                        // b jets
+                        sprintf(name, "dd_reco_bjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D1J1[ik][iet] = binsRec2D_bjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_bjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_bjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D1J2[ik][iet] = binsRec2D_bjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_bjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_bjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D2J1[ik][iet] = binsRec2D_bjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_bjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_bjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D2J2[ik][iet] = binsRec2D_bjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_bjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_bjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D3J1[ik][iet] = binsRec2D_bjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_bjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_bjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco bJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_bjt_2D_D3J2[ik][iet] = binsRec2D_bjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_bjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qbjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D1J1[ik][iet] = binsRec2D_qbjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qbjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qbjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D1J2[ik][iet] = binsRec2D_qbjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qbjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qbjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D2J1[ik][iet] = binsRec2D_qbjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qbjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qbjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D2J2[ik][iet] = binsRec2D_qbjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qbjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qbjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D3J1[ik][iet] = binsRec2D_qbjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qbjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qbjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qbJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qbjt_2D_D3J2[ik][iet] = binsRec2D_qbjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qbjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_abjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D1J1[ik][iet] = binsRec2D_abjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_abjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_abjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D1J2[ik][iet] = binsRec2D_abjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_abjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_abjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D2J1[ik][iet] = binsRec2D_abjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_abjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_abjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D2J2[ik][iet] = binsRec2D_abjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_abjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_abjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D3J1[ik][iet] = binsRec2D_abjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_abjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_abjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco abJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_abjt_2D_D3J2[ik][iet] = binsRec2D_abjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_abjt_2D_D3J2[ik][iet]->Sumw2();
+
+			// c jets
+			sprintf(name, "dd_reco_cjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D1J1[ik][iet] = binsRec2D_cjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_cjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_cjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D1J2[ik][iet] = binsRec2D_cjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_cjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_cjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D2J1[ik][iet] = binsRec2D_cjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_cjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_cjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D2J2[ik][iet] = binsRec2D_cjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_cjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_cjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D3J1[ik][iet] = binsRec2D_cjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_cjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_cjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco cJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_cjt_2D_D3J2[ik][iet] = binsRec2D_cjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_cjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qcjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D1J1[ik][iet] = binsRec2D_qcjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qcjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qcjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D1J2[ik][iet] = binsRec2D_qcjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qcjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qcjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D2J1[ik][iet] = binsRec2D_qcjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qcjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qcjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D2J2[ik][iet] = binsRec2D_qcjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qcjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qcjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D3J1[ik][iet] = binsRec2D_qcjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qcjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qcjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qcJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qcjt_2D_D3J2[ik][iet] = binsRec2D_qcjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qcjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_acjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D1J1[ik][iet] = binsRec2D_acjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_acjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_acjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D1J2[ik][iet] = binsRec2D_acjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_acjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_acjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D2J1[ik][iet] = binsRec2D_acjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_acjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_acjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D2J2[ik][iet] = binsRec2D_acjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_acjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_acjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D3J1[ik][iet] = binsRec2D_acjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_acjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_acjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco acJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_acjt_2D_D3J2[ik][iet] = binsRec2D_acjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_acjt_2D_D3J2[ik][iet]->Sumw2();
+
+			// s jets
+			sprintf(name, "dd_reco_sjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D1J1[ik][iet] = binsRec2D_sjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_sjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_sjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D1J2[ik][iet] = binsRec2D_sjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_sjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_sjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D2J1[ik][iet] = binsRec2D_sjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_sjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_sjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D2J2[ik][iet] = binsRec2D_sjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_sjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_sjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D3J1[ik][iet] = binsRec2D_sjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_sjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_sjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco sJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_sjt_2D_D3J2[ik][iet] = binsRec2D_sjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_sjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qsjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D1J1[ik][iet] = binsRec2D_qsjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qsjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qsjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D1J2[ik][iet] = binsRec2D_qsjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qsjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qsjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D2J1[ik][iet] = binsRec2D_qsjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qsjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qsjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D2J2[ik][iet] = binsRec2D_qsjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qsjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qsjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D3J1[ik][iet] = binsRec2D_qsjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qsjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qsjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qsJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qsjt_2D_D3J2[ik][iet] = binsRec2D_qsjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qsjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_asjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D1J1[ik][iet] = binsRec2D_asjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_asjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_asjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D1J2[ik][iet] = binsRec2D_asjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_asjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_asjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D2J1[ik][iet] = binsRec2D_asjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_asjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_asjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D2J2[ik][iet] = binsRec2D_asjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_asjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_asjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D3J1[ik][iet] = binsRec2D_asjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_asjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_asjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco asJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_asjt_2D_D3J2[ik][iet] = binsRec2D_asjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_asjt_2D_D3J2[ik][iet]->Sumw2();
+
+			// d jets
+			sprintf(name, "dd_reco_djt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco djet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D1J1[ik][iet] = binsRec2D_djt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_djt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_djt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco dJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D1J2[ik][iet] = binsRec2D_djt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_djt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_djt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco dJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D2J1[ik][iet] = binsRec2D_djt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_djt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_djt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco dJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D2J2[ik][iet] = binsRec2D_djt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_djt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_djt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco dJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D3J1[ik][iet] = binsRec2D_djt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_djt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_djt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco dJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_djt_2D_D3J2[ik][iet] = binsRec2D_djt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_djt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qdjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D1J1[ik][iet] = binsRec2D_qdjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qdjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qdjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D1J2[ik][iet] = binsRec2D_qdjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qdjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qdjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D2J1[ik][iet] = binsRec2D_qdjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qdjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qdjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D2J2[ik][iet] = binsRec2D_qdjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qdjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qdjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D3J1[ik][iet] = binsRec2D_qdjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qdjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qdjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qdJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qdjt_2D_D3J2[ik][iet] = binsRec2D_qdjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qdjt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_adjt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adjet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D1J1[ik][iet] = binsRec2D_adjt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_adjt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_adjt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D1J2[ik][iet] = binsRec2D_adjt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_adjt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_adjt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D2J1[ik][iet] = binsRec2D_adjt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_adjt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_adjt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D2J2[ik][iet] = binsRec2D_adjt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_adjt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_adjt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D3J1[ik][iet] = binsRec2D_adjt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_adjt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_adjt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco adJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_adjt_2D_D3J2[ik][iet] = binsRec2D_adjt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_adjt_2D_D3J2[ik][iet]->Sumw2();
+
+			// u jets
+			sprintf(name, "dd_reco_ujt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco ujet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D1J1[ik][iet] = binsRec2D_ujt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_ujt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_ujt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco uJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D1J2[ik][iet] = binsRec2D_ujt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_ujt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_ujt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco uJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D2J1[ik][iet] = binsRec2D_ujt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_ujt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_ujt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco uJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D2J2[ik][iet] = binsRec2D_ujt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_ujt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_ujt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco uJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D3J1[ik][iet] = binsRec2D_ujt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_ujt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_ujt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco uJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_ujt_2D_D3J2[ik][iet] = binsRec2D_ujt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_ujt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_qujt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco qujet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D1J1[ik][iet] = binsRec2D_qujt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_qujt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qujt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco quJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D1J2[ik][iet] = binsRec2D_qujt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qujt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qujt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco quJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D2J1[ik][iet] = binsRec2D_qujt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qujt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qujt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco quJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D2J2[ik][iet] = binsRec2D_qujt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qujt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qujt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco quJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D3J1[ik][iet] = binsRec2D_qujt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qujt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_qujt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco quJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_qujt_2D_D3J2[ik][iet] = binsRec2D_qujt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_qujt_2D_D3J2[ik][iet]->Sumw2();
+
+			//
+			sprintf(name, "dd_reco_aujt_d0_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco aujet Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D1J1[ik][iet] = binsRec2D_aujt_D1J1[ik][iet]->CreateHistogram(name,false,0,title); //false : global bin ID
+                        h_recovar_aujt_2D_D1J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_aujt_d0_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco auJet Q_{2}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D1J2[ik][iet] = binsRec2D_aujt_D1J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_aujt_2D_D1J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_aujt_d1_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco auJet Q_{1L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D2J1[ik][iet] = binsRec2D_aujt_D2J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_aujt_2D_D2J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_aujt_d1_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco auJet Q_{2L}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D2J2[ik][iet] = binsRec2D_aujt_D2J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_aujt_2D_D2J2[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_aujt_d2_j0_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco auJet Q_{1T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D3J1[ik][iet] = binsRec2D_aujt_D3J1[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_aujt_2D_D3J1[ik][iet]->Sumw2();
+
+                        sprintf(name, "dd_reco_aujt_d2_j1_k%i_eta%i", ik, iet);
+                        sprintf(title, "2D Reco auJet Q_{2T}^{%g} %g", kappa[ik], etarange[iet]);
+                        h_recovar_aujt_2D_D3J2[ik][iet] = binsRec2D_aujt_D3J2[ik][iet]->CreateHistogram(name,false,0,title);
+                        h_recovar_aujt_2D_D3J2[ik][iet]->Sumw2();
+
 			//recofake
 	     		sprintf(name, "dd_recofake_d0_j0_k%i_eta%i", ik, iet);
                         sprintf(title, "2D Reco Fake Q_{1}^{%g} %g", kappa[ik], etarange[iet]);
@@ -1596,6 +4057,568 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
                                 sprintf(title, "Reco Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
                                 h_recojc_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
                                 h_recojc_D3J2[ik][ipt][iet]->Sumw2();
+
+				//Gluon Jets
+				sprintf(name, "reco_jc_gjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_gjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_gjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_gjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_gjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_gjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_gjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_gjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_gjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_gjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_gjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco gJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_gjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_gjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qgjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qgjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qgjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qgjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qgjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qgjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qgjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qgjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qgjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qgjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qgjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qgJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qgjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qgjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_agjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_agjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_agjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_agjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_agjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_agjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_agjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_agjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_agjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_agjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_agjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco agJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_agjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_agjt_D3J2[ik][ipt][iet]->Sumw2();
+
+
+				//b Jets
+				sprintf(name, "reco_jc_bjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_bjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_bjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_bjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_bjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_bjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_bjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_bjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_bjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_bjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_bjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco bJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_bjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_bjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qbjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qbjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qbjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qbjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qbjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qbjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qbjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qbjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qbjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qbjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qbjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qbJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qbjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qbjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_abjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_abjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_abjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_abjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_abjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_abjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_abjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_abjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_abjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_abjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_abjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco abJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_abjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_abjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//c Jets
+				sprintf(name, "reco_jc_cjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_cjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_cjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_cjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_cjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_cjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_cjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_cjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_cjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_cjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_cjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco cJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_cjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_cjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qcjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qcjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qcjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qcjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qcjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qcjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qcjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qcjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qcjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qcjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qcjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qcJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qcjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qcjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_acjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_acjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_acjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_acjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_acjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_acjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_acjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_acjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_acjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_acjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_acjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco acJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_acjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_acjt_D3J2[ik][ipt][iet]->Sumw2();
+
+
+				//s Jets
+				sprintf(name, "reco_jc_sjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_sjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_sjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_sjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_sjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_sjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_sjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_sjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_sjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_sjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_sjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco sJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_sjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_sjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qsjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qsjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qsjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qsjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qsjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qsjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qsjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qsjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qsjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qsjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qsjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qsJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qsjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qsjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_asjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_asjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_asjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_asjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_asjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_asjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_asjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_asjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_asjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_asjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_asjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco asJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_asjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_asjt_D3J2[ik][ipt][iet]->Sumw2();
+
+
+				//u Jet
+				sprintf(name, "reco_jc_ujt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_ujt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_ujt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_ujt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_ujt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_ujt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_ujt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_ujt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_ujt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_ujt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_ujt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco uJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_ujt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_ujt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qujt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qujt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qujt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qujt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qujt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qujt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qujt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qujt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qujt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qujt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qujt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco quJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qujt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qujt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_aujt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_aujt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_aujt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_aujt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_aujt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_aujt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_aujt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_aujt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_aujt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_aujt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_aujt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco auJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_aujt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_aujt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//d Jet
+				sprintf(name, "reco_jc_djt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_djt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_djt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_djt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_djt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_djt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_djt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_djt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_djt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_djt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_djt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco dJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_djt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_djt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_qdjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qdjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qdjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_qdjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qdjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qdjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qdjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qdjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qdjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qdjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_qdjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco qdJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_qdjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_qdjt_D3J2[ik][ipt][iet]->Sumw2();
+
+				//
+				sprintf(name, "reco_jc_adjt_d0_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{1}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D1J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_adjt_D1J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_adjt_d0_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{2}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D1J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik]);
+                                h_recojc_adjt_D1J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_adjt_d1_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{1L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D2J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_adjt_D2J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_adjt_d1_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{2L}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D2J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_adjt_D2J2[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_adjt_d2_j0_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{1T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D3J1[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_adjt_D3J1[ik][ipt][iet]->Sumw2();
+
+                                sprintf(name, "reco_jc_adjt_d2_j1_k%i_pt%i_eta%i", ik, ipt, iet);
+                                sprintf(title, "Reco adJet Q_{2T}^{%g} %i %g", kappa[ik], int(leadingPtThreshold[ipt]), etarange[iet]);
+                                h_recojc_adjt_D3J2[ik][ipt][iet] = fs->make<TH1F>(name, title, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik]);
+                                h_recojc_adjt_D3J2[ik][ipt][iet]->Sumw2();
+
 				}
 				
 				//Gen
@@ -1845,6 +4868,96 @@ for(int ipt=0; ipt<njetptmn; ipt++){
   recojt_phi = fs->make<TH1F>("recojt_phi","#phi_{recojets}",100,-M_PI, M_PI);
   recojt_phi->Sumw2();
 
+  recojtg_eta = fs->make<TH1F>("recojtg_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojtg_eta->Sumw2();
+  recojtg_phi = fs->make<TH1F>("recojtg_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojtg_phi->Sumw2();
+
+  recojtqg_eta = fs->make<TH1F>("recojtqg_eta","#eta_{recojetsqg}",100,-2.5, 2.5);
+  recojtqg_eta->Sumw2();
+  recojtqg_phi = fs->make<TH1F>("recojtqg_phi","#phi_{recojetsqg}",100,-M_PI, M_PI);
+  recojtqg_phi->Sumw2();
+
+  recojtag_eta = fs->make<TH1F>("recojtag_eta","#eta_{recojetsag}",100,-2.5, 2.5);
+  recojtag_eta->Sumw2();
+  recojtag_phi = fs->make<TH1F>("recojtag_phi","#phi_{recojetsag}",100,-M_PI, M_PI);
+  recojtag_phi->Sumw2();
+
+  recojtb_eta = fs->make<TH1F>("recojtb_eta","#eta_{recojetsb}",100,-2.5, 2.5);
+  recojtb_eta->Sumw2();
+  recojtb_phi = fs->make<TH1F>("recojtb_phi","#phi_{recojetsb}",100,-M_PI, M_PI);
+  recojtb_phi->Sumw2();
+
+  recojtqb_eta = fs->make<TH1F>("recojtqb_eta","#eta_{recojetsqb}",100,-2.5, 2.5);
+  recojtqb_eta->Sumw2();
+  recojtqb_phi = fs->make<TH1F>("recojtqb_phi","#phi_{recojetsqb}",100,-M_PI, M_PI);
+  recojtqb_phi->Sumw2();
+
+  recojtab_eta = fs->make<TH1F>("recojtab_eta","#eta_{recojetsab}",100,-2.5, 2.5);
+  recojtab_eta->Sumw2();
+  recojtab_phi = fs->make<TH1F>("recojtab_phi","#phi_{recojetsab}",100,-M_PI, M_PI);
+  recojtab_phi->Sumw2();
+
+  recojtc_eta = fs->make<TH1F>("recojtc_eta","#eta_{recojetsc}",100,-2.5, 2.5);
+  recojtc_eta->Sumw2();
+  recojtc_phi = fs->make<TH1F>("recojtc_phi","#phi_{recojetsc}",100,-M_PI, M_PI);
+  recojtc_phi->Sumw2();
+
+  recojtqc_eta = fs->make<TH1F>("recojtqc_eta","#eta_{recojetsqc}",100,-2.5, 2.5);
+  recojtqc_eta->Sumw2();
+  recojtqc_phi = fs->make<TH1F>("recojtqc_phi","#phi_{recojetsqc}",100,-M_PI, M_PI);
+  recojtqc_phi->Sumw2();
+
+  recojtac_eta = fs->make<TH1F>("recojtac_eta","#eta_{recojetsac}",100,-2.5, 2.5);
+  recojtac_eta->Sumw2();
+  recojtac_phi = fs->make<TH1F>("recojtac_phi","#phi_{recojetsac}",100,-M_PI, M_PI);
+  recojtac_phi->Sumw2();
+
+  recojts_eta = fs->make<TH1F>("recojts_eta","#eta_{recojetss}",100,-2.5, 2.5);
+  recojts_eta->Sumw2();
+  recojts_phi = fs->make<TH1F>("recojts_phi","#phi_{recojetss}",100,-M_PI, M_PI);
+  recojts_phi->Sumw2();
+
+  recojtqs_eta = fs->make<TH1F>("recojtqs_eta","#eta_{recojetsqs}",100,-2.5, 2.5);
+  recojtqs_eta->Sumw2();
+  recojtqs_phi = fs->make<TH1F>("recojtqs_phi","#phi_{recojetsqs}",100,-M_PI, M_PI);
+  recojtqs_phi->Sumw2();
+
+  recojtas_eta = fs->make<TH1F>("recojtas_eta","#eta_{recojetsas}",100,-2.5, 2.5);
+  recojtas_eta->Sumw2();
+  recojtas_phi = fs->make<TH1F>("recojtas_phi","#phi_{recojetsas}",100,-M_PI, M_PI);
+  recojtas_phi->Sumw2();
+
+  recojtu_eta = fs->make<TH1F>("recojtu_eta","#eta_{recojetsu}",100,-2.5, 2.5);
+  recojtu_eta->Sumw2();
+  recojtu_phi = fs->make<TH1F>("recojtu_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
+  recojtu_phi->Sumw2();
+
+  recojtqu_eta = fs->make<TH1F>("recojtqu_eta","#eta_{recojetsqu}",100,-2.5, 2.5);
+  recojtqu_eta->Sumw2();
+  recojtqu_phi = fs->make<TH1F>("recojtqu_phi","#phi_{recojetsqu}",100,-M_PI, M_PI);
+  recojtqu_phi->Sumw2();
+
+  recojtau_eta = fs->make<TH1F>("recojtau_eta","#eta_{recojetsau}",100,-2.5, 2.5);
+  recojtau_eta->Sumw2();
+  recojtau_phi = fs->make<TH1F>("recojtau_phi","#phi_{recojetsau}",100,-M_PI, M_PI);
+  recojtau_phi->Sumw2();
+
+  recojtd_eta = fs->make<TH1F>("recojtd_eta","#eta_{recojetsd}",100,-2.5, 2.5);
+  recojtd_eta->Sumw2();
+  recojtd_phi = fs->make<TH1F>("recojtd_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
+  recojtd_phi->Sumw2();
+
+  recojtqd_eta = fs->make<TH1F>("recojtqd_eta","#eta_{recojetsqd}",100,-2.5, 2.5);
+  recojtqd_eta->Sumw2();
+  recojtqd_phi = fs->make<TH1F>("recojtqd_phi","#phi_{recojetsqd}",100,-M_PI, M_PI);
+  recojtqd_phi->Sumw2();
+
+  recojtad_eta = fs->make<TH1F>("recojtad_eta","#eta_{recojetsad}",100,-2.5, 2.5);
+  recojtad_eta->Sumw2();
+  recojtad_phi = fs->make<TH1F>("recojtad_phi","#phi_{recojetsad}",100,-M_PI, M_PI);
+  recojtad_phi->Sumw2();
+
   //recojt1_pt = fs->make<TH1F>("recojet1_pt","Et_{recojets}",100,20., 2020.);
   //recojt1_pt->Sumw2();
   recojt1_eta = fs->make<TH1F>("recojet1_eta","#eta_{recojets}",100,-2.5, 2.5);
@@ -1852,12 +4965,192 @@ for(int ipt=0; ipt<njetptmn; ipt++){
   recojt1_phi = fs->make<TH1F>("recojet1_phi","#phi_{recojets}",100,-M_PI, M_PI);
   recojt1_phi->Sumw2();
 
+  recojt1g_eta = fs->make<TH1F>("recojet1g_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt1g_eta->Sumw2();
+  recojt1g_phi = fs->make<TH1F>("recojet1g_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt1g_phi->Sumw2();
+
+  recojt1qg_eta = fs->make<TH1F>("recojet1qg_eta","#eta_{recojetsqg}",100,-2.5, 2.5);
+  recojt1qg_eta->Sumw2();
+  recojt1qg_phi = fs->make<TH1F>("recojet1qg_phi","#phi_{recojetsqg}",100,-M_PI, M_PI);
+  recojt1qg_phi->Sumw2();
+
+  recojt1ag_eta = fs->make<TH1F>("recojet1ag_eta","#eta_{recojetsag}",100,-2.5, 2.5);
+  recojt1ag_eta->Sumw2();
+  recojt1ag_phi = fs->make<TH1F>("recojet1ag_phi","#phi_{recojetsag}",100,-M_PI, M_PI);
+  recojt1ag_phi->Sumw2();
+
+  recojt1b_eta = fs->make<TH1F>("recojet1b_eta","#eta_{recojetsb}",100,-2.5, 2.5);
+  recojt1b_eta->Sumw2();
+  recojt1b_phi = fs->make<TH1F>("recojet1b_phi","#phi_{recojetsb}",100,-M_PI, M_PI);
+  recojt1b_phi->Sumw2();
+
+  recojt1qb_eta = fs->make<TH1F>("recojet1qb_eta","#eta_{recojetsqb}",100,-2.5, 2.5);
+  recojt1qb_eta->Sumw2();
+  recojt1qb_phi = fs->make<TH1F>("recojet1qb_phi","#phi_{recojetsqb}",100,-M_PI, M_PI);
+  recojt1qb_phi->Sumw2();
+
+  recojt1ab_eta = fs->make<TH1F>("recojet1ab_eta","#eta_{recojetsab}",100,-2.5, 2.5);
+  recojt1ab_eta->Sumw2();
+  recojt1ab_phi = fs->make<TH1F>("recojet1ab_phi","#phi_{recojetsab}",100,-M_PI, M_PI);
+  recojt1ab_phi->Sumw2();
+
+  recojt1c_eta = fs->make<TH1F>("recojet1c_eta","#eta_{recojetsc}",100,-2.5, 2.5);
+  recojt1c_eta->Sumw2();
+  recojt1c_phi = fs->make<TH1F>("recojet1c_phi","#phi_{recojetsc}",100,-M_PI, M_PI);
+  recojt1c_phi->Sumw2();
+
+  recojt1qc_eta = fs->make<TH1F>("recojet1qc_eta","#eta_{recojetsqc}",100,-2.5, 2.5);
+  recojt1qc_eta->Sumw2();
+  recojt1qc_phi = fs->make<TH1F>("recojet1qc_phi","#phi_{recojetsqc}",100,-M_PI, M_PI);
+  recojt1qc_phi->Sumw2();
+
+  recojt1ac_eta = fs->make<TH1F>("recojet1ac_eta","#eta_{recojetsac}",100,-2.5, 2.5);
+  recojt1ac_eta->Sumw2();
+  recojt1ac_phi = fs->make<TH1F>("recojet1ac_phi","#phi_{recojetsac}",100,-M_PI, M_PI);
+  recojt1ac_phi->Sumw2();
+
+  recojt1s_eta = fs->make<TH1F>("recojet1s_eta","#eta_{recojetss}",100,-2.5, 2.5);
+  recojt1s_eta->Sumw2();
+  recojt1s_phi = fs->make<TH1F>("recojet1s_phi","#phi_{recojetss}",100,-M_PI, M_PI);
+  recojt1s_phi->Sumw2();
+
+  recojt1qs_eta = fs->make<TH1F>("recojet1qs_eta","#eta_{recojetsqs}",100,-2.5, 2.5);
+  recojt1qs_eta->Sumw2();
+  recojt1qs_phi = fs->make<TH1F>("recojet1qs_phi","#phi_{recojetsqs}",100,-M_PI, M_PI);
+  recojt1qs_phi->Sumw2();
+
+  recojt1as_eta = fs->make<TH1F>("recojet1as_eta","#eta_{recojetsas}",100,-2.5, 2.5);
+  recojt1as_eta->Sumw2();
+  recojt1as_phi = fs->make<TH1F>("recojet1as_phi","#phi_{recojetsas}",100,-M_PI, M_PI);
+  recojt1as_phi->Sumw2();
+
+  recojt1u_eta = fs->make<TH1F>("recojet1u_eta","#eta_{recojetsu}",100,-2.5, 2.5);
+  recojt1u_eta->Sumw2();
+  recojt1u_phi = fs->make<TH1F>("recojet1u_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
+  recojt1u_phi->Sumw2();
+
+  recojt1qu_eta = fs->make<TH1F>("recojet1qu_eta","#eta_{recojetsqu}",100,-2.5, 2.5);
+  recojt1qu_eta->Sumw2();
+  recojt1qu_phi = fs->make<TH1F>("recojet1qu_phi","#phi_{recojetsqu}",100,-M_PI, M_PI);
+  recojt1qu_phi->Sumw2();
+
+  recojt1au_eta = fs->make<TH1F>("recojet1au_eta","#eta_{recojetsau}",100,-2.5, 2.5);
+  recojt1au_eta->Sumw2();
+  recojt1au_phi = fs->make<TH1F>("recojet1au_phi","#phi_{recojetsau}",100,-M_PI, M_PI);
+  recojt1au_phi->Sumw2();
+
+  recojt1d_eta = fs->make<TH1F>("recojet1d_eta","#eta_{recojetsd}",100,-2.5, 2.5);
+  recojt1d_eta->Sumw2();
+  recojt1d_phi = fs->make<TH1F>("recojet1d_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
+  recojt1d_phi->Sumw2();
+
+  recojt1qd_eta = fs->make<TH1F>("recojet1qd_eta","#eta_{recojetsqd}",100,-2.5, 2.5);
+  recojt1qd_eta->Sumw2();
+  recojt1qd_phi = fs->make<TH1F>("recojet1qd_phi","#phi_{recojetsqd}",100,-M_PI, M_PI);
+  recojt1qd_phi->Sumw2();
+
+  recojt1ad_eta = fs->make<TH1F>("recojet1ad_eta","#eta_{recojetsad}",100,-2.5, 2.5);
+  recojt1ad_eta->Sumw2();
+  recojt1ad_phi = fs->make<TH1F>("recojet1ad_phi","#phi_{recojetsad}",100,-M_PI, M_PI);
+  recojt1ad_phi->Sumw2();
+
   //recojt2_pt = fs->make<TH1F>("recojet2_pt","Et_{recojets}",100,20., 2020.);
   //recojt2_pt->Sumw2();
   recojt2_eta = fs->make<TH1F>("recojet2_eta","#eta_{recojets}",100,-2.5, 2.5);
   recojt2_eta->Sumw2();
   recojt2_phi = fs->make<TH1F>("recojet2_phi","#phi_{recojets}",100,-M_PI, M_PI);
   recojt2_phi->Sumw2();
+  
+  recojt2g_eta = fs->make<TH1F>("recojet2g_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt2g_eta->Sumw2();
+  recojt2g_phi = fs->make<TH1F>("recojet2g_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt2g_phi->Sumw2();
+
+  recojt2qg_eta = fs->make<TH1F>("recojet2qg_eta","#eta_{recojetsqg}",100,-2.5, 2.5);
+  recojt2qg_eta->Sumw2();
+  recojt2qg_phi = fs->make<TH1F>("recojet2qg_phi","#phi_{recojetsqg}",100,-M_PI, M_PI);
+  recojt2qg_phi->Sumw2();
+
+  recojt2ag_eta = fs->make<TH1F>("recojet2ag_eta","#eta_{recojetsag}",100,-2.5, 2.5);
+  recojt2ag_eta->Sumw2();
+  recojt2ag_phi = fs->make<TH1F>("recojet2ag_phi","#phi_{recojetsag}",100,-M_PI, M_PI);
+  recojt2ag_phi->Sumw2();
+
+  recojt2b_eta = fs->make<TH1F>("recojet2b_eta","#eta_{recojetsb}",100,-2.5, 2.5);
+  recojt2b_eta->Sumw2();
+  recojt2b_phi = fs->make<TH1F>("recojet2b_phi","#phi_{recojetsb}",100,-M_PI, M_PI);
+  recojt2b_phi->Sumw2();
+
+  recojt2qb_eta = fs->make<TH1F>("recojet2qb_eta","#eta_{recojetsqb}",100,-2.5, 2.5);
+  recojt2qb_eta->Sumw2();
+  recojt2qb_phi = fs->make<TH1F>("recojet2qb_phi","#phi_{recojetsqb}",100,-M_PI, M_PI);
+  recojt2qb_phi->Sumw2();
+
+  recojt2ab_eta = fs->make<TH1F>("recojet2ab_eta","#eta_{recojetsab}",100,-2.5, 2.5);
+  recojt2ab_eta->Sumw2();
+  recojt2ab_phi = fs->make<TH1F>("recojet2ab_phi","#phi_{recojetsab}",100,-M_PI, M_PI);
+  recojt2ab_phi->Sumw2();
+
+  recojt2c_eta = fs->make<TH1F>("recojet2c_eta","#eta_{recojetsc}",100,-2.5, 2.5);
+  recojt2c_eta->Sumw2();
+  recojt2c_phi = fs->make<TH1F>("recojet2c_phi","#phi_{recojetsc}",100,-M_PI, M_PI);
+  recojt2c_phi->Sumw2();
+
+  recojt2qc_eta = fs->make<TH1F>("recojet2qc_eta","#eta_{recojetsqc}",100,-2.5, 2.5);
+  recojt2qc_eta->Sumw2();
+  recojt2qc_phi = fs->make<TH1F>("recojet2qc_phi","#phi_{recojetsqc}",100,-M_PI, M_PI);
+  recojt2qc_phi->Sumw2();
+
+  recojt2ac_eta = fs->make<TH1F>("recojet2ac_eta","#eta_{recojetsac}",100,-2.5, 2.5);
+  recojt2ac_eta->Sumw2();
+  recojt2ac_phi = fs->make<TH1F>("recojet2ac_phi","#phi_{recojetsac}",100,-M_PI, M_PI);
+  recojt2ac_phi->Sumw2();
+
+  recojt2s_eta = fs->make<TH1F>("recojet2s_eta","#eta_{recojetss}",100,-2.5, 2.5);
+  recojt2s_eta->Sumw2();
+  recojt2s_phi = fs->make<TH1F>("recojet2s_phi","#phi_{recojetss}",100,-M_PI, M_PI);
+  recojt2s_phi->Sumw2();
+
+  recojt2qs_eta = fs->make<TH1F>("recojet2qs_eta","#eta_{recojetsqs}",100,-2.5, 2.5);
+  recojt2qs_eta->Sumw2();
+  recojt2qs_phi = fs->make<TH1F>("recojet2qs_phi","#phi_{recojetsqs}",100,-M_PI, M_PI);
+  recojt2qs_phi->Sumw2();
+
+  recojt2as_eta = fs->make<TH1F>("recojet2as_eta","#eta_{recojetsas}",100,-2.5, 2.5);
+  recojt2as_eta->Sumw2();
+  recojt2as_phi = fs->make<TH1F>("recojet2as_phi","#phi_{recojetsas}",100,-M_PI, M_PI);
+  recojt2as_phi->Sumw2();
+
+  recojt2u_eta = fs->make<TH1F>("recojet2u_eta","#eta_{recojetsu}",100,-2.5, 2.5);
+  recojt2u_eta->Sumw2();
+  recojt2u_phi = fs->make<TH1F>("recojet2u_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
+  recojt2u_phi->Sumw2();
+
+  recojt2qu_eta = fs->make<TH1F>("recojet2qu_eta","#eta_{recojetsqu}",100,-2.5, 2.5);
+  recojt2qu_eta->Sumw2();
+  recojt2qu_phi = fs->make<TH1F>("recojet2qu_phi","#phi_{recojetsqu}",100,-M_PI, M_PI);
+  recojt2qu_phi->Sumw2();
+
+  recojt2au_eta = fs->make<TH1F>("recojet2au_eta","#eta_{recojetsau}",100,-2.5, 2.5);
+  recojt2au_eta->Sumw2();
+  recojt2au_phi = fs->make<TH1F>("recojet2au_phi","#phi_{recojetsau}",100,-M_PI, M_PI);
+  recojt2au_phi->Sumw2();
+
+  recojt2d_eta = fs->make<TH1F>("recojet2d_eta","#eta_{recojetsd}",100,-2.5, 2.5);
+  recojt2d_eta->Sumw2();
+  recojt2d_phi = fs->make<TH1F>("recojet2d_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
+  recojt2d_phi->Sumw2();
+
+  recojt2qd_eta = fs->make<TH1F>("recojet2qd_eta","#eta_{recojetsqd}",100,-2.5, 2.5);
+  recojt2qd_eta->Sumw2();
+  recojt2qd_phi = fs->make<TH1F>("recojet2qd_phi","#phi_{recojetsqd}",100,-M_PI, M_PI);
+  recojt2qd_phi->Sumw2();
+
+  recojt2ad_eta = fs->make<TH1F>("recojet2ad_eta","#eta_{recojetsad}",100,-2.5, 2.5);
+  recojt2ad_eta->Sumw2();
+  recojt2ad_phi = fs->make<TH1F>("recojet2ad_phi","#phi_{recojetsad}",100,-M_PI, M_PI);
+  recojt2ad_phi->Sumw2();
 
   //recojt3_pt = fs->make<TH1F>("recojet2_pt","Et_{recojets}",100,20., 2020.);
   //recojt3_pt->Sumw2();
@@ -1888,15 +5181,288 @@ for(int ipt=0; ipt<njetptmn; ipt++){
     recojt_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt_pt[jk]->Sumw2();
 
+    sprintf(name, "recojtg_pt_%i",jk);
+    sprintf(title, "Et_{recojetsg}_%g", etarange[jk]);
+    recojtg_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtg_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqg_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqg}_%g", etarange[jk]);
+    recojtqg_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqg_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtag_pt_%i",jk);
+    sprintf(title, "Et_{recojetsag}_%g", etarange[jk]);
+    recojtag_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtag_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtb_pt_%i",jk);
+    sprintf(title, "Et_{recojetsb}_%g", etarange[jk]);
+    recojtb_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtb_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqb_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqb}_%g", etarange[jk]);
+    recojtqb_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqb_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtab_pt_%i",jk);
+    sprintf(title, "Et_{recojetsab}_%g", etarange[jk]);
+    recojtab_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtab_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtc_pt_%i",jk);
+    sprintf(title, "Et_{recojetsc}_%g", etarange[jk]);
+    recojtc_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtc_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqc_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqc}_%g", etarange[jk]);
+    recojtqc_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqc_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtac_pt_%i",jk);
+    sprintf(title, "Et_{recojetsac}_%g", etarange[jk]);
+    recojtac_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtac_pt[jk]->Sumw2();
+
+    sprintf(name, "recojts_pt_%i",jk);
+    sprintf(title, "Et_{recojetss}_%g", etarange[jk]);
+    recojts_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojts_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqs_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqs}_%g", etarange[jk]);
+    recojtqs_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqs_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtas_pt_%i",jk);
+    sprintf(title, "Et_{recojetsas}_%g", etarange[jk]);
+    recojtas_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtas_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtu_pt_%i",jk);
+    sprintf(title, "Et_{recojetsu}_%g", etarange[jk]);
+    recojtu_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtu_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqu_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqu}_%g", etarange[jk]);
+    recojtqu_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqu_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtau_pt_%i",jk);
+    sprintf(title, "Et_{recojetsau}_%g", etarange[jk]);
+    recojtau_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtau_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtd_pt_%i",jk);
+    sprintf(title, "Et_{recojetsd}_%g", etarange[jk]);
+    recojtd_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtd_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtqd_pt_%i",jk);
+    sprintf(title, "Et_{recojetsqd}_%g", etarange[jk]);
+    recojtqd_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtqd_pt[jk]->Sumw2();
+
+    sprintf(name, "recojtad_pt_%i",jk);
+    sprintf(title, "Et_{recojetsad}_%g", etarange[jk]);
+    recojtad_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtad_pt[jk]->Sumw2();
+
     sprintf(name, "recojet1_pt_%i",jk);
     sprintf(title, "Et_{recojets1}_%g", etarange[jk]);
     recojt1_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt1_pt[jk]->Sumw2();
 
+    sprintf(name, "recojet1g_pt_%i",jk);
+    sprintf(title, "Et_{recojets1g}_%g", etarange[jk]);
+    recojt1g_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1g_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qg_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qg}_%g", etarange[jk]);
+    recojt1qg_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qg_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1ag_pt_%i",jk);
+    sprintf(title, "Et_{recojets1ag}_%g", etarange[jk]);
+    recojt1ag_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1ag_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1b_pt_%i",jk);
+    sprintf(title, "Et_{recojets1b}_%g", etarange[jk]);
+    recojt1b_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1b_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qb_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qb}_%g", etarange[jk]);
+    recojt1qb_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qb_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1ab_pt_%i",jk);
+    sprintf(title, "Et_{recojets1ab}_%g", etarange[jk]);
+    recojt1ab_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1ab_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1c_pt_%i",jk);
+    sprintf(title, "Et_{recojets1c}_%g", etarange[jk]);
+    recojt1c_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1c_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qc_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qc}_%g", etarange[jk]);
+    recojt1qc_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qc_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1ac_pt_%i",jk);
+    sprintf(title, "Et_{recojets1ac}_%g", etarange[jk]);
+    recojt1ac_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1ac_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1s_pt_%i",jk);
+    sprintf(title, "Et_{recojets1s}_%g", etarange[jk]);
+    recojt1s_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1s_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qs_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qs}_%g", etarange[jk]);
+    recojt1qs_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qs_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1as_pt_%i",jk);
+    sprintf(title, "Et_{recojets1as}_%g", etarange[jk]);
+    recojt1as_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1as_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1u_pt_%i",jk);
+    sprintf(title, "Et_{recojets1u}_%g", etarange[jk]);
+    recojt1u_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1u_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qu_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qu}_%g", etarange[jk]);
+    recojt1qu_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qu_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1au_pt_%i",jk);
+    sprintf(title, "Et_{recojets1au}_%g", etarange[jk]);
+    recojt1au_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1au_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1d_pt_%i",jk);
+    sprintf(title, "Et_{recojets1d}_%g", etarange[jk]);
+    recojt1d_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1d_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1qd_pt_%i",jk);
+    sprintf(title, "Et_{recojets1qd}_%g", etarange[jk]);
+    recojt1qd_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1qd_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet1ad_pt_%i",jk);
+    sprintf(title, "Et_{recojets1ad}_%g", etarange[jk]);
+    recojt1ad_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1ad_pt[jk]->Sumw2();
+
+
+
     sprintf(name, "recojet2_pt_%i",jk);
     sprintf(title, "Et_{recojets2}_%g", etarange[jk]);
     recojt2_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2g_pt_%i",jk);
+    sprintf(title, "Et_{recojets2g}_%g", etarange[jk]);
+    recojt2g_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2g_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qg_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qg}_%g", etarange[jk]);
+    recojt2qg_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qg_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2ag_pt_%i",jk);
+    sprintf(title, "Et_{recojets2ag}_%g", etarange[jk]);
+    recojt2ag_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2ag_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2b_pt_%i",jk);
+    sprintf(title, "Et_{recojets2b}_%g", etarange[jk]);
+    recojt2b_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2b_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qb_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qb}_%g", etarange[jk]);
+    recojt2qb_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qb_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2ab_pt_%i",jk);
+    sprintf(title, "Et_{recojets2ab}_%g", etarange[jk]);
+    recojt2ab_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2ab_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2c_pt_%i",jk);
+    sprintf(title, "Et_{recojets2c}_%g", etarange[jk]);
+    recojt2c_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2c_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qc_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qc}_%g", etarange[jk]);
+    recojt2qc_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qc_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2ac_pt_%i",jk);
+    sprintf(title, "Et_{recojets2ac}_%g", etarange[jk]);
+    recojt2ac_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2ac_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2s_pt_%i",jk);
+    sprintf(title, "Et_{recojets2s}_%g", etarange[jk]);
+    recojt2s_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2s_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qs_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qs}_%g", etarange[jk]);
+    recojt2qs_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qs_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2as_pt_%i",jk);
+    sprintf(title, "Et_{recojets2as}_%g", etarange[jk]);
+    recojt2as_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2as_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2u_pt_%i",jk);
+    sprintf(title, "Et_{recojets2u}_%g", etarange[jk]);
+    recojt2u_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2u_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qu_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qu}_%g", etarange[jk]);
+    recojt2qu_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qu_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2au_pt_%i",jk);
+    sprintf(title, "Et_{recojets2au}_%g", etarange[jk]);
+    recojt2au_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2au_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2d_pt_%i",jk);
+    sprintf(title, "Et_{recojets2d}_%g", etarange[jk]);
+    recojt2d_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2d_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2qd_pt_%i",jk);
+    sprintf(title, "Et_{recojets2qd}_%g", etarange[jk]);
+    recojt2qd_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2qd_pt[jk]->Sumw2();
+
+    sprintf(name, "recojet2ad_pt_%i",jk);
+    sprintf(title, "Et_{recojets2ad}_%g", etarange[jk]);
+    recojt2ad_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2ad_pt[jk]->Sumw2();
+
 
     sprintf(name, "recojet3_pt_%i",jk);
     sprintf(title, "Et_{recojets3}_%g", etarange[jk]);
@@ -2383,6 +5949,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 //-------------------------------------------
   //vector<double> ijet1candsmom[nkappa];
   //vector<double> ijet1candsmom;
+
   double ijet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
   double ijet1_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -2390,6 +5957,154 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double ijet1_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
   double ijet1_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet1gcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1g_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1g_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1g_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1g_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qgcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qg_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qg_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qg_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qg_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1agcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ag_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ag_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ag_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ag_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet1bcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1b_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1b_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1b_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1b_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qbcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qb_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qb_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qb_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qb_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1abcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ab_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ab_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ab_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ab_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet1ccandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1c_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1c_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1c_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1c_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qccandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qc_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qc_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qc_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qc_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1accandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ac_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ac_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ac_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ac_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+
+///
+  double ijet1scandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1s_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1s_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1s_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1s_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qscandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qs_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qs_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qs_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qs_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ascandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1as_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1as_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1as_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1as_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet1ucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1u_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1u_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1u_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1u_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qu_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qu_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qu_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qu_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1aucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1au_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1au_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1au_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1au_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+///
+  double ijet1dcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1d_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1d_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1d_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1d_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qdcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qd_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qd_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1qd_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1qd_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1adcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ad_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ad_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet1ad_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet1ad_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+/////////////////
 
   double ijet2candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
@@ -2398,6 +6113,154 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double ijet2_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
   double ijet2_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet2gcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2g_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2g_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2g_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2g_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qgcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qg_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qg_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qg_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qg_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2agcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ag_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ag_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ag_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ag_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+///
+  double ijet2bcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2b_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2b_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2b_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2b_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qbcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qb_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qb_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qb_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qb_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  
+  double ijet2abcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ab_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ab_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ab_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ab_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+///
+  double ijet2ccandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2c_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2c_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2c_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2c_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qccandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qc_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qc_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qc_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qc_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2accandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ac_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ac_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ac_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ac_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+///
+  double ijet2scandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2s_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2s_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2s_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2s_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qscandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qs_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qs_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qs_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qs_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ascandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2as_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2as_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2as_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2as_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+///
+  double ijet2ucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2u_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2u_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2u_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2u_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qu_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qu_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qu_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qu_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2aucandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2au_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2au_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2au_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2au_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+///
+  double ijet2dcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2d_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2d_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2d_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2d_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qdcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qd_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qd_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2qd_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2qd_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2adcandsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ad_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ad_long_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+  double ijet2ad_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+  double ijet2ad_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
 /*
   double ijet1candsmom[nkappa];
@@ -2528,11 +6391,24 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double leadingpt = 0;    //Jet charge (single jet)
   bool isInEtaRange[njetetamn]={0}; //GMA{0,0,0,0};
   
-  recojet0_pt = 0.0;
-  recojet1_pt = 0.0;
+  recojet1_pt = 0.0; 
+  recojet1g_pt = 0.0, recojet1qg_pt = 0.0, recojet1ag_pt = 0.0;
+  recojet1b_pt = 0.0, recojet1qb_pt = 0.0, recojet1ab_pt = 0.0;
+  recojet1c_pt = 0.0, recojet1qc_pt = 0.0, recojet1ac_pt = 0.0;
+  recojet1s_pt = 0.0, recojet1qs_pt = 0.0, recojet1as_pt = 0.0;
+  recojet1u_pt = 0.0, recojet1qu_pt = 0.0, recojet1au_pt = 0.0;
+  recojet1d_pt = 0.0, recojet1qd_pt = 0.0, recojet1ad_pt = 0.0;
+  
+  recojet2_pt = 0.0; 
+  recojet2g_pt = 0.0, recojet2qg_pt = 0.0, recojet2ag_pt = 0.0;
+  recojet2b_pt = 0.0, recojet2qb_pt = 0.0, recojet2ab_pt = 0.0;
+  recojet2c_pt = 0.0, recojet2qc_pt = 0.0, recojet2ac_pt = 0.0;
+  recojet2s_pt = 0.0, recojet2qs_pt = 0.0, recojet2as_pt = 0.0;
+  recojet2u_pt = 0.0, recojet2qu_pt = 0.0, recojet2au_pt = 0.0;
+  recojet2d_pt = 0.0, recojet2qd_pt = 0.0, recojet2ad_pt = 0.0;
  
-  genrecojet0_pt = 0.0;
-  genrecojet1_pt = 0.0; 
+  genrecojet1_pt = 0.0, genrecojet1g_pt = 0.0, genrecojet1b_pt = 0.0, genrecojet1c_pt = 0.0, genrecojet1s_pt = 0.0, genrecojet1u_pt = 0.0, genrecojet1d_pt = 0.0;
+  genrecojet2_pt = 0.0, genrecojet2g_pt = 0.0, genrecojet2b_pt = 0.0, genrecojet2c_pt = 0.0, genrecojet2s_pt = 0.0, genrecojet2u_pt = 0.0, genrecojet2d_pt = 0.0;
 #ifndef GENPART
   edm::Handle<pat::JetCollection> ak4PFJets;
   if (isReconstruct) { 
@@ -3033,7 +6909,13 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
 	      if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet]) {
 	      //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet]) {
+	      	//int flavour = (*ak4PFJets)[ijet].partonFlavour();
+        	//cout << "Flavour : "<<flavour<<endl;
+		
 		int ireorjt = jetindx[isrc][ijet];
+		
+		int jetflav = (*ak4PFJets)[ireorjt].partonFlavour();	
+		//if(jetflav==5){cout << "Flavour : "<<jetflav<<endl;}	
 		
 		double pt = jetptx[isrc][ijet];
 		double sup = jetscl[isrc][ijet];
@@ -3121,7 +7003,100 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    if (isPt && iet==0) {recojt_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {recojt_phi->Fill(tmp4v.phi(), weighttrg);}
 		    if (isEta && ncount==1) {recoht2_pt[iet]->Fill(aveleadingpt,weighttrg);}
-		  }
+			// quarks & antiquarks
+			if(abs(jetflav==21 || jetflav==9)){
+                        if (isInEtaRange[iet]) {recojtg_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtg_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtg_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			if(abs(jetflav==5)){
+                        if (isInEtaRange[iet]) {recojtb_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtb_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtb_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==4)){
+                        if (isInEtaRange[iet]) {recojtc_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtc_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtc_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==3)){
+                        if (isInEtaRange[iet]) {recojts_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojts_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojts_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==2)){
+                        if (isInEtaRange[iet]) {recojtu_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtu_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtu_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==1)){
+                        if (isInEtaRange[iet]) {recojtd_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtd_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtd_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// quarks
+			if(jetflav==21 || jetflav==9){
+                        if (isInEtaRange[iet]) {recojtqg_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqg_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqg_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==5){
+                        if (isInEtaRange[iet]) {recojtqb_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqb_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqb_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==4){
+                        if (isInEtaRange[iet]) {recojtqc_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqc_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqc_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==3){
+                        if (isInEtaRange[iet]) {recojtqs_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqs_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqs_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==2){
+                        if (isInEtaRange[iet]) {recojtqu_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqu_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqu_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==1){
+                        if (isInEtaRange[iet]) {recojtqd_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtqd_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtqd_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// antiquark
+			if(jetflav==-21 || jetflav==-9){
+                        if (isInEtaRange[iet]) {recojtag_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtag_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtag_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-5){
+                        if (isInEtaRange[iet]) {recojtab_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtab_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtab_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-4){
+                        if (isInEtaRange[iet]) {recojtac_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtac_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtac_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-3){
+                        if (isInEtaRange[iet]) {recojtas_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtas_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtas_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-2){
+                        if (isInEtaRange[iet]) {recojtau_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtau_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtau_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-1){
+                        if (isInEtaRange[iet]) {recojtad_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                        if (isPt && iet==0) {recojtad_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojtad_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+		  }//if (isrc==0) {
 		//} else {
 		/*  if (isrc==0) { 
 		    if ((isInEtaRange[iet])) {recojt_oth_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
@@ -3144,13 +7119,201 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		
 		if (isrc==0) { 
 		  if(ijet==0) { 
-		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet0_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {recojt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {recojt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {recojt1_phi->Fill(tmp4v.phi(), weighttrg);}
+			// quarks & antiquarks
+			if(abs(jetflav==21 || jetflav==9)){
+			if (isInEtaRange[iet]) {recojt1g_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1g_pt = tmp4v.perp();}
+			if (isPt && iet==0) {recojt1g_eta->Fill(tmp4v.eta(), weighttrg);}
+			if (isEta && isPt) {recojt1g_phi->Fill(tmp4v.phi(), weighttrg);}
+			}
+			if(abs(jetflav==5)){
+                        if (isInEtaRange[iet]) {recojt1b_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1b_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1b_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1b_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			if(abs(jetflav==4)){
+                        if (isInEtaRange[iet]) {recojt1c_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1c_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1c_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1c_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			if(abs(jetflav==3)){
+                        if (isInEtaRange[iet]) {recojt1s_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1s_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1s_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1s_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			if(abs(jetflav==2)){
+                        if (isInEtaRange[iet]) {recojt1u_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1u_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1u_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1u_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }	
+			if(abs(jetflav==1)){
+                        if (isInEtaRange[iet]) {recojt1d_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1d_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1d_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1d_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// quarks
+			if(jetflav==21 || jetflav==9){
+                        if (isInEtaRange[iet]) {recojt1qg_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qg_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qg_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qg_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==5){
+                        if (isInEtaRange[iet]) {recojt1qb_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qb_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qb_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qb_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==4){
+                        if (isInEtaRange[iet]) {recojt1qc_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qc_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qc_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qc_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==3){
+                        if (isInEtaRange[iet]) {recojt1qs_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qs_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qs_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qs_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==2){
+                        if (isInEtaRange[iet]) {recojt1qu_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qu_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qu_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qu_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==1){
+                        if (isInEtaRange[iet]) {recojt1qd_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1qd_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1qd_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1qd_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// antiquarks
+			if(jetflav==-21 || jetflav==-9){
+                        if (isInEtaRange[iet]) {recojt1ag_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1ag_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1ag_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1ag_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-5){
+                        if (isInEtaRange[iet]) {recojt1ab_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1ab_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1ab_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1ab_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-4){
+                        if (isInEtaRange[iet]) {recojt1ac_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1ac_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1ac_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1ac_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-3){
+                        if (isInEtaRange[iet]) {recojt1as_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1as_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1as_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1as_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-2){
+                        if (isInEtaRange[iet]) {recojt1au_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1au_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1au_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1au_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-1){
+                        if (isInEtaRange[iet]) {recojt1ad_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1ad_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt1ad_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt1ad_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+	
 		  } else if(ijet==1){
-		    if (isInEtaRange[iet]) {recojt2_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet1_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {recojt2_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {recojt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {recojt2_phi->Fill(tmp4v.phi(), weighttrg);}
+			// quarks & antiquarks
+			if(abs(jetflav==21 || jetflav==9)){
+                        if (isInEtaRange[iet]) {recojt2g_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2g_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2g_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2g_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==5)){
+                        if (isInEtaRange[iet]) {recojt2b_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2b_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2b_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2b_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==4)){
+                        if (isInEtaRange[iet]) {recojt2c_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2c_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2c_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2c_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==3)){
+                        if (isInEtaRange[iet]) {recojt2s_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2s_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2s_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2s_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==2)){
+                        if (isInEtaRange[iet]) {recojt2u_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2u_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2u_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2u_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(abs(jetflav==1)){
+                        if (isInEtaRange[iet]) {recojt2d_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2d_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2d_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2d_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// quarks
+			if(jetflav==21 || jetflav==9){
+                        if (isInEtaRange[iet]) {recojt2qg_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qg_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qg_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qg_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==5){
+                        if (isInEtaRange[iet]) {recojt2qb_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qb_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qb_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qb_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==4){
+                        if (isInEtaRange[iet]) {recojt2qc_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qc_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qc_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qc_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==3){
+                        if (isInEtaRange[iet]) {recojt2qs_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qs_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qs_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qs_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==2){
+                        if (isInEtaRange[iet]) {recojt2qu_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qu_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qu_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qu_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==1){
+                        if (isInEtaRange[iet]) {recojt2qd_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2qd_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2qd_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2qd_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+			// antiquarks
+			if(jetflav==-21 || jetflav==-9){
+                        if (isInEtaRange[iet]) {recojt2ag_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2ag_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2ag_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2ag_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-5){
+                        if (isInEtaRange[iet]) {recojt2ab_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2ab_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2ab_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2ab_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-4){
+                        if (isInEtaRange[iet]) {recojt2ac_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2ac_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2ac_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2ac_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-3){
+                        if (isInEtaRange[iet]) {recojt2as_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2as_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2as_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2as_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-2){
+                        if (isInEtaRange[iet]) {recojt2au_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2au_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2au_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2au_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+                        if(jetflav==-1){
+                        if (isInEtaRange[iet]) {recojt2ad_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2ad_pt = tmp4v.perp();}
+                        if (isPt && iet==0) {recojt2ad_eta->Fill(tmp4v.eta(), weighttrg);}
+                        if (isEta && isPt) {recojt2ad_phi->Fill(tmp4v.phi(), weighttrg);}
+                        }
+
 		    if (isInEtaRange[iet] && ncount==2) { 
 		      if (irecoht>=0 && irecoht<nHLTmx) { 
 			recojtave_pt[iet][irecoht]->Fill(aveleadingpt, weighttrg);
@@ -3164,7 +7327,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		  } else if(ijet==2) {
 		    if (isInEtaRange[iet]) {recojt3_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 		    if (isPt && iet==0 ) {recojt3_eta->Fill(tmp4v.eta(), weighttrg);}
-		    if (isInEtaRange[iet] && isPt) {recojt3_phi->Fill(tmp4v.phi(), weighttrg);}
+		    if (isInEtaRange[iet] && isPt) {recojt3_phi->Fill(tmp4v.phi(), weighttrg);} 
 		  }
 		  
 		  if (tmpjt4v.size()==2 && isInEtaRange[iet]) { 
@@ -3274,8 +7437,171 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 					ijet1_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
 		                        ijet1_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
-                                        //cout <<"optimization 1"<<endl;
+				if(abs(jetflav==21 || jetflav==9)){
+					ijet1gcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);	
+
+					ijet1g_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1g_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1g_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1g_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
 					}
+				if(abs(jetflav==5)){
+					ijet1bcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1b_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1b_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1b_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1b_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+					}
+				if(abs(jetflav==4)){
+					ijet1ccandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1c_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1c_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1c_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1c_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+					}
+				if(abs(jetflav==3)){
+                                        ijet1scandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1s_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1s_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1s_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1s_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				if(abs(jetflav==2)){
+                                        ijet1ucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1u_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1u_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1u_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1u_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				if(abs(jetflav==1)){
+                                        ijet1dcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1d_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1d_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1d_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1d_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				// quarks
+				if(jetflav==21 || jetflav==9){
+                                        ijet1qgcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qg_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qg_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qg_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qg_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==5){
+                                        ijet1qbcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qb_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qb_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qb_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qb_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==4){
+                                        ijet1qccandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qc_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qc_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qc_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qc_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==3){
+                                        ijet1qscandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qs_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qs_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qs_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qs_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==2){
+                                        ijet1qucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qu_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qu_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qu_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qu_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==1){
+                                        ijet1qdcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1qd_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1qd_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1qd_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1qd_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				// antiquark
+				if(jetflav==-21 || jetflav==-9){
+                                        ijet1agcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1ag_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1ag_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1ag_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1ag_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-5){
+                                        ijet1abcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1ab_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1ab_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1ab_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1ab_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-4){
+                                        ijet1accandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1ac_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1ac_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1ac_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1ac_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-3){
+                                        ijet1ascandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1as_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1as_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1as_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1as_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-2){
+                                        ijet1aucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1au_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1au_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1au_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1au_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-1){
+                                        ijet1adcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet1ad_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet1ad_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet1ad_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet1ad_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				}//if(ijet==0){
 				//if (ijet==1 && cand4v.perp() > 1.0){
 				if(ijet==1){
 					ijet2candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
@@ -3285,10 +7611,174 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
                                         ijet2_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
                                         ijet2_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
-					}
-				}
-			}//if (isrc==0){
-		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2
+				if(abs(jetflav==21 || jetflav==9)){
+                                        ijet2gcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2g_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2g_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2g_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2g_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(abs(jetflav==5)){
+                                        ijet2bcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2b_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2b_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2b_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2b_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				if(abs(jetflav==4)){
+                                        ijet2ccandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2c_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2c_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2c_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2c_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(abs(jetflav==3)){
+                                        ijet2scandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2s_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2s_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2s_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2s_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				if(abs(jetflav==2)){
+                                        ijet2ucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2u_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2u_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2u_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2u_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(abs(jetflav==1)){
+                                        ijet2dcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2d_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2d_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2d_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2d_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				// quarks
+				if(jetflav==21 || jetflav==9){
+                                        ijet2qgcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qg_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qg_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qg_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qg_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==5){
+                                        ijet2qbcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qb_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qb_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qb_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qb_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==4){
+                                        ijet2qccandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qc_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qc_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qc_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qc_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==3){
+                                        ijet2qscandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qs_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qs_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qs_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qs_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==2){
+                                        ijet2qucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qu_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qu_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qu_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qu_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==1){
+                                        ijet2qdcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2qd_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2qd_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2qd_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2qd_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+				// antiquark
+				 if(jetflav==-21 || jetflav==-9){
+                                        ijet2agcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2ag_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2ag_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2ag_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2ag_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-5){
+                                        ijet2abcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2ab_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2ab_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2ab_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2ab_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-4){
+                                        ijet2accandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2ac_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2ac_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2ac_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2ac_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-3){
+                                        ijet2ascandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2as_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2as_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2as_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2as_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-2){
+                                        ijet2aucandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2au_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2au_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2au_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2au_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+                                        }
+                                if(jetflav==-1){
+                                        ijet2adcandsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
+
+                                        ijet2ad_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
+                                        ijet2ad_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+
+                                        ijet2ad_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
+                                        ijet2ad_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
+					}				
+				}//if(ijet==1){
+			}//for (int ik=0; ik<10; ik++){
+		}//if (isrc==0){
+	} //for (unsigned int i2 = 0; i2< daus.size(); ++i2
             	h_nchg[iet]->Fill(nchg, weighttrg);    	
 		//  if(isEta && isPt) {ncount++;}
 	   	//  }//if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet])
@@ -3696,12 +8186,12 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		if (isrc==0) { 
 		  if(ijet==0) {
 		    //cout<<"Gen Pt= " << avegenpt <<endl;
-		    if (isInEtaRange[iet]) {genjt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); genrecojet0_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {genjt1_pt[iet]->Fill(tmp4v.perp(), weighttrg); genrecojet1_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {genjt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {genjt1_phi->Fill(tmp4v.phi(), weighttrg);}
 		  } else if(ijet==1){
 		    //cout<<"okkkkkkkk" <<endl;
-		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);genrecojet1_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);genrecojet2_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {genjt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {genjt2_phi->Fill(tmp4v.phi(), weighttrg);}
 		    if (isInEtaRange[iet] && ncount==2) {
@@ -3863,7 +8353,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                                 igenjet2_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
                                 igenjet2_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
                                         }
-			}
+			}//for (int ik=0; ik<10; ik++){
 		}//if (isrc==0){
                     /*if (isEta) {
                         if (charge !=0) {
@@ -3982,11 +8472,30 @@ else {
       //cout << "Rand Number " << k << endl;*/
  
 //-----------------------------------------------Calculate And Fill Jet Charge Obserables------------------------------------
-	// Profile histograms
+	//Profile histograms
 	//hprof->Fill(recojet0_pt,ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
-	hchpt->Fill(recojet0_pt,nchg,weighttrg);
+	hchpt->Fill(recojet1_pt,nchg,weighttrg);
+/*
+bool isValue=false;
+double v_recojc_D1J1[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+double v_recojc_D1J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+double v_recojc_D2J1[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+double v_recojc_D2J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+double v_recojc_D3J1[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
-for(int itp=0; itp<ntype; itp++){
+	for(int ik=0; ik<10; ik++){
+		isValue = true;
+		v_recojc_D1J1[ik] = (pow(recojet0_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) : 0 ;
+                v_recojc_D1J2[ik] = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+                v_recojc_D2J1[ik] = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
+                v_recojc_D2J2[ik] = (ijet2_long_den[ik] > 0) ? (ijet2_long_num[ik]/ijet2_long_den[ik]) : 0 ;
+                v_recojc_D3J1[ik] = (ijet1_tran_den[ik] > 0) ? (ijet1_tran_num[ik]/ijet1_tran_den[ik]) : 0 ;
+                v_recojc_D3J2[ik] = (ijet2_tran_den[ik] > 0) ? (ijet2_tran_num[ik]/ijet2_tran_den[ik]) : 0 ;
+		cout << "Test1 " <<" kappa : "<< ik << " value : "<<v_recojc_D1J1[ik]<<endl;	
+		}
+*/
+for(int itp=0; itp<1; itp++){
 	for (int iet=0; iet<njetetamn; iet++){
 		for (int ik=0; ik<10; ik++){
                 	if (isReconstruct) {
@@ -4001,19 +8510,22 @@ for(int itp=0; itp<ntype; itp++){
 							//cout<<"testing 2"<<endl;
 							//test1[ik]=(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])));
 							
-							double v_recojc_D1J1 = (pow(recojet0_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) : 0 ;
-							double v_recojc_D1J2 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+							double v_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+							double v_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
 							double v_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
 							double v_recojc_D2J2 = (ijet2_long_den[ik] > 0) ? (ijet2_long_num[ik]/ijet2_long_den[ik]) : 0 ;
 							double v_recojc_D3J1 = (ijet1_tran_den[ik] > 0) ? (ijet1_tran_num[ik]/ijet1_tran_den[ik]) : 0 ;
 							double v_recojc_D3J2 = (ijet2_tran_den[ik] > 0) ? (ijet2_tran_num[ik]/ijet2_tran_den[ik]) : 0 ;
-
+						
+							// reco jetcharge 1D	
+							//if(isValue){
 							h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D1J1,weighttrg);
 							h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D1J2,weighttrg);
 							h_recojc_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D2J1,weighttrg);
 							h_recojc_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D2J2,weighttrg);
 							h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D3J1,weighttrg);
 							h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D3J2,weighttrg);
+							//cout << "Test2 " <<" kappa : "<< ik << " value : "<<v_recojc_D1J1<<endl;
 							
 							//h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
 							//h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
@@ -4022,8 +8534,10 @@ for(int itp=0; itp<ntype; itp++){
 							//h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
                                                         //h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
 
+					// reco jetcharge 2D
 					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
 					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_D1J1,leadingptjec[isrc]);
+					//cout <<" Debug : "<<" kappa : "<<ik<< " value : "<<irecbin_D1J1<<endl;
 					h_recovar_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, weighttrg);
 					
 					//int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);	
@@ -4044,7 +8558,613 @@ for(int itp=0; itp<ntype; itp++){
 
                                         //int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
 					int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_D3J2,leadingptjec[isrc]);
-                                        h_recovar_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);	
+                                        h_recovar_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
+			
+							// gluon jets
+							double v_recojc_gjt_D1J1 = (pow(recojet1g_pt,kappa[ik]) > 0) ? (ijet1gcandsmom[ik]/(pow(recojet1g_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_gjt_D1J2 = (pow(recojet2g_pt,kappa[ik]) > 0) ? (ijet2gcandsmom[ik]/(pow(recojet2g_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_gjt_D2J1 = (ijet1g_long_den[ik] > 0) ? (ijet1g_long_num[ik]/ijet1g_long_den[ik]) : 0 ;
+                                                        double v_recojc_gjt_D2J2 = (ijet2g_long_den[ik] > 0) ? (ijet2g_long_num[ik]/ijet2g_long_den[ik]) : 0 ;
+                                                        double v_recojc_gjt_D3J1 = (ijet1g_tran_den[ik] > 0) ? (ijet1g_tran_num[ik]/ijet1g_tran_den[ik]) : 0 ;
+                                                        double v_recojc_gjt_D3J2 = (ijet2g_tran_den[ik] > 0) ? (ijet2g_tran_num[ik]/ijet2g_tran_den[ik]) : 0 ;
+
+							// +gluon jets
+							double v_recojc_qgjt_D1J1 = (pow(recojet1qg_pt,kappa[ik]) > 0) ? (ijet1qgcandsmom[ik]/(pow(recojet1qg_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qgjt_D1J2 = (pow(recojet2qg_pt,kappa[ik]) > 0) ? (ijet2qgcandsmom[ik]/(pow(recojet2qg_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qgjt_D2J1 = (ijet1qg_long_den[ik] > 0) ? (ijet1qg_long_num[ik]/ijet1qg_long_den[ik]) : 0 ;
+                                                        double v_recojc_qgjt_D2J2 = (ijet2qg_long_den[ik] > 0) ? (ijet2qg_long_num[ik]/ijet2qg_long_den[ik]) : 0 ;
+                                                        double v_recojc_qgjt_D3J1 = (ijet1qg_tran_den[ik] > 0) ? (ijet1qg_tran_num[ik]/ijet1qg_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qgjt_D3J2 = (ijet2qg_tran_den[ik] > 0) ? (ijet2qg_tran_num[ik]/ijet2qg_tran_den[ik]) : 0 ;
+							
+							// -gluon jets
+							double v_recojc_agjt_D1J1 = (pow(recojet1ag_pt,kappa[ik]) > 0) ? (ijet1agcandsmom[ik]/(pow(recojet1ag_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_agjt_D1J2 = (pow(recojet2ag_pt,kappa[ik]) > 0) ? (ijet2agcandsmom[ik]/(pow(recojet2ag_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_agjt_D2J1 = (ijet1ag_long_den[ik] > 0) ? (ijet1ag_long_num[ik]/ijet1ag_long_den[ik]) : 0 ;
+                                                        double v_recojc_agjt_D2J2 = (ijet2ag_long_den[ik] > 0) ? (ijet2ag_long_num[ik]/ijet2ag_long_den[ik]) : 0 ;
+                                                        double v_recojc_agjt_D3J1 = (ijet1ag_tran_den[ik] > 0) ? (ijet1ag_tran_num[ik]/ijet1ag_tran_den[ik]) : 0 ;
+                                                        double v_recojc_agjt_D3J2 = (ijet2ag_tran_den[ik] > 0) ? (ijet2ag_tran_num[ik]/ijet2ag_tran_den[ik]) : 0 ;
+				
+							// 1D
+							h_recojc_gjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D1J1,weighttrg);
+                                                        h_recojc_gjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D1J2,weighttrg);
+                                                        h_recojc_gjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D2J1,weighttrg);
+                                                        h_recojc_gjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D2J2,weighttrg);
+                                                        h_recojc_gjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D3J1,weighttrg);
+                                                        h_recojc_gjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D3J2,weighttrg);
+
+							h_recojc_qgjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D1J1,weighttrg);
+                                                        h_recojc_qgjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D1J2,weighttrg);
+                                                        h_recojc_qgjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D2J1,weighttrg);
+                                                        h_recojc_qgjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D2J2,weighttrg);
+                                                        h_recojc_qgjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D3J1,weighttrg);
+                                                        h_recojc_qgjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D3J2,weighttrg);
+
+							h_recojc_agjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D1J1,weighttrg);
+                                                        h_recojc_agjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D1J2,weighttrg);
+                                                        h_recojc_agjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D2J1,weighttrg);
+                                                        h_recojc_agjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D2J2,weighttrg);
+                                                        h_recojc_agjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D3J1,weighttrg);
+                                                        h_recojc_agjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D3J2,weighttrg);
+
+					// 2D
+					int irecbin_gjt_D1J1 = RecoBinning2D_gjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D1J1,leadingptjec[isrc]);
+					h_recovar_gjt_2D_D1J1[ik][iet]->Fill(irecbin_gjt_D1J1, weighttrg);
+
+					int irecbin_gjt_D1J2 = RecoBinning2D_gjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D1J2[ik][iet]->Fill(irecbin_gjt_D1J2, weighttrg);
+
+					int irecbin_gjt_D2J1 = RecoBinning2D_gjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D2J1[ik][iet]->Fill(irecbin_gjt_D2J1, weighttrg);
+
+					int irecbin_gjt_D2J2 = RecoBinning2D_gjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D2J2[ik][iet]->Fill(irecbin_gjt_D2J2, weighttrg);
+
+					int irecbin_gjt_D3J1 = RecoBinning2D_gjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D3J1[ik][iet]->Fill(irecbin_gjt_D3J1, weighttrg);
+
+					int irecbin_gjt_D3J2 = RecoBinning2D_gjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D3J2[ik][iet]->Fill(irecbin_gjt_D3J2, weighttrg);
+
+
+					int irecbin_qgjt_D1J1 = RecoBinning2D_qgjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D1J1[ik][iet]->Fill(irecbin_qgjt_D1J1, weighttrg);
+
+                                        int irecbin_qgjt_D1J2 = RecoBinning2D_qgjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D1J2[ik][iet]->Fill(irecbin_qgjt_D1J2, weighttrg);
+
+                                        int irecbin_qgjt_D2J1 = RecoBinning2D_qgjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D2J1[ik][iet]->Fill(irecbin_qgjt_D2J1, weighttrg);
+
+                                        int irecbin_qgjt_D2J2 = RecoBinning2D_qgjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D2J2[ik][iet]->Fill(irecbin_qgjt_D2J2, weighttrg);
+
+                                        int irecbin_qgjt_D3J1 = RecoBinning2D_qgjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D3J1[ik][iet]->Fill(irecbin_qgjt_D3J1, weighttrg);
+
+                                        int irecbin_qgjt_D3J2 = RecoBinning2D_qgjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qgjt_2D_D3J2[ik][iet]->Fill(irecbin_qgjt_D3J2, weighttrg);
+
+					
+					int irecbin_agjt_D1J1 = RecoBinning2D_agjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D1J1[ik][iet]->Fill(irecbin_agjt_D1J1, weighttrg);
+
+                                        int irecbin_agjt_D1J2 = RecoBinning2D_agjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D1J2[ik][iet]->Fill(irecbin_agjt_D1J2, weighttrg);
+
+                                        int irecbin_agjt_D2J1 = RecoBinning2D_agjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D2J1[ik][iet]->Fill(irecbin_agjt_D2J1, weighttrg);
+
+                                        int irecbin_agjt_D2J2 = RecoBinning2D_agjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D2J2[ik][iet]->Fill(irecbin_agjt_D2J2, weighttrg);
+
+                                        int irecbin_agjt_D3J1 = RecoBinning2D_agjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D3J1[ik][iet]->Fill(irecbin_agjt_D3J1, weighttrg);
+
+                                        int irecbin_agjt_D3J2 = RecoBinning2D_agjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_agjt_2D_D3J2[ik][iet]->Fill(irecbin_agjt_D3J2, weighttrg);
+
+
+				
+							// b jets	
+							double v_recojc_bjt_D1J1 = (pow(recojet1b_pt,kappa[ik]) > 0) ? (ijet1bcandsmom[ik]/(pow(recojet1b_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_bjt_D1J2 = (pow(recojet2b_pt,kappa[ik]) > 0) ? (ijet2bcandsmom[ik]/(pow(recojet2b_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_bjt_D2J1 = (ijet1b_long_den[ik] > 0) ? (ijet1b_long_num[ik]/ijet1b_long_den[ik]) : 0 ;
+                                                        double v_recojc_bjt_D2J2 = (ijet2b_long_den[ik] > 0) ? (ijet2b_long_num[ik]/ijet2b_long_den[ik]) : 0 ;
+                                                        double v_recojc_bjt_D3J1 = (ijet1b_tran_den[ik] > 0) ? (ijet1b_tran_num[ik]/ijet1b_tran_den[ik]) : 0 ;
+                                                        double v_recojc_bjt_D3J2 = (ijet2b_tran_den[ik] > 0) ? (ijet2b_tran_num[ik]/ijet2b_tran_den[ik]) : 0 ;
+
+							double v_recojc_qbjt_D1J1 = (pow(recojet1qb_pt,kappa[ik]) > 0) ? (ijet1qbcandsmom[ik]/(pow(recojet1qb_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qbjt_D1J2 = (pow(recojet2qb_pt,kappa[ik]) > 0) ? (ijet2qbcandsmom[ik]/(pow(recojet2qb_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qbjt_D2J1 = (ijet1qb_long_den[ik] > 0) ? (ijet1qb_long_num[ik]/ijet1qb_long_den[ik]) : 0 ;
+                                                        double v_recojc_qbjt_D2J2 = (ijet2qb_long_den[ik] > 0) ? (ijet2qb_long_num[ik]/ijet2qb_long_den[ik]) : 0 ;
+                                                        double v_recojc_qbjt_D3J1 = (ijet1qb_tran_den[ik] > 0) ? (ijet1qb_tran_num[ik]/ijet1qb_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qbjt_D3J2 = (ijet2qb_tran_den[ik] > 0) ? (ijet2qb_tran_num[ik]/ijet2qb_tran_den[ik]) : 0 ;
+
+							double v_recojc_abjt_D1J1 = (pow(recojet1ab_pt,kappa[ik]) > 0) ? (ijet1abcandsmom[ik]/(pow(recojet1ab_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_abjt_D1J2 = (pow(recojet2ab_pt,kappa[ik]) > 0) ? (ijet2abcandsmom[ik]/(pow(recojet2ab_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_abjt_D2J1 = (ijet1ab_long_den[ik] > 0) ? (ijet1ab_long_num[ik]/ijet1ab_long_den[ik]) : 0 ;
+                                                        double v_recojc_abjt_D2J2 = (ijet2ab_long_den[ik] > 0) ? (ijet2ab_long_num[ik]/ijet2ab_long_den[ik]) : 0 ;
+                                                        double v_recojc_abjt_D3J1 = (ijet1ab_tran_den[ik] > 0) ? (ijet1ab_tran_num[ik]/ijet1ab_tran_den[ik]) : 0 ;
+                                                        double v_recojc_abjt_D3J2 = (ijet2ab_tran_den[ik] > 0) ? (ijet2ab_tran_num[ik]/ijet2ab_tran_den[ik]) : 0 ;
+
+
+							// 1D 
+							h_recojc_bjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D1J1,weighttrg);
+                                                        h_recojc_bjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D1J2,weighttrg);
+                                                        h_recojc_bjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D2J1,weighttrg);
+                                                        h_recojc_bjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D2J2,weighttrg);
+                                                        h_recojc_bjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D3J1,weighttrg);
+                                                        h_recojc_bjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D3J2,weighttrg);
+
+							h_recojc_qbjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D1J1,weighttrg);
+                                                        h_recojc_qbjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D1J2,weighttrg);
+                                                        h_recojc_qbjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D2J1,weighttrg);
+                                                        h_recojc_qbjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D2J2,weighttrg);
+                                                        h_recojc_qbjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D3J1,weighttrg);
+                                                        h_recojc_qbjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D3J2,weighttrg);
+
+							h_recojc_abjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D1J1,weighttrg);
+                                                        h_recojc_abjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D1J2,weighttrg);
+                                                        h_recojc_abjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D2J1,weighttrg);
+                                                        h_recojc_abjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D2J2,weighttrg);
+                                                        h_recojc_abjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D3J1,weighttrg);
+                                                        h_recojc_abjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D3J2,weighttrg);
+
+	
+					// 2D 
+					int irecbin_bjt_D1J1 = RecoBinning2D_bjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D1J1[ik][iet]->Fill(irecbin_bjt_D1J1, weighttrg);
+
+                                        int irecbin_bjt_D1J2 = RecoBinning2D_bjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D1J2[ik][iet]->Fill(irecbin_bjt_D1J2, weighttrg);
+
+                                        int irecbin_bjt_D2J1 = RecoBinning2D_bjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D2J1[ik][iet]->Fill(irecbin_bjt_D2J1, weighttrg);
+
+                                        int irecbin_bjt_D2J2 = RecoBinning2D_bjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D2J2[ik][iet]->Fill(irecbin_bjt_D2J2, weighttrg);
+
+                                        int irecbin_bjt_D3J1 = RecoBinning2D_bjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D3J1[ik][iet]->Fill(irecbin_bjt_D3J1, weighttrg);
+
+                                        int irecbin_bjt_D3J2 = RecoBinning2D_bjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_bjt_2D_D3J2[ik][iet]->Fill(irecbin_bjt_D3J2, weighttrg);
+
+		
+					int irecbin_qbjt_D1J1 = RecoBinning2D_qbjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D1J1[ik][iet]->Fill(irecbin_qbjt_D1J1, weighttrg);
+
+                                        int irecbin_qbjt_D1J2 = RecoBinning2D_qbjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D1J2[ik][iet]->Fill(irecbin_qbjt_D1J2, weighttrg);
+
+                                        int irecbin_qbjt_D2J1 = RecoBinning2D_qbjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D2J1[ik][iet]->Fill(irecbin_qbjt_D2J1, weighttrg);
+
+                                        int irecbin_qbjt_D2J2 = RecoBinning2D_qbjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D2J2[ik][iet]->Fill(irecbin_qbjt_D2J2, weighttrg);
+
+                                        int irecbin_qbjt_D3J1 = RecoBinning2D_qbjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D3J1[ik][iet]->Fill(irecbin_qbjt_D3J1, weighttrg);
+
+                                        int irecbin_qbjt_D3J2 = RecoBinning2D_qbjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qbjt_2D_D3J2[ik][iet]->Fill(irecbin_qbjt_D3J2, weighttrg);
+
+
+							// c jets
+							double v_recojc_cjt_D1J1 = (pow(recojet1c_pt,kappa[ik]) > 0) ? (ijet1ccandsmom[ik]/(pow(recojet1c_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_cjt_D1J2 = (pow(recojet2c_pt,kappa[ik]) > 0) ? (ijet2ccandsmom[ik]/(pow(recojet2c_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_cjt_D2J1 = (ijet1c_long_den[ik] > 0) ? (ijet1c_long_num[ik]/ijet1c_long_den[ik]) : 0 ;
+                                                        double v_recojc_cjt_D2J2 = (ijet2c_long_den[ik] > 0) ? (ijet2c_long_num[ik]/ijet2c_long_den[ik]) : 0 ;
+                                                        double v_recojc_cjt_D3J1 = (ijet1c_tran_den[ik] > 0) ? (ijet1c_tran_num[ik]/ijet1c_tran_den[ik]) : 0 ;
+                                                        double v_recojc_cjt_D3J2 = (ijet2c_tran_den[ik] > 0) ? (ijet2c_tran_num[ik]/ijet2c_tran_den[ik]) : 0 ;
+
+							double v_recojc_qcjt_D1J1 = (pow(recojet1qc_pt,kappa[ik]) > 0) ? (ijet1qccandsmom[ik]/(pow(recojet1qc_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qcjt_D1J2 = (pow(recojet2qc_pt,kappa[ik]) > 0) ? (ijet2qccandsmom[ik]/(pow(recojet2qc_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qcjt_D2J1 = (ijet1qc_long_den[ik] > 0) ? (ijet1qc_long_num[ik]/ijet1qc_long_den[ik]) : 0 ;
+                                                        double v_recojc_qcjt_D2J2 = (ijet2qc_long_den[ik] > 0) ? (ijet2qc_long_num[ik]/ijet2qc_long_den[ik]) : 0 ;
+                                                        double v_recojc_qcjt_D3J1 = (ijet1qc_tran_den[ik] > 0) ? (ijet1qc_tran_num[ik]/ijet1qc_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qcjt_D3J2 = (ijet2qc_tran_den[ik] > 0) ? (ijet2qc_tran_num[ik]/ijet2qc_tran_den[ik]) : 0 ;
+
+							double v_recojc_acjt_D1J1 = (pow(recojet1ac_pt,kappa[ik]) > 0) ? (ijet1accandsmom[ik]/(pow(recojet1ac_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_acjt_D1J2 = (pow(recojet2ac_pt,kappa[ik]) > 0) ? (ijet2accandsmom[ik]/(pow(recojet2ac_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_acjt_D2J1 = (ijet1ac_long_den[ik] > 0) ? (ijet1ac_long_num[ik]/ijet1ac_long_den[ik]) : 0 ;
+                                                        double v_recojc_acjt_D2J2 = (ijet2ac_long_den[ik] > 0) ? (ijet2ac_long_num[ik]/ijet2ac_long_den[ik]) : 0 ;
+                                                        double v_recojc_acjt_D3J1 = (ijet1ac_tran_den[ik] > 0) ? (ijet1ac_tran_num[ik]/ijet1ac_tran_den[ik]) : 0 ;
+                                                        double v_recojc_acjt_D3J2 = (ijet2ac_tran_den[ik] > 0) ? (ijet2ac_tran_num[ik]/ijet2ac_tran_den[ik]) : 0 ;
+
+
+							// 1D
+                                                        h_recojc_cjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D1J1,weighttrg);
+                                                        h_recojc_cjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D1J2,weighttrg);
+                                                        h_recojc_cjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D2J1,weighttrg);
+                                                        h_recojc_cjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D2J2,weighttrg);
+                                                        h_recojc_cjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D3J1,weighttrg);
+                                                        h_recojc_cjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D3J2,weighttrg);
+
+							h_recojc_qcjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D1J1,weighttrg);
+                                                        h_recojc_qcjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D1J2,weighttrg);
+                                                        h_recojc_qcjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D2J1,weighttrg);
+                                                        h_recojc_qcjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D2J2,weighttrg);
+                                                        h_recojc_qcjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D3J1,weighttrg);
+                                                        h_recojc_qcjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D3J2,weighttrg);
+
+							h_recojc_acjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D1J1,weighttrg);
+                                                        h_recojc_acjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D1J2,weighttrg);
+                                                        h_recojc_acjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D2J1,weighttrg);
+                                                        h_recojc_acjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D2J2,weighttrg);
+                                                        h_recojc_acjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D3J1,weighttrg);
+                                                        h_recojc_acjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D3J2,weighttrg);
+
+					// 2D
+					int irecbin_cjt_D1J1 = RecoBinning2D_cjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D1J1[ik][iet]->Fill(irecbin_cjt_D1J1, weighttrg);
+
+                                        int irecbin_cjt_D1J2 = RecoBinning2D_cjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D1J2[ik][iet]->Fill(irecbin_cjt_D1J2, weighttrg);
+
+                                        int irecbin_cjt_D2J1 = RecoBinning2D_cjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D2J1[ik][iet]->Fill(irecbin_cjt_D2J1, weighttrg);
+
+                                        int irecbin_cjt_D2J2 = RecoBinning2D_cjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D2J2[ik][iet]->Fill(irecbin_cjt_D2J2, weighttrg);
+
+                                        int irecbin_cjt_D3J1 = RecoBinning2D_cjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D3J1[ik][iet]->Fill(irecbin_cjt_D3J1, weighttrg);
+
+                                        int irecbin_cjt_D3J2 = RecoBinning2D_cjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_cjt_2D_D3J2[ik][iet]->Fill(irecbin_cjt_D3J2, weighttrg);
+
+
+					int irecbin_qcjt_D1J1 = RecoBinning2D_qcjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D1J1[ik][iet]->Fill(irecbin_qcjt_D1J1, weighttrg);
+
+                                        int irecbin_qcjt_D1J2 = RecoBinning2D_qcjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D1J2[ik][iet]->Fill(irecbin_qcjt_D1J2, weighttrg);
+
+                                        int irecbin_qcjt_D2J1 = RecoBinning2D_qcjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D2J1[ik][iet]->Fill(irecbin_qcjt_D2J1, weighttrg);
+
+                                        int irecbin_qcjt_D2J2 = RecoBinning2D_qcjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D2J2[ik][iet]->Fill(irecbin_qcjt_D2J2, weighttrg);
+
+                                        int irecbin_qcjt_D3J1 = RecoBinning2D_qcjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D3J1[ik][iet]->Fill(irecbin_qcjt_D3J1, weighttrg);
+
+                                        int irecbin_qcjt_D3J2 = RecoBinning2D_qcjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qcjt_2D_D3J2[ik][iet]->Fill(irecbin_qcjt_D3J2, weighttrg);
+
+					
+					int irecbin_acjt_D1J1 = RecoBinning2D_acjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D1J1[ik][iet]->Fill(irecbin_acjt_D1J1, weighttrg);
+
+                                        int irecbin_acjt_D1J2 = RecoBinning2D_acjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D1J2[ik][iet]->Fill(irecbin_acjt_D1J2, weighttrg);
+
+                                        int irecbin_acjt_D2J1 = RecoBinning2D_acjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D2J1[ik][iet]->Fill(irecbin_acjt_D2J1, weighttrg);
+
+                                        int irecbin_acjt_D2J2 = RecoBinning2D_acjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D2J2[ik][iet]->Fill(irecbin_acjt_D2J2, weighttrg);
+
+                                        int irecbin_acjt_D3J1 = RecoBinning2D_acjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D3J1[ik][iet]->Fill(irecbin_acjt_D3J1, weighttrg);
+
+                                        int irecbin_acjt_D3J2 = RecoBinning2D_acjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_acjt_2D_D3J2[ik][iet]->Fill(irecbin_acjt_D3J2, weighttrg);
+
+	
+							// s jets
+							double v_recojc_sjt_D1J1 = (pow(recojet1s_pt,kappa[ik]) > 0) ? (ijet1scandsmom[ik]/(pow(recojet1s_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_sjt_D1J2 = (pow(recojet2s_pt,kappa[ik]) > 0) ? (ijet2scandsmom[ik]/(pow(recojet2s_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_sjt_D2J1 = (ijet1s_long_den[ik] > 0) ? (ijet1s_long_num[ik]/ijet1s_long_den[ik]) : 0 ;
+                                                        double v_recojc_sjt_D2J2 = (ijet2s_long_den[ik] > 0) ? (ijet2s_long_num[ik]/ijet2s_long_den[ik]) : 0 ;
+                                                        double v_recojc_sjt_D3J1 = (ijet1s_tran_den[ik] > 0) ? (ijet1s_tran_num[ik]/ijet1s_tran_den[ik]) : 0 ;
+                                                        double v_recojc_sjt_D3J2 = (ijet2s_tran_den[ik] > 0) ? (ijet2s_tran_num[ik]/ijet2s_tran_den[ik]) : 0 ;
+
+							double v_recojc_qsjt_D1J1 = (pow(recojet1qs_pt,kappa[ik]) > 0) ? (ijet1qscandsmom[ik]/(pow(recojet1qs_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qsjt_D1J2 = (pow(recojet2qs_pt,kappa[ik]) > 0) ? (ijet2qscandsmom[ik]/(pow(recojet2qs_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qsjt_D2J1 = (ijet1qs_long_den[ik] > 0) ? (ijet1qs_long_num[ik]/ijet1qs_long_den[ik]) : 0 ;
+                                                        double v_recojc_qsjt_D2J2 = (ijet2qs_long_den[ik] > 0) ? (ijet2qs_long_num[ik]/ijet2qs_long_den[ik]) : 0 ;
+                                                        double v_recojc_qsjt_D3J1 = (ijet1qs_tran_den[ik] > 0) ? (ijet1qs_tran_num[ik]/ijet1qs_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qsjt_D3J2 = (ijet2qs_tran_den[ik] > 0) ? (ijet2qs_tran_num[ik]/ijet2qs_tran_den[ik]) : 0 ;
+
+							double v_recojc_asjt_D1J1 = (pow(recojet1as_pt,kappa[ik]) > 0) ? (ijet1ascandsmom[ik]/(pow(recojet1as_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_asjt_D1J2 = (pow(recojet2as_pt,kappa[ik]) > 0) ? (ijet2ascandsmom[ik]/(pow(recojet2as_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_asjt_D2J1 = (ijet1as_long_den[ik] > 0) ? (ijet1as_long_num[ik]/ijet1as_long_den[ik]) : 0 ;
+                                                        double v_recojc_asjt_D2J2 = (ijet2as_long_den[ik] > 0) ? (ijet2as_long_num[ik]/ijet2as_long_den[ik]) : 0 ;
+                                                        double v_recojc_asjt_D3J1 = (ijet1as_tran_den[ik] > 0) ? (ijet1as_tran_num[ik]/ijet1as_tran_den[ik]) : 0 ;
+                                                        double v_recojc_asjt_D3J2 = (ijet2as_tran_den[ik] > 0) ? (ijet2as_tran_num[ik]/ijet2as_tran_den[ik]) : 0 ;
+
+
+							// 1D
+                                                        h_recojc_sjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D1J1,weighttrg);
+                                                        h_recojc_sjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D1J2,weighttrg);
+                                                        h_recojc_sjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D2J1,weighttrg);
+                                                        h_recojc_sjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D2J2,weighttrg);
+                                                        h_recojc_sjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D3J1,weighttrg);
+                                                        h_recojc_sjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D3J2,weighttrg);
+
+							h_recojc_qsjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D1J1,weighttrg);
+                                                        h_recojc_qsjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D1J2,weighttrg);
+                                                        h_recojc_qsjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D2J1,weighttrg);
+                                                        h_recojc_qsjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D2J2,weighttrg);
+                                                        h_recojc_qsjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D3J1,weighttrg);
+                                                        h_recojc_qsjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D3J2,weighttrg);
+
+							h_recojc_asjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D1J1,weighttrg);
+                                                        h_recojc_asjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D1J2,weighttrg);
+                                                        h_recojc_asjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D2J1,weighttrg);
+                                                        h_recojc_asjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D2J2,weighttrg);
+                                                        h_recojc_asjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D3J1,weighttrg);
+                                                        h_recojc_asjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D3J2,weighttrg);
+
+
+					// 2D
+					int irecbin_sjt_D1J1 = RecoBinning2D_sjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D1J1[ik][iet]->Fill(irecbin_sjt_D1J1, weighttrg);
+
+                                        int irecbin_sjt_D1J2 = RecoBinning2D_sjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D1J2[ik][iet]->Fill(irecbin_sjt_D1J2, weighttrg);
+
+                                        int irecbin_sjt_D2J1 = RecoBinning2D_sjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D2J1[ik][iet]->Fill(irecbin_sjt_D2J1, weighttrg);
+
+                                        int irecbin_sjt_D2J2 = RecoBinning2D_sjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D2J2[ik][iet]->Fill(irecbin_sjt_D2J2, weighttrg);
+
+                                        int irecbin_sjt_D3J1 = RecoBinning2D_sjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D3J1[ik][iet]->Fill(irecbin_sjt_D3J1, weighttrg);
+
+                                        int irecbin_sjt_D3J2 = RecoBinning2D_sjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_sjt_2D_D3J2[ik][iet]->Fill(irecbin_sjt_D3J2, weighttrg);
+
+
+					int irecbin_qsjt_D1J1 = RecoBinning2D_qsjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D1J1[ik][iet]->Fill(irecbin_qsjt_D1J1, weighttrg);
+
+                                        int irecbin_qsjt_D1J2 = RecoBinning2D_qsjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D1J2[ik][iet]->Fill(irecbin_qsjt_D1J2, weighttrg);
+
+                                        int irecbin_qsjt_D2J1 = RecoBinning2D_qsjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D2J1[ik][iet]->Fill(irecbin_qsjt_D2J1, weighttrg);
+
+                                        int irecbin_qsjt_D2J2 = RecoBinning2D_qsjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D2J2[ik][iet]->Fill(irecbin_qsjt_D2J2, weighttrg);
+
+                                        int irecbin_qsjt_D3J1 = RecoBinning2D_qsjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D3J1[ik][iet]->Fill(irecbin_qsjt_D3J1, weighttrg);
+
+                                        int irecbin_qsjt_D3J2 = RecoBinning2D_qsjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qsjt_2D_D3J2[ik][iet]->Fill(irecbin_qsjt_D3J2, weighttrg);
+
+					
+					int irecbin_asjt_D1J1 = RecoBinning2D_asjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D1J1[ik][iet]->Fill(irecbin_asjt_D1J1, weighttrg);
+
+                                        int irecbin_asjt_D1J2 = RecoBinning2D_asjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D1J2[ik][iet]->Fill(irecbin_asjt_D1J2, weighttrg);
+
+                                        int irecbin_asjt_D2J1 = RecoBinning2D_asjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D2J1[ik][iet]->Fill(irecbin_asjt_D2J1, weighttrg);
+
+                                        int irecbin_asjt_D2J2 = RecoBinning2D_asjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D2J2[ik][iet]->Fill(irecbin_asjt_D2J2, weighttrg);
+
+                                        int irecbin_asjt_D3J1 = RecoBinning2D_asjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D3J1[ik][iet]->Fill(irecbin_asjt_D3J1, weighttrg);
+
+                                        int irecbin_asjt_D3J2 = RecoBinning2D_asjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_asjt_2D_D3J2[ik][iet]->Fill(irecbin_asjt_D3J2, weighttrg);
+
+
+
+							// u jets
+							double v_recojc_ujt_D1J1 = (pow(recojet1u_pt,kappa[ik]) > 0) ? (ijet1ucandsmom[ik]/(pow(recojet1u_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_ujt_D1J2 = (pow(recojet2u_pt,kappa[ik]) > 0) ? (ijet2ucandsmom[ik]/(pow(recojet2u_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_ujt_D2J1 = (ijet1u_long_den[ik] > 0) ? (ijet1u_long_num[ik]/ijet1u_long_den[ik]) : 0 ;
+                                                        double v_recojc_ujt_D2J2 = (ijet2u_long_den[ik] > 0) ? (ijet2u_long_num[ik]/ijet2u_long_den[ik]) : 0 ;
+                                                        double v_recojc_ujt_D3J1 = (ijet1u_tran_den[ik] > 0) ? (ijet1u_tran_num[ik]/ijet1u_tran_den[ik]) : 0 ;
+                                                        double v_recojc_ujt_D3J2 = (ijet2u_tran_den[ik] > 0) ? (ijet2u_tran_num[ik]/ijet2u_tran_den[ik]) : 0 ;
+
+							double v_recojc_qujt_D1J1 = (pow(recojet1qu_pt,kappa[ik]) > 0) ? (ijet1qucandsmom[ik]/(pow(recojet1qu_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qujt_D1J2 = (pow(recojet2qu_pt,kappa[ik]) > 0) ? (ijet2qucandsmom[ik]/(pow(recojet2qu_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qujt_D2J1 = (ijet1qu_long_den[ik] > 0) ? (ijet1qu_long_num[ik]/ijet1u_long_den[ik]) : 0 ;
+                                                        double v_recojc_qujt_D2J2 = (ijet2qu_long_den[ik] > 0) ? (ijet2qu_long_num[ik]/ijet2u_long_den[ik]) : 0 ;
+                                                        double v_recojc_qujt_D3J1 = (ijet1qu_tran_den[ik] > 0) ? (ijet1qu_tran_num[ik]/ijet1u_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qujt_D3J2 = (ijet2qu_tran_den[ik] > 0) ? (ijet2qu_tran_num[ik]/ijet2u_tran_den[ik]) : 0 ;
+
+							double v_recojc_aujt_D1J1 = (pow(recojet1au_pt,kappa[ik]) > 0) ? (ijet1aucandsmom[ik]/(pow(recojet1au_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_aujt_D1J2 = (pow(recojet2au_pt,kappa[ik]) > 0) ? (ijet2aucandsmom[ik]/(pow(recojet2au_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_aujt_D2J1 = (ijet1au_long_den[ik] > 0) ? (ijet1au_long_num[ik]/ijet1u_long_den[ik]) : 0 ;
+                                                        double v_recojc_aujt_D2J2 = (ijet2au_long_den[ik] > 0) ? (ijet2au_long_num[ik]/ijet2u_long_den[ik]) : 0 ;
+                                                        double v_recojc_aujt_D3J1 = (ijet1au_tran_den[ik] > 0) ? (ijet1au_tran_num[ik]/ijet1u_tran_den[ik]) : 0 ;
+                                                        double v_recojc_aujt_D3J2 = (ijet2au_tran_den[ik] > 0) ? (ijet2au_tran_num[ik]/ijet2u_tran_den[ik]) : 0 ;
+
+
+							// 1D
+                                                        h_recojc_ujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D1J1,weighttrg);
+                                                        h_recojc_ujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D1J2,weighttrg);
+                                                        h_recojc_ujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D2J1,weighttrg);
+                                                        h_recojc_ujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D2J2,weighttrg);
+                                                        h_recojc_ujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D3J1,weighttrg);
+                                                        h_recojc_ujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D3J2,weighttrg);
+
+							h_recojc_qujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D1J1,weighttrg);
+                                                        h_recojc_qujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D1J2,weighttrg);
+                                                        h_recojc_qujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D2J1,weighttrg);
+                                                        h_recojc_qujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D2J2,weighttrg);
+                                                        h_recojc_qujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D3J1,weighttrg);
+                                                        h_recojc_qujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D3J2,weighttrg);
+
+							h_recojc_aujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D1J1,weighttrg);
+                                                        h_recojc_aujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D1J2,weighttrg);
+                                                        h_recojc_aujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D2J1,weighttrg);
+                                                        h_recojc_aujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D2J2,weighttrg);
+                                                        h_recojc_aujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D3J1,weighttrg);
+                                                        h_recojc_aujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D3J2,weighttrg);
+
+
+
+					// 2D
+					int irecbin_ujt_D1J1 = RecoBinning2D_ujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D1J1[ik][iet]->Fill(irecbin_ujt_D1J1, weighttrg);
+
+                                        int irecbin_ujt_D1J2 = RecoBinning2D_ujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D1J2[ik][iet]->Fill(irecbin_ujt_D1J2, weighttrg);
+
+                                        int irecbin_ujt_D2J1 = RecoBinning2D_ujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D2J1[ik][iet]->Fill(irecbin_ujt_D2J1, weighttrg);
+
+                                        int irecbin_ujt_D2J2 = RecoBinning2D_ujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D2J2[ik][iet]->Fill(irecbin_ujt_D2J2, weighttrg);
+
+                                        int irecbin_ujt_D3J1 = RecoBinning2D_ujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D3J1[ik][iet]->Fill(irecbin_ujt_D3J1, weighttrg);
+
+                                        int irecbin_ujt_D3J2 = RecoBinning2D_ujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_ujt_2D_D3J2[ik][iet]->Fill(irecbin_ujt_D3J2, weighttrg);
+
+
+					int irecbin_qujt_D1J1 = RecoBinning2D_qujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D1J1[ik][iet]->Fill(irecbin_qujt_D1J1, weighttrg);
+
+                                        int irecbin_qujt_D1J2 = RecoBinning2D_qujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D1J2[ik][iet]->Fill(irecbin_qujt_D1J2, weighttrg);
+
+                                        int irecbin_qujt_D2J1 = RecoBinning2D_qujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D2J1[ik][iet]->Fill(irecbin_qujt_D2J1, weighttrg);
+
+                                        int irecbin_qujt_D2J2 = RecoBinning2D_qujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D2J2[ik][iet]->Fill(irecbin_qujt_D2J2, weighttrg);
+
+                                        int irecbin_qujt_D3J1 = RecoBinning2D_qujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D3J1[ik][iet]->Fill(irecbin_qujt_D3J1, weighttrg);
+
+                                        int irecbin_qujt_D3J2 = RecoBinning2D_qujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qujt_2D_D3J2[ik][iet]->Fill(irecbin_qujt_D3J2, weighttrg);
+
+
+					int irecbin_aujt_D1J1 = RecoBinning2D_aujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D1J1[ik][iet]->Fill(irecbin_aujt_D1J1, weighttrg);
+
+                                        int irecbin_aujt_D1J2 = RecoBinning2D_aujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D1J2[ik][iet]->Fill(irecbin_aujt_D1J2, weighttrg);
+
+                                        int irecbin_aujt_D2J1 = RecoBinning2D_aujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D2J1[ik][iet]->Fill(irecbin_aujt_D2J1, weighttrg);
+
+                                        int irecbin_aujt_D2J2 = RecoBinning2D_aujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D2J2[ik][iet]->Fill(irecbin_aujt_D2J2, weighttrg);
+
+                                        int irecbin_aujt_D3J1 = RecoBinning2D_aujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D3J1[ik][iet]->Fill(irecbin_aujt_D3J1, weighttrg);
+
+                                        int irecbin_aujt_D3J2 = RecoBinning2D_aujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_aujt_2D_D3J2[ik][iet]->Fill(irecbin_aujt_D3J2, weighttrg);
+
+							// d jets
+							double v_recojc_djt_D1J1 = (pow(recojet1d_pt,kappa[ik]) > 0) ? (ijet1dcandsmom[ik]/(pow(recojet1d_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_djt_D1J2 = (pow(recojet2d_pt,kappa[ik]) > 0) ? (ijet2dcandsmom[ik]/(pow(recojet2d_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_djt_D2J1 = (ijet1d_long_den[ik] > 0) ? (ijet1d_long_num[ik]/ijet1d_long_den[ik]) : 0 ;
+                                                        double v_recojc_djt_D2J2 = (ijet2d_long_den[ik] > 0) ? (ijet2d_long_num[ik]/ijet2d_long_den[ik]) : 0 ;
+                                                        double v_recojc_djt_D3J1 = (ijet1d_tran_den[ik] > 0) ? (ijet1d_tran_num[ik]/ijet1d_tran_den[ik]) : 0 ;
+                                                        double v_recojc_djt_D3J2 = (ijet2d_tran_den[ik] > 0) ? (ijet2d_tran_num[ik]/ijet2d_tran_den[ik]) : 0 ;
+
+							double v_recojc_qdjt_D1J1 = (pow(recojet1qd_pt,kappa[ik]) > 0) ? (ijet1qdcandsmom[ik]/(pow(recojet1qd_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qdjt_D1J2 = (pow(recojet2qd_pt,kappa[ik]) > 0) ? (ijet2qdcandsmom[ik]/(pow(recojet2qd_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qdjt_D2J1 = (ijet1qd_long_den[ik] > 0) ? (ijet1qd_long_num[ik]/ijet1qd_long_den[ik]) : 0 ;
+                                                        double v_recojc_qdjt_D2J2 = (ijet2qd_long_den[ik] > 0) ? (ijet2qd_long_num[ik]/ijet2qd_long_den[ik]) : 0 ;
+                                                        double v_recojc_qdjt_D3J1 = (ijet1qd_tran_den[ik] > 0) ? (ijet1qd_tran_num[ik]/ijet1qd_tran_den[ik]) : 0 ;
+                                                        double v_recojc_qdjt_D3J2 = (ijet2qd_tran_den[ik] > 0) ? (ijet2qd_tran_num[ik]/ijet2qd_tran_den[ik]) : 0 ;
+
+							double v_recojc_adjt_D1J1 = (pow(recojet1ad_pt,kappa[ik]) > 0) ? (ijet1adcandsmom[ik]/(pow(recojet1ad_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_adjt_D1J2 = (pow(recojet2ad_pt,kappa[ik]) > 0) ? (ijet2adcandsmom[ik]/(pow(recojet2ad_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_adjt_D2J1 = (ijet1ad_long_den[ik] > 0) ? (ijet1ad_long_num[ik]/ijet1ad_long_den[ik]) : 0 ;
+                                                        double v_recojc_adjt_D2J2 = (ijet2ad_long_den[ik] > 0) ? (ijet2ad_long_num[ik]/ijet2ad_long_den[ik]) : 0 ;
+                                                        double v_recojc_adjt_D3J1 = (ijet1ad_tran_den[ik] > 0) ? (ijet1ad_tran_num[ik]/ijet1ad_tran_den[ik]) : 0 ;
+                                                        double v_recojc_adjt_D3J2 = (ijet2ad_tran_den[ik] > 0) ? (ijet2ad_tran_num[ik]/ijet2ad_tran_den[ik]) : 0 ;
+
+
+							// 1D
+                                                        h_recojc_djt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D1J1,weighttrg);
+                                                        h_recojc_djt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D1J2,weighttrg);
+                                                        h_recojc_djt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D2J1,weighttrg);
+                                                        h_recojc_djt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D2J2,weighttrg);
+                                                        h_recojc_djt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D3J1,weighttrg);
+                                                        h_recojc_djt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D3J2,weighttrg);
+
+							h_recojc_qdjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D1J1,weighttrg);
+                                                        h_recojc_qdjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D1J2,weighttrg);
+                                                        h_recojc_qdjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D2J1,weighttrg);
+                                                        h_recojc_qdjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D2J2,weighttrg);
+                                                        h_recojc_qdjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D3J1,weighttrg);
+                                                        h_recojc_qdjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D3J2,weighttrg);
+
+							h_recojc_adjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D1J1,weighttrg);
+                                                        h_recojc_adjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D1J2,weighttrg);
+                                                        h_recojc_adjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D2J1,weighttrg);
+                                                        h_recojc_adjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D2J2,weighttrg);
+                                                        h_recojc_adjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D3J1,weighttrg);
+                                                        h_recojc_adjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D3J2,weighttrg);
+
+					// 2D
+					int irecbin_djt_D1J1 = RecoBinning2D_djt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D1J1[ik][iet]->Fill(irecbin_djt_D1J1, weighttrg);
+
+                                        int irecbin_djt_D1J2 = RecoBinning2D_djt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D1J2[ik][iet]->Fill(irecbin_djt_D1J2, weighttrg);
+
+                                        int irecbin_djt_D2J1 = RecoBinning2D_djt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D2J1[ik][iet]->Fill(irecbin_djt_D2J1, weighttrg);
+
+                                        int irecbin_djt_D2J2 = RecoBinning2D_djt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D2J2[ik][iet]->Fill(irecbin_djt_D2J2, weighttrg);
+
+                                        int irecbin_djt_D3J1 = RecoBinning2D_djt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D3J1[ik][iet]->Fill(irecbin_djt_D3J1, weighttrg);
+
+                                        int irecbin_djt_D3J2 = RecoBinning2D_djt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_djt_2D_D3J2[ik][iet]->Fill(irecbin_djt_D3J2, weighttrg);
+
+
+					int irecbin_qdjt_D1J1 = RecoBinning2D_qdjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D1J1[ik][iet]->Fill(irecbin_qdjt_D1J1, weighttrg);
+
+                                        int irecbin_qdjt_D1J2 = RecoBinning2D_qdjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D1J2[ik][iet]->Fill(irecbin_qdjt_D1J2, weighttrg);
+
+                                        int irecbin_qdjt_D2J1 = RecoBinning2D_qdjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D2J1[ik][iet]->Fill(irecbin_qdjt_D2J1, weighttrg);
+
+                                        int irecbin_qdjt_D2J2 = RecoBinning2D_qdjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D2J2[ik][iet]->Fill(irecbin_qdjt_D2J2, weighttrg);
+
+                                        int irecbin_qdjt_D3J1 = RecoBinning2D_qdjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D3J1[ik][iet]->Fill(irecbin_qdjt_D3J1, weighttrg);
+
+                                        int irecbin_qdjt_D3J2 = RecoBinning2D_qdjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_qdjt_2D_D3J2[ik][iet]->Fill(irecbin_qdjt_D3J2, weighttrg);
+
+
+					int irecbin_adjt_D1J1 = RecoBinning2D_adjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D1J1,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D1J1[ik][iet]->Fill(irecbin_adjt_D1J1, weighttrg);
+
+                                        int irecbin_adjt_D1J2 = RecoBinning2D_adjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D1J2,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D1J2[ik][iet]->Fill(irecbin_adjt_D1J2, weighttrg);
+
+                                        int irecbin_adjt_D2J1 = RecoBinning2D_adjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D2J1,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D2J1[ik][iet]->Fill(irecbin_adjt_D2J1, weighttrg);
+
+                                        int irecbin_adjt_D2J2 = RecoBinning2D_adjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D2J2,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D2J2[ik][iet]->Fill(irecbin_adjt_D2J2, weighttrg);
+
+                                        int irecbin_adjt_D3J1 = RecoBinning2D_adjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D3J1,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D3J1[ik][iet]->Fill(irecbin_adjt_D3J1, weighttrg);
+
+                                        int irecbin_adjt_D3J2 = RecoBinning2D_adjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D3J2,leadingptjec[isrc]);
+                                        h_recovar_adjt_2D_D3J2[ik][iet]->Fill(irecbin_adjt_D3J2, weighttrg);
+		
+							//}//if(isValue){
 							//cout <<"optimization 2"<<endl;   
 							}//if (isrc==0)
 						}//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
@@ -4061,8 +9181,8 @@ for(int itp=0; itp<ntype; itp++){
                                 		if(isrc==0) {
 							//isGENJC = true;
 
-							double v_genjc_D1J1 = (pow(genrecojet0_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))) : 0 ;
-							double v_genjc_D1J2 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+							double v_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+							double v_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
 							double v_genjc_D2J1 = (igenjet1_long_den[ik] > 0) ? (igenjet1_long_num[ik]/igenjet1_long_den[ik]) : 0 ;
 							double v_genjc_D2J2 = (igenjet2_long_den[ik] > 0) ? (igenjet2_long_num[ik]/igenjet2_long_den[ik]) : 0 ;
 							double v_genjc_D3J1 = (igenjet1_tran_den[ik] > 0) ? (igenjet1_tran_num[ik]/igenjet1_tran_den[ik]) : 0 ;
@@ -4112,15 +9232,15 @@ for(int itp=0; itp<ntype; itp++){
 			        //if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1 && genmom[isrc][itp][iet].size()>1){
 				if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){	
                                 				
-						double v1_recojc_D1J1 = (pow(recojet0_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) : 0 ;
-                                                double v1_recojc_D1J2 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+						double v1_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+                                                double v1_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
                                                 double v1_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
                                                 double v1_recojc_D2J2 = (ijet2_long_den[ik] > 0) ? (ijet2_long_num[ik]/ijet2_long_den[ik]) : 0 ;
                                                 double v1_recojc_D3J1 = (ijet1_tran_den[ik] > 0) ? (ijet1_tran_num[ik]/ijet1_tran_den[ik]) : 0 ;
                                                 double v1_recojc_D3J2 = (ijet2_tran_den[ik] > 0) ? (ijet2_tran_num[ik]/ijet2_tran_den[ik]) : 0 ;
 
-						double v1_genjc_D1J1 = (pow(genrecojet0_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))) : 0 ;
-                                                double v1_genjc_D1J2 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+						double v1_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+                                                double v1_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
                                                 double v1_genjc_D2J1 = (igenjet1_long_den[ik] > 0) ? (igenjet1_long_num[ik]/igenjet1_long_den[ik]) : 0 ;
                                                 double v1_genjc_D2J2 = (igenjet2_long_den[ik] > 0) ? (igenjet2_long_num[ik]/igenjet2_long_den[ik]) : 0 ;
                                                 double v1_genjc_D3J1 = (igenjet1_tran_den[ik] > 0) ? (igenjet1_tran_num[ik]/igenjet1_tran_den[ik]) : 0 ;
@@ -4185,8 +9305,8 @@ for(int itp=0; itp<ntype; itp++){
 					//if(isRECOJC && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
 					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
 					
-						double v2_recojc_D1J1 = (pow(recojet0_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))) : 0 ;
-                                                double v2_recojc_D1J2 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+						double v2_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
+                                                double v2_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
                                                 double v2_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
                                                 double v2_recojc_D2J2 = (ijet2_long_den[ik] > 0) ? (ijet2_long_num[ik]/ijet2_long_den[ik]) : 0 ;
                                                 double v2_recojc_D3J1 = (ijet1_tran_den[ik] > 0) ? (ijet1_tran_num[ik]/ijet1_tran_den[ik]) : 0 ;
@@ -4235,8 +9355,8 @@ for(int itp=0; itp<ntype; itp++){
 					//if(isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 		
-						double v2_genjc_D1J1 = (pow(genrecojet0_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))) : 0 ;
-                                                double v2_genjc_D1J2 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+						double v2_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
+                                                double v2_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
                                                 double v2_genjc_D2J1 = (igenjet1_long_den[ik] > 0) ? (igenjet1_long_num[ik]/igenjet1_long_den[ik]) : 0 ;
                                                 double v2_genjc_D2J2 = (igenjet2_long_den[ik] > 0) ? (igenjet2_long_num[ik]/igenjet2_long_den[ik]) : 0 ;
                                                 double v2_genjc_D3J1 = (igenjet1_tran_den[ik] > 0) ? (igenjet1_tran_num[ik]/igenjet1_tran_den[ik]) : 0 ;
@@ -4536,6 +9656,136 @@ QCDEventShape::endJob()
                 h_recovar_2D_D2J2[ik][iet]->Write();
 		h_recovar_2D_D3J1[ik][iet]->Write();
                 h_recovar_2D_D3J2[ik][iet]->Write();
+
+                h_recovar_gjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_gjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_gjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_gjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_gjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_gjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_qgjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qgjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qgjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qgjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qgjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_qgjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_agjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_agjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_agjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_agjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_agjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_agjt_2D_D3J2[ik][iet]->Write();
+
+
+		h_recovar_bjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_bjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_bjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_bjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_bjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_bjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_qbjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qbjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qbjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qbjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qbjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_qbjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_abjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_abjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_abjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_abjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_abjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_abjt_2D_D3J2[ik][iet]->Write();
+
+ 	
+		h_recovar_cjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_cjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_cjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_cjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_cjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_cjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_qcjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qcjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qcjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qcjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qcjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_qcjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_acjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_acjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_acjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_acjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_acjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_acjt_2D_D3J2[ik][iet]->Write();
+
+
+		h_recovar_sjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_sjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_sjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_sjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_sjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_sjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_qsjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qsjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qsjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qsjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qsjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_qsjt_2D_D3J2[ik][iet]->Write();
+		
+		h_recovar_asjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_asjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_asjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_asjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_asjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_asjt_2D_D3J2[ik][iet]->Write();
+
+
+		h_recovar_djt_2D_D1J1[ik][iet]->Write();
+                h_recovar_djt_2D_D1J2[ik][iet]->Write();
+                h_recovar_djt_2D_D2J1[ik][iet]->Write();
+                h_recovar_djt_2D_D2J2[ik][iet]->Write();
+                h_recovar_djt_2D_D3J1[ik][iet]->Write();
+                h_recovar_djt_2D_D3J2[ik][iet]->Write();
+		
+		h_recovar_qdjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qdjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qdjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qdjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qdjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_qdjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_adjt_2D_D1J1[ik][iet]->Write();
+                h_recovar_adjt_2D_D1J2[ik][iet]->Write();
+                h_recovar_adjt_2D_D2J1[ik][iet]->Write();
+                h_recovar_adjt_2D_D2J2[ik][iet]->Write();
+                h_recovar_adjt_2D_D3J1[ik][iet]->Write();
+                h_recovar_adjt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_ujt_2D_D1J1[ik][iet]->Write();
+                h_recovar_ujt_2D_D1J2[ik][iet]->Write();
+                h_recovar_ujt_2D_D2J1[ik][iet]->Write();
+                h_recovar_ujt_2D_D2J2[ik][iet]->Write();
+                h_recovar_ujt_2D_D3J1[ik][iet]->Write();
+                h_recovar_ujt_2D_D3J2[ik][iet]->Write();
+		
+		h_recovar_qujt_2D_D1J1[ik][iet]->Write();
+                h_recovar_qujt_2D_D1J2[ik][iet]->Write();
+                h_recovar_qujt_2D_D2J1[ik][iet]->Write();
+                h_recovar_qujt_2D_D2J2[ik][iet]->Write();
+                h_recovar_qujt_2D_D3J1[ik][iet]->Write();
+		h_recovar_qujt_2D_D3J2[ik][iet]->Write();
+
+		h_recovar_aujt_2D_D1J1[ik][iet]->Write();
+                h_recovar_aujt_2D_D1J2[ik][iet]->Write();
+                h_recovar_aujt_2D_D2J1[ik][iet]->Write();
+                h_recovar_aujt_2D_D2J2[ik][iet]->Write();
+                h_recovar_aujt_2D_D3J1[ik][iet]->Write();
+		h_recovar_aujt_2D_D3J2[ik][iet]->Write();
 
 		h_genvar_2D_D1J1[ik][iet]->Write();
                 h_genvar_2D_D1J2[ik][iet]->Write();
