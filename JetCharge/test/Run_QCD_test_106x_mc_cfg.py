@@ -58,7 +58,8 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'76X_mcRun2_asymptotic_v12')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'74X_mcRun2_asymptotic_realisticBS_v1')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'MCRUN2_74_V9')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v8')
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v8')
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v9')
 
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1

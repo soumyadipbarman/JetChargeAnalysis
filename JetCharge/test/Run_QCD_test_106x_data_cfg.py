@@ -13,6 +13,7 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 # source
 process.source = cms.Source("PoolSource",
      fileNames = cms.untracked.vstring(
+'/store/data/Run2017B/JetHT/MINIAOD/UL2017_MiniAODv2-v1/260000/00EA7817-B2DB-E44A-9FD7-3FFB3778C024.root',
 #'/store/mc/Spring14dr/TTJets_MSDecaysCKM_central_Tune4C_13TeV-madgraph-tauola/AODSIM/PU20bx25_POSTLS170_V5-v1/00000/00B6F8B6-90F1-E311-B72C-0025905A6092.root',
 #'/store/data/Run2016F/JetHT/MINIAOD/21Feb2020_UL2016-v1/20000/0F71E50E-4F98-1446-B14A-A8600DDA6537.root',
 #'/store/data/Run2017B/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FFEEECDB-9680-6749-976A-F2CF385F8489.root',
@@ -21,7 +22,7 @@ process.source = cms.Source("PoolSource",
 #'/store/data/Run2017D/JetHT/MINIAOD/09Aug2019_UL2017-v1/00000/4EAE67FC-658E-1647-B91F-A978348DA634.root',
 #'/store/data/Run2017E/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/016BE62D-1105-AC4F-8A58-59BD14326D8B.root',
 #'/store/data/Run2017E/JetHT/MINIAOD/09Aug2019_UL2017-v1/130000/02CD90CE-110C-1B4C-BC0C-4BA10C64EFE2.root',
-'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FF1B7616-113A-F14B-A97A-4939F16CB1B5.root',
+#'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FF1B7616-113A-F14B-A97A-4939F16CB1B5.root',
 #'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FE81D290-531D-9044-BEC0-428C277EA7C6.root',
 #'/store/data/Run2017F/JetHT/MINIAOD/09Aug2019_UL2017-v1/50000/FD6F6891-A1F9-534E-9B4C-6D49F8620D0B.root',
 #'/store/data/Run2017B/JetHT/MINIAOD/31Mar2018-v1/90000/E87B6957-7139-E811-86AC-0CC47A78A468.root',
@@ -68,7 +69,8 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'94X_dataRun2_v11')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'102X_dataRun2_v12')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v28')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v32')
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v32')
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v35')
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -170,6 +172,3 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 process.p = cms.Path(process.analyzeBasicPat)
 print "test2"
 #process.p = cms.Path(process.ak5PFJets*process.ak5GenJets*process.analyzeBasicPat)
-
-
-
