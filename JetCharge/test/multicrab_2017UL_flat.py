@@ -76,6 +76,7 @@ def main():
 
 
 #               config.JobType.maxMemoryMB = 2500
+                config.JobType.maxJobRuntimeMin = 2000
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
                 config.Data.splitting = 'FileBased'

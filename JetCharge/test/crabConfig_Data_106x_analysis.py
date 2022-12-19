@@ -1,11 +1,11 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName = 'JetHT_Run2017B_UL2017'
+#config.General.requestName = 'JetHT_Run2017B_UL2017'
 #config.General.requestName = 'JetHT_Run2017C_UL2017'
 #config.General.requestName = 'JetHT_Run2017D_UL2017'
 #config.General.requestName = 'JetHT_Run2017E_UL2017'
-#config.General.requestName = 'JetHT_Run2017F_UL2017'
+config.General.requestName = 'JetHT_Run2017F_UL2017'
 
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
@@ -29,11 +29,11 @@ config.JobType.inputFiles= ["/afs/cern.ch/work/s/sobarman/private/JetChargeAnaly
 #config.Data.inputDataset = '/JetHT/Run2017E-09Aug2019_UL2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017F-09Aug2019_UL2017-v1/MINIAOD'
 
-config.Data.inputDataset = '/JetHT/Run2017B-UL2017_MiniAODv2-v1/MINIAOD'
+#config.Data.inputDataset = '/JetHT/Run2017B-UL2017_MiniAODv2-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-UL2017_MiniAODv2-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017D-UL2017_MiniAODv2-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017E-UL2017_MiniAODv2-v1/MINIAOD'
-#config.Data.inputDataset = '/JetHT/Run2017F-UL2017_MiniAODv2-v1/MINIAOD'
+config.Data.inputDataset = '/JetHT/Run2017F-UL2017_MiniAODv2-v1/MINIAOD'
 
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
@@ -43,11 +43,11 @@ config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Coll
 config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
 config.Data.publication = False
 
-config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017B_UL2017'
+#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017B_UL2017'
 #config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017C_UL2017'
 #config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017D_UL2017'
 #config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017E_UL2017'
-#config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017F_UL2017'
+config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017F_UL2017'
 
 #config.Data.publishDataName = 'May2015_Data_analysis'
 

@@ -37,7 +37,7 @@ process.source = cms.Source("PoolSource",
 )
 
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
@@ -72,8 +72,8 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-#process.options.numberOfThreads=cms.untracked.uint32(4)
-#process.options.numberOfStreams=cms.untracked.uint32(0)
+process.options.numberOfThreads=cms.untracked.uint32(2)
+process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
  cout = cms.untracked.PSet(  

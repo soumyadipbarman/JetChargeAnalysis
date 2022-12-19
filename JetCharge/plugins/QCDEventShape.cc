@@ -26,14 +26,14 @@
 //#define TRIGGER
 
 ////for Madgraph
-//#define LHAPDF
-//#define JETRESO
-//#define TRACKSYS
-//#define TRIGGER
+#define LHAPDF
+#define JETRESO
+#define TRACKSYS
+#define TRIGGER
 
 ////for Pythia8 & Herwig7
-#define JETRESO
-#define TRIGGER
+//#define JETRESO
+//#define TRIGGER
 
 ////For Flat
 //#define FLAT
@@ -390,9 +390,9 @@ double binrngs1[nvar][nmxbins+1]={{},{},{},
 //double recohtbins[nHLTmx+1] = {83, 109, 172, 241, 309, 377, 462, 570, 3000.0};
 double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0};
 
-int recohtnbins[nkappa]={10,10,10,10,10,10,10,10,10,10};
-double recohtbinsmin[nkappa] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669};
-double recohtbinsmax[nkappa] = {119, 185, 251, 319, 388, 467, 518, 579, 669, 3000};
+//int recohtnbins[nkappa]={10,10,10,10,10,10,10,10,10,10};
+//double recohtbinsmin[nkappa] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669};
+//double recohtbinsmax[nkappa] = {119, 185, 251, 319, 388, 467, 518, 579, 669, 3000};
 //-------------------------------------------
 const int nusedvar=5;
 double usedvars[nusedvar]={3, 9, 15, 18, 24};
@@ -927,9 +927,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  bool isFlat=1;
+  //bool isFlat=1;
 //#else 
-  //bool isFlat=0;
+  bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -2180,17 +2180,17 @@ char name1[200], title1[200];
       }
 //-------------------------------------------Define TUnfoldBinning Jet Charge
 for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
-	for (int ik=0; ik<10; ik++){
+	for (int ik=0; ik<nkappa; ik++){
 		//Reco
                 sprintf(RecoBinName, "Detector2d_d0_j0_k%i_eta%i", ik, iet);
-                binsRec2D_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
+                binsRec2D_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);	
 		sprintf(RecoBinName, "Recobin2d_d0_j0_k%i_eta%i",ik, iet);
                 RecoBinning2D_D1J1[ik][iet]= binsRec2D_D1J1[ik][iet]->AddBinning(RecoBinName);
 		sprintf(Axisname, "d0_j0_k%i", ik);
                 RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
-                sprintf(Axisname, "pt");
-                //RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		sprintf(Axisname, "pt");
+                RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//RecoBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(RecoBinName, "Detector2d_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2199,8 +2199,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d0_j1_k%i", ik);
                 RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//RecoBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 		
 		sprintf(RecoBinName, "Detector2d_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2209,8 +2209,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d1_j0_k%i", ik);
                 RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2219,8 +2219,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d1_j1_k%i", ik);
                 RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//RecoBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(RecoBinName, "Detector2d_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2229,8 +2229,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d2_j0_k%i", ik);
                 RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2239,8 +2239,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d2_j1_k%i", ik);
                 RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		// g jets
 		sprintf(RecoBinName, "Detector2d_gjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2250,7 +2250,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d0_j0_k%i", ik);
                 RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(RecoBinName, "Detector2d_gjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2259,7 +2260,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d0_j1_k%i", ik);
                 RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(RecoBinName, "Detector2d_gjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2268,7 +2270,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d1_j0_k%i", ik);
                 RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
           
 		sprintf(RecoBinName, "Detector2d_gjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2277,7 +2280,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d1_j1_k%i", ik);
                 RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
                 
 		sprintf(RecoBinName, "Detector2d_gjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2286,7 +2290,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d2_j0_k%i", ik);
                 RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(RecoBinName, "Detector2d_gjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2295,7 +2300,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "gjt_d2_j1_k%i", ik);
                 RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_gjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
       		//
       		sprintf(RecoBinName, "Detector2d_qgjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2305,7 +2311,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d0_j0_k%i", ik);
                 RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qgjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qgjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2314,7 +2321,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d0_j1_k%i", ik);
                 RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qgjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qgjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2323,7 +2331,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d1_j0_k%i", ik);
                 RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qgjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qgjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2332,7 +2341,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d1_j1_k%i", ik);
                 RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qgjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qgjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2341,7 +2351,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d2_j0_k%i", ik);
                 RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qgjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qgjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2350,7 +2361,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qgjt_d2_j1_k%i", ik);
                 RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qgjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_agjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2360,7 +2372,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d0_j0_k%i", ik);
                 RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_agjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_agjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2369,7 +2382,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d0_j1_k%i", ik);
                 RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_agjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_agjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2378,7 +2392,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d1_j0_k%i", ik);
                 RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_agjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_agjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2387,7 +2402,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d1_j1_k%i", ik);
                 RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_agjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_agjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2396,7 +2412,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d2_j0_k%i", ik);
                 RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_agjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_agjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2405,7 +2422,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "agjt_d2_j1_k%i", ik);
                 RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_agjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		
 		// b jets
@@ -2416,7 +2434,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d0_j0_k%i", ik);
                 RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_bjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_bjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2425,7 +2444,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d0_j1_k%i", ik);
                 RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_bjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_bjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2434,7 +2454,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d1_j0_k%i", ik);
                 RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_bjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_bjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2443,7 +2464,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d1_j1_k%i", ik);
                 RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_bjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_bjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2452,7 +2474,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d2_j0_k%i", ik);
                 RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_bjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_bjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2461,7 +2484,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d2_j1_k%i", ik);
                 RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_bjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_qbjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2471,7 +2495,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qbjt_d0_j0_k%i", ik);
                 RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qbjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qbjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2480,7 +2505,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qbjt_d0_j1_k%i", ik);
                 RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qbjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qbjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2489,7 +2515,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qbjt_d1_j0_k%i", ik);
                 RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qbjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qbjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2498,7 +2525,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qbjt_d1_j1_k%i", ik);
                 RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qbjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qbjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2507,7 +2535,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qbjt_d2_j0_k%i", ik);
                 RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qbjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qbjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2516,7 +2545,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "bjt_d2_j1_k%i", ik);
                 RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qbjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_abjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2526,7 +2556,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d0_j0_k%i", ik);
                 RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_abjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_abjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2535,7 +2566,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d0_j1_k%i", ik);
                 RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_abjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_abjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2544,7 +2576,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d1_j0_k%i", ik);
                 RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_abjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_abjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2553,7 +2586,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d1_j1_k%i", ik);
                 RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_abjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_abjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2562,7 +2596,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d2_j0_k%i", ik);
                 RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_abjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_abjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2571,7 +2606,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "abjt_d2_j1_k%i", ik);
                 RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_abjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		
 		// c jets
@@ -2582,7 +2618,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d0_j0_k%i", ik);
                 RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_cjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_cjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2591,7 +2628,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d0_j1_k%i", ik);
                 RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_cjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_cjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2600,7 +2638,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d1_j0_k%i", ik);
                 RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_cjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_cjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2609,7 +2648,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d1_j1_k%i", ik);
                 RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_cjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_cjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2618,7 +2658,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d2_j0_k%i", ik);
                 RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_cjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_cjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2627,7 +2668,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "cjt_d2_j1_k%i", ik);
                 RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_cjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_qcjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2637,7 +2679,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d0_j0_k%i", ik);
                 RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qcjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qcjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2646,7 +2689,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d0_j1_k%i", ik);
                 RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qcjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qcjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2655,7 +2699,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d1_j0_k%i", ik);
                 RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qcjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qcjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2664,7 +2709,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d1_j1_k%i", ik);
                 RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qcjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qcjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2673,7 +2719,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d2_j0_k%i", ik);
                 RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qcjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qcjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2682,7 +2729,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qcjt_d2_j1_k%i", ik);
                 RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qcjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_acjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2692,7 +2740,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d0_j0_k%i", ik);
                 RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_acjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_acjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2701,7 +2750,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d0_j1_k%i", ik);
                 RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_acjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_acjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2710,7 +2760,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d1_j0_k%i", ik);
                 RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_acjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_acjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2719,7 +2770,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d1_j1_k%i", ik);
                 RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_acjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_acjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2728,7 +2780,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d2_j0_k%i", ik);
                 RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_acjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_acjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2737,7 +2790,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "acjt_d2_j1_k%i", ik);
                 RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_acjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 
 		// s jets
@@ -2748,7 +2802,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d0_j0_k%i", ik);
                 RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_sjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_sjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2757,7 +2812,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d0_j1_k%i", ik);
                 RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_sjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_sjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2766,7 +2822,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d1_j0_k%i", ik);
                 RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_sjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_sjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2775,7 +2832,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d1_j1_k%i", ik);
                 RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_sjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_sjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2784,7 +2842,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d2_j0_k%i", ik);
                 RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_sjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_sjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2793,7 +2852,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "sjt_d2_j1_k%i", ik);
                 RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_sjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_qsjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2803,7 +2863,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d0_j0_k%i", ik);
                 RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qsjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qsjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2812,7 +2873,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d0_j1_k%i", ik);
                 RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qsjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qsjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2821,7 +2883,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d1_j0_k%i", ik);
                 RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qsjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qsjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2830,7 +2893,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d1_j1_k%i", ik);
                 RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qsjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qsjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2839,7 +2903,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d2_j0_k%i", ik);
                 RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qsjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qsjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2848,7 +2913,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qsjt_d2_j1_k%i", ik);
                 RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qsjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_asjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2858,7 +2924,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d0_j0_k%i", ik);
                 RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_asjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_asjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2867,7 +2934,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d0_j1_k%i", ik);
                 RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_asjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_asjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2876,7 +2944,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d1_j0_k%i", ik);
                 RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_asjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_asjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2885,7 +2954,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d1_j1_k%i", ik);
                 RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_asjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_asjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2894,7 +2964,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d2_j0_k%i", ik);
                 RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_asjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_asjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2903,7 +2974,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "asjt_d2_j1_k%i", ik);
                 RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_asjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		// d jets
 		sprintf(RecoBinName, "Detector2d_djt_d0_j0_k%i_eta%i", ik, iet);
@@ -2913,7 +2985,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d0_j0_k%i", ik);
                 RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_djt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_djt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2922,7 +2995,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d0_j1_k%i", ik);
                 RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_djt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_djt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2931,7 +3005,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d1_j0_k%i", ik);
                 RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_djt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_djt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2940,7 +3015,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d1_j1_k%i", ik);
                 RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_djt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_djt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2949,7 +3025,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d2_j0_k%i", ik);
                 RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_djt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_djt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2958,7 +3035,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "djt_d2_j1_k%i", ik);
                 RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_djt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_qdjt_d0_j0_k%i_eta%i", ik, iet);
@@ -2968,7 +3046,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d0_j0_k%i", ik);
                 RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qdjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qdjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2977,7 +3056,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d0_j1_k%i", ik);
                 RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qdjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qdjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2986,7 +3066,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d1_j0_k%i", ik);
                 RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qdjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qdjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -2995,7 +3076,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d1_j1_k%i", ik);
                 RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qdjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qdjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3004,7 +3086,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d2_j0_k%i", ik);
                 RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qdjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qdjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3013,7 +3096,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qdjt_d2_j1_k%i", ik);
                 RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qdjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_adjt_d0_j0_k%i_eta%i", ik, iet);
@@ -3023,7 +3107,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d0_j0_k%i", ik);
                 RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_adjt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_adjt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3032,7 +3117,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d0_j1_k%i", ik);
                 RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_adjt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_adjt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3041,7 +3127,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d1_j0_k%i", ik);
                 RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_adjt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_adjt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3050,7 +3137,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d1_j1_k%i", ik);
                 RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_adjt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_adjt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3059,7 +3147,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d2_j0_k%i", ik);
                 RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_adjt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_adjt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3068,7 +3157,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "adjt_d2_j1_k%i", ik);
                 RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_adjt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		
 		// u jets
@@ -3079,7 +3169,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d0_j0_k%i", ik);
                 RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_ujt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_ujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3088,7 +3179,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d0_j1_k%i", ik);
                 RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_ujt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_ujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3097,7 +3189,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d1_j0_k%i", ik);
                 RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_ujt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_ujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3106,7 +3199,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d1_j1_k%i", ik);
                 RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_ujt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_ujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3115,7 +3209,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d2_j0_k%i", ik);
                 RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_ujt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_ujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3124,7 +3219,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "ujt_d2_j1_k%i", ik);
                 RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_ujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_qujt_d0_j0_k%i_eta%i", ik, iet);
@@ -3134,7 +3230,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d0_j0_k%i", ik);
                 RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qujt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3143,7 +3240,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d0_j1_k%i", ik);
                 RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qujt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3152,7 +3250,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d1_j0_k%i", ik);
                 RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qujt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3161,7 +3260,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d1_j1_k%i", ik);
                 RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qujt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_qujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3170,7 +3270,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d2_j0_k%i", ik);
                 RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_qujt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_qujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3179,7 +3280,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "qujt_d2_j1_k%i", ik);
                 RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_qujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		//
 		sprintf(RecoBinName, "Detector2d_aujt_d0_j0_k%i_eta%i", ik, iet);
@@ -3189,7 +3291,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d0_j0_k%i", ik);
                 RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_aujt_d0_j1_k%i_eta%i", ik, iet);
                 binsRec2D_aujt_D1J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3198,7 +3301,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d0_j1_k%i", ik);
                 RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, recojcd1bins[ik], recojcd1minran[ik], recojcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_aujt_d1_j0_k%i_eta%i", ik, iet);
                 binsRec2D_aujt_D2J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3207,7 +3311,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d1_j0_k%i", ik);
                 RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_aujt_d1_j1_k%i_eta%i", ik, iet);
                 binsRec2D_aujt_D2J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3216,7 +3321,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d1_j1_k%i", ik);
                 RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_aujt_d2_j0_k%i_eta%i", ik, iet);
                 binsRec2D_aujt_D3J1[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3225,7 +3331,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d2_j0_k%i", ik);
                 RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(RecoBinName, "Detector2d_aujt_d2_j1_k%i_eta%i", ik, iet);
                 binsRec2D_aujt_D3J2[ik][iet] = new TUnfoldBinning(RecoBinName);
@@ -3234,7 +3341,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "aujt_d2_j1_k%i", ik);
                 RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, recojcd23bins[ik], recojcd23minran[ik], recojcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+		RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //RecoBinning2D_aujt_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 
 		//Gen
@@ -3245,8 +3353,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d0_j0_k%i", ik);
                 GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//GenBinning2D_D1J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(GenBinName, "Generator2d_d0_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D1J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -3255,8 +3363,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d0_j1_k%i", ik);
                 GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, genjcd1bins[ik], genjcd1minran[ik], genjcd1maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+                //GenBinning2D_D1J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(GenBinName, "Generator2d_d1_j0_k%i_eta%i", ik, iet);
                 binsGen2D_D2J1[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -3265,8 +3373,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d1_j0_k%i", ik);
                 GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//GenBinning2D_D2J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
                 sprintf(GenBinName, "Generator2d_d1_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D2J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -3275,8 +3383,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d1_j1_k%i", ik);
                 GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//GenBinning2D_D2J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
 		sprintf(GenBinName, "Generator2d_d2_j0_k%i_eta%i", ik, iet);
                 binsGen2D_D3J1[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -3285,8 +3393,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d2_j0_k%i", ik);
                 GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//GenBinning2D_D3J1[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
         
                 sprintf(GenBinName, "Generator2d_d2_j1_k%i_eta%i", ik, iet);
                 binsGen2D_D3J2[ik][iet] = new TUnfoldBinning(GenBinName);
@@ -3295,8 +3403,8 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 sprintf(Axisname, "d2_j1_k%i", ik);
                 GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, genjcd23bins[ik], genjcd23minran[ik], genjcd23maxran[ik], false, false);
                 sprintf(Axisname, "pt");
-                //GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
-		GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
+                GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
+		//GenBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 		}
 }
 //-------------------------------------------
@@ -5922,7 +6030,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //int ievt = iEvent.id().event();
   counthist->Fill(1); 
   //if (nevt%100==1)   std::cout<<"QCDEventShape::analyze "<< nevt<<" IRUN= "<<iEvent.id().run()<<" ievt= "<< iEvent.id().event()<<" "<<ievt<<endl;
-  if (nevt%100==1)   std::cout<<"Jet Charge Analysis Run No. =  "<< nevt<<endl;
+  if (nevt%1000==1)   std::cout<<"Jet Charge Analysis Run No. =  "<< nevt<<endl;
   //std::cout << "ok1"<<endl;
 
   //" ilumi" <<
@@ -6469,7 +6577,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #else
 
 #endif
-  }
+  }//if (ak4PFJets.isValid() && ak4PFJets->size()>=2) {
 #endif
   //cout<<"leadingpt:"<<leadingpt<<endl;
   //cout<<"aveleadingpt:"<<aveleadingpt<<endl;
@@ -6907,7 +7015,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    //for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
 	    
 	    for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
-	      if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet]) {
+	      if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet]) {  // eta cut only on leading two jets ??
 	      //if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet]) {
 	      	//int flavour = (*ak4PFJets)[ijet].partonFlavour();
         	//cout << "Flavour : "<<flavour<<endl;
@@ -7426,8 +7534,9 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		   // jet charge observables
 		   if (isrc==0){
 			for (int ik=0; ik<10; ik++){
-				//if (ijet==0 && cand4v.perp() > 1.0){
-				if(ijet==0){
+				if (ijet==0 && cand4v.perp() > 1.0){
+				//if(ijet==0){
+					//recojet1_pt = tmp4v.perp();
 					//cout<<"testing 1"<<endl;
                                         ijet1candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
 					//ijet1candsmom.push_back(candsmom(charge, cand4v.perp(), kappa[ik]));
@@ -7602,8 +7711,9 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
                                         ijet1ad_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
                                         }
 				}//if(ijet==0){
-				//if (ijet==1 && cand4v.perp() > 1.0){
-				if(ijet==1){
+				if (ijet==1 && cand4v.perp() > 1.0){
+				//else if(ijet==1){
+					//recojet2_pt = tmp4v.perp();
 					ijet2candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
 
 					ijet2_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
@@ -8191,7 +8301,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		    if (isEta && isPt) {genjt1_phi->Fill(tmp4v.phi(), weighttrg);}
 		  } else if(ijet==1){
 		    //cout<<"okkkkkkkk" <<endl;
-		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg);genrecojet2_pt = tmp4v.perp();}
+		    if (isInEtaRange[iet]) {genjt2_pt[iet]->Fill(tmp4v.perp(), weighttrg); genrecojet2_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {genjt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {genjt2_phi->Fill(tmp4v.phi(), weighttrg);}
 		    if (isInEtaRange[iet] && ncount==2) {
@@ -8335,16 +8445,18 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	
 	if (isrc==0){
 		for (int ik=0; ik<10; ik++){
-			if (ijet==0 && cand4v.perp() > 1.0){
+			if (ijet==0 && cand4v.perp()>1.0){
+				//genrecojet1_pt = tmp4v.perp();
+				//cout << " Test1 : "<<genrecojet1_pt<<endl;
 				igenjet1candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
-					
 				igenjet1_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
                                 igenjet1_long_den[ik] += (dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
 
                                 igenjet1_tran_num[ik] += (charge*(crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(),kappa[ik])));
                                 igenjet1_tran_den[ik] += (crossproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik]));
 				}
-			if (ijet==1 && cand4v.perp() > 1.0){
+			if (ijet==1 && cand4v.perp()>1.0){
+				//genrecojet2_pt = tmp4v.perp();
                                 igenjet2candsmom[ik] += candsmom(charge, cand4v.perp(), kappa[ik]);
 
                                 igenjet2_long_num[ik] += (charge*(dotproduct(cand4v.px(), cand4v.py(), cand4v.pz(), tmp4v.px(), tmp4v.py(), tmp4v.pz(), tmp4v.perp(), kappa[ik])));
@@ -8495,28 +8607,28 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		cout << "Test1 " <<" kappa : "<< ik << " value : "<<v_recojc_D1J1[ik]<<endl;	
 		}
 */
-for(int itp=0; itp<1; itp++){
+//for(int itp=0; itp<1; itp++){
 	for (int iet=0; iet<njetetamn; iet++){
 		for (int ik=0; ik<10; ik++){
                 	if (isReconstruct) {
                         	for (int isrc=0; isrc<njecmx; isrc++) {
 					//if(isrc==0){isRECOJC = false;}
 					//isRECOJC = false;
-                                	//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
-					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+                                	if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
 						//isRECOJC = true;
                                 		if (isrc==0) {
 							//isRECOJC = true;
 							//cout<<"testing 2"<<endl;
 							//test1[ik]=(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])));
-							
+							/*
 							double v_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
 							double v_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
 							double v_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
 							double v_recojc_D2J2 = (ijet2_long_den[ik] > 0) ? (ijet2_long_num[ik]/ijet2_long_den[ik]) : 0 ;
 							double v_recojc_D3J1 = (ijet1_tran_den[ik] > 0) ? (ijet1_tran_num[ik]/ijet1_tran_den[ik]) : 0 ;
 							double v_recojc_D3J2 = (ijet2_tran_den[ik] > 0) ? (ijet2_tran_num[ik]/ijet2_tran_den[ik]) : 0 ;
-						
+								
 							// reco jetcharge 1D	
 							//if(isValue){
 							h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D1J1,weighttrg);
@@ -8526,38 +8638,38 @@ for(int itp=0; itp<1; itp++){
 							h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D3J1,weighttrg);
 							h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_D3J2,weighttrg);
 							//cout << "Test2 " <<" kappa : "<< ik << " value : "<<v_recojc_D1J1<<endl;
-							
-							//h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
-							//h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
-							//h_recojc_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
-                                                        //h_recojc_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
-							//h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
-                                                        //h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
+							*/
+							h_recojc_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
+							h_recojc_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik])),weighttrg);
+							h_recojc_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
+                                                        h_recojc_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
+							h_recojc_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
+                                                        h_recojc_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
 
 					// reco jetcharge 2D
-					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
-					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_D1J1,leadingptjec[isrc]);
+					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
+					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_D1J1,leadingptjec[isrc]);
 					//cout <<" Debug : "<<" kappa : "<<ik<< " value : "<<irecbin_D1J1<<endl;
 					h_recovar_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, weighttrg);
 					
-					//int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);	
-					int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_D1J2,leadingptjec[isrc]);
+					int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik])),leadingptjec[isrc]);	
+					//int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_D1J2,leadingptjec[isrc]);
 					h_recovar_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, weighttrg);
 							
-					//int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
-					int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_D2J1,leadingptjec[isrc]);
+					int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+					//int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_D2J1,leadingptjec[isrc]);
 					h_recovar_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, weighttrg);
 
-					//int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
-					int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_D2J2,leadingptjec[isrc]);
+					int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+					//int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_D2J2,leadingptjec[isrc]);
                                         h_recovar_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, weighttrg);
 
-					//int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
-					int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_D3J1,leadingptjec[isrc]);
+					int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+					//int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_D3J1,leadingptjec[isrc]);
                                         h_recovar_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, weighttrg);
 
-                                        //int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
-					int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_D3J2,leadingptjec[isrc]);
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+					//int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_D3J2,leadingptjec[isrc]);
                                         h_recovar_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
 			
 							// gluon jets
@@ -9175,63 +9287,65 @@ for(int itp=0; itp<1; itp++){
                         	for (int isrc=0; isrc<nGenReso; isrc++) {
 					//if(isrc==0){isRECOJC = false;}
 					//isGENJC = false;
-					//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
-                                	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
+					if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                	//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
 						//isGENJC = true;
                                 		if(isrc==0) {
 							//isGENJC = true;
-
+							/*
 							double v_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
 							double v_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
 							double v_genjc_D2J1 = (igenjet1_long_den[ik] > 0) ? (igenjet1_long_num[ik]/igenjet1_long_den[ik]) : 0 ;
 							double v_genjc_D2J2 = (igenjet2_long_den[ik] > 0) ? (igenjet2_long_num[ik]/igenjet2_long_den[ik]) : 0 ;
 							double v_genjc_D3J1 = (igenjet1_tran_den[ik] > 0) ? (igenjet1_tran_num[ik]/igenjet1_tran_den[ik]) : 0 ;
 							double v_genjc_D3J2 = (igenjet2_tran_den[ik] > 0) ? (igenjet2_tran_num[ik]/igenjet2_tran_den[ik]) : 0 ;
-							
+							//cout << " Test2 : "<<igenjet1candsmom[ik] << endl;		
+							//cout << " Test2 : "<<genrecojet1_pt<<endl;	
 							h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D1J1,weighttrg);
 							h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D1J2,weighttrg);
 							h_genjc_D2J1[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D2J1,weighttrg);
 							h_genjc_D2J2[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D2J2,weighttrg);
 							h_genjc_D3J1[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D3J1,weighttrg);
-							h_genjc_D3J2[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D3J2,weighttrg);										
-							//h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
-							//h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
-							//h_genjc_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
-                                                        //h_genjc_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
-							//h_genjc_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
-                                                        //h_genjc_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
+							h_genjc_D3J2[ik][igenhtres[isrc]][iet]->Fill(v_genjc_D3J2,weighttrg);															*/
+							h_genjc_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
+							h_genjc_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik])),weighttrg);
+							h_genjc_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                        h_genjc_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+							h_genjc_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                        h_genjc_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
 
-					//int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
-					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v_genjc_D1J1,leadgenptres[isrc]);
+					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
+					//int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v_genjc_D1J1,leadgenptres[isrc]);
 					h_genvar_2D_D1J1[ik][iet]->Fill(igenbin_D1J1, weighttrg);
 
-					//int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
-					int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v_genjc_D1J2,leadgenptres[isrc]);
+					int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik])),leadgenptres[isrc]);
+					//int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v_genjc_D1J2,leadgenptres[isrc]);
                                         h_genvar_2D_D1J2[ik][iet]->Fill(igenbin_D1J2, weighttrg);
 
-					//int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
-					int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v_genjc_D2J1,leadgenptres[isrc]);
+					int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v_genjc_D2J1,leadgenptres[isrc]);
                                         h_genvar_2D_D2J1[ik][iet]->Fill(igenbin_D2J1, weighttrg);
 
-					//int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
-					int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v_genjc_D2J2,leadgenptres[isrc]);
+					int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v_genjc_D2J2,leadgenptres[isrc]);
                                         h_genvar_2D_D2J2[ik][iet]->Fill(igenbin_D2J2, weighttrg);
 
-					//int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
-					int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v_genjc_D3J1,leadgenptres[isrc]);
+					int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v_genjc_D3J1,leadgenptres[isrc]);
                                         h_genvar_2D_D3J1[ik][iet]->Fill(igenbin_D3J1, weighttrg);
 
-                                        //int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
-					int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_genjc_D3J2,leadgenptres[isrc]);
+                                        int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_genjc_D3J2,leadgenptres[isrc]);
                                         h_genvar_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
 
 							}//if(isrc==0)
 						}//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
 				if (isrc==0 && isReconstruct){
+				if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
-			        //if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1 && genmom[isrc][itp][iet].size()>1){
-				if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){	
-                                				
+				//if(isRECOJC && isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && recomom[isrc][itp][iet].size()>1){	
+				//if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+                                	/*			
 						double v1_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
                                                 double v1_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
                                                 double v1_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
@@ -9252,59 +9366,59 @@ for(int itp=0; itp<1; itp++){
 						h_RM_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v1_recojc_D2J2,v1_genjc_D2J2,weighttrg);
 						h_RM_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v1_recojc_D3J1,v1_genjc_D3J1,weighttrg);
 						h_RM_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v1_recojc_D3J2,v1_genjc_D3J2,weighttrg);
-	
-						//h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik]))),weighttrg);
-						//h_RM_D1J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik]))),(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))),weighttrg);
+					*/
+						h_RM_D1J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))),(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))),weighttrg);
+						h_RM_D1J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))),(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))),weighttrg);
 						
-						//h_RM_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),(igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
-                                                //h_RM_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),(igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+						h_RM_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),(igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                h_RM_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),(igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
 			
-						//h_RM_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),(igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
-                                                //h_RM_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),(igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
+						h_RM_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),(igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                h_RM_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),(igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
 
 
-				        //int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
-       					//int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
-					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D1J1,leadingptjec[isrc]);
-                                        int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D1J1,leadgenptres[isrc]);
+				        int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
+       					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
+					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D1J1,leadingptjec[isrc]);
+                                        //int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D1J1,leadgenptres[isrc]);
 						RM_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, igenbin_D1J1, weighttrg);
 
-                                        //int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
-                                	//int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]); 
-					int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D1J2,leadingptjec[isrc]);
-                                        int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D1J2,leadgenptres[isrc]);    
+                                        int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik])),leadingptjec[isrc]);
+                                	int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik])),leadgenptres[isrc]); 
+					//int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D1J2,leadingptjec[isrc]);
+                                        //int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D1J2,leadgenptres[isrc]);    
 						RM_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, igenbin_D1J2, weighttrg);
 
-                                        //int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
-                                	//int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
-					int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D2J1,leadingptjec[isrc]);
-                                        int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D2J1,leadgenptres[isrc]);
+                                        int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+                                	int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+					//int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D2J1,leadingptjec[isrc]);
+                                        //int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D2J1,leadgenptres[isrc]);
 						RM_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, igenbin_D2J1, weighttrg);
 
-                                        //int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
-                                	//int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
-					int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D2J2,leadingptjec[isrc]);
-                                        int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D2J2,leadgenptres[isrc]);
+                                        int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+                                	int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+					//int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D2J2,leadingptjec[isrc]);
+                                        //int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D2J2,leadgenptres[isrc]);
 						RM_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, igenbin_D2J2, weighttrg);
 
-                                        //int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
-                                    	//int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
-					int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D3J1,leadingptjec[isrc]);
-                                        int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D3J1,leadgenptres[isrc]);
+                                        int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+                                    	int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+					//int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v1_recojc_D3J1,leadingptjec[isrc]);
+                                        //int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v1_genjc_D3J1,leadgenptres[isrc]);
 						RM_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, igenbin_D3J1, weighttrg);
 
-                                        //int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
-  					//int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]); 
-					int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D3J2,leadingptjec[isrc]);
-                                        int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D3J2,leadgenptres[isrc]);
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+  					int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]); 
+					//int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D3J2,leadingptjec[isrc]);
+                                        //int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D3J2,leadgenptres[isrc]);
                 				RM_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, igenbin_D3J2, weighttrg);                   
 						
 								}//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				else {
-					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
-					//if(isRECOJC && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
-					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
-					
+					if( irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+					//if( isRECOJC && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+				/*	
 						double v2_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
                                                 double v2_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
                                                 double v2_recojc_D2J1 = (ijet1_long_den[ik] > 0) ? (ijet1_long_num[ik]/ijet1_long_den[ik]) : 0 ;
@@ -9318,43 +9432,43 @@ for(int itp=0; itp<1; itp++){
 						h_recofake_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v2_recojc_D2J2,weighttrg);
 						h_recofake_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v2_recojc_D3J1,weighttrg);
 						h_recofake_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v2_recojc_D3J2,weighttrg);				
-		
-						//h_recofake_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),weighttrg);
-						//h_recofake_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
-                                                //h_recofake_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
-                                                //h_recofake_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
-                                                //h_recofake_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
-                                                //h_recofake_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
+		*/
+						h_recofake_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik])),weighttrg);
+						h_recofake_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik])),weighttrg);
+                                                h_recofake_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_long_num[ik]/ijet1_long_den[ik]),weighttrg);
+                                                h_recofake_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_long_num[ik]/ijet2_long_den[ik]),weighttrg);
+                                                h_recofake_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1_tran_num[ik]/ijet1_tran_den[ik]),weighttrg);
+                                                h_recofake_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2_tran_num[ik]/ijet2_tran_den[ik]),weighttrg);
 			
-					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])),leadingptjec[isrc]);
-					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D1J1,leadingptjec[isrc]);
+					int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
+					//int irecbin_D1J1 = RecoBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D1J1,leadingptjec[isrc]);
                                         h_recofake_2D_D1J1[ik][iet]->Fill(irecbin_D1J1, weighttrg);
 
-                                        //int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet1_pt,kappa[ik])),leadingptjec[isrc]);
-					int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D1J2,leadingptjec[isrc]);
+                                        int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik])),leadingptjec[isrc]);
+					//int irecbin_D1J2 = RecoBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D1J2,leadingptjec[isrc]);
                                         h_recofake_2D_D1J2[ik][iet]->Fill(irecbin_D1J2, weighttrg);
 
-                                        //int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
-					int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D2J1,leadingptjec[isrc]);
+                                        int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(ijet1_long_num[ik]/ijet1_long_den[ik],leadingptjec[isrc]);
+					//int irecbin_D2J1 = RecoBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D2J1,leadingptjec[isrc]);
                                         h_recofake_2D_D2J1[ik][iet]->Fill(irecbin_D2J1, weighttrg);
 
-                                        //int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
-					int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D2J2,leadingptjec[isrc]);
+                                        int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(ijet2_long_num[ik]/ijet2_long_den[ik],leadingptjec[isrc]);
+					//int irecbin_D2J2 = RecoBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D2J2,leadingptjec[isrc]);
                                         h_recofake_2D_D2J2[ik][iet]->Fill(irecbin_D2J2, weighttrg);
 
-                                        //int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
-					int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D3J1,leadingptjec[isrc]);
+                                        int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(ijet1_tran_num[ik]/ijet1_tran_den[ik],leadingptjec[isrc]);
+					//int irecbin_D3J1 = RecoBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v2_recojc_D3J1,leadingptjec[isrc]);
                                         h_recofake_2D_D3J1[ik][iet]->Fill(irecbin_D3J1, weighttrg);
 
-                                        //int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
-					int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D3J2,leadingptjec[isrc]);
+                                        int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
+					//int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v2_recojc_D3J2,leadingptjec[isrc]);
                                         h_recofake_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
 
 					}
-					//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
 					//if(isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
-					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
-		
+					//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
+		/*
 						double v2_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
                                                 double v2_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
                                                 double v2_genjc_D2J1 = (igenjet1_long_den[ik] > 0) ? (igenjet1_long_num[ik]/igenjet1_long_den[ik]) : 0 ;
@@ -9368,36 +9482,36 @@ for(int itp=0; itp<1; itp++){
 						h_genmiss_D2J2[ik][igenhtres[isrc]][iet]->Fill(v2_genjc_D2J2,weighttrg);
 						h_genmiss_D3J1[ik][igenhtres[isrc]][iet]->Fill(v2_genjc_D3J1,weighttrg);
 						h_genmiss_D3J2[ik][igenhtres[isrc]][iet]->Fill(v2_genjc_D3J2,weighttrg);
+*/
+						h_genmiss_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
+						h_genmiss_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik])),weighttrg);
+                                                h_genmiss_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
+                                                h_genmiss_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
+                                                h_genmiss_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
+                                                h_genmiss_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
 
-						//h_genmiss_D1J1[ik][igenhtres[isrc]][iet]->Fill(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),weighttrg);
-						//h_genmiss_D1J2[ik][igenhtres[isrc]][iet]->Fill(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),weighttrg);
-                                                //h_genmiss_D2J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_long_num[ik]/igenjet1_long_den[ik]),weighttrg);
-                                                //h_genmiss_D2J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_long_num[ik]/igenjet2_long_den[ik]),weighttrg);
-                                                //h_genmiss_D3J1[ik][igenhtres[isrc]][iet]->Fill((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),weighttrg);
-                                                //h_genmiss_D3J2[ik][igenhtres[isrc]][iet]->Fill((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),weighttrg);
-
-					//int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet0_pt,kappa[ik])),leadgenptres[isrc]);
-					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D1J1,leadgenptres[isrc]);
+					int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
+					//int igenbin_D1J1 = GenBinning2D_D1J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D1J1,leadgenptres[isrc]);
                                         h_genmiss_2D_D1J1[ik][iet]->Fill(igenbin_D1J1, weighttrg);
 
-                                        //int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet1_pt,kappa[ik])),leadgenptres[isrc]);
-					int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D1J2,leadgenptres[isrc]);
+                                        int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik])),leadgenptres[isrc]);
+					//int igenbin_D1J2 = GenBinning2D_D1J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D1J2,leadgenptres[isrc]);
                                         h_genmiss_2D_D1J2[ik][iet]->Fill(igenbin_D1J2, weighttrg);
 
-                                        //int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
-					int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D2J1,leadgenptres[isrc]);
+                                        int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber((igenjet1_long_num[ik]/igenjet1_long_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D2J1 = GenBinning2D_D2J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D2J1,leadgenptres[isrc]);
                                         h_genmiss_2D_D2J1[ik][iet]->Fill(igenbin_D2J1, weighttrg);
 
-                                        //int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
-					int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D2J2,leadgenptres[isrc]);
+                                        int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber((igenjet2_long_num[ik]/igenjet2_long_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D2J2 = GenBinning2D_D2J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D2J2,leadgenptres[isrc]);
                                         h_genmiss_2D_D2J2[ik][iet]->Fill(igenbin_D2J2, weighttrg);
 
-                                        //int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
-					int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D3J1,leadgenptres[isrc]);
+                                        int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber((igenjet1_tran_num[ik]/igenjet1_tran_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D3J1 = GenBinning2D_D3J1[ik][iet]->GetGlobalBinNumber(v2_genjc_D3J1,leadgenptres[isrc]);
                                         h_genmiss_2D_D3J1[ik][iet]->Fill(igenbin_D3J1, weighttrg);
 
-                                        //int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
-					int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D3J2,leadgenptres[isrc]);
+                                        int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
+					//int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v2_genjc_D3J2,leadgenptres[isrc]);
                                         h_genmiss_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
 								}//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 							}
@@ -9406,7 +9520,7 @@ for(int itp=0; itp<1; itp++){
 				}//if(isMC){
 			}//for (int ik=0; ik<10; ik++){
 		}//for (int iet=0; iet<njetetamn; iet++){
-	}//for(int itp=0; itp<ntype; itp++){
+//	}//for(int itp=0; itp<ntype; itp++){
 //-----------------------------------------------Calculate And Fill the EventShape Variables--------------------------------
 
       for(int itp=0; itp<ntype; itp++) {
