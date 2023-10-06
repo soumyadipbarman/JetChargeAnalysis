@@ -318,7 +318,7 @@ double genjcd1maxran[nkappa]={6.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
 int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
-*/
+
 
 //Date: 08Feb2023
 //Reco level
@@ -336,6 +336,26 @@ double genjcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0}
 double genjcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
 
 int genjcd23bins[nkappa]={10,10,15,18,18,20,20,20,20,20};
+double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+*/
+
+//Fine Binning
+//Reco level
+int recojcd1bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
+double recojcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int recojcd23bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
+double recojcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+
+//Gen level
+int genjcd1bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
+double genjcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int genjcd23bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
 double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
 
@@ -8764,7 +8784,7 @@ for(int itp=0; itp<ntype; itp++){
 					//isRECOJC = false;
                                 	//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
 					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
-					EventShape_vector  recoevtshape(recomom[isrc][itp][iet], 2.4, 0, 2, 1);
+					EventShape_vector  recoevtshape(recomom[isrc][itp][iet], 2.5, 0, 2, 1);
 			                recovar =  recoevtshape.getEventShapes();
                 			if(isrc==0){recovar1 =  recoevtshape.getEventShapes();}
 					if (recovar[nvar]>=2) {
@@ -9478,7 +9498,7 @@ for(int itp=0; itp<ntype; itp++){
 					//isGENJC = false;
 					//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
                                 	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
-					EventShape_vector  genevtshape(genmom[isrc][itp][iet], 2.4, 0, 2, 1);
+					EventShape_vector  genevtshape(genmom[isrc][itp][iet], 2.5, 0, 2, 1);
 
 		                	genvar =  genevtshape.getEventShapes();
                 			if (genvar[nvar]>=2) {
@@ -9547,7 +9567,8 @@ for(int itp=0; itp<ntype; itp++){
 				//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && recomom[isrc][itp][iet].size()>1){
 				//for(int ij=0; ij<nvar; ij++) {
 	                    	//if (isItUsed(ij)) {
-                      		if(isRECO[itp][iet] && isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
+	                    	if(isRECO[itp][iet] && isGEN && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
+                      		//if(isRECO[itp][iet] && isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
 
 				if(recovar1[nvar]>=2 &&  genvar[nvar]>=2){
 				//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){

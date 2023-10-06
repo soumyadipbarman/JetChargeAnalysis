@@ -82,7 +82,7 @@ def main():
                 config.Data.inputDataset = None
                 config.Data.splitting = 'LumiBased'
                 #config.Data.splitting = 'Automatic'
-                config.Data.unitsPerJob = 34
+                config.Data.unitsPerJob = 40
 #               config.Data.totalUnits = 30
                 config.Data.outputDatasetTag = None
 #                config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
