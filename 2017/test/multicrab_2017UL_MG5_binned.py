@@ -69,17 +69,14 @@ def main():
                 config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
 #               config.Data.ignoreLocality = True
                 config.Data.inputDBS = 'global'
-		config.JobType.inputFiles= [
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_MC_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"]
+		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"]
 
 
-#               config.JobType.maxMemoryMB = 2500
-		config.JobType.maxJobRuntimeMin = 2750
+                config.JobType.maxMemoryMB = 2500
+		#config.JobType.maxJobRuntimeMin = 2750
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
-		config.JobType.numCores = 2
+		#config.JobType.numCores = 2
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
 #               config.Data.useParent = True

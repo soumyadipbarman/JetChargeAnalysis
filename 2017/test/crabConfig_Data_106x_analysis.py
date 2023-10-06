@@ -14,14 +14,8 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.psetName = 'Run_QCD_test_106x_data_cfg.py'
 
-config.JobType.inputFiles= ["/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunE_V5_DATA_UncertaintySources_AK4PFchs.txt",
-"/afs/cern.ch/work/s/sobarman/private/JetChargeAnalysis_v4/CMSSW_10_6_20/src/Test/QCDEventShape/test/Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt",
-]
+config.JobType.inputFiles= ["Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt","Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunE_V5_DATA_UncertaintySources_AK4PFchs.txt",
+"Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt"]
 
 #config.Data.inputDataset = '/JetHT/Run2017B-09Aug2019_UL2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-09Aug2019_UL2017-v1/MINIAOD'
