@@ -26,10 +26,10 @@ process.source = cms.Source("PoolSource",
 #eventRanges = cms.untracked.VEventRange('1:1000-1:2000'),
 )
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(30000) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
@@ -71,17 +71,28 @@ process.MessageLogger = cms.Service("MessageLogger",
  destinations = cms.untracked.vstring('cout')  
 )  
 
+# For Pileup JetID 
+process.load('RecoJets.JetProducers.PileupJetID_cfi')
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL17
+process.pileupJetIdUpdated = process.pileupJetId.clone(
+        jets=cms.InputTag("slimmedJets"),
+        inputIsCorrected=True,
+        applyJec=False,
+        vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
+        algos = cms.VPSet(_chsalgos_106X_UL17),
+    )
+
+
 #For L1Prefiring
-'''
-from PhysicsTools.PatUtils.l1ECALPrefiringWeightProducer_cfi import l1ECALPrefiringWeightProducer
-process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
-    TheJets = cms.InputTag("slimmedJets"), #this should be the slimmedJets collection with up to date JECs !
-    #L1Maps = cms.string("L1PrefiringMaps.root"),
-    DataEra = cms.string("UL2017BtoF"), #Use 2016BtoH for 2016
-    UseJetEMPt = cms.bool(False),
-    PrefiringRateSystematicUncty = cms.double(0.2),
-    SkipWarnings = False)
-'''
+from PhysicsTools.PatUtils.l1PrefiringWeightProducer_cfi import l1PrefiringWeightProducer
+process.prefiringweight = l1PrefiringWeightProducer.clone(
+TheJets = cms.InputTag("slimmedJets"), #this should be the slimmedJets collection with up to date JECs !
+DataEraECAL = cms.string("UL2017BtoF"),
+DataEraMuon = cms.string("20172018"),
+UseJetEMPt = cms.bool(False),
+PrefiringRateSystematicUnctyECAL = cms.double(0.2),
+PrefiringRateSystematicUnctyMuon = cms.double(0.2)
+)
 
 #ak5 PF & Gen Jets
 #from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets
@@ -100,6 +111,7 @@ process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
 process.TFileService=cms.Service("TFileService",
     fileName=cms.string("Test_MC_2017UL.root")
 )
+
 print "test1"
 # Produce PDF weights (maximum is 3)
 process.pdfWeights = cms.EDProducer("PdfWeightProducer",

@@ -47,9 +47,8 @@ process.source = cms.Source("PoolSource",
  )
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -91,7 +90,16 @@ process.MessageLogger = cms.Service("MessageLogger",
  destinations = cms.untracked.vstring('cout')  
 )  
 
-
+# For Pileup JetID 
+process.load('RecoJets.JetProducers.PileupJetID_cfi')
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL17
+process.pileupJetIdUpdated = process.pileupJetId.clone(
+        jets=cms.InputTag("slimmedJets"),
+        inputIsCorrected=True,
+        applyJec=False,
+        vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
+        algos = cms.VPSet(_chsalgos_106X_UL17),
+    )
 
 #process.load("HLTrigger.HLTcore.hltPrescaleRecorder_cfi")
 
