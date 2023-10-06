@@ -74,7 +74,7 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-#process.options.numberOfThreads=cms.untracked.uint32(2)
+#process.options.numberOfThreads=cms.untracked.uint32(4)
 #process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  

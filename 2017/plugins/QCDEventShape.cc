@@ -318,7 +318,7 @@ double genjcd1maxran[nkappa]={6.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
 int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
-
+*/
 
 //Date: 08Feb2023
 //Reco level
@@ -336,26 +336,6 @@ double genjcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0}
 double genjcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
 
 int genjcd23bins[nkappa]={10,10,15,18,18,20,20,20,20,20};
-double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
-double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
-*/
-
-//Fine Binning
-//Reco level
-int recojcd1bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
-double recojcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
-double recojcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
-
-int recojcd23bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
-double recojcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
-double recojcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
-
-//Gen level
-int genjcd1bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
-double genjcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
-double genjcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
-
-int genjcd23bins[nkappa]={120,120,120,120,120,120,120,120,120,120};
 double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
 
@@ -6681,8 +6661,8 @@ double _prefiringweightdown =(*theprefweightdown);
       double NHF = (*ak4PFJets)[ij].neutralHadronEnergyFraction();
       double NEMF = (*ak4PFJets)[ij].neutralEmEnergyFraction();
       double CHF = (*ak4PFJets)[ij].chargedHadronEnergyFraction();
-      //double MUF = (*ak4PFJets)[ij].muonEnergyFraction();
-      //double CEMF = (*ak4PFJets)[ij].chargedEmEnergyFraction();
+      double MUF = (*ak4PFJets)[ij].muonEnergyFraction();
+      double CEMF = (*ak4PFJets)[ij].chargedEmEnergyFraction();
       int NumConst = (*ak4PFJets)[ij].chargedMultiplicity()+(*ak4PFJets)[ij].neutralMultiplicity();
       //int NumNeutralParticles =(*ak4PFJets)[ij].neutralMultiplicity();
       int CHM = (*ak4PFJets)[ij].chargedMultiplicity();
@@ -6695,13 +6675,9 @@ double _prefiringweightdown =(*theprefweightdown);
       //Updated for UL17 : 27Aug20
       //if(abs((*ak4PFJets)[ij].eta())<=2.6){
       //if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0)  TightJetID =true;
-      //if (abs((*ak4PFJets)[ij].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) { TightJetID =true;} 
-      //else {TightJetID =false;}if(abs((*ak4PFJets)[ij].eta())<=2.7){
-      if(abs((*ak4PFJets)[ij].eta())<=2.7){
-      if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0  && abs((*ak4PFJets)[ij].eta())<=2.4 )  TightJetID =true;
-      if(NHF<0.90 && NEMF<0.99 && abs((*ak4PFJets)[ij].eta())>2.4 )  TightJetID =true;}
+      if (abs((*ak4PFJets)[ij].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) { TightJetID =true;} 
       else {TightJetID =false;}
-      if (abs((*ak4PFJets)[ij].eta())>2.7) {TightJetID = false;}  //2.5 or 2.6
+      if (abs((*ak4PFJets)[ij].eta())>2.5) {TightJetID = false;}  //2.5 or 2.6
       if ((*ak4PFJets)[ij].pt()<30.0) {TightJetID = false;}
 
       if (TightJetID) { aveleadingpt +=(*ak4PFJets)[ij].pt();
@@ -7105,11 +7081,11 @@ weighttrg = tmpwt*lumiwtt;
 	}
 #elif defined(JETRESO)
 	if (isrc==0) {  
-	  reso = sqrt(abs(sf*sf - 1))*rp;
+	  reso = sqrt(sf*sf - 1)*rp;
 	} else if (isrc==1) {
-	  reso = sqrt(abs(sf_up*sf_up - 1))*rp;
+	  reso = sqrt(sf_up*sf_up - 1)*rp;
 	} else if (isrc==2) {
-	  reso = sqrt(abs(sf_dn*sf_dn - 1))*rp;
+	  reso = sqrt(sf_dn*sf_dn - 1)*rp;
 	}
 	sup = gRandom->Gaus(1.0, reso);			
 #endif
@@ -7204,20 +7180,17 @@ weighttrg = tmpwt*lumiwtt;
 		double NHF = (*ak4PFJets)[ireorjt].neutralHadronEnergyFraction();
 		double NEMF = (*ak4PFJets)[ireorjt].neutralEmEnergyFraction();
 		double CHF = (*ak4PFJets)[ireorjt].chargedHadronEnergyFraction();
-		//double MUF = (*ak4PFJets)[ireorjt].muonEnergyFraction();
-		//double CEMF = (*ak4PFJets)[ireorjt].chargedEmEnergyFraction();
+		double MUF = (*ak4PFJets)[ireorjt].muonEnergyFraction();
+		double CEMF = (*ak4PFJets)[ireorjt].chargedEmEnergyFraction();
 		int NumConst = (*ak4PFJets)[ireorjt].chargedMultiplicity()+(*ak4PFJets)[ireorjt].neutralMultiplicity();
 		//int NumNeutralParticles =(*ak4PFJets)[ireorjt].neutralMultiplicity();
 		int CHM = (*ak4PFJets)[ireorjt].chargedMultiplicity();
                 //cout<<"NHF== "<< NHF << "; NEF== " << NEMF <<" ; CHF==" <<CHF <<" ;cef==" << CEMF <<"; no= " << NumConst <<" ; nch==" << CHM <<" ; NO of part==" << NumNeutralParticles <<endl;
 		bool TightJetID =false;
-                //if (abs((*ak4PFJets)[ireorjt].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) {TightJetID =true;}
-      		//else {TightJetID =false;}
-      		if(abs((*ak4PFJets)[ireorjt].eta())<=2.7){
-                if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0 && abs((*ak4PFJets)[ireorjt].eta())<=2.4)  TightJetID =true;
-                if(NHF<0.90 && NEMF<0.99 && abs((*ak4PFJets)[ireorjt].eta())>2.4)  TightJetID =true;}
-                else {TightJetID =false;}
-                if (abs((*ak4PFJets)[ireorjt].eta())>2.7) {TightJetID = false;}
+                if (abs((*ak4PFJets)[ireorjt].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) {TightJetID =true;}
+      		else {TightJetID =false;}
+
+                if (abs((*ak4PFJets)[ireorjt].eta())>2.5) {TightJetID = false;}
                 if ((*ak4PFJets)[ireorjt].pt()<30.0) {TightJetID = false;}
 		
 		if( ireorjt<=1 && !TightJetID) break;
@@ -7263,7 +7236,9 @@ weighttrg = tmpwt*lumiwtt;
 		//tmpjt4v.push_back(tmp4v);	  
 		//if (isEta && isPt) {allrecojetmom.push_back(tmp4v);}
 		//if (ncount<=2) {  //change for all jet 26th June
-		  if (isEta && isPt) {recomom[isrc][0][iet].push_back(tmp4v);}
+		  if (isEta && isPt) {
+		     recomom[isrc][0][iet].push_back(tmp4v);
+		  }
 		  //}
 		  //cout <<"ncount filled "<<ncount<<" "<<isrc<<" "<<iet<<" "<<recomom[isrc][0][iet].size()<<endl;
 		  //px +=tmp4v.px();
@@ -8355,36 +8330,34 @@ weighttrg = tmpwt*lumiwtt;
 	    //int recterm=0;
 	    //int ithird=-1;
 	    
-	    for(unsigned ijet = 0; ijet < genjets->size(); ijet++) {
-	    //for(unsigned ijet = 0; ijet != genjets->size(); ijet++) {
-	      int igenjt = genjetindx[isrc][ijet];
+	    //for(unsigned ijet = 0; ijet < genjets->size(); ijet++) {
+	    for(unsigned ijet = 0; ijet != genjets->size(); ijet++) {
+	      //int igenjt = genjetindx[isrc][ijet];
 	     /* if ((*genjets)[igenjt].pt()>25.0) {
 		cout<<"ievt "<<ievt<<" "<<ijet<<" "<<igenjt<<" "<<genjetptx[isrc][ijet]<<" "<<(*genjets)[igenjt].pt()<<" "<<(*genjets)[igenjt].eta()<<" "<<(*genjets)[igenjt].phi()<<endl;
 	      }*/
 
-	      if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && 
-                  abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet]) {     // need to check
+	      if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet]) {     // need to check
 	      //if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet]) {	
-		//int igenjt = genjetindx[isrc][ijet];
+		int igenjt = genjetindx[isrc][ijet];
 	
 		double pt = genjetptx[isrc][ijet];
 		double sup = genjetscl[isrc][ijet];
 		double abseta = abs((*genjets)[igenjt].eta());
 		if (pt<30.0 || abseta >etarange[iet]) continue;
-		//bool isEta = (abseta<2.5) ? true : false;
+		bool isEta = (abseta<2.5) ? true : false;
 		
 		//if (iet==0 && isrc==0) 
 		//cout <<"MC:pteta "<<ijet<<" "<<pt<<" "<<abseta<<endl;
 		if (abseta>5.0) continue;
-		bool isEta = (abseta<2.5) ? true : false;
-		//bool isPt = (pt>30.0) ? true : false;
-		//if (isEta && isPt) {ncount++;}
+		bool isPt = (pt>30.0) ? true : false;
+		if (isEta && isPt) {ncount++;}
 		
 		
 		HepLorentzVector tmp4v((*genjets)[igenjt].px(), (*genjets)[igenjt].py(), (*genjets)[igenjt].pz(), (*genjets)[igenjt].energy());
 		
 		tmp4v *=sup;
-		bool isPt = (pt>30.0) ? true : false;
+		//bool isPt = (pt>30.0) ? true : false;
 		//Response 
 		/*if(isPt && isReconstruct) {
 		  for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
@@ -8414,7 +8387,7 @@ weighttrg = tmpwt*lumiwtt;
 		//							pt = tmp4v.perp();
 		
 		//bool isPt = (pt>30.0) ? true : false;
-		if (isEta && isPt) {ncount++;}
+		//if (isEta && isPt) {ncount++;}
 		
 		/*if (ncount <=2 && ncount !=ijet+1) {
 		  for (int ix=0; ix<ntype; ix++) { 
@@ -8784,13 +8757,13 @@ for(int itp=0; itp<ntype; itp++){
 					//isRECOJC = false;
                                 	//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
 					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
-					EventShape_vector  recoevtshape(recomom[isrc][itp][iet], 2.5, 0, 2, 1);
+					EventShape_vector  recoevtshape(recomom[isrc][itp][iet], 2.4, 0, 2, 1);
 			                recovar =  recoevtshape.getEventShapes();
                 			if(isrc==0){recovar1 =  recoevtshape.getEventShapes();}
 					if (recovar[nvar]>=2) {
 					if (isrc==0) {isRECO[itp][iet] = true;}
-			                //for (int ij=0; ij<nvar; ij++) {
-                    			//if (isItUsed(ij)) {
+			                for (int ij=0; ij<nvar; ij++) {
+                    			if (isItUsed(ij)) {
 						//isRECOJC = true;
                                 		if (isrc==0) {
 						if (int(recovar[nvar])>=2) {	
@@ -9480,8 +9453,8 @@ for(int itp=0; itp<ntype; itp++){
 							//}//if(isValue){
 							//cout <<"optimization 2"<<endl;   
 							}//if (isrc==0)
-							//}//if (isItUsed(ij)) {
-							//}//for (int ij=0; ij<nvar; ij++) {
+							}//if (isItUsed(ij)) {
+							}//for (int ij=0; ij<nvar; ij++) {
 							}//if (recovar[nvar]>=2) {
 							
 						}//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
@@ -9498,13 +9471,13 @@ for(int itp=0; itp<ntype; itp++){
 					//isGENJC = false;
 					//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
                                 	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
-					EventShape_vector  genevtshape(genmom[isrc][itp][iet], 2.5, 0, 2, 1);
+					EventShape_vector  genevtshape(genmom[isrc][itp][iet], 2.4, 0, 2, 1);
 
 		                	genvar =  genevtshape.getEventShapes();
                 			if (genvar[nvar]>=2) {
                   			isGEN = true;
-                  			//for (int ij=0; ij<nvar; ij++) {
-                    			//if (isItUsed(ij)) {
+                  			for (int ij=0; ij<nvar; ij++) {
+                    			if (isItUsed(ij)) {
 						//isGENJC = true;
                                 		if(isrc==0) {
 						if (int(genvar[nvar])>=2) {
@@ -9557,18 +9530,17 @@ for(int itp=0; itp<ntype; itp++){
 							}//if (int(genvar[nvar])>=2) {
 							
 							}//if(isrc==0)
-							//}//if (isItUsed(ij)) {
-							//}//for (int ij=0; ij<nvar; ij++) {
+							}//if (isItUsed(ij)) {
+							}//for (int ij=0; ij<nvar; ij++) {
 							}//if (genvar[nvar]>=2) {
 							
 						}//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
 				if (isrc==0 && isReconstruct){
 				//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && recomom[isrc][itp][iet].size()>1){
-				//for(int ij=0; ij<nvar; ij++) {
-	                    	//if (isItUsed(ij)) {
-	                    	if(isRECO[itp][iet] && isGEN && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
-                      		//if(isRECO[itp][iet] && isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
+				for(int ij=0; ij<nvar; ij++) {
+	                    	if (isItUsed(ij)) {
+                      		if(isRECO[itp][iet] && isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
 
 				if(recovar1[nvar]>=2 &&  genvar[nvar]>=2){
 				//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
@@ -9746,8 +9718,8 @@ for(int itp=0; itp<ntype; itp++){
                                         h_genmiss_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
 								}//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 							}
-							//}//if (isItUsed(ij))
-							//}// for(int ij=0; ij<nvar; ij++)	
+							}//if (isItUsed(ij))
+							}// for(int ij=0; ij<nvar; ij++)	
 						}//if (isrc==0 && isReconstruct){
 					}//for (int isrc=0; isrc<nGenReso; isrc++) {
 				}//if(isMC){
@@ -9781,6 +9753,7 @@ for(int itp=0; itp<ntype; itp++){
                         //if(itp==0){ cout <<" Var :  " << ij <<" : "<< recovar[ij];}
 		        h_recoevtvar[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar[ij], weighttrg); 
                         int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
+			//int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
                         h_recovar_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
 		        }
 			//for (int irand=0; irand<10; irand++) {
@@ -9795,12 +9768,13 @@ for(int itp=0; itp<ntype; itp++){
 #ifdef JETENERGY
 			if (int(recovar[nvar])>=2) {h_recoevtvarjec[itp][irecohtjec[isrc]][iet][ij][isrc]->Fill(recovar[ij], weighttrg);
                            int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
+			   //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
                            h_recoevtvarjec_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg); }
 #elif defined(JETRESO)
 			if (int(recovar[nvar])>=2) {h_recoevtvarres[itp][irecohtjec[isrc]][iet][ij][isrc]->Fill(recovar[ij], weighttrg);
                            int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
-                            h_recoevtvarres_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg);}
-
+			   //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
+                           h_recoevtvarres_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg);}
 #endif
 		      }
 		    }
@@ -9827,6 +9801,7 @@ for(int itp=0; itp<ntype; itp++){
 			if (int(genvar[nvar])>=2) {
 			h_genevtvar[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);
 			int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+                        //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                         h_genvar_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
                         //if(ij==3 && itp==0 ){cout<<"Gen: "<<ievt<<" "<<"Ty:" << itp  << " Nvar : "<<genvar[nvar]<<" "<<genmom[isrc][itp][iet].size() << " Ht2 Bins :" <<igenhtres[isrc];}
                         //if(itp==0){ cout <<" Var :  " << ij <<" : "<< genvar[ij];}
@@ -9841,6 +9816,7 @@ for(int itp=0; itp<ntype; itp++){
 			for (int ix=1; ix<nnnmx; ix++) {
 			if (int(genvar[nvar])>=2) {h_genevtvarpdf[itp][igenhtres[isrc]][iet][ij][ix]->Fill(genvar[ij], weighttrg*pdfwt[ix]);
                         int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+			//int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                         h_genevtvarpdf_2D[itp][iet][ij][ix]->Fill(igenbin, weighttrg*pdfwt[ix]);   
                          }
 			}
@@ -9850,7 +9826,6 @@ for(int itp=0; itp<ntype; itp++){
 		  }
 		}
 	      }
-
 
 ///cout <<endl;	
   	      if(isrc==0 && isReconstruct){ 
@@ -9862,18 +9837,22 @@ for(int itp=0; itp<ntype; itp++){
  
 			 h_2devtvar[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], genvar[ij], weighttrg);
 			 int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+			 //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                          int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
+			 //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                          RM_2D[itp][iet][ij]->Fill(irecbin, igenbin, weighttrg);
                         }else if (recovar1[nvar]>=2) {
 			 
                          //h_2devtvar[itp][igenht][iet][ij]->Fill(recovar[ij],-10.0, weighttrg);	
 			  h_recoevtfake[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], weighttrg);
                           int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
+			  //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                           h_recofake_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
                         }else if (genvar[nvar]>=2) {
 			//h_2devtvar[itp][igenht][iet][ij]->Fill(-10.0, genvar[ij], weighttrg);	//Fill in Reco Underflow
 			  h_genevtmiss[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);	
                           int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+			  //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                           h_genmiss_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
                             }
 			//  h_2devtvar[itp][0][iet][ij]->Fill(recovar[ij], genvar[ij], weighttrg);
@@ -9883,6 +9862,7 @@ for(int itp=0; itp<ntype; itp++){
 			    //h_2devtvar[itp][igenht][iet][ij]->Fill(recovar[ij],-10.0, weighttrg); //Fill Fake in Gen Underflow
 			    h_recoevtfake[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], weighttrg);
                             int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
+			    //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                             h_recofake_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
 			}
 			if (isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && genvar[nvar]>=2) {
@@ -9891,6 +9871,7 @@ for(int itp=0; itp<ntype; itp++){
 			   h_2devtvar[itp][igenht][iet][ij]->Fill(-10.0, genvar[ij], weighttrg);	//Fill Miss in Reco Underflow
 			   h_genevtmiss[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);	
 			   int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
+			   //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                            h_genmiss_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
 			}
 		      }

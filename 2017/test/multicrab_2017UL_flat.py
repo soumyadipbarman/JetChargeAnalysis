@@ -71,18 +71,18 @@ def main():
                 config.Data.inputDBS = 'global'
 		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"]
 
-                config.JobType.maxMemoryMB = 3000
-		#config.JobType.maxJobRuntimeMin = 5000 #default 1315
-                #config.JobType.numCores = 1
+                #config.JobType.maxMemoryMB = 3000
+		#config.JobType.maxJobRuntimeMin = 5000 #2750
+                #config.JobType.numCores = 4
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
                 #config.Data.splitting = 'FileBased'
-                #config.Data.unitsPerJob = 1
+                config.Data.unitsPerJob = 30
 #               config.Data.useParent = True
                 config.Data.inputDataset = None
                 config.Data.splitting = 'LumiBased'
-                #config.Data.splitting = 'Automatic'
-                config.Data.unitsPerJob = 40
+#               config.Data.splitting = 'Automatic'
+#               config.Data.unitsPerJob = 20
 #               config.Data.totalUnits = 30
                 config.Data.outputDatasetTag = None
 #                config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
