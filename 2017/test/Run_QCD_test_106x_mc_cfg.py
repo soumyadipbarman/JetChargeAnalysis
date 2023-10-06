@@ -24,11 +24,12 @@ process.source = cms.Source("PoolSource",
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6-v2/270000/0879FBF1-5326-F94C-B12A-8E88EEBF639C.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6-v2/270000/0859D23C-3B96-F94D-85C5-2A277F6704FE.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6-v2/270000/084EEF62-871E-1E49-A9FA-EEC55E72FE35.root',
-'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6_ext2-v2/60000/FB6B1B36-AF31-BB4F-8B24-37063D7D7CD9.root',
+#'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6_ext2-v2/60000/FB6B1B36-AF31-BB4F-8B24-37063D7D7CD9.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6_ext2-v2/60000/FA0DBDDB-4DC6-5A44-934B-B3100EB43C5E.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6_ext2-v2/60000/F199462C-AD3F-CD41-A707-168EBF5BA2B9.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v6_ext2-v2/60000/E98B458E-FF8B-1F41-993E-05D6AC948556.root',
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/MINIAODSIM/106X_mc2017_realistic_v6-v2/240000/001B7529-3179-1D4E-881E-931109365733.root',
+'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
  )
 
 #eventsToSkip = cms.untracked.VEventRange('1:1950-1:2000'),
@@ -59,7 +60,8 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'74X_mcRun2_asymptotic_realisticBS_v1')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'MCRUN2_74_V9')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v8')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v9')
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v9')
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v10')
 
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1
@@ -72,8 +74,8 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-process.options.numberOfThreads=cms.untracked.uint32(2)
-process.options.numberOfStreams=cms.untracked.uint32(0)
+#process.options.numberOfThreads=cms.untracked.uint32(2)
+#process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
  cout = cms.untracked.PSet(  
@@ -89,6 +91,18 @@ process.MessageLogger = cms.Service("MessageLogger",
  categories = cms.untracked.vstring('FwkJob'), 
  destinations = cms.untracked.vstring('cout')  
 )  
+
+#For L1Prefiring
+'''
+from PhysicsTools.PatUtils.l1ECALPrefiringWeightProducer_cfi import l1ECALPrefiringWeightProducer
+process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
+    TheJets = cms.InputTag("slimmedJets"), #this should be the slimmedJets collection with up to date JECs !
+    #L1Maps = cms.string("L1PrefiringMaps.root"),
+    DataEra = cms.string("UL2017BtoF"), #Use 2016BtoH for 2016
+    UseJetEMPt = cms.bool(False),
+    PrefiringRateSystematicUncty = cms.double(0.2),
+    SkipWarnings = False)
+'''
 
 #ak5 PF & Gen Jets
 #from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets

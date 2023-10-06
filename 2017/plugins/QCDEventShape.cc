@@ -26,18 +26,27 @@
 //#define TRIGGER
 
 ////for Madgraph
-#define LHAPDF
-#define JETRESO
-#define TRACKSYS
-#define TRIGGER
+//#define LHAPDF
+//#define JETRESO
+//#define TRACKSYS
+//#define TRIGGER
 
 ////for Pythia8 & Herwig7
-//#define JETRESO
-//#define TRIGGER
+#define JETRESO
+#define TRIGGER
 
 ////For Flat
 //#define FLAT
 
+//#define LUMIWEIGHT
+
+//#define PREFIRE
+
+
+//#define MERGE_BIN
+//#define PUNOMI
+//#define PUUP
+//#define PUDOWN
 
 ////For GenParticle only
 //#define GENPART
@@ -124,6 +133,7 @@
 
 #include "Test/QCDEventShape/plugins/EventShape_vector.h" 
 
+
 #include "DataFormats/Common/interface/View.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
@@ -148,7 +158,6 @@
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 #include "PhysicsTools/Utilities/interface/LumiReWeighting.h"
 #include "TProfile.h"
-
 using namespace edm;
 using namespace reco;
 using namespace std;
@@ -250,7 +259,6 @@ int rnbinsx1[nvar]={0,0,0,20,0,0,
                    14,0,0,0,0,0,0,0};
 */
 //-----------------------------------For Reco Level
-const int rnmxbins=32;  //Maximum Bins in bellow array
 /*
 int jcbins[60]={40,40,40,30,20,20,20,20,20,20,
 		40,40,40,30,20,20,20,20,20,20,
@@ -291,7 +299,7 @@ double genjcd1maxran[nkappa]={8.0,5.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0};
 int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 double genjcd23minran[nkappa]={-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
-*/
+
 
 //Reco level
 int recojcd1bins[nkappa]={32,32,32,20,20,20,20,20,20,20};
@@ -310,8 +318,29 @@ double genjcd1maxran[nkappa]={6.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
 int genjcd23bins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
 double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
-//-------------------------------------------
+*/
 
+//Date: 08Feb2023
+//Reco level
+int recojcd1bins[nkappa]={60,60,60,60,60,40,40,40,40,40};
+double recojcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int recojcd23bins[nkappa]={20,20,30,36,36,40,40,40,40,40};
+double recojcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double recojcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+
+//Gen level
+int genjcd1bins[nkappa]={30,30,30,30,30,20,20,20,20,20};
+double genjcd1minran[nkappa]={-4.0,-4.0,-3.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd1maxran[nkappa]={4.0,4.0,3.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0};
+
+int genjcd23bins[nkappa]={10,10,15,18,18,20,20,20,20,20};
+double genjcd23minran[nkappa]={-0.4,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
+double genjcd23maxran[nkappa]={0.4,0.6,0.6,0.8,0.8,1.0,1.0,1.0,1.0,1.0};
+
+//-------------------------------------------
+const int rnmxbins=32;  //Maximum Bins in bellow array
 int rnbinsx0[nvar]={0,0,0,32,0,0,0,0,0,
                   32,0,0,0,0,0,14,0,
                   0,24,0,0,0,0,0,26,
@@ -393,7 +422,23 @@ double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 
 //int recohtnbins[nkappa]={10,10,10,10,10,10,10,10,10,10};
 //double recohtbinsmin[nkappa] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669};
 //double recohtbinsmax[nkappa] = {119, 185, 251, 319, 388, 467, 518, 579, 669, 3000};
-//-------------------------------------------
+
+/*
+#ifdef MERGE_BIN
+double recohtbins[nHLTmx+1] = {83, 109, 176, 247, 318, 387, 477, 573, 3000.0}; //For 2018
+#else
+double recohtbins[nHLTmx+1] = {66, 95, 155, 227, 286, 350, 444, 557, 3000.0}; // For 2016 Trigger
+#endif
+*/
+
+//---------------------------------------------Lumi weight
+/*
+int iera = 2;// 0 for Run 2016, 1 for Run 2017 , 2 for Run 2018
+double lumi[3] = {36330, 41480, 59830};
+double total_lumi = lumi[0]+lumi[1]+lumi[2];
+double lumiwtt = lumi[iera]/total_lumi;
+*/
+//---------------------------------------------
 const int nusedvar=5;
 double usedvars[nusedvar]={3, 9, 15, 18, 24};
 
@@ -469,6 +514,7 @@ unsigned int mypow_2[32];
 //const bool m_trigeff = true;
 const int njetptmn=nHLTmx; // 8; //10
 const int njetptbin=120;
+
 #ifdef DIJETAVE
 //const char* jethlt_name[nHLTmx]={"HLT_DiPFJetAve60_v","HLT_DiPFJetAve80_v", "HLT_DiPFJetAve140_v", "HLT_DiPFJetAve200_v", "HLT_DiPFJetAve260_v", "HLT_DiPFJetAve320_v", "HLT_DiPFJetAve400_v", "HLT_DiPFJetAve500_v"};
 const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v","HLT_PFJet200_v","HLT_PFJet260_v","HLT_PFJet320_v","HLT_PFJet400_v","HLT_PFJet450_v","HLT_PFJet500_v","HLT_PFJet550_v"};
@@ -476,6 +522,15 @@ const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v
 //double leadingPtThreshold[njetptmn+1] ={90.0, 120.0, 180.0, 250.0, 320.0, 400.0, 480.0, 600.0, 2000.0};
 //double leadingPtThreshold[njetptmn+1] ={83, 109, 172, 241, 309, 377, 462, 570, 3000.0}; //Fit Value dijet trigger
 double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
+
+/*
+#ifdef MERGE_BIN
+double leadingPtThreshold[njetptmn+1] ={83, 109, 176, 247, 318, 387, 477, 573, 3000.0}; //Fit Value dijet trigger 2018
+#else
+double leadingPtThreshold[njetptmn+1] ={66, 95, 155, 227, 286, 350, 444, 557, 3000.0}; //Fit Value dijet trigger 2016
+#endif
+//double leadingPtThreshold[njetptmn+1] ={83, 109, 172, 241, 309, 377, 462, 570, 3000.0}; //Fit Value dijet trigger 2017
+*/
 
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
 //double compres[njetptmn] = {1630, 5320, 62.1, 38.9, 27.0, 4.33, 1.23, 1.0};
@@ -927,9 +982,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -1944,6 +1999,11 @@ class QCDEventShape : public edm::EDAnalyzer {
   const edm::EDGetTokenT<LHEEventProduct> lheEventProductToken_;
   edm::EDGetTokenT<double> m_rho_token;
 
+  edm::EDGetTokenT< double > prefweight_token;
+  edm::EDGetTokenT< double > prefweightup_token;
+  edm::EDGetTokenT< double > prefweightdown_token;
+
+
   float qscale;
   float wtfact; //MC : eventinfo->weight(); data : hltpres[ihltfill]*l1pres[ihltfill];
   int procid, npilup1, npilup2; //1:-5 to -1, 2:0 to 3
@@ -1992,6 +2052,9 @@ edm::LumiReWeighting *LumiWeights_;
   pdfNNPDFWeightsInputToken_(consumes<std::vector<double> >(iConfig.getParameter<edm::InputTag>("PDFNNPDFWeightsInputTag"))),
   LHERunInfoToken_(consumes<LHERunInfoProduct, edm::InRun >(iConfig.getParameter<edm::InputTag>("LHERunInfoProductInputTag"))),
   lheEventProductToken_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("LHEEventProductInputTag"))),
+  prefweight_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProb"))),
+  prefweightup_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbUp"))),
+  prefweightdown_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbDown"))),
   hltPrescaleProvider_(iConfig, consumesCollector(), *this)
 {
   //now do what ever initialization is needed
@@ -2242,7 +2305,7 @@ for (int iet=0; iet<njetetamn; iet++) {                         //Default 1
                 RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, nHLTmx, recohtbins, false, false);
                 //RecoBinning2D_D3J2[ik][iet]->AddAxis(Axisname, recohtnbins[ik], recohtbinsmin[ik],recohtbinsmax[ik], false, false);
 
-		// g jets
+		// gluon jets
 		sprintf(RecoBinName, "Detector2d_gjt_d0_j0_k%i_eta%i", ik, iet);
                 binsRec2D_gjt_D1J1[ik][iet] = new TUnfoldBinning(RecoBinName);
                 sprintf(RecoBinName, "Recobin2d_gjt_d0_j0_k%i_eta%i",ik, iet);
@@ -4855,7 +4918,7 @@ for (int ipt=0; ipt<njetptmn; ipt++) {
 //-------------------------------------------
  sprintf(name, "corr_jet");
  sprintf(title, "Gen_Reco_HT2");
- h_2ht=fs->make<TH2F>(name, title, 8, leadingPtThreshold, 8, leadingPtThreshold);
+ h_2ht=fs->make<TH2F>(name, title, 10, leadingPtThreshold, 10, leadingPtThreshold);
 //-------------------------------------------
 //RM 
 for(int ipt=0; ipt<njetptmn; ipt++){
@@ -6030,7 +6093,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //int ievt = iEvent.id().event();
   counthist->Fill(1); 
   //if (nevt%100==1)   std::cout<<"QCDEventShape::analyze "<< nevt<<" IRUN= "<<iEvent.id().run()<<" ievt= "<< iEvent.id().event()<<" "<<ievt<<endl;
-  if (nevt%1000==1)   std::cout<<"Jet Charge Analysis Run No. =  "<< nevt<<endl;
+  if (nevt%100==1)   std::cout<<"Jet Charge Analysis Run No. =  "<< nevt<<endl;
   //std::cout << "ok1"<<endl;
 
   //" ilumi" <<
@@ -6058,6 +6121,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //vector<double> ijet1candsmom[nkappa];
   //vector<double> ijet1candsmom;
 
+/*
   double ijet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
   double ijet1_long_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -6369,6 +6433,39 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double ijet2ad_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
   double ijet2ad_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+*/
+////////////////////////////////////////////////////////////////////////////////////////
+  
+  double ijet1candsmom[nkappa], ijet1_long_num[nkappa], ijet1_long_den[nkappa], ijet1_tran_num[nkappa], ijet1_tran_den[nkappa];
+
+  double ijet1gcandsmom[nkappa], ijet1g_long_num[nkappa], ijet1g_long_den[nkappa], ijet1g_tran_num[nkappa], ijet1g_tran_den[nkappa], ijet1qgcandsmom[nkappa], ijet1qg_long_num[nkappa], ijet1qg_long_den[nkappa], ijet1qg_tran_num[nkappa], ijet1qg_tran_den[nkappa], ijet1agcandsmom[nkappa], ijet1ag_long_num[nkappa], ijet1ag_long_den[nkappa], ijet1ag_tran_num[nkappa], ijet1ag_tran_den[nkappa];
+
+  double ijet1bcandsmom[nkappa], ijet1b_long_num[nkappa], ijet1b_long_den[nkappa], ijet1b_tran_num[nkappa], ijet1b_tran_den[nkappa], ijet1qbcandsmom[nkappa], ijet1qb_long_num[nkappa], ijet1qb_long_den[nkappa], ijet1qb_tran_num[nkappa], ijet1qb_tran_den[nkappa], ijet1abcandsmom[nkappa], ijet1ab_long_num[nkappa], ijet1ab_long_den[nkappa], ijet1ab_tran_num[nkappa], ijet1ab_tran_den[nkappa];
+
+  double ijet1ccandsmom[nkappa], ijet1c_long_num[nkappa], ijet1c_long_den[nkappa], ijet1c_tran_num[nkappa], ijet1c_tran_den[nkappa], ijet1qccandsmom[nkappa], ijet1qc_long_num[nkappa], ijet1qc_long_den[nkappa], ijet1qc_tran_num[nkappa], ijet1qc_tran_den[nkappa], ijet1accandsmom[nkappa], ijet1ac_long_num[nkappa], ijet1ac_long_den[nkappa], ijet1ac_tran_num[nkappa], ijet1ac_tran_den[nkappa];
+
+  double ijet1scandsmom[nkappa], ijet1s_long_num[nkappa], ijet1s_long_den[nkappa], ijet1s_tran_num[nkappa], ijet1s_tran_den[nkappa], ijet1qscandsmom[nkappa], ijet1qs_long_num[nkappa], ijet1qs_long_den[nkappa], ijet1qs_tran_num[nkappa], ijet1qs_tran_den[nkappa], ijet1ascandsmom[nkappa], ijet1as_long_num[nkappa], ijet1as_long_den[nkappa], ijet1as_tran_num[nkappa], ijet1as_tran_den[nkappa];
+
+  double ijet1ucandsmom[nkappa], ijet1u_long_num[nkappa], ijet1u_long_den[nkappa], ijet1u_tran_num[nkappa], ijet1u_tran_den[nkappa], ijet1qucandsmom[nkappa], ijet1qu_long_num[nkappa], ijet1qu_long_den[nkappa], ijet1qu_tran_num[nkappa], ijet1qu_tran_den[nkappa], ijet1aucandsmom[nkappa], ijet1au_long_num[nkappa], ijet1au_long_den[nkappa], ijet1au_tran_num[nkappa], ijet1au_tran_den[nkappa];
+
+  double ijet1dcandsmom[nkappa], ijet1d_long_num[nkappa], ijet1d_long_den[nkappa], ijet1d_tran_num[nkappa], ijet1d_tran_den[nkappa], ijet1qdcandsmom[nkappa], ijet1qd_long_num[nkappa], ijet1qd_long_den[nkappa], ijet1qd_tran_num[nkappa], ijet1qd_tran_den[nkappa], ijet1adcandsmom[nkappa], ijet1ad_long_num[nkappa], ijet1ad_long_den[nkappa], ijet1ad_tran_num[nkappa], ijet1ad_tran_den[nkappa];
+
+
+////
+  double ijet2candsmom[nkappa], ijet2_long_num[nkappa], ijet2_long_den[nkappa], ijet2_tran_num[nkappa], ijet2_tran_den[nkappa];
+
+  double ijet2gcandsmom[nkappa], ijet2g_long_num[nkappa], ijet2g_long_den[nkappa], ijet2g_tran_num[nkappa], ijet2g_tran_den[nkappa], ijet2qgcandsmom[nkappa], ijet2qg_long_num[nkappa], ijet2qg_long_den[nkappa], ijet2qg_tran_num[nkappa], ijet2qg_tran_den[nkappa], ijet2agcandsmom[nkappa], ijet2ag_long_num[nkappa], ijet2ag_long_den[nkappa], ijet2ag_tran_num[nkappa], ijet2ag_tran_den[nkappa];
+
+  double ijet2bcandsmom[nkappa], ijet2b_long_num[nkappa], ijet2b_long_den[nkappa], ijet2b_tran_num[nkappa], ijet2b_tran_den[nkappa], ijet2qbcandsmom[nkappa], ijet2qb_long_num[nkappa], ijet2qb_long_den[nkappa], ijet2qb_tran_num[nkappa], ijet2qb_tran_den[nkappa], ijet2abcandsmom[nkappa], ijet2ab_long_num[nkappa], ijet2ab_long_den[nkappa], ijet2ab_tran_num[nkappa], ijet2ab_tran_den[nkappa];
+
+  double ijet2ccandsmom[nkappa], ijet2c_long_num[nkappa], ijet2c_long_den[nkappa], ijet2c_tran_num[nkappa], ijet2c_tran_den[nkappa], ijet2qccandsmom[nkappa], ijet2qc_long_num[nkappa], ijet2qc_long_den[nkappa], ijet2qc_tran_num[nkappa], ijet2qc_tran_den[nkappa], ijet2accandsmom[nkappa], ijet2ac_long_num[nkappa], ijet2ac_long_den[nkappa], ijet2ac_tran_num[nkappa], ijet2ac_tran_den[nkappa];
+
+  double ijet2scandsmom[nkappa], ijet2s_long_num[nkappa], ijet2s_long_den[nkappa], ijet2s_tran_num[nkappa], ijet2s_tran_den[nkappa], ijet2qscandsmom[nkappa], ijet2qs_long_num[nkappa], ijet2qs_long_den[nkappa], ijet2qs_tran_num[nkappa], ijet2qs_tran_den[nkappa], ijet2ascandsmom[nkappa], ijet2as_long_num[nkappa], ijet2as_long_den[nkappa], ijet2as_tran_num[nkappa], ijet2as_tran_den[nkappa];
+
+  double ijet2ucandsmom[nkappa], ijet2u_long_num[nkappa], ijet2u_long_den[nkappa], ijet2u_tran_num[nkappa], ijet2u_tran_den[nkappa], ijet2qucandsmom[nkappa], ijet2qu_long_num[nkappa], ijet2qu_long_den[nkappa], ijet2qu_tran_num[nkappa], ijet2qu_tran_den[nkappa], ijet2aucandsmom[nkappa], ijet2au_long_num[nkappa], ijet2au_long_den[nkappa], ijet2au_tran_num[nkappa], ijet2au_tran_den[nkappa];
+
+  double ijet2dcandsmom[nkappa], ijet2d_long_num[nkappa], ijet2d_long_den[nkappa], ijet2d_tran_num[nkappa], ijet2d_tran_den[nkappa], ijet2qdcandsmom[nkappa], ijet2qd_long_num[nkappa], ijet2qd_long_den[nkappa], ijet2qd_tran_num[nkappa], ijet2qd_tran_den[nkappa], ijet2adcandsmom[nkappa], ijet2ad_long_num[nkappa], ijet2ad_long_den[nkappa], ijet2ad_tran_num[nkappa], ijet2ad_tran_den[nkappa];
+
 
 /*
   double ijet1candsmom[nkappa];
@@ -6386,7 +6483,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double ijet2_tran_num[nkappa];
   double ijet2_tran_den[nkappa];
-*/
+
 
   double igenjet1candsmom[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
@@ -6403,6 +6500,10 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double igenjet2_tran_num[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
   double igenjet2_tran_den[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+*/
+  
+  double igenjet1candsmom[nkappa], igenjet1_long_num[nkappa], igenjet1_long_den[nkappa], igenjet1_tran_num[nkappa], igenjet1_tran_den[nkappa], igenjet2candsmom[nkappa], igenjet2_long_num[nkappa], igenjet2_long_den[nkappa], igenjet2_tran_num[nkappa], igenjet2_tran_den[nkappa];
+
 //-------------------------------------------
   wtfact=1.0;
   //double px=0;
@@ -6477,7 +6578,24 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       }
     }
   }
-  
+ 
+/*
+edm::Handle< double > theprefweight;
+iEvent.getByToken(prefweight_token, theprefweight ) ;
+double _prefiringweight =(*theprefweight);
+
+edm::Handle< double > theprefweightup;
+iEvent.getByToken(prefweightup_token, theprefweightup ) ;
+double _prefiringweightup =(*theprefweightup);
+
+edm::Handle< double > theprefweightdown;
+iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
+double _prefiringweightdown =(*theprefweightdown);
+*/
+//cout << "Prefire  wt : " << _prefiringweight << endl;
+//cout << "Prefire up wt : " << _prefiringweightup << endl;
+//cout << "Prefire down wt : " << _prefiringweightdown << endl;
+ 
 #ifdef TRIGGER
   edm::Handle<edm::TriggerResults> trigRes;
   iEvent.getByToken(triggerBits_, trigRes);
@@ -6543,8 +6661,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       double NHF = (*ak4PFJets)[ij].neutralHadronEnergyFraction();
       double NEMF = (*ak4PFJets)[ij].neutralEmEnergyFraction();
       double CHF = (*ak4PFJets)[ij].chargedHadronEnergyFraction();
-      double MUF = (*ak4PFJets)[ij].muonEnergyFraction();
-      double CEMF = (*ak4PFJets)[ij].chargedEmEnergyFraction();
+      //double MUF = (*ak4PFJets)[ij].muonEnergyFraction();
+      //double CEMF = (*ak4PFJets)[ij].chargedEmEnergyFraction();
       int NumConst = (*ak4PFJets)[ij].chargedMultiplicity()+(*ak4PFJets)[ij].neutralMultiplicity();
       //int NumNeutralParticles =(*ak4PFJets)[ij].neutralMultiplicity();
       int CHM = (*ak4PFJets)[ij].chargedMultiplicity();
@@ -6557,9 +6675,13 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       //Updated for UL17 : 27Aug20
       //if(abs((*ak4PFJets)[ij].eta())<=2.6){
       //if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0)  TightJetID =true;
-      if (abs((*ak4PFJets)[ij].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) { TightJetID =true;} 
+      //if (abs((*ak4PFJets)[ij].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) { TightJetID =true;} 
+      //else {TightJetID =false;}if(abs((*ak4PFJets)[ij].eta())<=2.7){
+      if(abs((*ak4PFJets)[ij].eta())<=2.7){
+      if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0  && abs((*ak4PFJets)[ij].eta())<=2.4 )  TightJetID =true;
+      if(NHF<0.90 && NEMF<0.99 && abs((*ak4PFJets)[ij].eta())>2.4 )  TightJetID =true;}
       else {TightJetID =false;}
-      if (abs((*ak4PFJets)[ij].eta())>2.5) {TightJetID = false;}  //2.5 or 2.6
+      if (abs((*ak4PFJets)[ij].eta())>2.7) {TightJetID = false;}  //2.5 or 2.6
       if ((*ak4PFJets)[ij].pt()<30.0) {TightJetID = false;}
 
       if (TightJetID) { aveleadingpt +=(*ak4PFJets)[ij].pt();
@@ -6818,6 +6940,26 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
     //weighttrg = weight*lumiwt[3];
     //cout <<"TEST2  weighttrg "<< weighttrg<<" ; weight "<<weight<<" ; "<< wtfact<<endl;
   }
+
+/*
+#ifdef PREFIRE
+double tmpwt = weighttrg;
+weighttrg = tmpwt*_prefiringweight;
+//weighttrg = tmpwt*_prefiringweightup;
+//weighttrg = tmpwt*_prefiringweightdown;
+#endif
+*/
+
+//---------------Lumiweight------------------
+/*
+//cout << "before lumi " << weighttrg ;
+#ifdef LUMIWEIGHT
+double tmpwt = weighttrg;
+weighttrg = tmpwt*lumiwtt;
+#endif
+//cout << "   After lumi " << weighttrg << endl;
+*/
+
 //-------------------------------------------
 #ifndef GENPART
   if(!isMC){
@@ -6943,11 +7085,11 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	}
 #elif defined(JETRESO)
 	if (isrc==0) {  
-	  reso = sqrt(sf*sf - 1)*rp;
+	  reso = sqrt(abs(sf*sf - 1))*rp;
 	} else if (isrc==1) {
-	  reso = sqrt(sf_up*sf_up - 1)*rp;
+	  reso = sqrt(abs(sf_up*sf_up - 1))*rp;
 	} else if (isrc==2) {
-	  reso = sqrt(sf_dn*sf_dn - 1)*rp;
+	  reso = sqrt(abs(sf_dn*sf_dn - 1))*rp;
 	}
 	sup = gRandom->Gaus(1.0, reso);			
 #endif
@@ -7042,17 +7184,20 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		double NHF = (*ak4PFJets)[ireorjt].neutralHadronEnergyFraction();
 		double NEMF = (*ak4PFJets)[ireorjt].neutralEmEnergyFraction();
 		double CHF = (*ak4PFJets)[ireorjt].chargedHadronEnergyFraction();
-		double MUF = (*ak4PFJets)[ireorjt].muonEnergyFraction();
-		double CEMF = (*ak4PFJets)[ireorjt].chargedEmEnergyFraction();
+		//double MUF = (*ak4PFJets)[ireorjt].muonEnergyFraction();
+		//double CEMF = (*ak4PFJets)[ireorjt].chargedEmEnergyFraction();
 		int NumConst = (*ak4PFJets)[ireorjt].chargedMultiplicity()+(*ak4PFJets)[ireorjt].neutralMultiplicity();
 		//int NumNeutralParticles =(*ak4PFJets)[ireorjt].neutralMultiplicity();
 		int CHM = (*ak4PFJets)[ireorjt].chargedMultiplicity();
                 //cout<<"NHF== "<< NHF << "; NEF== " << NEMF <<" ; CHF==" <<CHF <<" ;cef==" << CEMF <<"; no= " << NumConst <<" ; nch==" << CHM <<" ; NO of part==" << NumNeutralParticles <<endl;
 		bool TightJetID =false;
-                if (abs((*ak4PFJets)[ireorjt].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) {TightJetID =true;}
-      		else {TightJetID =false;}
-
-                if (abs((*ak4PFJets)[ireorjt].eta())>2.5) {TightJetID = false;}
+                //if (abs((*ak4PFJets)[ireorjt].eta())<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && MUF <0.8 && NHF < 0.9 ) {TightJetID =true;}
+      		//else {TightJetID =false;}
+      		if(abs((*ak4PFJets)[ireorjt].eta())<=2.7){
+                if(NHF<0.90 && NEMF<0.90 && NumConst>1 && CHF>0 && CHM>0 && abs((*ak4PFJets)[ireorjt].eta())<=2.4)  TightJetID =true;
+                if(NHF<0.90 && NEMF<0.99 && abs((*ak4PFJets)[ireorjt].eta())>2.4)  TightJetID =true;}
+                else {TightJetID =false;}
+                if (abs((*ak4PFJets)[ireorjt].eta())>2.7) {TightJetID = false;}
                 if ((*ak4PFJets)[ireorjt].pt()<30.0) {TightJetID = false;}
 		
 		if( ireorjt<=1 && !TightJetID) break;
@@ -7098,9 +7243,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		//tmpjt4v.push_back(tmp4v);	  
 		//if (isEta && isPt) {allrecojetmom.push_back(tmp4v);}
 		//if (ncount<=2) {  //change for all jet 26th June
-		  if (isEta && isPt) {
-		     recomom[isrc][0][iet].push_back(tmp4v);
-		  }
+		  if (isEta && isPt) {recomom[isrc][0][iet].push_back(tmp4v);}
 		  //}
 		  //cout <<"ncount filled "<<ncount<<" "<<isrc<<" "<<iet<<" "<<recomom[isrc][0][iet].size()<<endl;
 		  //px +=tmp4v.px();
@@ -8192,34 +8335,36 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    //int recterm=0;
 	    //int ithird=-1;
 	    
-	    //for(unsigned ijet = 0; ijet < genjets->size(); ijet++) {
-	    for(unsigned ijet = 0; ijet != genjets->size(); ijet++) {
-	      //int igenjt = genjetindx[isrc][ijet];
+	    for(unsigned ijet = 0; ijet < genjets->size(); ijet++) {
+	    //for(unsigned ijet = 0; ijet != genjets->size(); ijet++) {
+	      int igenjt = genjetindx[isrc][ijet];
 	     /* if ((*genjets)[igenjt].pt()>25.0) {
 		cout<<"ievt "<<ievt<<" "<<ijet<<" "<<igenjt<<" "<<genjetptx[isrc][ijet]<<" "<<(*genjets)[igenjt].pt()<<" "<<(*genjets)[igenjt].eta()<<" "<<(*genjets)[igenjt].phi()<<endl;
 	      }*/
 
-	      if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet]) {     // need to check
+	      if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && 
+                  abs((*genjets)[genjetindx[isrc][1]].eta())<etarange[iet]) {     // need to check
 	      //if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet]) {	
-		int igenjt = genjetindx[isrc][ijet];
+		//int igenjt = genjetindx[isrc][ijet];
 	
 		double pt = genjetptx[isrc][ijet];
 		double sup = genjetscl[isrc][ijet];
 		double abseta = abs((*genjets)[igenjt].eta());
 		if (pt<30.0 || abseta >etarange[iet]) continue;
-		bool isEta = (abseta<2.5) ? true : false;
+		//bool isEta = (abseta<2.5) ? true : false;
 		
 		//if (iet==0 && isrc==0) 
 		//cout <<"MC:pteta "<<ijet<<" "<<pt<<" "<<abseta<<endl;
 		if (abseta>5.0) continue;
-		bool isPt = (pt>30.0) ? true : false;
-		if (isEta && isPt) {ncount++;}
+		bool isEta = (abseta<2.5) ? true : false;
+		//bool isPt = (pt>30.0) ? true : false;
+		//if (isEta && isPt) {ncount++;}
 		
 		
 		HepLorentzVector tmp4v((*genjets)[igenjt].px(), (*genjets)[igenjt].py(), (*genjets)[igenjt].pz(), (*genjets)[igenjt].energy());
 		
 		tmp4v *=sup;
-		//bool isPt = (pt>30.0) ? true : false;
+		bool isPt = (pt>30.0) ? true : false;
 		//Response 
 		/*if(isPt && isReconstruct) {
 		  for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
@@ -8249,7 +8394,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		//							pt = tmp4v.perp();
 		
 		//bool isPt = (pt>30.0) ? true : false;
-		//if (isEta && isPt) {ncount++;}
+		if (isEta && isPt) {ncount++;}
 		
 		/*if (ncount <=2 && ncount !=ijet+1) {
 		  for (int ix=0; ix<ntype; ix++) { 
@@ -8607,17 +8752,28 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		cout << "Test1 " <<" kappa : "<< ik << " value : "<<v_recojc_D1J1[ik]<<endl;	
 		}
 */
-//for(int itp=0; itp<1; itp++){
+for(int itp=0; itp<ntype; itp++){
 	for (int iet=0; iet<njetetamn; iet++){
 		for (int ik=0; ik<10; ik++){
                 	if (isReconstruct) {
+			recovar1.clear();
                         	for (int isrc=0; isrc<njecmx; isrc++) {
+				recovar.clear();
+				if (isrc==0) {isRECO[itp][iet]=false;} 
 					//if(isrc==0){isRECOJC = false;}
 					//isRECOJC = false;
-                                	if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
-					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+                                	//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+					if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+					EventShape_vector  recoevtshape(recomom[isrc][itp][iet], 2.4, 0, 2, 1);
+			                recovar =  recoevtshape.getEventShapes();
+                			if(isrc==0){recovar1 =  recoevtshape.getEventShapes();}
+					if (recovar[nvar]>=2) {
+					if (isrc==0) {isRECO[itp][iet] = true;}
+			                //for (int ij=0; ij<nvar; ij++) {
+                    			//if (isItUsed(ij)) {
 						//isRECOJC = true;
                                 		if (isrc==0) {
+						if (int(recovar[nvar])>=2) {	
 							//isRECOJC = true;
 							//cout<<"testing 2"<<endl;
 							//test1[ik]=(ijet1candsmom[ik]/(pow(recojet0_pt,kappa[ik])));
@@ -8671,8 +8827,10 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                         int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(ijet2_tran_num[ik]/ijet2_tran_den[ik],leadingptjec[isrc]);
 					//int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_D3J2,leadingptjec[isrc]);
                                         h_recovar_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
-			
+
+	
 							// gluon jets
+							/*
 							double v_recojc_gjt_D1J1 = (pow(recojet1g_pt,kappa[ik]) > 0) ? (ijet1gcandsmom[ik]/(pow(recojet1g_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_gjt_D1J2 = (pow(recojet2g_pt,kappa[ik]) > 0) ? (ijet2gcandsmom[ik]/(pow(recojet2g_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_gjt_D2J1 = (ijet1g_long_den[ik] > 0) ? (ijet1g_long_num[ik]/ijet1g_long_den[ik]) : 0 ;
@@ -8680,104 +8838,103 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_gjt_D3J1 = (ijet1g_tran_den[ik] > 0) ? (ijet1g_tran_num[ik]/ijet1g_tran_den[ik]) : 0 ;
                                                         double v_recojc_gjt_D3J2 = (ijet2g_tran_den[ik] > 0) ? (ijet2g_tran_num[ik]/ijet2g_tran_den[ik]) : 0 ;
 
-							// +gluon jets
-							double v_recojc_qgjt_D1J1 = (pow(recojet1qg_pt,kappa[ik]) > 0) ? (ijet1qgcandsmom[ik]/(pow(recojet1qg_pt,kappa[ik]))) : 0 ;
+                                                        double v_recojc_qgjt_D1J1 = (pow(recojet1qg_pt,kappa[ik]) > 0) ? (ijet1qgcandsmom[ik]/(pow(recojet1qg_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_qgjt_D1J2 = (pow(recojet2qg_pt,kappa[ik]) > 0) ? (ijet2qgcandsmom[ik]/(pow(recojet2qg_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_qgjt_D2J1 = (ijet1qg_long_den[ik] > 0) ? (ijet1qg_long_num[ik]/ijet1qg_long_den[ik]) : 0 ;
                                                         double v_recojc_qgjt_D2J2 = (ijet2qg_long_den[ik] > 0) ? (ijet2qg_long_num[ik]/ijet2qg_long_den[ik]) : 0 ;
                                                         double v_recojc_qgjt_D3J1 = (ijet1qg_tran_den[ik] > 0) ? (ijet1qg_tran_num[ik]/ijet1qg_tran_den[ik]) : 0 ;
                                                         double v_recojc_qgjt_D3J2 = (ijet2qg_tran_den[ik] > 0) ? (ijet2qg_tran_num[ik]/ijet2qg_tran_den[ik]) : 0 ;
-							
-							// -gluon jets
-							double v_recojc_agjt_D1J1 = (pow(recojet1ag_pt,kappa[ik]) > 0) ? (ijet1agcandsmom[ik]/(pow(recojet1ag_pt,kappa[ik]))) : 0 ;
+
+                                                        double v_recojc_agjt_D1J1 = (pow(recojet1ag_pt,kappa[ik]) > 0) ? (ijet1agcandsmom[ik]/(pow(recojet1ag_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_agjt_D1J2 = (pow(recojet2ag_pt,kappa[ik]) > 0) ? (ijet2agcandsmom[ik]/(pow(recojet2ag_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_agjt_D2J1 = (ijet1ag_long_den[ik] > 0) ? (ijet1ag_long_num[ik]/ijet1ag_long_den[ik]) : 0 ;
                                                         double v_recojc_agjt_D2J2 = (ijet2ag_long_den[ik] > 0) ? (ijet2ag_long_num[ik]/ijet2ag_long_den[ik]) : 0 ;
                                                         double v_recojc_agjt_D3J1 = (ijet1ag_tran_den[ik] > 0) ? (ijet1ag_tran_num[ik]/ijet1ag_tran_den[ik]) : 0 ;
                                                         double v_recojc_agjt_D3J2 = (ijet2ag_tran_den[ik] > 0) ? (ijet2ag_tran_num[ik]/ijet2ag_tran_den[ik]) : 0 ;
-				
-							// 1D
-							h_recojc_gjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D1J1,weighttrg);
-                                                        h_recojc_gjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D1J2,weighttrg);
-                                                        h_recojc_gjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D2J1,weighttrg);
-                                                        h_recojc_gjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D2J2,weighttrg);
-                                                        h_recojc_gjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D3J1,weighttrg);
-                                                        h_recojc_gjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_gjt_D3J2,weighttrg);
+							*/
+							
+							// 1D	
+							h_recojc_gjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1gcandsmom[ik]/(pow(recojet1g_pt,kappa[ik])),weighttrg);
+							h_recojc_gjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2gcandsmom[ik]/(pow(recojet2g_pt,kappa[ik])),weighttrg);
+							h_recojc_gjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1g_long_num[ik]/ijet1g_long_den[ik]),weighttrg);
+							h_recojc_gjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2g_long_num[ik]/ijet2g_long_den[ik]),weighttrg);
+							h_recojc_gjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1g_tran_num[ik]/ijet1g_tran_den[ik]),weighttrg);
+							h_recojc_gjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2g_tran_num[ik]/ijet2g_tran_den[ik]),weighttrg);
 
-							h_recojc_qgjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D1J1,weighttrg);
-                                                        h_recojc_qgjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D1J2,weighttrg);
-                                                        h_recojc_qgjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D2J1,weighttrg);
-                                                        h_recojc_qgjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D2J2,weighttrg);
-                                                        h_recojc_qgjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D3J1,weighttrg);
-                                                        h_recojc_qgjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qgjt_D3J2,weighttrg);
+							h_recojc_qgjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qgcandsmom[ik]/(pow(recojet1qg_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qgjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qgcandsmom[ik]/(pow(recojet2qg_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qgjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1qg_long_num[ik]/ijet1qg_long_den[ik]),weighttrg);
+                                                        h_recojc_qgjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2qg_long_num[ik]/ijet2qg_long_den[ik]),weighttrg);
+                                                        h_recojc_qgjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1qg_tran_num[ik]/ijet1qg_tran_den[ik]),weighttrg);
+                                                        h_recojc_qgjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2qg_tran_num[ik]/ijet2qg_tran_den[ik]),weighttrg);
+							
+							h_recojc_agjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1agcandsmom[ik]/(pow(recojet1ag_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_agjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2agcandsmom[ik]/(pow(recojet2ag_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_agjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1ag_long_num[ik]/ijet1ag_long_den[ik]),weighttrg);
+                                                        h_recojc_agjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2ag_long_num[ik]/ijet2ag_long_den[ik]),weighttrg);
+                                                        h_recojc_agjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill((ijet1ag_tran_num[ik]/ijet1ag_tran_den[ik]),weighttrg);
+                                                        h_recojc_agjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill((ijet2ag_tran_num[ik]/ijet2ag_tran_den[ik]),weighttrg);
+							
 
-							h_recojc_agjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D1J1,weighttrg);
-                                                        h_recojc_agjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D1J2,weighttrg);
-                                                        h_recojc_agjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D2J1,weighttrg);
-                                                        h_recojc_agjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D2J2,weighttrg);
-                                                        h_recojc_agjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D3J1,weighttrg);
-                                                        h_recojc_agjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_agjt_D3J2,weighttrg);
+					int irecbin_gjt_D1J1 = RecoBinning2D_gjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1gcandsmom[ik]/(pow(recojet1g_pt,kappa[ik])),leadingptjec[isrc]);
+                                        h_recovar_gjt_2D_D1J1[ik][iet]->Fill(irecbin_gjt_D1J1, weighttrg);
 
-					// 2D
-					int irecbin_gjt_D1J1 = RecoBinning2D_gjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D1J1,leadingptjec[isrc]);
-					h_recovar_gjt_2D_D1J1[ik][iet]->Fill(irecbin_gjt_D1J1, weighttrg);
-
-					int irecbin_gjt_D1J2 = RecoBinning2D_gjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D1J2,leadingptjec[isrc]);
+					int irecbin_gjt_D1J2 = RecoBinning2D_gjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2gcandsmom[ik]/(pow(recojet2g_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_gjt_2D_D1J2[ik][iet]->Fill(irecbin_gjt_D1J2, weighttrg);
 
-					int irecbin_gjt_D2J1 = RecoBinning2D_gjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_gjt_D2J1 = RecoBinning2D_gjt_D2J1[ik][iet]->GetGlobalBinNumber((ijet1g_long_num[ik]/ijet1g_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_gjt_2D_D2J1[ik][iet]->Fill(irecbin_gjt_D2J1, weighttrg);
 
-					int irecbin_gjt_D2J2 = RecoBinning2D_gjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_gjt_D2J2 = RecoBinning2D_gjt_D2J2[ik][iet]->GetGlobalBinNumber((ijet2g_long_num[ik]/ijet2g_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_gjt_2D_D2J2[ik][iet]->Fill(irecbin_gjt_D2J2, weighttrg);
 
-					int irecbin_gjt_D3J1 = RecoBinning2D_gjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_gjt_D3J1 = RecoBinning2D_gjt_D3J1[ik][iet]->GetGlobalBinNumber((ijet1g_tran_num[ik]/ijet1g_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_gjt_2D_D3J1[ik][iet]->Fill(irecbin_gjt_D3J1, weighttrg);
 
-					int irecbin_gjt_D3J2 = RecoBinning2D_gjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_gjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_gjt_D3J2 = RecoBinning2D_gjt_D3J2[ik][iet]->GetGlobalBinNumber((ijet2g_tran_num[ik]/ijet2g_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_gjt_2D_D3J2[ik][iet]->Fill(irecbin_gjt_D3J2, weighttrg);
 
-
-					int irecbin_qgjt_D1J1 = RecoBinning2D_qgjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D1J1,leadingptjec[isrc]);
+					
+					int irecbin_qgjt_D1J1 = RecoBinning2D_qgjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qgcandsmom[ik]/(pow(recojet1qg_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D1J1[ik][iet]->Fill(irecbin_qgjt_D1J1, weighttrg);
 
-                                        int irecbin_qgjt_D1J2 = RecoBinning2D_qgjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qgjt_D1J2 = RecoBinning2D_qgjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qgcandsmom[ik]/(pow(recojet2qg_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D1J2[ik][iet]->Fill(irecbin_qgjt_D1J2, weighttrg);
 
-                                        int irecbin_qgjt_D2J1 = RecoBinning2D_qgjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qgjt_D2J1 = RecoBinning2D_qgjt_D2J1[ik][iet]->GetGlobalBinNumber((ijet1qg_long_num[ik]/ijet1qg_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D2J1[ik][iet]->Fill(irecbin_qgjt_D2J1, weighttrg);
 
-                                        int irecbin_qgjt_D2J2 = RecoBinning2D_qgjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qgjt_D2J2 = RecoBinning2D_qgjt_D2J2[ik][iet]->GetGlobalBinNumber((ijet2qg_long_num[ik]/ijet2qg_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D2J2[ik][iet]->Fill(irecbin_qgjt_D2J2, weighttrg);
 
-                                        int irecbin_qgjt_D3J1 = RecoBinning2D_qgjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qgjt_D3J1 = RecoBinning2D_qgjt_D3J1[ik][iet]->GetGlobalBinNumber((ijet1qg_tran_num[ik]/ijet1qg_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D3J1[ik][iet]->Fill(irecbin_qgjt_D3J1, weighttrg);
 
-                                        int irecbin_qgjt_D3J2 = RecoBinning2D_qgjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qgjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qgjt_D3J2 = RecoBinning2D_qgjt_D3J2[ik][iet]->GetGlobalBinNumber((ijet2qg_tran_num[ik]/ijet2qg_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_qgjt_2D_D3J2[ik][iet]->Fill(irecbin_qgjt_D3J2, weighttrg);
 
 					
-					int irecbin_agjt_D1J1 = RecoBinning2D_agjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D1J1,leadingptjec[isrc]);
+					int irecbin_agjt_D1J1 = RecoBinning2D_agjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1agcandsmom[ik]/(pow(recojet1ag_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D1J1[ik][iet]->Fill(irecbin_agjt_D1J1, weighttrg);
 
-                                        int irecbin_agjt_D1J2 = RecoBinning2D_agjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_agjt_D1J2 = RecoBinning2D_agjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2agcandsmom[ik]/(pow(recojet2ag_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D1J2[ik][iet]->Fill(irecbin_agjt_D1J2, weighttrg);
 
-                                        int irecbin_agjt_D2J1 = RecoBinning2D_agjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_agjt_D2J1 = RecoBinning2D_agjt_D2J1[ik][iet]->GetGlobalBinNumber((ijet1ag_long_num[ik]/ijet1ag_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D2J1[ik][iet]->Fill(irecbin_agjt_D2J1, weighttrg);
 
-                                        int irecbin_agjt_D2J2 = RecoBinning2D_agjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_agjt_D2J2 = RecoBinning2D_agjt_D2J2[ik][iet]->GetGlobalBinNumber((ijet2ag_long_num[ik]/ijet2ag_long_den[ik]),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D2J2[ik][iet]->Fill(irecbin_agjt_D2J2, weighttrg);
 
-                                        int irecbin_agjt_D3J1 = RecoBinning2D_agjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_agjt_D3J1 = RecoBinning2D_agjt_D3J1[ik][iet]->GetGlobalBinNumber((ijet1ag_tran_num[ik]/ijet1ag_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D3J1[ik][iet]->Fill(irecbin_agjt_D3J1, weighttrg);
 
-                                        int irecbin_agjt_D3J2 = RecoBinning2D_agjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_agjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_agjt_D3J2 = RecoBinning2D_agjt_D3J2[ik][iet]->GetGlobalBinNumber((ijet2ag_tran_num[ik]/ijet2ag_tran_den[ik]),leadingptjec[isrc]);
                                         h_recovar_agjt_2D_D3J2[ik][iet]->Fill(irecbin_agjt_D3J2, weighttrg);
-
 
 				
 							// b jets	
+							/*
 							double v_recojc_bjt_D1J1 = (pow(recojet1b_pt,kappa[ik]) > 0) ? (ijet1bcandsmom[ik]/(pow(recojet1b_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_bjt_D1J2 = (pow(recojet2b_pt,kappa[ik]) > 0) ? (ijet2bcandsmom[ik]/(pow(recojet2b_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_bjt_D2J1 = (ijet1b_long_den[ik] > 0) ? (ijet1b_long_num[ik]/ijet1b_long_den[ik]) : 0 ;
@@ -8798,71 +8955,91 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_abjt_D2J2 = (ijet2ab_long_den[ik] > 0) ? (ijet2ab_long_num[ik]/ijet2ab_long_den[ik]) : 0 ;
                                                         double v_recojc_abjt_D3J1 = (ijet1ab_tran_den[ik] > 0) ? (ijet1ab_tran_num[ik]/ijet1ab_tran_den[ik]) : 0 ;
                                                         double v_recojc_abjt_D3J2 = (ijet2ab_tran_den[ik] > 0) ? (ijet2ab_tran_num[ik]/ijet2ab_tran_den[ik]) : 0 ;
+							*/
 
+							// 1D
+							h_recojc_bjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1bcandsmom[ik]/(pow(recojet1b_pt,kappa[ik])),weighttrg);
+							h_recojc_bjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2bcandsmom[ik]/(pow(recojet2b_pt,kappa[ik])),weighttrg);
+							h_recojc_bjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1b_long_num[ik]/ijet1b_long_den[ik],weighttrg);
+							h_recojc_bjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2b_long_num[ik]/ijet2b_long_den[ik],weighttrg);
+							h_recojc_bjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1b_tran_num[ik]/ijet1b_tran_den[ik],weighttrg);
+							h_recojc_bjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2b_tran_num[ik]/ijet2b_tran_den[ik],weighttrg);
 
-							// 1D 
-							h_recojc_bjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D1J1,weighttrg);
-                                                        h_recojc_bjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D1J2,weighttrg);
-                                                        h_recojc_bjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D2J1,weighttrg);
-                                                        h_recojc_bjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D2J2,weighttrg);
-                                                        h_recojc_bjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D3J1,weighttrg);
-                                                        h_recojc_bjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_bjt_D3J2,weighttrg);
+							h_recojc_qbjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qbcandsmom[ik]/(pow(recojet1qb_pt,kappa[ik])),weighttrg);
+							h_recojc_qbjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qbcandsmom[ik]/(pow(recojet2qb_pt,kappa[ik])),weighttrg);
+							h_recojc_qbjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qb_long_num[ik]/ijet1qb_long_den[ik],weighttrg);
+							h_recojc_qbjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qb_long_num[ik]/ijet2qb_long_den[ik],weighttrg);
+							h_recojc_qbjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qb_tran_num[ik]/ijet1qb_tran_den[ik],weighttrg);
+							h_recojc_qbjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qb_tran_num[ik]/ijet2qb_tran_den[ik],weighttrg);
 
-							h_recojc_qbjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D1J1,weighttrg);
-                                                        h_recojc_qbjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D1J2,weighttrg);
-                                                        h_recojc_qbjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D2J1,weighttrg);
-                                                        h_recojc_qbjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D2J2,weighttrg);
-                                                        h_recojc_qbjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D3J1,weighttrg);
-                                                        h_recojc_qbjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qbjt_D3J2,weighttrg);
-
-							h_recojc_abjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D1J1,weighttrg);
-                                                        h_recojc_abjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D1J2,weighttrg);
-                                                        h_recojc_abjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D2J1,weighttrg);
-                                                        h_recojc_abjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D2J2,weighttrg);
-                                                        h_recojc_abjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D3J1,weighttrg);
-                                                        h_recojc_abjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_abjt_D3J2,weighttrg);
-
+							h_recojc_abjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1abcandsmom[ik]/(pow(recojet1ab_pt,kappa[ik])),weighttrg);
+							h_recojc_abjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2abcandsmom[ik]/(pow(recojet2ab_pt,kappa[ik])),weighttrg);
+							h_recojc_abjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ab_long_num[ik]/ijet1ab_long_den[ik],weighttrg);
+							h_recojc_abjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ab_long_num[ik]/ijet2ab_long_den[ik],weighttrg);
+							h_recojc_abjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ab_tran_num[ik]/ijet1ab_tran_den[ik],weighttrg);
+							h_recojc_abjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ab_tran_num[ik]/ijet2ab_tran_den[ik],weighttrg);
+							
 	
 					// 2D 
-					int irecbin_bjt_D1J1 = RecoBinning2D_bjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D1J1,leadingptjec[isrc]);
+					int irecbin_bjt_D1J1 = RecoBinning2D_bjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1bcandsmom[ik]/(pow(recojet1b_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D1J1[ik][iet]->Fill(irecbin_bjt_D1J1, weighttrg);
 
-                                        int irecbin_bjt_D1J2 = RecoBinning2D_bjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_bjt_D1J2 = RecoBinning2D_bjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2bcandsmom[ik]/(pow(recojet2b_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D1J2[ik][iet]->Fill(irecbin_bjt_D1J2, weighttrg);
 
-                                        int irecbin_bjt_D2J1 = RecoBinning2D_bjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_bjt_D2J1 = RecoBinning2D_bjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1b_long_num[ik]/ijet1b_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D2J1[ik][iet]->Fill(irecbin_bjt_D2J1, weighttrg);
 
-                                        int irecbin_bjt_D2J2 = RecoBinning2D_bjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_bjt_D2J2 = RecoBinning2D_bjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2b_long_num[ik]/ijet2b_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D2J2[ik][iet]->Fill(irecbin_bjt_D2J2, weighttrg);
 
-                                        int irecbin_bjt_D3J1 = RecoBinning2D_bjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_bjt_D3J1 = RecoBinning2D_bjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1b_tran_num[ik]/ijet1b_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D3J1[ik][iet]->Fill(irecbin_bjt_D3J1, weighttrg);
 
-                                        int irecbin_bjt_D3J2 = RecoBinning2D_bjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_bjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_bjt_D3J2 = RecoBinning2D_bjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2b_tran_num[ik]/ijet2b_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_bjt_2D_D3J2[ik][iet]->Fill(irecbin_bjt_D3J2, weighttrg);
 
 		
-					int irecbin_qbjt_D1J1 = RecoBinning2D_qbjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D1J1,leadingptjec[isrc]);
+					int irecbin_qbjt_D1J1 = RecoBinning2D_qbjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qbcandsmom[ik]/(pow(recojet1qb_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D1J1[ik][iet]->Fill(irecbin_qbjt_D1J1, weighttrg);
 
-                                        int irecbin_qbjt_D1J2 = RecoBinning2D_qbjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qbjt_D1J2 = RecoBinning2D_qbjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qbcandsmom[ik]/(pow(recojet2qb_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D1J2[ik][iet]->Fill(irecbin_qbjt_D1J2, weighttrg);
 
-                                        int irecbin_qbjt_D2J1 = RecoBinning2D_qbjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qbjt_D2J1 = RecoBinning2D_qbjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1qb_long_num[ik]/ijet1qb_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D2J1[ik][iet]->Fill(irecbin_qbjt_D2J1, weighttrg);
 
-                                        int irecbin_qbjt_D2J2 = RecoBinning2D_qbjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qbjt_D2J2 = RecoBinning2D_qbjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2qb_long_num[ik]/ijet2qb_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D2J2[ik][iet]->Fill(irecbin_qbjt_D2J2, weighttrg);
 
-                                        int irecbin_qbjt_D3J1 = RecoBinning2D_qbjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qbjt_D3J1 = RecoBinning2D_qbjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1qb_tran_num[ik]/ijet1qb_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D3J1[ik][iet]->Fill(irecbin_qbjt_D3J1, weighttrg);
 
-                                        int irecbin_qbjt_D3J2 = RecoBinning2D_qbjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qbjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qbjt_D3J2 = RecoBinning2D_qbjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2qb_tran_num[ik]/ijet2qb_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qbjt_2D_D3J2[ik][iet]->Fill(irecbin_qbjt_D3J2, weighttrg);
+
+					
+					int irecbin_abjt_D1J1 = RecoBinning2D_abjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1abcandsmom[ik]/(pow(recojet1ab_pt,kappa[ik])),leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D1J1[ik][iet]->Fill(irecbin_abjt_D1J1, weighttrg);
+
+                                        int irecbin_abjt_D1J2 = RecoBinning2D_abjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2abcandsmom[ik]/(pow(recojet2ab_pt,kappa[ik])),leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D1J2[ik][iet]->Fill(irecbin_abjt_D1J2, weighttrg);
+
+                                        int irecbin_abjt_D2J1 = RecoBinning2D_abjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1ab_long_num[ik]/ijet1ab_long_den[ik],leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D2J1[ik][iet]->Fill(irecbin_abjt_D2J1, weighttrg);
+
+                                        int irecbin_abjt_D2J2 = RecoBinning2D_abjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2ab_long_num[ik]/ijet2ab_long_den[ik],leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D2J2[ik][iet]->Fill(irecbin_abjt_D2J2, weighttrg);
+
+                                        int irecbin_abjt_D3J1 = RecoBinning2D_abjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1ab_tran_num[ik]/ijet1ab_tran_den[ik],leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D3J1[ik][iet]->Fill(irecbin_abjt_D3J1, weighttrg);
+
+                                        int irecbin_abjt_D3J2 = RecoBinning2D_abjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2ab_tran_num[ik]/ijet2ab_tran_den[ik],leadingptjec[isrc]);
+                                        h_recovar_abjt_2D_D3J2[ik][iet]->Fill(irecbin_abjt_D3J2, weighttrg);
 
 
 							// c jets
+							/*
 							double v_recojc_cjt_D1J1 = (pow(recojet1c_pt,kappa[ik]) > 0) ? (ijet1ccandsmom[ik]/(pow(recojet1c_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_cjt_D1J2 = (pow(recojet2c_pt,kappa[ik]) > 0) ? (ijet2ccandsmom[ik]/(pow(recojet2c_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_cjt_D2J1 = (ijet1c_long_den[ik] > 0) ? (ijet1c_long_num[ik]/ijet1c_long_den[ik]) : 0 ;
@@ -8883,89 +9060,90 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_acjt_D2J2 = (ijet2ac_long_den[ik] > 0) ? (ijet2ac_long_num[ik]/ijet2ac_long_den[ik]) : 0 ;
                                                         double v_recojc_acjt_D3J1 = (ijet1ac_tran_den[ik] > 0) ? (ijet1ac_tran_num[ik]/ijet1ac_tran_den[ik]) : 0 ;
                                                         double v_recojc_acjt_D3J2 = (ijet2ac_tran_den[ik] > 0) ? (ijet2ac_tran_num[ik]/ijet2ac_tran_den[ik]) : 0 ;
-
+							*/
 
 							// 1D
-                                                        h_recojc_cjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D1J1,weighttrg);
-                                                        h_recojc_cjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D1J2,weighttrg);
-                                                        h_recojc_cjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D2J1,weighttrg);
-                                                        h_recojc_cjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D2J2,weighttrg);
-                                                        h_recojc_cjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D3J1,weighttrg);
-                                                        h_recojc_cjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_cjt_D3J2,weighttrg);
+                                                        h_recojc_cjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ccandsmom[ik]/(pow(recojet1c_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_cjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ccandsmom[ik]/(pow(recojet2c_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_cjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1c_long_num[ik]/ijet1c_long_den[ik],weighttrg);
+                                                        h_recojc_cjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2c_long_num[ik]/ijet2c_long_den[ik],weighttrg);
+                                                        h_recojc_cjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1c_tran_num[ik]/ijet1c_tran_den[ik],weighttrg);
+                                                        h_recojc_cjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2c_tran_num[ik]/ijet2c_tran_den[ik],weighttrg);
 
-							h_recojc_qcjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D1J1,weighttrg);
-                                                        h_recojc_qcjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D1J2,weighttrg);
-                                                        h_recojc_qcjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D2J1,weighttrg);
-                                                        h_recojc_qcjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D2J2,weighttrg);
-                                                        h_recojc_qcjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D3J1,weighttrg);
-                                                        h_recojc_qcjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qcjt_D3J2,weighttrg);
+							h_recojc_qcjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qccandsmom[ik]/(pow(recojet1qc_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qcjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qccandsmom[ik]/(pow(recojet2qc_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qcjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qc_long_num[ik]/ijet1qc_long_den[ik],weighttrg);
+                                                        h_recojc_qcjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qc_long_num[ik]/ijet2qc_long_den[ik],weighttrg);
+                                                        h_recojc_qcjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qc_tran_num[ik]/ijet1qc_tran_den[ik],weighttrg);
+                                                        h_recojc_qcjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qc_tran_num[ik]/ijet2qc_tran_den[ik],weighttrg);
 
-							h_recojc_acjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D1J1,weighttrg);
-                                                        h_recojc_acjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D1J2,weighttrg);
-                                                        h_recojc_acjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D2J1,weighttrg);
-                                                        h_recojc_acjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D2J2,weighttrg);
-                                                        h_recojc_acjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D3J1,weighttrg);
-                                                        h_recojc_acjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_acjt_D3J2,weighttrg);
+							h_recojc_acjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1accandsmom[ik]/(pow(recojet1ac_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_acjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2accandsmom[ik]/(pow(recojet2ac_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_acjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ac_long_num[ik]/ijet1ac_long_den[ik],weighttrg);
+                                                        h_recojc_acjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ac_long_num[ik]/ijet2ac_long_den[ik],weighttrg);
+                                                        h_recojc_acjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ac_tran_num[ik]/ijet1ac_tran_den[ik],weighttrg);
+                                                        h_recojc_acjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ac_tran_num[ik]/ijet2ac_tran_den[ik],weighttrg);
 
 					// 2D
-					int irecbin_cjt_D1J1 = RecoBinning2D_cjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D1J1,leadingptjec[isrc]);
+					int irecbin_cjt_D1J1 = RecoBinning2D_cjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1ccandsmom[ik]/(pow(recojet1c_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D1J1[ik][iet]->Fill(irecbin_cjt_D1J1, weighttrg);
 
-                                        int irecbin_cjt_D1J2 = RecoBinning2D_cjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_cjt_D1J2 = RecoBinning2D_cjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2ccandsmom[ik]/(pow(recojet2c_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D1J2[ik][iet]->Fill(irecbin_cjt_D1J2, weighttrg);
 
-                                        int irecbin_cjt_D2J1 = RecoBinning2D_cjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_cjt_D2J1 = RecoBinning2D_cjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1c_long_num[ik]/ijet1c_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D2J1[ik][iet]->Fill(irecbin_cjt_D2J1, weighttrg);
 
-                                        int irecbin_cjt_D2J2 = RecoBinning2D_cjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_cjt_D2J2 = RecoBinning2D_cjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2c_long_num[ik]/ijet2c_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D2J2[ik][iet]->Fill(irecbin_cjt_D2J2, weighttrg);
 
-                                        int irecbin_cjt_D3J1 = RecoBinning2D_cjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_cjt_D3J1 = RecoBinning2D_cjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1c_tran_num[ik]/ijet1c_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D3J1[ik][iet]->Fill(irecbin_cjt_D3J1, weighttrg);
 
-                                        int irecbin_cjt_D3J2 = RecoBinning2D_cjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_cjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_cjt_D3J2 = RecoBinning2D_cjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2c_tran_num[ik]/ijet2c_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_cjt_2D_D3J2[ik][iet]->Fill(irecbin_cjt_D3J2, weighttrg);
 
 
-					int irecbin_qcjt_D1J1 = RecoBinning2D_qcjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D1J1,leadingptjec[isrc]);
+					int irecbin_qcjt_D1J1 = RecoBinning2D_qcjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qccandsmom[ik]/(pow(recojet1qc_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D1J1[ik][iet]->Fill(irecbin_qcjt_D1J1, weighttrg);
 
-                                        int irecbin_qcjt_D1J2 = RecoBinning2D_qcjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qcjt_D1J2 = RecoBinning2D_qcjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qccandsmom[ik]/(pow(recojet2qc_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D1J2[ik][iet]->Fill(irecbin_qcjt_D1J2, weighttrg);
 
-                                        int irecbin_qcjt_D2J1 = RecoBinning2D_qcjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qcjt_D2J1 = RecoBinning2D_qcjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1qc_long_num[ik]/ijet1qc_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D2J1[ik][iet]->Fill(irecbin_qcjt_D2J1, weighttrg);
 
-                                        int irecbin_qcjt_D2J2 = RecoBinning2D_qcjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qcjt_D2J2 = RecoBinning2D_qcjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2qc_long_num[ik]/ijet2qc_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D2J2[ik][iet]->Fill(irecbin_qcjt_D2J2, weighttrg);
 
-                                        int irecbin_qcjt_D3J1 = RecoBinning2D_qcjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qcjt_D3J1 = RecoBinning2D_qcjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1qc_tran_num[ik]/ijet1qc_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D3J1[ik][iet]->Fill(irecbin_qcjt_D3J1, weighttrg);
 
-                                        int irecbin_qcjt_D3J2 = RecoBinning2D_qcjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qcjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qcjt_D3J2 = RecoBinning2D_qcjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2qc_tran_num[ik]/ijet2qc_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qcjt_2D_D3J2[ik][iet]->Fill(irecbin_qcjt_D3J2, weighttrg);
 
 					
-					int irecbin_acjt_D1J1 = RecoBinning2D_acjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D1J1,leadingptjec[isrc]);
+					int irecbin_acjt_D1J1 = RecoBinning2D_acjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1accandsmom[ik]/(pow(recojet1ac_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D1J1[ik][iet]->Fill(irecbin_acjt_D1J1, weighttrg);
 
-                                        int irecbin_acjt_D1J2 = RecoBinning2D_acjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_acjt_D1J2 = RecoBinning2D_acjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2accandsmom[ik]/(pow(recojet2ac_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D1J2[ik][iet]->Fill(irecbin_acjt_D1J2, weighttrg);
 
-                                        int irecbin_acjt_D2J1 = RecoBinning2D_acjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_acjt_D2J1 = RecoBinning2D_acjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1ac_long_num[ik]/ijet1ac_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D2J1[ik][iet]->Fill(irecbin_acjt_D2J1, weighttrg);
 
-                                        int irecbin_acjt_D2J2 = RecoBinning2D_acjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_acjt_D2J2 = RecoBinning2D_acjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2ac_long_num[ik]/ijet2ac_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D2J2[ik][iet]->Fill(irecbin_acjt_D2J2, weighttrg);
 
-                                        int irecbin_acjt_D3J1 = RecoBinning2D_acjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_acjt_D3J1 = RecoBinning2D_acjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1ac_tran_num[ik]/ijet1ac_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D3J1[ik][iet]->Fill(irecbin_acjt_D3J1, weighttrg);
 
-                                        int irecbin_acjt_D3J2 = RecoBinning2D_acjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_acjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_acjt_D3J2 = RecoBinning2D_acjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2ac_tran_num[ik]/ijet2ac_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_acjt_2D_D3J2[ik][iet]->Fill(irecbin_acjt_D3J2, weighttrg);
 
 	
 							// s jets
+							/*
 							double v_recojc_sjt_D1J1 = (pow(recojet1s_pt,kappa[ik]) > 0) ? (ijet1scandsmom[ik]/(pow(recojet1s_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_sjt_D1J2 = (pow(recojet2s_pt,kappa[ik]) > 0) ? (ijet2scandsmom[ik]/(pow(recojet2s_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_sjt_D2J1 = (ijet1s_long_den[ik] > 0) ? (ijet1s_long_num[ik]/ijet1s_long_den[ik]) : 0 ;
@@ -8986,91 +9164,92 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_asjt_D2J2 = (ijet2as_long_den[ik] > 0) ? (ijet2as_long_num[ik]/ijet2as_long_den[ik]) : 0 ;
                                                         double v_recojc_asjt_D3J1 = (ijet1as_tran_den[ik] > 0) ? (ijet1as_tran_num[ik]/ijet1as_tran_den[ik]) : 0 ;
                                                         double v_recojc_asjt_D3J2 = (ijet2as_tran_den[ik] > 0) ? (ijet2as_tran_num[ik]/ijet2as_tran_den[ik]) : 0 ;
-
+							*/
 
 							// 1D
-                                                        h_recojc_sjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D1J1,weighttrg);
-                                                        h_recojc_sjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D1J2,weighttrg);
-                                                        h_recojc_sjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D2J1,weighttrg);
-                                                        h_recojc_sjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D2J2,weighttrg);
-                                                        h_recojc_sjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D3J1,weighttrg);
-                                                        h_recojc_sjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_sjt_D3J2,weighttrg);
+                                                        h_recojc_sjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1scandsmom[ik]/(pow(recojet1s_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_sjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2scandsmom[ik]/(pow(recojet2s_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_sjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1s_long_num[ik]/ijet1s_long_den[ik],weighttrg);
+                                                        h_recojc_sjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2s_long_num[ik]/ijet2s_long_den[ik],weighttrg);
+                                                        h_recojc_sjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1s_tran_num[ik]/ijet1s_tran_den[ik],weighttrg);
+                                                        h_recojc_sjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2s_tran_num[ik]/ijet2s_tran_den[ik],weighttrg);
 
-							h_recojc_qsjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D1J1,weighttrg);
-                                                        h_recojc_qsjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D1J2,weighttrg);
-                                                        h_recojc_qsjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D2J1,weighttrg);
-                                                        h_recojc_qsjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D2J2,weighttrg);
-                                                        h_recojc_qsjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D3J1,weighttrg);
-                                                        h_recojc_qsjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qsjt_D3J2,weighttrg);
+							h_recojc_qsjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qscandsmom[ik]/(pow(recojet1qs_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qsjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qscandsmom[ik]/(pow(recojet2qs_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qsjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qs_long_num[ik]/ijet1qs_long_den[ik],weighttrg);
+                                                        h_recojc_qsjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qs_long_num[ik]/ijet2qs_long_den[ik],weighttrg);
+                                                        h_recojc_qsjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qs_tran_num[ik]/ijet1qs_tran_den[ik],weighttrg);
+                                                        h_recojc_qsjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qs_tran_num[ik]/ijet2qs_tran_den[ik],weighttrg);
 
-							h_recojc_asjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D1J1,weighttrg);
-                                                        h_recojc_asjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D1J2,weighttrg);
-                                                        h_recojc_asjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D2J1,weighttrg);
-                                                        h_recojc_asjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D2J2,weighttrg);
-                                                        h_recojc_asjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D3J1,weighttrg);
-                                                        h_recojc_asjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_asjt_D3J2,weighttrg);
+							h_recojc_asjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ascandsmom[ik]/(pow(recojet1as_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_asjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ascandsmom[ik]/(pow(recojet2as_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_asjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1as_long_num[ik]/ijet1as_long_den[ik],weighttrg);
+                                                        h_recojc_asjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2as_long_num[ik]/ijet2as_long_den[ik],weighttrg);
+                                                        h_recojc_asjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1as_tran_num[ik]/ijet1as_tran_den[ik],weighttrg);
+                                                        h_recojc_asjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2as_tran_num[ik]/ijet2as_tran_den[ik],weighttrg);
 
 
 					// 2D
-					int irecbin_sjt_D1J1 = RecoBinning2D_sjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D1J1,leadingptjec[isrc]);
+					int irecbin_sjt_D1J1 = RecoBinning2D_sjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1scandsmom[ik]/(pow(recojet1s_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D1J1[ik][iet]->Fill(irecbin_sjt_D1J1, weighttrg);
 
-                                        int irecbin_sjt_D1J2 = RecoBinning2D_sjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_sjt_D1J2 = RecoBinning2D_sjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2scandsmom[ik]/(pow(recojet2s_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D1J2[ik][iet]->Fill(irecbin_sjt_D1J2, weighttrg);
 
-                                        int irecbin_sjt_D2J1 = RecoBinning2D_sjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_sjt_D2J1 = RecoBinning2D_sjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1s_long_num[ik]/ijet1s_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D2J1[ik][iet]->Fill(irecbin_sjt_D2J1, weighttrg);
 
-                                        int irecbin_sjt_D2J2 = RecoBinning2D_sjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_sjt_D2J2 = RecoBinning2D_sjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2s_long_num[ik]/ijet2s_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D2J2[ik][iet]->Fill(irecbin_sjt_D2J2, weighttrg);
 
-                                        int irecbin_sjt_D3J1 = RecoBinning2D_sjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_sjt_D3J1 = RecoBinning2D_sjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1s_tran_num[ik]/ijet1s_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D3J1[ik][iet]->Fill(irecbin_sjt_D3J1, weighttrg);
 
-                                        int irecbin_sjt_D3J2 = RecoBinning2D_sjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_sjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_sjt_D3J2 = RecoBinning2D_sjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2s_tran_num[ik]/ijet2s_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_sjt_2D_D3J2[ik][iet]->Fill(irecbin_sjt_D3J2, weighttrg);
 
 
-					int irecbin_qsjt_D1J1 = RecoBinning2D_qsjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D1J1,leadingptjec[isrc]);
+					int irecbin_qsjt_D1J1 = RecoBinning2D_qsjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qscandsmom[ik]/(pow(recojet1qs_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D1J1[ik][iet]->Fill(irecbin_qsjt_D1J1, weighttrg);
 
-                                        int irecbin_qsjt_D1J2 = RecoBinning2D_qsjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qsjt_D1J2 = RecoBinning2D_qsjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qscandsmom[ik]/(pow(recojet2qs_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D1J2[ik][iet]->Fill(irecbin_qsjt_D1J2, weighttrg);
 
-                                        int irecbin_qsjt_D2J1 = RecoBinning2D_qsjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qsjt_D2J1 = RecoBinning2D_qsjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1qs_long_num[ik]/ijet1qs_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D2J1[ik][iet]->Fill(irecbin_qsjt_D2J1, weighttrg);
 
-                                        int irecbin_qsjt_D2J2 = RecoBinning2D_qsjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qsjt_D2J2 = RecoBinning2D_qsjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2qs_long_num[ik]/ijet2qs_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D2J2[ik][iet]->Fill(irecbin_qsjt_D2J2, weighttrg);
 
-                                        int irecbin_qsjt_D3J1 = RecoBinning2D_qsjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qsjt_D3J1 = RecoBinning2D_qsjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1qs_tran_num[ik]/ijet1qs_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D3J1[ik][iet]->Fill(irecbin_qsjt_D3J1, weighttrg);
 
-                                        int irecbin_qsjt_D3J2 = RecoBinning2D_qsjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qsjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qsjt_D3J2 = RecoBinning2D_qsjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2qs_tran_num[ik]/ijet2qs_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qsjt_2D_D3J2[ik][iet]->Fill(irecbin_qsjt_D3J2, weighttrg);
 
 					
-					int irecbin_asjt_D1J1 = RecoBinning2D_asjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D1J1,leadingptjec[isrc]);
+					int irecbin_asjt_D1J1 = RecoBinning2D_asjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1ascandsmom[ik]/(pow(recojet1as_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D1J1[ik][iet]->Fill(irecbin_asjt_D1J1, weighttrg);
 
-                                        int irecbin_asjt_D1J2 = RecoBinning2D_asjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_asjt_D1J2 = RecoBinning2D_asjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2ascandsmom[ik]/(pow(recojet2as_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D1J2[ik][iet]->Fill(irecbin_asjt_D1J2, weighttrg);
 
-                                        int irecbin_asjt_D2J1 = RecoBinning2D_asjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_asjt_D2J1 = RecoBinning2D_asjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1as_long_num[ik]/ijet1as_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D2J1[ik][iet]->Fill(irecbin_asjt_D2J1, weighttrg);
 
-                                        int irecbin_asjt_D2J2 = RecoBinning2D_asjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_asjt_D2J2 = RecoBinning2D_asjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2as_long_num[ik]/ijet2as_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D2J2[ik][iet]->Fill(irecbin_asjt_D2J2, weighttrg);
 
-                                        int irecbin_asjt_D3J1 = RecoBinning2D_asjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_asjt_D3J1 = RecoBinning2D_asjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1as_tran_num[ik]/ijet1as_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D3J1[ik][iet]->Fill(irecbin_asjt_D3J1, weighttrg);
 
-                                        int irecbin_asjt_D3J2 = RecoBinning2D_asjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_asjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_asjt_D3J2 = RecoBinning2D_asjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2as_tran_num[ik]/ijet2as_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_asjt_2D_D3J2[ik][iet]->Fill(irecbin_asjt_D3J2, weighttrg);
 
 
 
 							// u jets
+							/*
 							double v_recojc_ujt_D1J1 = (pow(recojet1u_pt,kappa[ik]) > 0) ? (ijet1ucandsmom[ik]/(pow(recojet1u_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_ujt_D1J2 = (pow(recojet2u_pt,kappa[ik]) > 0) ? (ijet2ucandsmom[ik]/(pow(recojet2u_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_ujt_D2J1 = (ijet1u_long_den[ik] > 0) ? (ijet1u_long_num[ik]/ijet1u_long_den[ik]) : 0 ;
@@ -9091,90 +9270,91 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_aujt_D2J2 = (ijet2au_long_den[ik] > 0) ? (ijet2au_long_num[ik]/ijet2u_long_den[ik]) : 0 ;
                                                         double v_recojc_aujt_D3J1 = (ijet1au_tran_den[ik] > 0) ? (ijet1au_tran_num[ik]/ijet1u_tran_den[ik]) : 0 ;
                                                         double v_recojc_aujt_D3J2 = (ijet2au_tran_den[ik] > 0) ? (ijet2au_tran_num[ik]/ijet2u_tran_den[ik]) : 0 ;
-
+							*/
 
 							// 1D
-                                                        h_recojc_ujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D1J1,weighttrg);
-                                                        h_recojc_ujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D1J2,weighttrg);
-                                                        h_recojc_ujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D2J1,weighttrg);
-                                                        h_recojc_ujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D2J2,weighttrg);
-                                                        h_recojc_ujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D3J1,weighttrg);
-                                                        h_recojc_ujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_ujt_D3J2,weighttrg);
+                                                        h_recojc_ujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ucandsmom[ik]/(pow(recojet1u_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_ujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ucandsmom[ik]/(pow(recojet2u_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_ujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1u_long_num[ik]/ijet1u_long_den[ik],weighttrg);
+                                                        h_recojc_ujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2u_long_num[ik]/ijet2u_long_den[ik],weighttrg);
+                                                        h_recojc_ujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1u_tran_num[ik]/ijet1u_tran_den[ik],weighttrg);
+                                                        h_recojc_ujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2u_tran_num[ik]/ijet2u_tran_den[ik],weighttrg);
 
-							h_recojc_qujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D1J1,weighttrg);
-                                                        h_recojc_qujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D1J2,weighttrg);
-                                                        h_recojc_qujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D2J1,weighttrg);
-                                                        h_recojc_qujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D2J2,weighttrg);
-                                                        h_recojc_qujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D3J1,weighttrg);
-                                                        h_recojc_qujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qujt_D3J2,weighttrg);
+							h_recojc_qujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qucandsmom[ik]/(pow(recojet1qu_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qucandsmom[ik]/(pow(recojet2qu_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qu_long_num[ik]/ijet1u_long_den[ik],weighttrg);
+                                                        h_recojc_qujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qu_long_num[ik]/ijet2u_long_den[ik],weighttrg);
+                                                        h_recojc_qujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qu_tran_num[ik]/ijet1u_tran_den[ik],weighttrg);
+                                                        h_recojc_qujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qu_tran_num[ik]/ijet2u_tran_den[ik],weighttrg);
 
-							h_recojc_aujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D1J1,weighttrg);
-                                                        h_recojc_aujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D1J2,weighttrg);
-                                                        h_recojc_aujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D2J1,weighttrg);
-                                                        h_recojc_aujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D2J2,weighttrg);
-                                                        h_recojc_aujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D3J1,weighttrg);
-                                                        h_recojc_aujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_aujt_D3J2,weighttrg);
+							h_recojc_aujt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1aucandsmom[ik]/(pow(recojet1au_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_aujt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2aucandsmom[ik]/(pow(recojet2au_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_aujt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1au_long_num[ik]/ijet1u_long_den[ik],weighttrg);
+                                                        h_recojc_aujt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2au_long_num[ik]/ijet2u_long_den[ik],weighttrg);
+                                                        h_recojc_aujt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1au_tran_num[ik]/ijet1u_tran_den[ik],weighttrg);
+                                                        h_recojc_aujt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2au_tran_num[ik]/ijet2u_tran_den[ik],weighttrg);
 
 
 
 					// 2D
-					int irecbin_ujt_D1J1 = RecoBinning2D_ujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D1J1,leadingptjec[isrc]);
+					int irecbin_ujt_D1J1 = RecoBinning2D_ujt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1ucandsmom[ik]/(pow(recojet1u_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D1J1[ik][iet]->Fill(irecbin_ujt_D1J1, weighttrg);
 
-                                        int irecbin_ujt_D1J2 = RecoBinning2D_ujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_ujt_D1J2 = RecoBinning2D_ujt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2ucandsmom[ik]/(pow(recojet2u_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D1J2[ik][iet]->Fill(irecbin_ujt_D1J2, weighttrg);
 
-                                        int irecbin_ujt_D2J1 = RecoBinning2D_ujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_ujt_D2J1 = RecoBinning2D_ujt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1u_long_num[ik]/ijet1u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D2J1[ik][iet]->Fill(irecbin_ujt_D2J1, weighttrg);
 
-                                        int irecbin_ujt_D2J2 = RecoBinning2D_ujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_ujt_D2J2 = RecoBinning2D_ujt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2u_long_num[ik]/ijet2u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D2J2[ik][iet]->Fill(irecbin_ujt_D2J2, weighttrg);
 
-                                        int irecbin_ujt_D3J1 = RecoBinning2D_ujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_ujt_D3J1 = RecoBinning2D_ujt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1u_tran_num[ik]/ijet1u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D3J1[ik][iet]->Fill(irecbin_ujt_D3J1, weighttrg);
 
-                                        int irecbin_ujt_D3J2 = RecoBinning2D_ujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_ujt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_ujt_D3J2 = RecoBinning2D_ujt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2u_tran_num[ik]/ijet2u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_ujt_2D_D3J2[ik][iet]->Fill(irecbin_ujt_D3J2, weighttrg);
 
 
-					int irecbin_qujt_D1J1 = RecoBinning2D_qujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D1J1,leadingptjec[isrc]);
+					int irecbin_qujt_D1J1 = RecoBinning2D_qujt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qucandsmom[ik]/(pow(recojet1qu_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D1J1[ik][iet]->Fill(irecbin_qujt_D1J1, weighttrg);
 
-                                        int irecbin_qujt_D1J2 = RecoBinning2D_qujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qujt_D1J2 = RecoBinning2D_qujt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qucandsmom[ik]/(pow(recojet2qu_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D1J2[ik][iet]->Fill(irecbin_qujt_D1J2, weighttrg);
 
-                                        int irecbin_qujt_D2J1 = RecoBinning2D_qujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qujt_D2J1 = RecoBinning2D_qujt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1qu_long_num[ik]/ijet1u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D2J1[ik][iet]->Fill(irecbin_qujt_D2J1, weighttrg);
 
-                                        int irecbin_qujt_D2J2 = RecoBinning2D_qujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qujt_D2J2 = RecoBinning2D_qujt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2qu_long_num[ik]/ijet2u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D2J2[ik][iet]->Fill(irecbin_qujt_D2J2, weighttrg);
 
-                                        int irecbin_qujt_D3J1 = RecoBinning2D_qujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qujt_D3J1 = RecoBinning2D_qujt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1qu_tran_num[ik]/ijet1u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D3J1[ik][iet]->Fill(irecbin_qujt_D3J1, weighttrg);
 
-                                        int irecbin_qujt_D3J2 = RecoBinning2D_qujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qujt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qujt_D3J2 = RecoBinning2D_qujt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2qu_tran_num[ik]/ijet2u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qujt_2D_D3J2[ik][iet]->Fill(irecbin_qujt_D3J2, weighttrg);
 
 
-					int irecbin_aujt_D1J1 = RecoBinning2D_aujt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D1J1,leadingptjec[isrc]);
+					int irecbin_aujt_D1J1 = RecoBinning2D_aujt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1aucandsmom[ik]/(pow(recojet1au_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D1J1[ik][iet]->Fill(irecbin_aujt_D1J1, weighttrg);
 
-                                        int irecbin_aujt_D1J2 = RecoBinning2D_aujt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_aujt_D1J2 = RecoBinning2D_aujt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2aucandsmom[ik]/(pow(recojet2au_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D1J2[ik][iet]->Fill(irecbin_aujt_D1J2, weighttrg);
 
-                                        int irecbin_aujt_D2J1 = RecoBinning2D_aujt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_aujt_D2J1 = RecoBinning2D_aujt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1au_long_num[ik]/ijet1u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D2J1[ik][iet]->Fill(irecbin_aujt_D2J1, weighttrg);
 
-                                        int irecbin_aujt_D2J2 = RecoBinning2D_aujt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_aujt_D2J2 = RecoBinning2D_aujt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2au_long_num[ik]/ijet2u_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D2J2[ik][iet]->Fill(irecbin_aujt_D2J2, weighttrg);
 
-                                        int irecbin_aujt_D3J1 = RecoBinning2D_aujt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_aujt_D3J1 = RecoBinning2D_aujt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1au_tran_num[ik]/ijet1u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D3J1[ik][iet]->Fill(irecbin_aujt_D3J1, weighttrg);
 
-                                        int irecbin_aujt_D3J2 = RecoBinning2D_aujt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_aujt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_aujt_D3J2 = RecoBinning2D_aujt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2au_tran_num[ik]/ijet2u_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_aujt_2D_D3J2[ik][iet]->Fill(irecbin_aujt_D3J2, weighttrg);
 
 							// d jets
+							/*
 							double v_recojc_djt_D1J1 = (pow(recojet1d_pt,kappa[ik]) > 0) ? (ijet1dcandsmom[ik]/(pow(recojet1d_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_djt_D1J2 = (pow(recojet2d_pt,kappa[ik]) > 0) ? (ijet2dcandsmom[ik]/(pow(recojet2d_pt,kappa[ik]))) : 0 ;
                                                         double v_recojc_djt_D2J1 = (ijet1d_long_den[ik] > 0) ? (ijet1d_long_num[ik]/ijet1d_long_den[ik]) : 0 ;
@@ -9195,102 +9375,119 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                                         double v_recojc_adjt_D2J2 = (ijet2ad_long_den[ik] > 0) ? (ijet2ad_long_num[ik]/ijet2ad_long_den[ik]) : 0 ;
                                                         double v_recojc_adjt_D3J1 = (ijet1ad_tran_den[ik] > 0) ? (ijet1ad_tran_num[ik]/ijet1ad_tran_den[ik]) : 0 ;
                                                         double v_recojc_adjt_D3J2 = (ijet2ad_tran_den[ik] > 0) ? (ijet2ad_tran_num[ik]/ijet2ad_tran_den[ik]) : 0 ;
-
+							*/
 
 							// 1D
-                                                        h_recojc_djt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D1J1,weighttrg);
-                                                        h_recojc_djt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D1J2,weighttrg);
-                                                        h_recojc_djt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D2J1,weighttrg);
-                                                        h_recojc_djt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D2J2,weighttrg);
-                                                        h_recojc_djt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D3J1,weighttrg);
-                                                        h_recojc_djt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_djt_D3J2,weighttrg);
+                                                        h_recojc_djt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1dcandsmom[ik]/(pow(recojet1d_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_djt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2dcandsmom[ik]/(pow(recojet2d_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_djt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1d_long_num[ik]/ijet1d_long_den[ik],weighttrg);
+                                                        h_recojc_djt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2d_long_num[ik]/ijet2d_long_den[ik],weighttrg);
+                                                        h_recojc_djt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1d_tran_num[ik]/ijet1d_tran_den[ik],weighttrg);
+                                                        h_recojc_djt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2d_tran_num[ik]/ijet2d_tran_den[ik],weighttrg);
 
-							h_recojc_qdjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D1J1,weighttrg);
-                                                        h_recojc_qdjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D1J2,weighttrg);
-                                                        h_recojc_qdjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D2J1,weighttrg);
-                                                        h_recojc_qdjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D2J2,weighttrg);
-                                                        h_recojc_qdjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D3J1,weighttrg);
-                                                        h_recojc_qdjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_qdjt_D3J2,weighttrg);
+							h_recojc_qdjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qdcandsmom[ik]/(pow(recojet1qd_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qdjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qdcandsmom[ik]/(pow(recojet2qd_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_qdjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qd_long_num[ik]/ijet1qd_long_den[ik],weighttrg);
+                                                        h_recojc_qdjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qd_long_num[ik]/ijet2qd_long_den[ik],weighttrg);
+                                                        h_recojc_qdjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1qd_tran_num[ik]/ijet1qd_tran_den[ik],weighttrg);
+                                                        h_recojc_qdjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2qd_tran_num[ik]/ijet2qd_tran_den[ik],weighttrg);
 
-							h_recojc_adjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D1J1,weighttrg);
-                                                        h_recojc_adjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D1J2,weighttrg);
-                                                        h_recojc_adjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D2J1,weighttrg);
-                                                        h_recojc_adjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D2J2,weighttrg);
-                                                        h_recojc_adjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D3J1,weighttrg);
-                                                        h_recojc_adjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(v_recojc_adjt_D3J2,weighttrg);
+							h_recojc_adjt_D1J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1adcandsmom[ik]/(pow(recojet1ad_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_adjt_D1J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2adcandsmom[ik]/(pow(recojet2ad_pt,kappa[ik])),weighttrg);
+                                                        h_recojc_adjt_D2J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ad_long_num[ik]/ijet1ad_long_den[ik],weighttrg);
+                                                        h_recojc_adjt_D2J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ad_long_num[ik]/ijet2ad_long_den[ik],weighttrg);
+                                                        h_recojc_adjt_D3J1[ik][irecohtjec[isrc]][iet]->Fill(ijet1ad_tran_num[ik]/ijet1ad_tran_den[ik],weighttrg);
+                                                        h_recojc_adjt_D3J2[ik][irecohtjec[isrc]][iet]->Fill(ijet2ad_tran_num[ik]/ijet2ad_tran_den[ik],weighttrg);
 
 					// 2D
-					int irecbin_djt_D1J1 = RecoBinning2D_djt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D1J1,leadingptjec[isrc]);
+					int irecbin_djt_D1J1 = RecoBinning2D_djt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1dcandsmom[ik]/(pow(recojet1d_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_djt_2D_D1J1[ik][iet]->Fill(irecbin_djt_D1J1, weighttrg);
 
-                                        int irecbin_djt_D1J2 = RecoBinning2D_djt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_djt_D1J2 = RecoBinning2D_djt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2dcandsmom[ik]/(pow(recojet2d_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_djt_2D_D1J2[ik][iet]->Fill(irecbin_djt_D1J2, weighttrg);
 
-                                        int irecbin_djt_D2J1 = RecoBinning2D_djt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_djt_D2J1 = RecoBinning2D_djt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1d_long_num[ik]/ijet1d_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_djt_2D_D2J1[ik][iet]->Fill(irecbin_djt_D2J1, weighttrg);
 
-                                        int irecbin_djt_D2J2 = RecoBinning2D_djt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_djt_D2J2 = RecoBinning2D_djt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2d_long_num[ik]/ijet2d_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_djt_2D_D2J2[ik][iet]->Fill(irecbin_djt_D2J2, weighttrg);
 
-                                        int irecbin_djt_D3J1 = RecoBinning2D_djt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_djt_D3J1 = RecoBinning2D_djt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1d_tran_num[ik]/ijet1d_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_djt_2D_D3J1[ik][iet]->Fill(irecbin_djt_D3J1, weighttrg);
 
-                                        int irecbin_djt_D3J2 = RecoBinning2D_djt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_djt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_djt_D3J2 = RecoBinning2D_djt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2d_tran_num[ik]/ijet2d_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_djt_2D_D3J2[ik][iet]->Fill(irecbin_djt_D3J2, weighttrg);
 
 
-					int irecbin_qdjt_D1J1 = RecoBinning2D_qdjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D1J1,leadingptjec[isrc]);
+					int irecbin_qdjt_D1J1 = RecoBinning2D_qdjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1qdcandsmom[ik]/(pow(recojet1qd_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D1J1[ik][iet]->Fill(irecbin_qdjt_D1J1, weighttrg);
 
-                                        int irecbin_qdjt_D1J2 = RecoBinning2D_qdjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_qdjt_D1J2 = RecoBinning2D_qdjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2qdcandsmom[ik]/(pow(recojet2qd_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D1J2[ik][iet]->Fill(irecbin_qdjt_D1J2, weighttrg);
 
-                                        int irecbin_qdjt_D2J1 = RecoBinning2D_qdjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_qdjt_D2J1 = RecoBinning2D_qdjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1qd_long_num[ik]/ijet1qd_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D2J1[ik][iet]->Fill(irecbin_qdjt_D2J1, weighttrg);
 
-                                        int irecbin_qdjt_D2J2 = RecoBinning2D_qdjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_qdjt_D2J2 = RecoBinning2D_qdjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2qd_long_num[ik]/ijet2qd_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D2J2[ik][iet]->Fill(irecbin_qdjt_D2J2, weighttrg);
 
-                                        int irecbin_qdjt_D3J1 = RecoBinning2D_qdjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_qdjt_D3J1 = RecoBinning2D_qdjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1qd_tran_num[ik]/ijet1qd_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D3J1[ik][iet]->Fill(irecbin_qdjt_D3J1, weighttrg);
 
-                                        int irecbin_qdjt_D3J2 = RecoBinning2D_qdjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_qdjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_qdjt_D3J2 = RecoBinning2D_qdjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2qd_tran_num[ik]/ijet2qd_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_qdjt_2D_D3J2[ik][iet]->Fill(irecbin_qdjt_D3J2, weighttrg);
 
 
-					int irecbin_adjt_D1J1 = RecoBinning2D_adjt_D1J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D1J1,leadingptjec[isrc]);
+					int irecbin_adjt_D1J1 = RecoBinning2D_adjt_D1J1[ik][iet]->GetGlobalBinNumber(ijet1adcandsmom[ik]/(pow(recojet1ad_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D1J1[ik][iet]->Fill(irecbin_adjt_D1J1, weighttrg);
 
-                                        int irecbin_adjt_D1J2 = RecoBinning2D_adjt_D1J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D1J2,leadingptjec[isrc]);
+                                        int irecbin_adjt_D1J2 = RecoBinning2D_adjt_D1J2[ik][iet]->GetGlobalBinNumber(ijet2adcandsmom[ik]/(pow(recojet2ad_pt,kappa[ik])),leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D1J2[ik][iet]->Fill(irecbin_adjt_D1J2, weighttrg);
 
-                                        int irecbin_adjt_D2J1 = RecoBinning2D_adjt_D2J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D2J1,leadingptjec[isrc]);
+                                        int irecbin_adjt_D2J1 = RecoBinning2D_adjt_D2J1[ik][iet]->GetGlobalBinNumber(ijet1ad_long_num[ik]/ijet1ad_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D2J1[ik][iet]->Fill(irecbin_adjt_D2J1, weighttrg);
 
-                                        int irecbin_adjt_D2J2 = RecoBinning2D_adjt_D2J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D2J2,leadingptjec[isrc]);
+                                        int irecbin_adjt_D2J2 = RecoBinning2D_adjt_D2J2[ik][iet]->GetGlobalBinNumber(ijet2ad_long_num[ik]/ijet2ad_long_den[ik],leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D2J2[ik][iet]->Fill(irecbin_adjt_D2J2, weighttrg);
 
-                                        int irecbin_adjt_D3J1 = RecoBinning2D_adjt_D3J1[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D3J1,leadingptjec[isrc]);
+                                        int irecbin_adjt_D3J1 = RecoBinning2D_adjt_D3J1[ik][iet]->GetGlobalBinNumber(ijet1ad_tran_num[ik]/ijet1ad_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D3J1[ik][iet]->Fill(irecbin_adjt_D3J1, weighttrg);
 
-                                        int irecbin_adjt_D3J2 = RecoBinning2D_adjt_D3J2[ik][iet]->GetGlobalBinNumber(v_recojc_adjt_D3J2,leadingptjec[isrc]);
+                                        int irecbin_adjt_D3J2 = RecoBinning2D_adjt_D3J2[ik][iet]->GetGlobalBinNumber(ijet2ad_tran_num[ik]/ijet2ad_tran_den[ik],leadingptjec[isrc]);
                                         h_recovar_adjt_2D_D3J2[ik][iet]->Fill(irecbin_adjt_D3J2, weighttrg);
 		
+						}//if (int(recovar[nvar])>=2) {
 							//}//if(isValue){
 							//cout <<"optimization 2"<<endl;   
 							}//if (isrc==0)
+							//}//if (isItUsed(ij)) {
+							//}//for (int ij=0; ij<nvar; ij++) {
+							}//if (recovar[nvar]>=2) {
+							
 						}//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn) {
+						
 					}//for (int isrc=0; isrc<njecmx; isrc++) {
+					
 				}//if (isReconstruct) {
 			                
 			if(isMC){
                         	for (int isrc=0; isrc<nGenReso; isrc++) {
+				genvar.clear();
+              			bool isGEN=false;
 					//if(isrc==0){isRECOJC = false;}
 					//isGENJC = false;
-					if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
-                                	//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
+					//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                	if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1) {
+					EventShape_vector  genevtshape(genmom[isrc][itp][iet], 2.4, 0, 2, 1);
+
+		                	genvar =  genevtshape.getEventShapes();
+                			if (genvar[nvar]>=2) {
+                  			isGEN = true;
+                  			//for (int ij=0; ij<nvar; ij++) {
+                    			//if (isItUsed(ij)) {
 						//isGENJC = true;
                                 		if(isrc==0) {
+						if (int(genvar[nvar])>=2) {
 							//isGENJC = true;
 							/*
 							double v_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
@@ -9337,11 +9534,22 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                         int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber((igenjet2_tran_num[ik]/igenjet2_tran_den[ik]),leadgenptres[isrc]);
 					//int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v_genjc_D3J2,leadgenptres[isrc]);
                                         h_genvar_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
-
+							}//if (int(genvar[nvar])>=2) {
+							
 							}//if(isrc==0)
+							//}//if (isItUsed(ij)) {
+							//}//for (int ij=0; ij<nvar; ij++) {
+							}//if (genvar[nvar]>=2) {
+							
 						}//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn) {
 				if (isrc==0 && isReconstruct){
-				if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+				//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+				//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && recomom[isrc][itp][iet].size()>1){
+				//for(int ij=0; ij<nvar; ij++) {
+	                    	//if (isItUsed(ij)) {
+                      		if(isRECO[itp][iet] && isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1) {
+
+				if(recovar1[nvar]>=2 &&  genvar[nvar]>=2){
 				//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				//if(isRECOJC && isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && recomom[isrc][itp][iet].size()>1){	
 				//if(isRECOJC && isGENJC && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
@@ -9412,12 +9620,13 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 					//int irecbin_D3J2 = RecoBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_recojc_D3J2,leadingptjec[isrc]);
                                         //int igenbin_D3J2 = GenBinning2D_D3J2[ik][iet]->GetGlobalBinNumber(v1_genjc_D3J2,leadgenptres[isrc]);
                 				RM_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, igenbin_D3J2, weighttrg);                   
-						
+					}//if(recovar1[nvar]>=2 &&  genvar[nvar]>=2){	
 								}//if(irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 				else {
-					if( irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+					//if( irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 					//if( isRECOJC && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
 					//if(irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1){
+					if (isRECO[itp][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && recomom[isrc][itp][iet].size()>1 && recovar1[nvar]>=2) {
 				/*	
 						double v2_recojc_D1J1 = (pow(recojet1_pt,kappa[ik]) > 0) ? (ijet1candsmom[ik]/(pow(recojet1_pt,kappa[ik]))) : 0 ;
                                                 double v2_recojc_D1J2 = (pow(recojet2_pt,kappa[ik]) > 0) ? (ijet2candsmom[ik]/(pow(recojet2_pt,kappa[ik]))) : 0 ;
@@ -9465,9 +9674,10 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                         h_recofake_2D_D3J2[ik][iet]->Fill(irecbin_D3J2, weighttrg);
 
 					}
-					if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+					//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
 					//if(isGENJC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 					//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
+					if (isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && genvar[nvar]>=2) {
 		/*
 						double v2_genjc_D1J1 = (pow(genrecojet1_pt,kappa[ik]) > 0) ? (igenjet1candsmom[ik]/(pow(genrecojet1_pt,kappa[ik]))) : 0 ;
                                                 double v2_genjc_D1J2 = (pow(genrecojet2_pt,kappa[ik]) > 0) ? (igenjet2candsmom[ik]/(pow(genrecojet2_pt,kappa[ik]))) : 0 ;
@@ -9515,12 +9725,14 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                                         h_genmiss_2D_D3J2[ik][iet]->Fill(igenbin_D3J2, weighttrg);
 								}//if(igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1){
 							}
+							//}//if (isItUsed(ij))
+							//}// for(int ij=0; ij<nvar; ij++)	
 						}//if (isrc==0 && isReconstruct){
 					}//for (int isrc=0; isrc<nGenReso; isrc++) {
 				}//if(isMC){
 			}//for (int ik=0; ik<10; ik++){
 		}//for (int iet=0; iet<njetetamn; iet++){
-//	}//for(int itp=0; itp<ntype; itp++){
+	}//for(int itp=0; itp<ntype; itp++){
 //-----------------------------------------------Calculate And Fill the EventShape Variables--------------------------------
 
       for(int itp=0; itp<ntype; itp++) {
@@ -9548,7 +9760,6 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
                         //if(itp==0){ cout <<" Var :  " << ij <<" : "<< recovar[ij];}
 		        h_recoevtvar[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar[ij], weighttrg); 
                         int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
-			//int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
                         h_recovar_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
 		        }
 			//for (int irand=0; irand<10; irand++) {
@@ -9563,13 +9774,12 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 #ifdef JETENERGY
 			if (int(recovar[nvar])>=2) {h_recoevtvarjec[itp][irecohtjec[isrc]][iet][ij][isrc]->Fill(recovar[ij], weighttrg);
                            int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
-			   //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
                            h_recoevtvarjec_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg); }
 #elif defined(JETRESO)
 			if (int(recovar[nvar])>=2) {h_recoevtvarres[itp][irecohtjec[isrc]][iet][ij][isrc]->Fill(recovar[ij], weighttrg);
                            int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],aveleadingptjec[isrc]);
-			   //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar[ij],leadingptjec[isrc]);
-                           h_recoevtvarres_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg);}
+                            h_recoevtvarres_2D[itp][iet][ij][isrc]->Fill(irecbin, weighttrg);}
+
 #endif
 		      }
 		    }
@@ -9596,7 +9806,6 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 			if (int(genvar[nvar])>=2) {
 			h_genevtvar[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);
 			int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
-                        //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                         h_genvar_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
                         //if(ij==3 && itp==0 ){cout<<"Gen: "<<ievt<<" "<<"Ty:" << itp  << " Nvar : "<<genvar[nvar]<<" "<<genmom[isrc][itp][iet].size() << " Ht2 Bins :" <<igenhtres[isrc];}
                         //if(itp==0){ cout <<" Var :  " << ij <<" : "<< genvar[ij];}
@@ -9611,7 +9820,6 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 			for (int ix=1; ix<nnnmx; ix++) {
 			if (int(genvar[nvar])>=2) {h_genevtvarpdf[itp][igenhtres[isrc]][iet][ij][ix]->Fill(genvar[ij], weighttrg*pdfwt[ix]);
                         int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
-			//int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                         h_genevtvarpdf_2D[itp][iet][ij][ix]->Fill(igenbin, weighttrg*pdfwt[ix]);   
                          }
 			}
@@ -9621,6 +9829,7 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		  }
 		}
 	      }
+
 
 ///cout <<endl;	
   	      if(isrc==0 && isReconstruct){ 
@@ -9632,22 +9841,18 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
  
 			 h_2devtvar[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], genvar[ij], weighttrg);
 			 int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
-			 //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                          int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
-			 //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                          RM_2D[itp][iet][ij]->Fill(irecbin, igenbin, weighttrg);
                         }else if (recovar1[nvar]>=2) {
 			 
                          //h_2devtvar[itp][igenht][iet][ij]->Fill(recovar[ij],-10.0, weighttrg);	
 			  h_recoevtfake[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], weighttrg);
                           int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
-			  //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                           h_recofake_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
                         }else if (genvar[nvar]>=2) {
 			//h_2devtvar[itp][igenht][iet][ij]->Fill(-10.0, genvar[ij], weighttrg);	//Fill in Reco Underflow
 			  h_genevtmiss[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);	
                           int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
-			  //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                           h_genmiss_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
                             }
 			//  h_2devtvar[itp][0][iet][ij]->Fill(recovar[ij], genvar[ij], weighttrg);
@@ -9657,7 +9862,6 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 			    //h_2devtvar[itp][igenht][iet][ij]->Fill(recovar[ij],-10.0, weighttrg); //Fill Fake in Gen Underflow
 			    h_recoevtfake[itp][irecohtjec[isrc]][iet][ij]->Fill(recovar1[ij], weighttrg);
                             int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],aveleadingptjec[isrc]);
-			    //int irecbin =  RecoBinning2D[itp][iet][ij]->GetGlobalBinNumber(recovar1[ij],leadingptjec[isrc]);
                             h_recofake_2D[itp][iet][ij]->Fill(irecbin, weighttrg);
 			}
 			if (isGEN && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genmom[isrc][itp][iet].size()>1 && genvar[nvar]>=2) {
@@ -9666,7 +9870,6 @@ double v_recojc_D3J2[nkappa] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 			   h_2devtvar[itp][igenht][iet][ij]->Fill(-10.0, genvar[ij], weighttrg);	//Fill Miss in Reco Underflow
 			   h_genevtmiss[itp][igenhtres[isrc]][iet][ij]->Fill(genvar[ij], weighttrg);	
 			   int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], avegenptres[isrc]);
-			   //int igenbin = GenBinning2D[itp][iet][ij]->GetGlobalBinNumber(genvar[ij], leadgenptres[isrc]);
                            h_genmiss_2D[itp][iet][ij]->Fill(igenbin, weighttrg);
 			}
 		      }
