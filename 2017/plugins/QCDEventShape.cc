@@ -22,8 +22,8 @@
 #define DIJETAVE 
 
 ////for data
-#define JETENERGY
-#define TRIGGER
+//#define JETENERGY
+//#define TRIGGER
 
 ////for Madgraph
 //#define LHAPDF
@@ -33,8 +33,8 @@
 //#define TRACKSYS
 
 ////for Pythia8 & Herwig7
-//#define JETRESO
-//#define TRIGGER
+#define JETRESO
+#define TRIGGER
 //#define MATCHING
 
 ////For Flat
@@ -182,6 +182,32 @@ double jetname[njet]={1,2};             // 2 Jets
 double kappa[nkappa]={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0}; // 10 kappa values
 /*
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Date_26Jul2023 : Fixed Binning
+double recobins[ndef][njet][nkappa]={{{24,24,24,20,30,30,60,60,60,60},{24,24,24,20,30,30,60,60,60,60}},
+                                        {{24,24,60,60,60,60,60,60,60,60},{24,24,60,60,60,60,60,60,60,60}},
+                                        {{24,24,60,60,120,120,120,120,120,120},{24,24,60,60,120,120,120,120,120,120}}};
+
+double genbins[ndef][njet][nkappa]={{{24,24,24,20,30,30,60,60,60,60},{24,24,24,20,30,30,60,60,60,60}},
+                                        {{24,24,60,60,60,60,60,60,60,60},{24,24,60,60,60,60,60,60,60,60}},
+                                        {{24,24,60,60,120,120,120,120,120,120},{24,24,60,60,120,120,120,120,120,120}}};
+
+double recomin[ndef][njet][nkappa]={{{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}}};
+
+double recomax[ndef][njet][nkappa]={{{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}}};
+
+double genmin[ndef][njet][nkappa]={{{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}}};
+
+double genmax[ndef][njet][nkappa]={{{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}}};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Date_02Jun2023 : Some bins and range modifed by hand as there are some bins with zero entries at reco level
 double nrecobins[ndef][njet][nkappa]={{{40,32,24,20,16,16,24,20,20,16},{52,36,32,28,24,20,24,24,20,16}},{{24,24,20,20,20,20,20,16,16,16},{24,24,20,20,20,24,24,20,20,16}},{{24,24,20,16,20,20,16,16,16,16},{24,24,24,20,24,20,20,20,20,20}}};
 
@@ -324,7 +350,6 @@ double genrng[ndef][njet][nkappa][range]={{{{-3.73,-3.20,-2.67,-2.13,-1.60,-1.33
 {-1.00,-0.80,-0.53,-0.33,-0.13,0.00,0.13,0.33,0.53,0.80,1.00},
 {-1.00,-0.80,-0.53,-0.33,-0.13,0.00,0.13,0.33,0.53,0.80,1.00}}}};
 */
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Date_26Jul2023 : Some bins and range modifed by hand as there are some bins with zero entries at reco level : bins changed for lower kappa values
 double nrecobins[ndef][njet][nkappa]={{{28,20,20,16,16,16,24,20,20,16},{28,24,24,24,24,20,24,24,20,16}},{{20,20,20,20,20,20,20,16,16,16},{20,20,20,20,20,24,24,20,20,16}},{{20,20,20,16,20,20,16,16,16,16},{20,20,20,20,24,20,20,20,20,20}}};
@@ -1169,8 +1194,8 @@ edm::LumiReWeighting *LumiWeights_;
             				}
 #elif defined(JETRESO)
 	      			for (int ix=0; ix<njecmx; ix++ ) {
-              				sprintf(name, "dd_recoreso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
-              				sprintf(title, "2D Recoreso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+              				sprintf(name, "dd_reco_reso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+              				sprintf(title, "2D Reco reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
               				h_recovarres2D[id][ij][ik][iet][ix] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
               				h_recovarres2D[id][ij][ik][iet][ix]->Sumw2();
 
@@ -1345,7 +1370,7 @@ for(int id=0; id<ndef; id++){
                                         }
 #elif defined(JETRESO)
                                 for (int ix=0; ix<njecmx; ix++ ) {
-                                        sprintf(name, "recoreso_jc_d%i_j%i_k%i_eta%i_pt%i_%i", id, ij, ik,iet, ipt, ix);
+                                        sprintf(name, "reco_reso_jc_d%i_j%i_k%i_eta%i_pt%i_%i", id, ij, ik,iet, ipt, ix);
                                         //sprintf(title, "Recoreso Q_{%s,%g}^{%g} %g %i %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(leadingPtThreshold[ipt]),ix);
 					sprintf(title, "Recoreso Q_{%s,%g}^{%g} %g %i %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]),ix);
                                         h_recovarres[id][ij][ik][iet][ipt][ix] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
@@ -1381,7 +1406,6 @@ for(int id=0; id<ndef; id++){
 					sprintf(title, "Gen Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
                                         h_genmiss[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
                                         h_genmiss[id][ij][ik][iet][ipt]->Sumw2();
-
                                         }
                                 }
                         }
@@ -1939,18 +1963,20 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //recojet1_pt = 0.0, recojet2_pt = 0.0;
   //genrecojet1_pt = 0.0, genrecojet2_pt = 0.0;
  
-  double RecoJCO[ndef][njet][nkappa] = {{{0.0}}};
-  double GenJCO[ndef][njet][nkappa] = {{{0.0}}};
+  double RecoJCO[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double GenJCO[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 
-  double recomomJCO[ndef][njet][nkappa] = {{{0.0}}};
-  double genmomJCO[ndef][njet][nkappa] = {{{0.0}}}; 
+  double recomomJCO[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double genmomJCO[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}}; 
 //------------------------------------------
 
-  double ijet1candsmom_num[nkappa] = {0.0}, ijet1candsmom_den[nkappa] = {0.0}, ijet1_long_num[nkappa] = {0.0}, ijet1_long_den[nkappa] = {0.0}, ijet1_tran_num[nkappa] = {0.0}, ijet1_tran_den[nkappa] = {0.0};
-  double ijet2candsmom_num[nkappa] = {0.0},ijet2candsmom_den[nkappa] = {0.0}, ijet2_long_num[nkappa] = {0.0}, ijet2_long_den[nkappa] = {0.0}, ijet2_tran_num[nkappa] = {0.0}, ijet2_tran_den[nkappa] = {0.0}; 
+ //Reco JCO initialize
+  double ijet1candsmom_num[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den[nkappa][njecmx] = {{0.0}}, ijet1_long_num[nkappa][njecmx] = {{0.0}}, ijet1_long_den[nkappa][njecmx] = {{0.0}}, ijet1_tran_num[nkappa][njecmx] = {{0.0}}, ijet1_tran_den[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_num[nkappa][njecmx] = {{0.0}},ijet2candsmom_den[nkappa][njecmx] = {{0.0}}, ijet2_long_num[nkappa][njecmx] = {{0.0}}, ijet2_long_den[nkappa][njecmx] = {{0.0}}, ijet2_tran_num[nkappa][njecmx] = {{0.0}}, ijet2_tran_den[nkappa][njecmx] = {{0.0}}; 
   
-  double igenjet1candsmom_num[nkappa] = {0.0}, igenjet1candsmom_den[nkappa] = {0.0}, igenjet1_long_num[nkappa] = {0.0}, igenjet1_long_den[nkappa] = {0.0}, igenjet1_tran_num[nkappa] = {0.0}, igenjet1_tran_den[nkappa] = {0.0}; 
-  double igenjet2candsmom_num[nkappa] = {0.0}, igenjet2candsmom_den[nkappa] = {0.0}, igenjet2_long_num[nkappa] = {0.0}, igenjet2_long_den[nkappa] = {0.0}, igenjet2_tran_num[nkappa] = {0.0}, igenjet2_tran_den[nkappa] = {0.0};
+  //Gen JCO initialize
+  double igenjet1candsmom_num[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den[nkappa][nGenReso] = {{0.0}}; 
+  double igenjet2candsmom_num[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den[nkappa][nGenReso] = {{0.0}};
 
 //-------------------------------------------
   wtfact=1.0;
@@ -2539,7 +2565,6 @@ for (unsigned int ijet = 0; ijet < ak4PFJets->size(); ijet++) {
 //#endif
 
 //Particle matching
-/*
 //bool part_matches = false;
 std::vector<reco::CandidatePtr> matched_recoparts;
 std::vector<reco::CandidatePtr> matched_genparts;
@@ -2575,11 +2600,12 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
 			if(recocand.pt()<1.0 || abs(recocand.eta())>2.5 || gencand.pt()<1.0 || abs(gencand.eta())>2.5 || recocand.charge()==0 || gencand.charge()==0) continue;
                         double partdR = deltaR(recocand, gencand);
                         if (partdR < 0.05 && recocand.charge() == gencand.charge() && !matched_recodaus[ireco] && !matched_gendaus[igen]) {
+			//if (partdR < 0.05 && !matched_recodaus[ireco] && !matched_gendaus[igen]) {
                             matched_recodaus[ireco] = true;
                             matched_gendaus[igen] = true;
                             matched_recoparts.push_back(recodaus[ireco]);
                             matched_genparts.push_back(gendaus[igen]);
-			cout<<"------Particle Matching START--------"<<endl;
+/*			cout<<"------Particle Matching START--------"<<endl;
 			if(ijet==0){
 			cout<<"Leading RecoJet pt : "<<(*ak4PFJets)[ijet].pt()<<endl;
 			cout<<"Leading GenJet pt : "<<(*genjets)[igjet].pt()<<endl;
@@ -2587,7 +2613,7 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
 			cout << "Leading GenJet Particle check : pt: " << gencand.pt() << " eta: " <<gencand.eta() << " ID: " << gencand.pdgId() << " charge: " << gencand.charge() << endl;
 	}
 			cout<<"------Particle Matching END--------"<<endl;
-
+*/
 						}
                     				}
                 			}
@@ -2597,7 +2623,7 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
     		}
 	}
 }
-*/
+
 //#endif
 
 if(isMC) {
@@ -2623,14 +2649,14 @@ if(isMC) {
 #if defined(JETRESO)&&(!defined(JETENERGY))
       //resolution file 
       JME::JetResolution resolution;
-      resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
-      //resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
+      //resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
+      resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
  
       //Scalefactor file
       JME::JetResolutionScaleFactor res_sf;
       //cout<<"Filename="<<scalefile<<endl;
-      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
-      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
+      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
+      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
       
       edm::Handle<double> rho;
       iEvent.getByToken(m_rho_token, rho);
@@ -2907,11 +2933,10 @@ if(isMC) {
 	//cout<<" Reco particle momentum : "<<ijet1candsmomk1<<" Jet pt : "<<recojet1_test<<" JCO : "<<ijet1candsmomk1/recojet1_test<<endl;
         //cout<<"-------------"<<endl;
         h_nchg[iet]->Fill(nchg, weighttrg);    
-
+/*
 //Jet Matching
 if(ijet==0){
         for (int ik=0; ik<10; ik++){
-/*
 //#ifdef MATCHING
         if(jet_matches){
 		for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
@@ -2954,8 +2979,8 @@ if(ijet==0){
 			}
 		}
 	}
-*/
-//#else
+
+#else
 	for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
                 const pat::PackedCandidate &pfcand = dynamic_cast<const pat::PackedCandidate &>(*daus[i2]);
                 int charge = pfcand.charge();
@@ -2974,14 +2999,91 @@ if(ijet==0){
                                 }
                         }
                 }
-//#endif
+#endif
 
 }
 }
+*/
 
+if(ijet==0){
+        for (int ik=0; ik<10; ik++){
+//#ifdef MATCHING
+	if(jet_matches){
+		for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+
+        	for (unsigned int imatched = 0; imatched < matched_recoparts.size(); ++imatched) {
+                const pat::PackedCandidate& matched_recocand = static_cast<const pat::PackedCandidate&>(*matched_recoparts[imatched]);
+
+                if (recocand.charge() == matched_recocand.charge() && deltaR(recocand, matched_recocand) < 1e-4) {
+		//if (deltaR(recocand, matched_recocand) < 1e-4) {
+			int charge = recocand.charge();
+			Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+			if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+			//if(isrc==0){
+
+				ijet1candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				ijet1candsmom_den[ik][isrc] += (cand3v.perp());
+
+				ijet1_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+        	                ijet1_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                	        ijet1_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                      		ijet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					//}
+				}
+			}
+		}
+	}
+	}else{
+		for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+		int charge = recocand.charge();
+                        Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+                        //if(isrc==0){
+				
+				ijet1candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				ijet1candsmom_den[ik][isrc] += (cand3v.perp());
+
+				ijet1_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet1_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					//}
+				}
+			}
+		}
+/*
+#else
+
+	for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+                int charge = recocand.charge();
+                        Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+                        if(isrc==0){
+
+				ijet1candsmom_num[ik] += charge*(pow(cand3v.perp(), kappa[ik]));
+				ijet1candsmom_den[ik] += (cand3v.perp());
+
+                                ijet1_long_num[ik] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_long_den[ik] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet1_tran_num[ik] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_tran_den[ik] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}
+			}
+		}
+#endif
+*/
+	}
+}
+
+/*		
 if(ijet==1){
         for (int ik=0; ik<10; ik++){
-/*
 //#ifdef MATCHING
         if(jet_matches){
                 for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
@@ -3024,8 +3126,8 @@ if(ijet==1){
 			}
 		}
 	}
-*/
-//#else
+
+#else
 	for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
                 const pat::PackedCandidate &pfcand = dynamic_cast<const pat::PackedCandidate &>(*daus[i2]);
                 int charge = pfcand.charge();
@@ -3044,8 +3146,84 @@ if(ijet==1){
                                         }
                                 }
                         }
-//#endif	
+#endif	
+
 }
+}
+*/
+if(ijet==1){
+	for (int ik=0; ik<10; ik++){
+//#ifdef MATCHING
+	if(jet_matches){
+                for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+
+                for (unsigned int imatched = 0; imatched < matched_recoparts.size(); ++imatched) {
+                const pat::PackedCandidate& matched_recocand = static_cast<const pat::PackedCandidate&>(*matched_recoparts[imatched]);
+
+                if (recocand.charge() == matched_recocand.charge() && deltaR(recocand, matched_recocand) < 1e-4) {
+		//if (deltaR(recocand, matched_recocand) < 1e-4) {
+                        int charge = recocand.charge();
+                        Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+                        //if(isrc==0){
+
+				ijet2candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				ijet2candsmom_den[ik][isrc] += (cand3v.perp());
+
+				ijet2_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                	        ijet2_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                        	ijet2_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                        	ijet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+						//}
+					}
+				}
+			}
+		}
+	}else{
+		for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+                int charge = recocand.charge();
+                Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+                if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+                //if(isrc==0){
+		
+			ijet2candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+			ijet2candsmom_den[ik][isrc] += (cand3v.perp());
+
+			ijet2_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                        ijet2_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					//}
+				}
+			}
+		}
+/*
+#else
+
+	for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
+                const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
+                int charge = recocand.charge();
+                Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
+                if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
+                if(isrc==0){
+			ijet2candsmom_num[ik] += charge*(pow(cand3v.perp(), kappa[ik]));
+			ijet2candsmom_den[ik] += (cand3v.perp());
+
+                        ijet2_long_num[ik] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_long_den[ik] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                        ijet2_tran_num[ik] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_tran_den[ik] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}
+			}
+		}
+#endif
+*/
+	}
 }
 
 		//  if(isEta && isPt) {ncount++;}
@@ -3344,7 +3522,7 @@ if(ijet==1){
 		} //for (unsigned int i2 = 0; i2< daus.size(); ++i2)
 		//cout<<" Gen particle momentum : "<<igenjet1candsmomk1<<" Jet pt : "<<genjet1_test<<" JCO : "<<igenjet1candsmomk1/genjet1_test<<endl;
 		//cout<<"-------------"<<endl;
-
+/*
 if (ijet==0){
 	for (int ik=0; ik<10; ik++){
 //#ifdef MATCHING
@@ -3389,7 +3567,7 @@ if (ijet==0){
                 	}
 		}
 	}
-/*
+
 #else
 	for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
                 const pat::PackedCandidate &pfcand = static_cast<const pat::PackedCandidate &>(*daus[i2]);
@@ -3410,10 +3588,90 @@ if (ijet==0){
                         }
                 }
 #endif
-*/
+
 }
+}
+*/
+	if (ijet==0){
+		for (int ik=0; ik<10; ik++){
+//#ifdef MATCHING
+			if(jet_matches){	
+				for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                		const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+
+	        		for (unsigned int imatched = 0; imatched < matched_genparts.size(); ++imatched) {
+                		const pat::PackedCandidate& matched_gencand = static_cast<const pat::PackedCandidate&>(*matched_genparts[imatched]);
+
+                		if (gencand.charge() == matched_gencand.charge() && deltaR(gencand, matched_gencand) < 1e-4) {
+				//if (deltaR(gencand, matched_gencand) < 1e-4) {
+
+				int charge = gencand.charge();
+                        	Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+
+                        	if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                        	//if(isrc==0){
+
+					igenjet1candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					igenjet1candsmom_den[ik][isrc] += (cand3v.perp());
+
+                                	igenjet1_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                	igenjet1_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                	igenjet1_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                	igenjet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							//}
+						}
+					}
+				}
+			}
+			}else{
+			for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                        const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+				
+                        int charge = gencand.charge();
+                        Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                        //if(isrc==0){
+				
+				igenjet1candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet1candsmom_den[ik][isrc] += (cand3v.perp());
+
+                                igenjet1_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                igenjet1_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+						//}
+					}
+				}
+			}
+/*
+#else
+			for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                        const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+
+                        int charge = gencand.charge();
+                        Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                        if(isrc==0){
+
+				 igenjet1candsmom_num[ik] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet1candsmom_den[ik] += (cand3v.perp());
+
+                                igenjet1_long_num[ik] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_long_den[ik] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                igenjet1_tran_num[ik] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_tran_den[ik] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}
+			}
+		}
+#endif
+*/
+	}
 }
 
+/*
 if(ijet==1){
 	for (int ik=0; ik<10; ik++){
 //#ifdef MATCHING
@@ -3458,7 +3716,7 @@ if(ijet==1){
 			}
 		}
 	}
-/*
+
 #else
 	for (unsigned int i2 = 0; i2< daus.size(); ++i2) {
                 const pat::PackedCandidate &pfcand = static_cast<const pat::PackedCandidate &>(*daus[i2]);
@@ -3479,8 +3737,85 @@ if(ijet==1){
                         }
                 }
 #endif
-*/
+
 }
+}
+*/
+	if(ijet==1){
+		for (int ik=0; ik<10; ik++){
+//#ifdef MATCHING
+			if(jet_matches){
+                                for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                                const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+
+                                for (unsigned int imatched = 0; imatched < matched_genparts.size(); ++imatched) {
+                                const pat::PackedCandidate& matched_gencand = static_cast<const pat::PackedCandidate&>(*matched_genparts[imatched]);
+
+                                if (gencand.charge() == matched_gencand.charge() && deltaR(gencand, matched_gencand) < 1e-4) {
+				//if (deltaR(gencand, matched_gencand) < 1e-4) {
+                                int charge = gencand.charge();
+                                Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+                                if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                                //if(isrc==0){
+
+					igenjet2candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					igenjet2candsmom_den[ik][isrc] += (cand3v.perp());
+
+        	                        igenjet2_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                	                igenjet2_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                        	        igenjet2_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                	igenjet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							//}
+						}
+					}
+				}
+			}
+		}else{
+			for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                        const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+                                
+                        int charge = gencand.charge();
+                        Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                        //if(isrc==0){
+		
+				igenjet2candsmom_num[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet2candsmom_den[ik][isrc] += (cand3v.perp());
+
+                                igenjet2_long_num[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_long_den[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                igenjet2_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					//}
+				}
+			}
+		}
+/*
+#else
+		for (unsigned int igen = 0; igen < daus.size(); ++igen) {
+                        const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
+
+                        int charge = gencand.charge();
+                        Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
+                        if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
+                        if(isrc==0){
+				
+				igenjet2candsmom_num[ik] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet2candsmom_den[ik] += (cand3v.perp());
+
+                                igenjet2_long_num[ik] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_long_den[ik] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                igenjet2_tran_num[ik] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_tran_den[ik] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}
+			}
+		}
+#endif
+*/
+	}
 }
 
 		  //  if (isEta && isPt) {ncount++;}
@@ -3559,63 +3894,67 @@ if(ijet==1){
 	//hprof->Fill(recojet0_pt,ijet0_candsmom_10/(pow(recojet0_pt,1.0)),weighttrg);
 	//hchpt->Fill(recojet1_pt,nchg,weighttrg);
 
-	for (int ik=0; ik<nkappa; ik++){	
-		RecoJCO[0][0][ik] = (ijet1candsmom_num[ik]/(pow(ijet1candsmom_den[ik],kappa[ik])));
-                RecoJCO[0][1][ik] = (ijet2candsmom_num[ik]/(pow(ijet2candsmom_den[ik],kappa[ik])));
+for (int ik=0; ik<nkappa; ik++){	
+	for (int isrc = 0; isrc < njecmx; isrc++) {
+		RecoJCO[0][0][ik][isrc] = (ijet1candsmom_num[ik][isrc]/(pow(ijet1candsmom_den[ik][isrc],kappa[ik])));
+                RecoJCO[0][1][ik][isrc] = (ijet2candsmom_num[ik][isrc]/(pow(ijet2candsmom_den[ik][isrc],kappa[ik])));
 
-		RecoJCO[1][0][ik] = (ijet1_long_num[ik]/ijet1_long_den[ik]);
-                RecoJCO[1][1][ik] = (ijet2_long_num[ik]/ijet2_long_den[ik]);
+		RecoJCO[1][0][ik][isrc] = (ijet1_long_num[ik][isrc]/ijet1_long_den[ik][isrc]);
+                RecoJCO[1][1][ik][isrc] = (ijet2_long_num[ik][isrc]/ijet2_long_den[ik][isrc]);
 
-                RecoJCO[2][0][ik] = (ijet1_tran_num[ik]/ijet1_tran_den[ik]);
-                RecoJCO[2][1][ik] = (ijet2_tran_num[ik]/ijet2_tran_den[ik]);
-
-
-		GenJCO[0][0][ik] = (igenjet1candsmom_num[ik]/(pow(igenjet1candsmom_den[ik],kappa[ik])));
-                GenJCO[0][1][ik] = (igenjet2candsmom_num[ik]/(pow(igenjet2candsmom_den[ik],kappa[ik])));
-
-		GenJCO[1][0][ik] = (igenjet1_long_num[ik]/igenjet1_long_den[ik]);
-		GenJCO[1][1][ik] = (igenjet2_long_num[ik]/igenjet2_long_den[ik]);
-
-		GenJCO[2][0][ik] = (igenjet1_tran_num[ik]/igenjet1_tran_den[ik]);
-		GenJCO[2][1][ik] = (igenjet2_tran_num[ik]/igenjet2_tran_den[ik]);
+                RecoJCO[2][0][ik][isrc] = (ijet1_tran_num[ik][isrc]/ijet1_tran_den[ik][isrc]);
+                RecoJCO[2][1][ik][isrc] = (ijet2_tran_num[ik][isrc]/ijet2_tran_den[ik][isrc]);
 
 
-		recomomJCO[0][0][ik] = (pow(ijet1candsmom_den[ik],kappa[ik]));
-                recomomJCO[0][1][ik] = (pow(ijet2candsmom_den[ik],kappa[ik]));
+		recomomJCO[0][0][ik][isrc] = (pow(ijet1candsmom_den[ik][isrc],kappa[ik]));
+                recomomJCO[0][1][ik][isrc] = (pow(ijet2candsmom_den[ik][isrc],kappa[ik]));
 
-		recomomJCO[1][0][ik] = (ijet1_long_den[ik]);
-                recomomJCO[1][1][ik] = (ijet2_long_den[ik]);
+                recomomJCO[1][0][ik][isrc] = (ijet1_long_den[ik][isrc]);
+                recomomJCO[1][1][ik][isrc] = (ijet2_long_den[ik][isrc]);
 
-		recomomJCO[2][0][ik] = (ijet1_tran_den[ik]);
-                recomomJCO[2][1][ik] = (ijet2_tran_den[ik]);
-
-
-		genmomJCO[0][0][ik] = (pow(igenjet1candsmom_den[ik],kappa[ik]));
-                genmomJCO[0][1][ik] = (pow(igenjet2candsmom_den[ik],kappa[ik]));
-
-		genmomJCO[1][0][ik] = (igenjet1_long_den[ik]);
-                genmomJCO[1][1][ik] = (igenjet2_long_den[ik]);
-
-		genmomJCO[2][0][ik] = (igenjet1_tran_den[ik]);
-                genmomJCO[2][1][ik] = (igenjet2_tran_den[ik]);
+                recomomJCO[2][0][ik][isrc] = (ijet1_tran_den[ik][isrc]);
+                recomomJCO[2][1][ik][isrc] = (ijet2_tran_den[ik][isrc]);
 		}
+	
+	for (int isrc = 0; isrc < nGenReso; isrc++) {
+		GenJCO[0][0][ik][isrc] = (igenjet1candsmom_num[ik][isrc]/(pow(igenjet1candsmom_den[ik][isrc],kappa[ik])));
+                GenJCO[0][1][ik][isrc] = (igenjet2candsmom_num[ik][isrc]/(pow(igenjet2candsmom_den[ik][isrc],kappa[ik])));
+
+		GenJCO[1][0][ik][isrc] = (igenjet1_long_num[ik][isrc]/igenjet1_long_den[ik][isrc]);
+		GenJCO[1][1][ik][isrc] = (igenjet2_long_num[ik][isrc]/igenjet2_long_den[ik][isrc]);
+
+		GenJCO[2][0][ik][isrc] = (igenjet1_tran_num[ik][isrc]/igenjet1_tran_den[ik][isrc]);
+		GenJCO[2][1][ik][isrc] = (igenjet2_tran_num[ik][isrc]/igenjet2_tran_den[ik][isrc]);
+
+
+		genmomJCO[0][0][ik][isrc] = (pow(igenjet1candsmom_den[ik][isrc],kappa[ik]));
+                genmomJCO[0][1][ik][isrc] = (pow(igenjet2candsmom_den[ik][isrc],kappa[ik]));
+
+		genmomJCO[1][0][ik][isrc] = (igenjet1_long_den[ik][isrc]);
+                genmomJCO[1][1][ik][isrc] = (igenjet2_long_den[ik][isrc]);
+
+		genmomJCO[2][0][ik][isrc] = (igenjet1_tran_den[ik][isrc]);
+                genmomJCO[2][1][ik][isrc] = (igenjet2_tran_den[ik][isrc]);
+		}
+	}
 
 
 //Histograms are filled using array for all the kappa values
 //1D
-bool isRecoJCO1D[ndef][njet][nkappa][njetetamn]={{{{false}}}};
-bool isGenJCO1D[ndef][njet][nkappa][njetetamn]={{{{false}}}};
-
+bool isRecoJCO1D[ndef][njet][nkappa][njetetamn];
+bool isGenJCO1D[ndef][njet][nkappa][njetetamn];
 #ifdef JETRESO
-bool isRecoJCO_JER_1D[ndef][njet][nkappa][njetetamn][njecmx]={{{{{false}}}}};
+bool isRecoJCO_JER_1D[ndef][njet][nkappa][njetetamn][njecmx];
 #endif
 
 for(int id=0; id<ndef; id++){
 for(int ij=0; ij<njet; ij++){
 for(int ik=0; ik<nkappa; ik++){
 for(int iet=0; iet<njetetamn; iet++){
+
 //#ifdef MATCHING
-	if(recomomJCO[id][ij][ik]<=0 || genmomJCO[id][ij][ik]<=0) continue;
+	//if(recomomJCO[id][ij][ik]<=0 || genmomJCO[id][ij][ik]<=0) continue;
+	if(recomomJCO[id][ij][ik][0]<=0 || recomomJCO[id][ij][ik][1]<=0 || recomomJCO[id][ij][ik][2]<=0 || genmomJCO[id][ij][ik][0]<=0) continue;
 //#else
 	//if(recomomJCO[id][ij][ik]<=0) continue;
 //#endif
@@ -3628,17 +3967,17 @@ for(int iet=0; iet<njetetamn; iet++){
                                                 if (isrc==0) {
                                                         if(ak4PFJets->size()>=2){
                                                         isRecoJCO1D[id][ij][ik][iet]=true;
-							h_recovar[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik],weighttrg);
+							h_recovar[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
                                                                 }
                                                         }
                                                 else{
 #ifdef JETENERGY
                                                         if(ak4PFJets->size()>=2){
-                                                                h_recovarjec[id][ij][ik][iet][irecohtjec[isrc]][isrc]->Fill(RecoJCO[id][ij][ik], weighttrg);
+                                                                h_recovarjec[id][ij][ik][iet][irecohtjec[isrc]][isrc]->Fill(RecoJCO[id][ij][ik][isrc], weighttrg);
                                                         }
 #elif defined(JETRESO)
                                                         if(ak4PFJets->size()>=2){
-                                                                h_recovarres[id][ij][ik][iet][irecohtjec[isrc]][isrc]->Fill(RecoJCO[id][ij][ik], weighttrg);
+                                                                h_recovarres[id][ij][ik][iet][irecohtjec[isrc]][isrc]->Fill(RecoJCO[id][ij][ik][isrc], weighttrg);
                                                         }
 #endif
                                                 }
@@ -3651,16 +3990,15 @@ for(int iet=0; iet<njetetamn; iet++){
                                                 if(isrc==0){
                                                         if(genjets->size()>=2){
                                                         isGenJCO1D[id][ij][ik][iet]=true;
-                                                        h_genvar[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik],weighttrg);
+                                                        h_genvar[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
                                                                 }
 #ifdef LHAPDF
                                                         for (int ix=1; ix<nnnmx; ix++) {
                                                                 if (genjets->size()>=2) {
-                                                                        h_genvarpdf[id][ij][ik][iet][igenhtres[isrc]][ix]->Fill(GenJCO[id][ij][ik], weighttrg*pdfwt[ix]);
+                                                                        h_genvarpdf[id][ij][ik][iet][igenhtres[isrc]][ix]->Fill(GenJCO[id][ij][ik][isrc], weighttrg*pdfwt[ix]);
                                                                         }
                                                                 }
 #endif
-
                                                         }
                                                 }
 					if (isrc==0 && isReconstruct){
@@ -3669,25 +4007,25 @@ for(int iet=0; iet<njetetamn; iet++){
 						//if( isRecoJCO1D[id][ij][ik][iet] && isGenJCO1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
 //#else
 						//if( isRecoJCO1D[id][ij][ik][iet] && isGenJCO1D[id][ij][ik][iet] && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
-						//if( isRecoJCO1D[id][ij][ik][iet] && isGenJCO1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
+						//if( isRecoJCO1D[id][ij][ik][iet] && isGenJCO1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 //#endif
 
                                                 if(ak4PFJets->size()>=2 && genjets->size()>=2){
-							h_RM[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik],GenJCO[id][ij][ik],weighttrg);
+							h_RM[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],GenJCO[id][ij][ik][isrc],weighttrg);
                                                         }
                                                 else if(ak4PFJets->size()>=2){
-                                                        h_recofake[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik],weighttrg);
+                                                        h_recofake[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
                                                         }
                                                 else if(genjets->size()>=2){
-                                                        h_genmiss[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik],weighttrg);
+                                                        h_genmiss[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
                                                         }
                                                 }
 						else{
                                                         if(isRecoJCO1D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
-                                                                h_recofake[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik],weighttrg);
+                                                                h_recofake[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
 							}
                                                         if(isGenJCO1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                                                h_genmiss[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik],weighttrg);
+                                                                h_genmiss[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
                                                                 }
 							}//else{
 						}//if (isrc==0 && isReconstruct){
@@ -3696,21 +4034,21 @@ for(int iet=0; iet<njetetamn; iet++){
                                 for(int ijer=0 ; ijer < njecmx ; ijer++){
                                         if( isRecoJCO_JER_1D[id][ij][ik][iet][ijer] && isGenJCO1D[id][ij][ik][iet] && irecohtjec[ijer]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && jet_matches){
                                                 if(ak4PFJets->size()>=2 && genjets->size()>=2){
-                                                        h_RM_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik],GenJCO[id][ij][ik],weighttrg);
+                                                        h_RM_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik][isrc],GenJCO[id][ij][ik][isrc],weighttrg);
                                                         }
                                                 else if(ak4PFJets->size()>=2){
-                                                        h_recofake_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik], weighttrg);
+                                                        h_recofake_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik][isrc], weighttrg);
                                                         }
                                                 else if(genjets->size()>=2){
-                                                        h_genmiss_JER[id][ij][ik][iet][igenhtres[isrc]][ijer]->Fill(GenJCO[id][ij][ik], weighttrg);
+                                                        h_genmiss_JER[id][ij][ik][iet][igenhtres[isrc]][ijer]->Fill(GenJCO[id][ij][ik][isrc], weighttrg);
                                                         }
                                                 }
                                                 else{
                                                         if(isRecoJCO_JER_1D[id][ij][ik][iet][ijer] && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && ak4PFJets->size()>=2){
-                                                                h_recofake_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik], weighttrg);
+                                                                h_recofake_JER[id][ij][ik][iet][irecohtjec[ijer]][ijer]->Fill(RecoJCO[id][ij][ik][isrc], weighttrg);
                                                                 }
                                                         if(isGenJCO1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                                                h_genmiss_JER[id][ij][ik][iet][igenhtres[isrc]][ijer]->Fill(GenJCO[id][ij][ik], weighttrg);
+                                                                h_genmiss_JER[id][ij][ik][iet][igenhtres[isrc]][ijer]->Fill(GenJCO[id][ij][ik][isrc], weighttrg);
                                                                 }
                                                         }
 
@@ -3734,12 +4072,15 @@ bool isRecoJCO_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
 for(int id=0; id<ndef; id++){
 for(int ij=0; ij<njet; ij++){
 for(int ik=0; ik<nkappa; ik++){
-for (int iet=0; iet<njetetamn; iet++){
+for(int iet=0; iet<njetetamn; iet++){
+
 //#ifdef MATCHING
-//	if(recomomJCO[id][ij][ik]<=0 || genmomJCO[id][ij][ik]<=0) continue;
+	//if(recomomJCO[id][ij][ik][isrc]<=0 || genmomJCO[id][ij][ik][isrc]<=0) continue;
+	if(recomomJCO[id][ij][ik][0]<=0 || recomomJCO[id][ij][ik][1]<=0 || recomomJCO[id][ij][ik][2]<=0 || genmomJCO[id][ij][ik][0]<=0) continue;
 //#else
-	if(recomomJCO[id][ij][ik]<=0) continue;
+//	if(recomomJCO[id][ij][ik]<=0) continue;
 //#endif
+
                         if (isReconstruct) {
                                 for (int isrc=0; isrc<njecmx; isrc++) {
 					if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
@@ -3749,23 +4090,24 @@ for (int iet=0; iet<njetetamn; iet++){
                                                 if (isrc==0) {
 							if(ak4PFJets->size()>=2){
 							isRecoJCO2D[id][ij][ik][iet]=true;
-							int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
+							int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
 							h_recovar2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
 								}
 							}
 						else{
 #ifdef JETENERGY
 							if(ak4PFJets->size()>=2){
-								int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
+								int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
                                                         	h_recovarjec2D[id][ij][ik][iet][isrc]->Fill(irecbin, weighttrg);
 							}
 #elif defined(JETRESO)
 							if(ak4PFJets->size()>=2){
-                                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
+                                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
                                                                 h_recovarres2D[id][ij][ik][iet][isrc]->Fill(irecbin, weighttrg);
                                                         }
 #endif
 						}
+
 					}
 				}
 			}//if (isReconstruct) {
@@ -3775,13 +4117,13 @@ for (int iet=0; iet<njetetamn; iet++){
 						if(isrc==0){
 							if(genjets->size()>=2){
 							isGenJCO2D[id][ij][ik][iet]=true;
-							int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+							int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
                                                         h_genvar2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
 							}
 #ifdef LHAPDF
                 				        for (int ix=1; ix<nnnmx; ix++) {
 		                        			if (genjets->size()>=2) {
-                        						int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+                        						int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
                         						h_genvarpdf2D[id][ij][ik][iet][ix]->Fill(igenbin, weighttrg*pdfwt[ix]);
                                                                     	}
                         					}
@@ -3795,26 +4137,26 @@ for (int iet=0; iet<njetetamn; iet++){
 //						if( isRecoJCO2D[id][ij][ik][iet] && isGenJCO2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 //#endif
 						if(ak4PFJets->size()>=2 && genjets->size()>=2){
-							int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
-							int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+							int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
+							int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
 							h_RM2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
 							}
 						else if(ak4PFJets->size()>=2){
-                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
                                                         h_recofake2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
 							}
 						else if(genjets->size()>=2){
-                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
                                                         h_genmiss2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
 							}
 						}
 						else{
 							if(isRecoJCO2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
-								int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[isrc]);
+								int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
                                                         	h_recofake2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
 								}
 							if(isGenJCO2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-								int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+								int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
 	                                                        h_genmiss2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
 								}												
 							}//else{
@@ -3824,26 +4166,26 @@ for (int iet=0; iet<njetetamn; iet++){
 				for(int ijer=0 ; ijer < njecmx ; ijer++){
 					if( isRecoJCO_JER_2D[id][ij][ik][iet][ijer] && isGenJCO2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && jet_matches){
                                                 if(ak4PFJets->size()>=2 && genjets->size()>=2){
-                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[ijer]);
-                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[ijer]);
+                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
 							h_RM_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin,igenbin,weighttrg);
                                                         }
                                                 else if(ak4PFJets->size()>=2){
-                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[ijer]);
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[ijer]);
 							h_recofake_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin, weighttrg);
                                                         }
                                                 else if(genjets->size()>=2){
-                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
 							h_genmiss_JER_2D[id][ij][ik][iet][ijer]->Fill(igenbin, weighttrg);
                                                         }
                                                 }
                                                 else{
                                                         if(isRecoJCO_JER_2D[id][ij][ik][iet][ijer] && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && ak4PFJets->size()>=2){
-                                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik],leadingptjec[ijer]);
+                                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[ijer]);
 								h_recofake_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin, weighttrg);
                                                                 }
                                                         if(isGenJCO2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik],leadgenptres[isrc]);
+                                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
 								h_genmiss_JER_2D[id][ij][ik][iet][ijer]->Fill(igenbin, weighttrg);
                                                                 }
                                                         }
@@ -3891,8 +4233,8 @@ QCDEventShape::beginJob() {
 #ifdef JETENERGY
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
-    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
+    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
     vsrc.push_back(unc);
