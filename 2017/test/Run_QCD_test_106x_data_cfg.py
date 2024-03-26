@@ -47,8 +47,8 @@ process.source = cms.Source("PoolSource",
  )
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -125,7 +125,7 @@ process.pileupJetIdUpdated = process.pileupJetId.clone(
 process.TFileService=cms.Service("TFileService",
     fileName=cms.string("Test_Data_2017UL.root")
 )
-print "test1"
+print ("test1")
 process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #       photonSrc = cms.untracked.InputTag("cleanPatPhotons"),
 #       electronSrc = cms.untracked.InputTag("cleanPatElectrons"),
@@ -135,6 +135,8 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         metSrc = cms.InputTag("slimmedMETs"),
         genSrc = cms.untracked.InputTag("packedGenParticles"),
         pfSrc = cms.InputTag("packedPFCandidates"),
+	metPATSrc = cms.InputTag("TriggerResults","","PAT"),
+        metRECOSrc = cms.InputTag("TriggerResults","","RECO"),
         bits = cms.InputTag("TriggerResults","","HLT"),
         prescales = cms.InputTag("patTrigger"),
         objects = cms.InputTag("selectedPatTrigger"),
@@ -185,5 +187,5 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 
 #process.analyzeBasicPat.append("keep *_ak5PFJetsCHS_*_EX")
 process.p = cms.Path(process.analyzeBasicPat)
-print "test2"
+print ("test2")
 #process.p = cms.Path(process.ak5PFJets*process.ak5GenJets*process.analyzeBasicPat)

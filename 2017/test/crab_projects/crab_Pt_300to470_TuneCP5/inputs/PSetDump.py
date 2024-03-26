@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Test")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root')
+    fileNames = cms.untracked.vstring('/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/0086E683-690A-A84C-8769-8C1A1BEB7CC4.root')
 )
 process.EmptyJetIdParams = cms.PSet(
     Pt010_Loose = cms.vdouble(-999.0, -999.0, -999.0, -999.0),
@@ -8995,6 +8995,13 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
     RootFileName = cms.untracked.string('pythia8_test_13tev.root'),
     ak5genJetSrc = cms.InputTag("ak5GenJets"),
     ak5pfJetSrc = cms.InputTag("ak5PFJets"),
+    bDiscriminators = cms.vstring(
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags', 
+        'pfDeepCSVJetTags:probb', 
+        'pfDeepCSVJetTags:probbb', 
+        'pfDeepCSVJetTags:probc', 
+        'pfDeepCSVJetTags:probudsg'
+    ),
     bits = cms.InputTag("TriggerResults","","HLT"),
     bsSrc = cms.InputTag("offlineBeamSpot"),
     evtinfo = cms.InputTag("generator"),
@@ -9007,11 +9014,14 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
     filterecalBadCalibFilter = cms.InputTag("Flag_ecalBadCalibFilter"),
     filtereeBadScFilter = cms.InputTag("Flag_eeBadScFilter"),
     filterglobalSuperTightHalo2016Filter = cms.InputTag("Flag_globalSuperTightHalo2016Filter"),
+    genJetFlavourInfos = cms.InputTag("slimmedGenJetsFlavourInfos"),
     genSrc = cms.untracked.InputTag("packedGenParticles"),
     genjetSrc = cms.InputTag("slimmedGenJets"),
     jetSrc = cms.InputTag("slimmedJets"),
+    metPATSrc = cms.InputTag("TriggerResults","","PAT"),
+    metRECOSrc = cms.InputTag("TriggerResults","","RECO"),
     metSrc = cms.InputTag("slimmedMETs"),
-    objects = cms.InputTag("selectedPatTrigger"),
+    objects = cms.InputTag("slimmedPatTrigger"),
     pfSrc = cms.InputTag("packedPFCandidates"),
     pileupSrc = cms.InputTag("slimmedAddPileupInfo"),
     prescales = cms.InputTag("patTrigger"),

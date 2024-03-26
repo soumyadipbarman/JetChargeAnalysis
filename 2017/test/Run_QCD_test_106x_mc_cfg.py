@@ -16,9 +16,9 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/MINIAODSIM/106X_mc2017_realistic_v6-v2/240000/001B7529-3179-1D4E-881E-931109365733.root',
-#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
+'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
 #'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/4207BCEB-1C21-3F4E-94E7-81254FB74338.root',
-'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2540000/14760F85-292E-9348-AA76-31497448B990.root',
+#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2540000/14760F85-292E-9348-AA76-31497448B990.root',
 #'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/0086E683-690A-A84C-8769-8C1A1BEB7CC4.root',
 #'/store/mc/RunIISummer20UL17MiniAODv2/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/30000/02BAF4C4-FC88-8947-BC24-1EA27D3117D8.root',
  )
@@ -140,9 +140,12 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         metSrc = cms.InputTag("slimmedMETs"),
         genSrc = cms.untracked.InputTag("packedGenParticles"),
         pfSrc = cms.InputTag("packedPFCandidates"),
+	metPATSrc = cms.InputTag("TriggerResults","","PAT"),
+	metRECOSrc = cms.InputTag("TriggerResults","","RECO"),
         bits = cms.InputTag("TriggerResults","","HLT"),
         prescales = cms.InputTag("patTrigger"),
-        objects = cms.InputTag("selectedPatTrigger"),
+	objects = cms.InputTag("slimmedPatTrigger"),
+        #objects = cms.InputTag("selectedPatTrigger"),
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
@@ -191,6 +194,10 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
          'pfDeepCSVJetTags:probudsg'
     )
  )
+
+#process.options = cms.untracked.PSet(
+#SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
 
 #process.ak5PFJets = ak5PFJets.clone(src = 'packedPFCandidates')
 #process.analyzeBasicPat.append("keep *_ak5PFJets_*_EX")
