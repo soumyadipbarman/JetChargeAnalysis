@@ -47,8 +47,8 @@ process.source = cms.Source("PoolSource",
  )
 )
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -141,6 +141,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
+	genJetFlavourInfos = cms.InputTag('slimmedGenJetsFlavourInfos'),
         pileupSrc =cms.InputTag("slimmedAddPileupInfo"),
         ak5pfJetSrc = cms.InputTag("ak5PFJets"),
         ak5genJetSrc = cms.InputTag("ak5GenJets"),
@@ -158,19 +159,24 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 	MonteCarlo =  cms.untracked.bool(False),
 	ParticleLabel =  cms.untracked.bool(False),
 	Reconstruct =cms.untracked.bool(True),
-#  EtaRange =  cms.untracked.double(5.0),
-#  PtThreshold = cms.untracked.double(12.0),
+#       EtaRange =  cms.untracked.double(5.0),
+#       PtThreshold = cms.untracked.double(12.0),
   	EtaRange =  cms.untracked.double(3.0),
   	PtThreshold = cms.untracked.double(55.0), #effective is 21
   	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81       
-#        scaleFactorsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'), 
-#        scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-#        scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-
-      
+#       scaleFactorsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'), 
+#       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+#       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
+         'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+         'pfDeepCSVJetTags:probb',
+         'pfDeepCSVJetTags:probbb',
+         'pfDeepCSVJetTags:probc',
+         'pfDeepCSVJetTags:probudsg'
+    )    
  )
 
 
