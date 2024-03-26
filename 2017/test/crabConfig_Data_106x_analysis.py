@@ -34,7 +34,7 @@ config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 15
 config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'
 
-config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
+config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis/2017'
 config.Data.publication = False
 
 #config.Data.outputDatasetTag = 'crab_projects_JetHT_Run2017B_UL2017'

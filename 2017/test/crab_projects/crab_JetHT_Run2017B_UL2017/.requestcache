@@ -223,7 +223,7 @@ g17
 tp94
 Rp95
 sg88
-S'/store/user/sobarman/JetCharge/Analysis'
+S'/store/user/sobarman/JetCharge/Analysis/2017'
 p96
 sg30
 Nsg87
@@ -302,7 +302,7 @@ S'prod'
 p126
 sS'RequestName'
 p127
-V230913_183239:sobarman_crab_JetHT_Run2017B_UL2017
+V231124_144951:sobarman_crab_JetHT_Run2017B_UL2017
 p128
 sS'voRole'
 p129

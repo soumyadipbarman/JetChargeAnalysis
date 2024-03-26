@@ -88,7 +88,7 @@ def main():
                 config.Data.outputDatasetTag = None
 #                config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 #               config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
-		config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis'
+		config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis/2017'
                 config.Data.publication = False
                 config.JobType.allowUndistributedCMSSW = True
                 #config.Site.storageSite = 'T2_IN_TIFR'

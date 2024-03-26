@@ -1953,7 +1953,7 @@ process.isolationSumsCalculator = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(2000)
 )
 
 process.met_53x = cms.PSet(

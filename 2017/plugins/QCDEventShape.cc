@@ -22,24 +22,24 @@
 #define DIJETAVE 
 
 ////for data
-//#define JETENERGY
-//#define TRIGGER
-
-////for Madgraph
-#define LHAPDF
-#define JETRESO
+#define JETENERGY
 #define TRIGGER
-#define MATCHING
 
-////for Pythia8 & Herwig7
+////For Madgraph
+//#define LHAPDF
 //#define JETRESO
 //#define TRIGGER
 //#define MATCHING
 
-////MC Flavor Tagging 
-#define FLAV
+////For Pythia8 & Herwig7
+//#define JETRESO
+//#define TRIGGER
+//#define MATCHING
 
-////For Flat
+////For MC Flavor Tagging 
+//#define FLAV
+
+////For MC Flat Sample
 //#define FLAT
 
 ////For GenParticle only
@@ -47,29 +47,28 @@
 
 //#define LUMIWEIGHT
 //#define MERGE_BIN
-
 //#define TRACKSYS
 
-//For L1 PreFiring
-#define PREFIRE
-
-//For PileUp
+////For PileUp
 #define PUNOMI
 //#define PUUP
 //#define PUDOWN
 
-//For Hybrid JER
-#define STOCHASTIC
+////For Hybrid JER
+//#define STOCHASTIC
 
-//For Track Reconstruction Efficiency
-#define TRACKEFF
+////For L1 PreFiring
+//#define PREFIRE
 
-//For Track pT Resolution
-#define TRACKPTUP
-#define TRACKPTDOWN
+////For Track Reconstruction Efficiency
+//#define TRACKEFF
 
-//Scale Variation for MG5 & PY8Flat
-#define SCALEUNC
+////For Track pT Resolution
+//#define TRACKPTUP
+//#define TRACKPTDOWN
+
+////For Scale Variation for PY8Flat
+//#define SCALEUNC
 
 
 #include <memory>
@@ -514,9 +513,35 @@ double genrng[ndef][njet][nkappa][range]={{{{-3.67,-3.00,-2.33,-1.67,-1.00,-0.67
 {-1.00,-0.80,-0.53,-0.33,-0.13,0.00,0.13,0.33,0.53,0.80,1.00},
 {-1.00,-0.80,-0.53,-0.33,-0.13,0.00,0.13,0.33,0.53,0.80,1.00}}}};
 
+//Binning for plotting all kappa in one canvas
+double recobinskappa[ndef][njet][nkappa]={{{30,30,30,30,30,30,30,30,30,30},{30,30,30,30,30,30,30,30,30,30}},
+                                        {{20,20,20,20,20,20,20,20,20,20},{20,20,20,20,20,20,20,20,20,20}},
+                                        {{20,20,20,20,20,20,20,20,20,20},{20,20,20,20,20,20,20,20,20,20}}};
+/*
+double genbins[ndef][njet][nkappa]={{{24,24,24,20,30,30,60,60,60,60},{24,24,24,20,30,30,60,60,60,60}},
+                                        {{24,24,60,60,60,60,60,60,60,60},{24,24,60,60,60,60,60,60,60,60}},
+                                        {{24,24,60,60,120,120,120,120,120,120},{24,24,60,60,120,120,120,120,120,120}}};
+*/
+double recominkappa[ndef][njet][nkappa]={{{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0},{-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0}},
+                                        {{-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0},{-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0}}};
+
+double recomaxkappa[ndef][njet][nkappa]={{{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0},{2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0}},
+                                        {{2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0},{2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0}}};
+/*
+double genmin[ndef][njet][nkappa]={{{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}},
+                                        {{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0},{-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0}}};
+
+double genmax[ndef][njet][nkappa]={{{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}},
+                                        {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}}};
+*/
 //----------------------------------------PT Binning For 2D unfold 
 double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; // 10 trigger phase-space
 double genhtbins[ngenPT+1] = {92, 185, 319, 467, 579, 3000.0};   // 5 PT binning
+//double genhtbins[ngenPT+1] = {100, 200, 400, 800, 1600, 3000.0};
 //double genhtbins[ngenPT+1] = {100, 400, 700, 1000, 1400, 3000.0};
 
 /*
@@ -618,15 +643,16 @@ unsigned int mypow_2[32];
 //myfile.open("txt.log");
 
 //const bool m_trigeff = true;
-const int njetptmn=nHLTmx; // 8; //10
-//const int njetptmn=ngenPT; //5
+//const int njetptmn=nHLTmx; // 8; //10
+const int njetptmn=ngenPT; //5
 const int njetptbin=120;
 
 #ifdef DIJETAVE
 const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v","HLT_PFJet200_v","HLT_PFJet260_v","HLT_PFJet320_v","HLT_PFJet400_v","HLT_PFJet450_v","HLT_PFJet500_v","HLT_PFJet550_v"};
 const char* jethlt_lowest={"HLT_PFJet40_v"};
 
-double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
+//double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
+double leadingPtThreshold[nHLTmx+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
 
 /*
 #ifdef MERGE_BIN
@@ -665,9 +691,15 @@ double pdfwt[nnnmx];
 //TH1F* h_genvarpdf[ndef][njet][nkappa][njetetamn][njetptmn][nnnmx];
 TH1F* h_genvarpdf[ndef][njet][nkappa][njetetamn][ngenPT][nnnmx];
 TH1* h_genvarpdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+
+const int nmgscale=9;
+double mgscale[nmgscale];
+TH1F* h_genvarmgscale[ndef][njet][nkappa][njetetamn][ngenPT][nmgscale];
+TH1* h_genvarmgscale2D[ndef][njet][nkappa][njetetamn][nmgscale];
 #endif
 
 #ifdef SCALEUNC
+//Only available in Py8 Flat
 const int nscale=46;
 double scalewt[nscale];
 TH1F* h_genvarscaleunc[ndef][njet][nkappa][njetetamn][ngenPT][nscale];
@@ -857,11 +889,15 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_genmiss[ndef][njet][nkappa][njetetamn][ngenPT];
   TH2F* h_RM[ndef][njet][nkappa][njetetamn][ngenPT];
 
+  TH1F* h_recovarIB[ndef][njet][nkappa][njetetamn][ngenPT]; //identical binning & range for all the variables
+
 #ifdef FLAV
   //First-set Flavor Tagging
   TH1F* h_recovar_gjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_ujet[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recovar_ubarjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_djet[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recovar_dbarjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_ojet[ndef][njet][nkappa][njetetamn][ngenPT];
 
   //Second-set Flavor Tagging
@@ -877,6 +913,18 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_recofake_prefire[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_genmiss_prefire[ndef][njet][nkappa][njetetamn][ngenPT];
   TH2F* h_RM_prefire[ndef][njet][nkappa][njetetamn][ngenPT];
+
+  TH1F* h_recovar_prefireup[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genvar_prefireup[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recofake_prefireup[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genmiss_prefireup[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH2F* h_RM_prefireup[ndef][njet][nkappa][njetetamn][ngenPT];
+
+  TH1F* h_recovar_prefiredown[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genvar_prefiredown[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recofake_prefiredown[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genmiss_prefiredown[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH2F* h_RM_prefiredown[ndef][njet][nkappa][njetetamn][ngenPT];
 #endif
 
 #ifdef TRACKEFF
@@ -901,25 +949,59 @@ class QCDEventShape : public edm::EDAnalyzer {
 #endif
 
   //Profile histogram
-  TProfile* hchpt; // jetpt vs. charge
+/*  TProfile* hchpt; // jetpt vs. charge
   TProfile* hchpt1;
   TProfile* hchpt2;
   TProfile* hprof_reco_jco_pt[ndef][njet][nkappa]; // Reco JCO vs. jetpt
   TProfile* hprof_gen_jco_pt[ndef][njet][nkappa]; // Gen JCO vs. jetpt
+*/
+  TH2F* hchpt;
+  TH2F* hchpt1;
+  TH2F* hchpt1_gjet;
+  TH2F* hchpt1_ujet;
+  TH2F* hchpt1_ubarjet;
+  TH2F* hchpt1_djet;
+  TH2F* hchpt1_dbarjet;
+  
+  TH2F* hchpt2;
+  TH2F* hchpt2_gjet;
+  TH2F* hchpt2_ujet;
+  TH2F* hchpt2_ubarjet;
+  TH2F* hchpt2_djet;
+  TH2F* hchpt2_dbarjet;
+
+  TH2F* hprof_reco_jco_pt[ndef][njet][nkappa]; // Reco JCO vs. jetpt
+  TH2F* hprof_gen_jco_pt[ndef][njet][nkappa]; // Gen JCO vs. jetpt
 
   //Ratio of Matched charged pT to charged pT vs GenJet pT
-  TProfile *hprof_matchedChg_R_allChg_genjetpt[njet][nkappa];
+  //TProfile *hprof_matchedChg_R_allChg_genjetpt[njet][nkappa];
+  TH2F *hprof_matchedChg_R_allChg_genjetpt[njet][nkappa];
   
   //Ratio of track pt to Jet pt vs. Jet pT
-  TProfile* hprof_gen_trackpt_R_jetpt_jetpt[njet][nkappa];
-  TProfile* hprof_reco_trackpt_R_jetpt_jetpt[njet][nkappa];
+  //TProfile* hprof_gen_trackpt_R_jetpt_jetpt[njet][nkappa];
+  //TProfile* hprof_reco_trackpt_R_jetpt_jetpt[njet][nkappa];
 
+  TH2F* hprof_gen_trackpt_R_jetpt_jetpt[njet][nkappa];
+  TH2F* hprof_reco_trackpt_R_jetpt_jetpt[njet][nkappa];
+
+  TH2F* hprof_reco_jco_pt_debug[ndef][njet][nkappa];  //debug
 #ifdef FLAV 
   //Flavor Tagging
+  /*
   TProfile* hprof_jco_pt_gjet[ndef][njet][nkappa];
   TProfile* hprof_jco_pt_ujet[ndef][njet][nkappa];
+  TProfile* hprof_jco_pt_ubarjet[ndef][njet][nkappa];
   TProfile* hprof_jco_pt_djet[ndef][njet][nkappa];
+  TProfile* hprof_jco_pt_dbarjet[ndef][njet][nkappa];
   TProfile* hprof_jco_pt_ojet[ndef][njet][nkappa];
+  */
+  TH2F* hprof_jco_pt_gjet[ndef][njet][nkappa];
+  TH2F* hprof_jco_pt_ujet[ndef][njet][nkappa];
+  TH2F* hprof_jco_pt_ubarjet[ndef][njet][nkappa];
+  TH2F* hprof_jco_pt_djet[ndef][njet][nkappa];
+  TH2F* hprof_jco_pt_dbarjet[ndef][njet][nkappa];
+  TH2F* hprof_jco_pt_ojet[ndef][njet][nkappa];
+
 #endif
 
   //static const int njetmx =30;
@@ -968,7 +1050,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   //First-set Flavor Tagging
   TH1* h_recovar_gjet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_ujet2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_ubarjet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_djet2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_dbarjet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_ojet2D[ndef][njet][nkappa][njetetamn];
 
   //Second-set Flavor Tagging
@@ -984,6 +1068,18 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1* h_recofake_prefire2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_prefire2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_prefire2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_prefireup_2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_prefiredown_2D[ndef][njet][nkappa][njetetamn];
 #endif
 
 #ifdef TRACKEFF
@@ -1091,6 +1187,20 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recojt2u_eta;
   TH1F* recojt2u_phi;
 
+  //ubar-jet
+  TH1F* recojtubar_pt[njetetamn];
+  TH1F* recojtubar_eta;
+  TH1F* recojtubar_phi;
+
+  TH1F* recojt1ubar_pt[njetetamn];
+  TH1F* recojt1ubar_eta;
+  TH1F* recojt1ubar_phi;
+
+  TH1F* recojt2ubar_pt[njetetamn];
+  TH1F* recojt2ubar_eta;
+  TH1F* recojt2ubar_phi;
+
+
   //d-jet
   TH1F* recojtd_pt[njetetamn];
   TH1F* recojtd_eta;
@@ -1103,6 +1213,19 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* recojt2d_pt[njetetamn];
   TH1F* recojt2d_eta;
   TH1F* recojt2d_phi;
+
+  //dbar-jet
+  TH1F* recojtdbar_pt[njetetamn];
+  TH1F* recojtdbar_eta;
+  TH1F* recojtdbar_phi;
+
+  TH1F* recojt1dbar_pt[njetetamn];
+  TH1F* recojt1dbar_eta;
+  TH1F* recojt1dbar_phi;
+
+  TH1F* recojt2dbar_pt[njetetamn];
+  TH1F* recojt2dbar_eta;
+  TH1F* recojt2dbar_phi;
 
   //others-nonmatched-jets
   TH1F* recojto_pt[njetetamn];
@@ -1293,8 +1416,8 @@ class QCDEventShape : public edm::EDAnalyzer {
   edm::EDGetTokenT<double> m_rho_token;
 #ifdef PREFIRE
   edm::EDGetTokenT< double > prefweight_token;
-  //edm::EDGetTokenT< double > prefweightup_token;
-  //edm::EDGetTokenT< double > prefweightdown_token;
+  edm::EDGetTokenT< double > prefweightup_token;
+  edm::EDGetTokenT< double > prefweightdown_token;
 #endif
 
   /*
@@ -1361,8 +1484,8 @@ edm::LumiReWeighting *LumiWeights_;
   lheEventProductToken_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("LHEEventProductInputTag"))),
 #ifdef PREFIRE
   prefweight_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProb"))),
-  //prefweightup_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbUp"))),
-  //prefweightdown_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbDown"))),
+  prefweightup_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbUp"))),
+  prefweightdown_token(consumes< double >(edm::InputTag("prefiringweight:nonPrefiringProbDown"))),
 #endif
 
 /*
@@ -1464,10 +1587,22 @@ for(int id=0; id<ndef; id++){
                                         h_recovar_ujet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_recovar_ujet2D[id][ij][ik][iet]->Sumw2();
 
+					sprintf(name, "dd_reco_ubarjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco ubarJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_ubarjet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_ubarjet2D[id][ij][ik][iet]->Sumw2();
+
+
 					sprintf(name, "dd_reco_djet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
                                         sprintf(title, "2D Reco dJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
                                         h_recovar_djet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_recovar_djet2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_reco_dbarjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco dbarJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_dbarjet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_dbarjet2D[id][ij][ik][iet]->Sumw2();
+
 
 					sprintf(name, "dd_reco_ojet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
                                         sprintf(title, "2D Reco oJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
@@ -1508,6 +1643,12 @@ for(int id=0; id<ndef; id++){
             				h_genvarpdf2D[id][ij][ik][iet][ix] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
             				h_genvarpdf2D[id][ij][ik][iet][ix]->Sumw2();
            				}
+				for(int iy=0; iy<nmgscale; iy++){
+					sprintf(name, "dd_genmgscale_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, iy);
+                                        sprintf(title, "2D Genmgscale Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],iy);
+                                        h_genvarmgscale2D[id][ij][ik][iet][iy] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvarmgscale2D[id][ij][ik][iet][iy]->Sumw2();
+					}
 #endif
 
 #ifdef SCALEUNC
@@ -1582,6 +1723,38 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "Gen_Reco PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_RM_prefire2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                         h_RM_prefire2D[id][ij][ik][iet]->Sumw2();
+
+					//up
+					sprintf(name, "dd_reco_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_prefireup_2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake PreFire up Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_prefireup_2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_corr_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_prefireup_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+					//down
+					sprintf(name, "dd_reco_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_prefiredown_2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake PreFire down Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_prefiredown_2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_corr_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_prefiredown_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_prefiredown_2D[id][ij][ik][iet]->Sumw2();
                                         }
 
 					sprintf(name, "dd_gen_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -1593,6 +1766,28 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Gen Miss PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_genmiss_prefire2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_prefire2D[id][ij][ik][iet]->Sumw2();			
+
+					//up
+					sprintf(name, "dd_gen_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_prefireup_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_prefireup_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+					//down
+					sprintf(name, "dd_gen_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_prefiredown_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_prefiredown_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_prefiredown_2D[id][ij][ik][iet]->Sumw2();
 #endif
 
 #ifdef TRACKEFF
@@ -1773,6 +1968,10 @@ for(int id=0; id<ndef; id++){
                                         h_recovar[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
                                         h_recovar[id][ij][ik][iet][ipt]->Sumw2();
 
+					sprintf(name, "reco_jc_ib_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+					sprintf(title, "Reco identical binning Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovarIB[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                                        h_recovarIB[id][ij][ik][iet][ipt]->Sumw2();
 #ifdef FLAV
 					//Flavor Tagging
 					sprintf(name, "reco_gjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
@@ -1785,10 +1984,22 @@ for(int id=0; id<ndef; id++){
                                         h_recovar_ujet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
                                         h_recovar_ujet[id][ij][ik][iet][ipt]->Sumw2();
 
+					sprintf(name, "reco_ubarjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco ubarjet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_ubarjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recovar_ubarjet[id][ij][ik][iet][ipt]->Sumw2();
+
+
 					sprintf(name, "reco_djet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
                                         sprintf(title, "Reco djet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
                                         h_recovar_djet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
                                         h_recovar_djet[id][ij][ik][iet][ipt]->Sumw2();
+
+					sprintf(name, "reco_dbarjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco dbarjet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_dbarjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recovar_dbarjet[id][ij][ik][iet][ipt]->Sumw2();
+
 
 					sprintf(name, "reco_ojet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
                                         sprintf(title, "Reco ojet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
@@ -1837,6 +2048,12 @@ for(int id=0; id<ndef; id++){
 					sprintf(title, "Genpdf Q_{%s,%g}^{%g} %g %i %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]),ix);
                                         h_genvarpdf[id][ij][ik][iet][ipt][ix] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
                                         h_genvarpdf[id][ij][ik][iet][ipt][ix]->Sumw2();
+                                        }
+				for (int iy=0; iy<nmgscale; iy++) {
+                                        sprintf(name, "genmgscale_jc_d%i_j%i_k%i_eta%i_pt%i_%i", id, ij, ik,iet, ipt, iy);
+					sprintf(title, "Genmgscale Q_{%s,%g}^{%g} %g %i %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]),iy);
+                                        h_genvarmgscale[id][ij][ik][iet][ipt][iy] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_genvarmgscale[id][ij][ik][iet][ipt][iy]->Sumw2();
                                         }
 #endif
 
@@ -1912,6 +2129,38 @@ for(int id=0; id<ndef; id++){
 					sprintf(title, "RM PreFire Q_{%s,%g}^{%g} %g %i",jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
                                         h_RM_prefire[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik], ngenbins[id][ij][ik], genrng[id][ij][ik]);
                                         h_RM_prefire[id][ij][ik][iet][ipt]->Sumw2();
+
+					//up
+					sprintf(name, "reco_prefireup_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco PreFire up Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_prefireup[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recovar_prefireup[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "recofake_prefireup_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco Fake Prefire up Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recofake_prefireup[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recofake_prefireup[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "RM_prefireup_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+                                        sprintf(title, "RM PreFire up Q_{%s,%g}^{%g} %g %i",jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_RM_prefireup[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik], ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_RM_prefireup[id][ij][ik][iet][ipt]->Sumw2();
+
+					//down
+					sprintf(name, "reco_prefiredown_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco PreFire down Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_prefiredown[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recovar_prefiredown[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "recofake_prefiredown_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco Fake Prefire down Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recofake_prefiredown[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+                                        h_recofake_prefiredown[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "RM_prefiredown_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+                                        sprintf(title, "RM PreFire down Q_{%s,%g}^{%g} %g %i",jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_RM_prefiredown[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik], ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_RM_prefiredown[id][ij][ik][iet][ipt]->Sumw2();
 					}
 
 					sprintf(name, "gen_prefire_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
@@ -1923,6 +2172,28 @@ for(int id=0; id<ndef; id++){
 					sprintf(title, "Gen PreFire Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
                                         h_genmiss_prefire[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
                                         h_genmiss_prefire[id][ij][ik][iet][ipt]->Sumw2();
+
+					//up
+					sprintf(name, "gen_prefireup_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+                                        sprintf(title, "Gen PreFire up Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genvar_prefireup[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_genvar_prefireup[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "genmiss_prefireup_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Gen PreFire up Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genmiss_prefireup[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_genmiss_prefireup[id][ij][ik][iet][ipt]->Sumw2();
+
+					//down
+					sprintf(name, "gen_prefiredown_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+                                        sprintf(title, "Gen PreFire down Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genvar_prefiredown[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_genvar_prefiredown[id][ij][ik][iet][ipt]->Sumw2();
+
+                                        sprintf(name, "genmiss_prefiredown_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Gen PreFire down Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genmiss_prefiredown[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
+                                        h_genmiss_prefiredown[id][ij][ik][iet][ipt]->Sumw2();
 #endif
 
 #ifdef TRACKEFF
@@ -2003,18 +2274,24 @@ for(int ij=0; ij<njet; ij++){
 	for (int ik=0; ik<nkappa; ik++){
         	sprintf(name, "matched_all_jetpt_j%i_k%i",ij, ik);
                 sprintf(title, "Gen Matched_All Tracks vs Jet pT Q_{%g}^{%g}", jetname[ij], kappa[ik]);
-		hprof_matchedChg_R_allChg_genjetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+		//hprof_matchedChg_R_allChg_genjetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+		//hprof_matchedChg_R_allChg_genjetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,30,-1,1);
+		hprof_matchedChg_R_allChg_genjetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,20,0,2);
 		hprof_matchedChg_R_allChg_genjetpt[ij][ik]->Sumw2();
 
 		sprintf(name, "gen_trackpt_jetpt_jetpt_j%i_k%i",ij, ik);
                 sprintf(title, "Gen Track to Jet pT vs Jet pT Q_{%g}^{%g}", jetname[ij], kappa[ik]);
-		hprof_gen_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+		//hprof_gen_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+		//hprof_gen_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,30,-1,1);
+		hprof_gen_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,20,0,2);
 		hprof_gen_trackpt_R_jetpt_jetpt[ij][ik]->Sumw2();
 	
 		if(isReconstruct){
 			sprintf(name, "reco_trackpt_jetpt_jetpt_j%i_k%i",ij, ik);
                 	sprintf(title, "Reco Track to Jet pT vs Jet pT Q_{%g}^{%g}", jetname[ij], kappa[ik]);
-			hprof_reco_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			//hprof_reco_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			//hprof_reco_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,30,-1,1);
+			hprof_reco_trackpt_R_jetpt_jetpt[ij][ik] = fs->make<TH2F>(name,title,30,30,1500,20,0,2);
 			hprof_reco_trackpt_R_jetpt_jetpt[ij][ik]->Sumw2();
 		}
 	}
@@ -2025,34 +2302,59 @@ for(int id=0; id<ndef; id++){
         	for (int ik=0; ik<nkappa; ik++){
 			sprintf(name, "reco_jco_pt_d%i_j%i_k%i",id, ij, ik);
 			sprintf(title, "JCO vs pT Reco Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-			hprof_reco_jco_pt[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			//hprof_reco_jco_pt[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
 			//hprof_jco_pt[id][ij][ik] = fs->make<TProfile>(name,title,ngenPT,genhtbins,-3,3);
+			hprof_reco_jco_pt[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
 			hprof_reco_jco_pt[id][ij][ik]->Sumw2();
+
+			//reco_jco_pt_d0_j0_k9
+			sprintf(name, "reco_jco_pt_debug_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT Reco debug Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_reco_jco_pt_debug[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,30,-3,3);
+			//hprof_reco_jco_pt_debug[id][ij][ik] = fs->make<TH2F>(name,title,20,30,1500, nrecobins[id][ij][ik], recorng[id][ij][ik]);
+			hprof_reco_jco_pt_debug[id][ij][ik]->Sumw2();
 
 			sprintf(name, "gen_jco_pt_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT Gen Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_gen_jco_pt[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        //hprof_gen_jco_pt[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_gen_jco_pt[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
 			hprof_gen_jco_pt[id][ij][ik]->Sumw2();
 #ifdef FLAV
 			//Flavor Tagging
 			sprintf(name, "jco_pt_gjet_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT gjet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_jco_pt_gjet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        //hprof_jco_pt_gjet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_jco_pt_gjet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
 			hprof_jco_pt_gjet[id][ij][ik]->Sumw2();
 
 			sprintf(name, "jco_pt_ujet_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT ujet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_jco_pt_ujet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        //hprof_jco_pt_ujet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        hprof_jco_pt_ujet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
                         hprof_jco_pt_ujet[id][ij][ik]->Sumw2();
 
-                        sprintf(name, "jco_pt_djet_d%i_j%i_k%i",id, ij, ik);
+			sprintf(name, "jco_pt_ubarjet_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT ubarjet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        //hprof_jco_pt_ubarjet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_jco_pt_ubarjet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_jco_pt_ubarjet[id][ij][ik]->Sumw2();
+
+			sprintf(name, "jco_pt_djet_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT djet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_jco_pt_djet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        //hprof_jco_pt_djet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_jco_pt_djet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
                         hprof_jco_pt_djet[id][ij][ik]->Sumw2();
+
+                        sprintf(name, "jco_pt_dbarjet_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT dbarjet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        //hprof_jco_pt_dbarjet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_jco_pt_dbarjet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_jco_pt_dbarjet[id][ij][ik]->Sumw2();
 
 			sprintf(name, "jco_pt_ojet_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT ojet Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_jco_pt_ojet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+                        //hprof_jco_pt_ojet[id][ij][ik] = fs->make<TProfile>(name,title,20,30,1500,-1,1);
+			hprof_jco_pt_ojet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
                         hprof_jco_pt_ojet[id][ij][ik]->Sumw2();
 #endif
 		}
@@ -2136,53 +2438,86 @@ for(int id=0; id<ndef; id++){
   recojt2g_phi->Sumw2();
 
   //d-jet
-  recojtd_eta = fs->make<TH1F>("recojtd_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojtd_eta = fs->make<TH1F>("recojtd_eta","#eta_{recojetsd}",100,-2.5, 2.5);
   recojtd_eta->Sumw2();
-  recojtd_phi = fs->make<TH1F>("recojtd_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojtd_phi = fs->make<TH1F>("recojtd_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
   recojtd_phi->Sumw2();
 
-  recojt1d_eta = fs->make<TH1F>("recojt1d_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt1d_eta = fs->make<TH1F>("recojt1d_eta","#eta_{recojetsd}",100,-2.5, 2.5);
   recojt1d_eta->Sumw2();
-  recojt1d_phi = fs->make<TH1F>("recojt1d_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt1d_phi = fs->make<TH1F>("recojt1d_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
   recojt1d_phi->Sumw2();
 
-  recojt2d_eta = fs->make<TH1F>("recojt2d_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt2d_eta = fs->make<TH1F>("recojt2d_eta","#eta_{recojetsd}",100,-2.5, 2.5);
   recojt2d_eta->Sumw2();
-  recojt2d_phi = fs->make<TH1F>("recojt2d_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt2d_phi = fs->make<TH1F>("recojt2d_phi","#phi_{recojetsd}",100,-M_PI, M_PI);
   recojt2d_phi->Sumw2();
 
+  //dbar-jet
+  recojtdbar_eta = fs->make<TH1F>("recojtdbar_eta","#eta_{recojetsdbar}",100,-2.5, 2.5);
+  recojtdbar_eta->Sumw2();
+  recojtdbar_phi = fs->make<TH1F>("recojtdbar_phi","#phi_{recojetsdbar}",100,-M_PI, M_PI);
+  recojtdbar_phi->Sumw2();
+
+  recojt1dbar_eta = fs->make<TH1F>("recojt1dbar_eta","#eta_{recojetsdbar}",100,-2.5, 2.5);
+  recojt1dbar_eta->Sumw2();
+  recojt1dbar_phi = fs->make<TH1F>("recojt1dbar_phi","#phi_{recojetsdbar}",100,-M_PI, M_PI);
+  recojt1dbar_phi->Sumw2();
+
+  recojt2dbar_eta = fs->make<TH1F>("recojt2dbar_eta","#eta_{recojetsdbar}",100,-2.5, 2.5);
+  recojt2dbar_eta->Sumw2();
+  recojt2dbar_phi = fs->make<TH1F>("recojt2dbar_phi","#phi_{recojetsdbar}",100,-M_PI, M_PI);
+  recojt2dbar_phi->Sumw2();
+
   //u-jet
-  recojtu_eta = fs->make<TH1F>("recojtu_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojtu_eta = fs->make<TH1F>("recojtu_eta","#eta_{recojetsu}",100,-2.5, 2.5);
   recojtu_eta->Sumw2();
-  recojtu_phi = fs->make<TH1F>("recojtu_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojtu_phi = fs->make<TH1F>("recojtu_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
   recojtu_phi->Sumw2();
 
-  recojt1u_eta = fs->make<TH1F>("recojt1u_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt1u_eta = fs->make<TH1F>("recojt1u_eta","#eta_{recojetsu}",100,-2.5, 2.5);
   recojt1u_eta->Sumw2();
-  recojt1u_phi = fs->make<TH1F>("recojt1u_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt1u_phi = fs->make<TH1F>("recojt1u_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
   recojt1u_phi->Sumw2();
 
-  recojt2u_eta = fs->make<TH1F>("recojt2u_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt2u_eta = fs->make<TH1F>("recojt2u_eta","#eta_{recojetsu}",100,-2.5, 2.5);
   recojt2u_eta->Sumw2();
-  recojt2u_phi = fs->make<TH1F>("recojt2u_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt2u_phi = fs->make<TH1F>("recojt2u_phi","#phi_{recojetsu}",100,-M_PI, M_PI);
   recojt2u_phi->Sumw2();
 
+  //ubar-jet
+  recojtubar_eta = fs->make<TH1F>("recojtubar_eta","#eta_{recojetsubar}",100,-2.5, 2.5);
+  recojtubar_eta->Sumw2();
+  recojtubar_phi = fs->make<TH1F>("recojtubar_phi","#phi_{recojetsubar}",100,-M_PI, M_PI);
+  recojtubar_phi->Sumw2();
+
+  recojt1ubar_eta = fs->make<TH1F>("recojt1ubar_eta","#eta_{recojetsubar}",100,-2.5, 2.5);
+  recojt1ubar_eta->Sumw2();
+  recojt1ubar_phi = fs->make<TH1F>("recojt1ubar_phi","#phi_{recojetsubar}",100,-M_PI, M_PI);
+  recojt1ubar_phi->Sumw2();
+
+  recojt2ubar_eta = fs->make<TH1F>("recojt2ubar_eta","#eta_{recojetsubar}",100,-2.5, 2.5);
+  recojt2ubar_eta->Sumw2();
+  recojt2ubar_phi = fs->make<TH1F>("recojt2ubar_phi","#phi_{recojetsubar}",100,-M_PI, M_PI);
+  recojt2ubar_phi->Sumw2();
+  
   //others
-  recojto_eta = fs->make<TH1F>("recojto_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojto_eta = fs->make<TH1F>("recojto_eta","#eta_{recojetso}",100,-2.5, 2.5);
   recojto_eta->Sumw2();
-  recojto_phi = fs->make<TH1F>("recojto_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojto_phi = fs->make<TH1F>("recojto_phi","#phi_{recojetso}",100,-M_PI, M_PI);
   recojto_phi->Sumw2();
 
-  recojt1o_eta = fs->make<TH1F>("recojt1o_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt1o_eta = fs->make<TH1F>("recojt1o_eta","#eta_{recojetso}",100,-2.5, 2.5);
   recojt1o_eta->Sumw2();
-  recojt1o_phi = fs->make<TH1F>("recojt1o_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt1o_phi = fs->make<TH1F>("recojt1o_phi","#phi_{recojetso}",100,-M_PI, M_PI);
   recojt1o_phi->Sumw2();
 
-  recojt2o_eta = fs->make<TH1F>("recojt2o_eta","#eta_{recojetsg}",100,-2.5, 2.5);
+  recojt2o_eta = fs->make<TH1F>("recojt2o_eta","#eta_{recojetso}",100,-2.5, 2.5);
   recojt2o_eta->Sumw2();
-  recojt2o_phi = fs->make<TH1F>("recojt2o_phi","#phi_{recojetsg}",100,-M_PI, M_PI);
+  recojt2o_phi = fs->make<TH1F>("recojt2o_phi","#phi_{recojetso}",100,-M_PI, M_PI);
   recojt2o_phi->Sumw2(); 
 
+  //Second-set Flavor 
   recojt_qjet_eta = fs->make<TH1F>("recojt_qjet_eta","#eta_{recojetsq}",100,-2.5, 2.5);
   recojt_qjet_eta->Sumw2();
   recojt_qjet_phi = fs->make<TH1F>("recojt_qjet_phi","#phi_{recojetsq}",100,-M_PI, M_PI);
@@ -2243,7 +2578,7 @@ for(int id=0; id<ndef; id++){
   recojt2_aqojet_phi = fs->make<TH1F>("recojt2_aqojet_phi","#phi_{reco2jetsaqo}",100,-M_PI, M_PI);
   recojt2_aqojet_phi->Sumw2();
 #endif
-
+/*
   hchpt = fs->make<TProfile>("hchpt","hchpt",99,30,1500,1,100);
   hchpt->Sumw2();
 
@@ -2252,6 +2587,45 @@ for(int id=0; id<ndef; id++){
 
   hchpt2 = fs->make<TProfile>("hchpt2","hchpt2",99,30,1500,1,100);
   hchpt2->Sumw2();
+*/
+  hchpt = fs->make<TH2F>("hchpt","hchpt",30,30,1500,99,1,100);
+  hchpt->Sumw2();
+
+  hchpt1 = fs->make<TH2F>("hchpt1","hchpt1",30,30,1500,99,1,100);
+  hchpt1->Sumw2();
+
+  hchpt1_gjet = fs->make<TH2F>("hchpt1_gjet","hchpt1_gjet",30,30,1500,99,1,100);
+  hchpt1_gjet->Sumw2();
+
+  hchpt1_ujet = fs->make<TH2F>("hchpt1_ujet","hchpt1_ujet",30,30,1500,99,1,100);
+  hchpt1_ujet->Sumw2();
+
+  hchpt1_ubarjet = fs->make<TH2F>("hchpt1_ubarjet","hchpt1_ubarjet",30,30,1500,99,1,100);
+  hchpt1_ubarjet->Sumw2();
+
+  hchpt1_djet = fs->make<TH2F>("hchpt1_djet","hchpt1_djet",30,30,1500,99,1,100);
+  hchpt1_djet->Sumw2();
+
+  hchpt1_dbarjet = fs->make<TH2F>("hchpt1_dbarjet","hchpt1_dbarjet",30,30,1500,99,1,100);
+  hchpt1_dbarjet->Sumw2(); 
+
+  hchpt2 = fs->make<TH2F>("hchpt2","hchpt2",30,30,1500,99,1,100);
+  hchpt2->Sumw2();
+
+  hchpt2_gjet = fs->make<TH2F>("hchpt2_gjet","hchpt2_gjet",30,30,1500,99,1,100);
+  hchpt2_gjet->Sumw2();
+
+  hchpt2_ujet = fs->make<TH2F>("hchpt2_ujet","hchpt2_ujet",30,30,1500,99,1,100);
+  hchpt2_ujet->Sumw2();
+
+  hchpt2_ubarjet = fs->make<TH2F>("hchpt2_ubarjet","hchpt2_ubarjet",30,30,1500,99,1,100);
+  hchpt2_ubarjet->Sumw2();
+
+  hchpt2_djet = fs->make<TH2F>("hchpt2_djet","hchpt2_djet",30,30,1500,99,1,100);
+  hchpt2_djet->Sumw2();
+
+  hchpt2_dbarjet = fs->make<TH2F>("hchpt2_dbarjet","hchpt2_dbarjet",30,30,1500,99,1,100);
+  hchpt2_dbarjet->Sumw2();
 
   for(int jk=0; jk<njetetamn; jk++){
     sprintf(name, "recojetallave_pt_%i",jk);
@@ -2317,6 +2691,22 @@ for(int id=0; id<ndef; id++){
     recojt2d_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2d_pt[jk]->Sumw2();
 
+    //dbar-jet
+    sprintf(name, "recojtdbar_pt_%i",jk);
+    sprintf(title, "Et_{recojetdbar}_%g", etarange[jk]);
+    recojtdbar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtdbar_pt[jk]->Sumw2();
+
+    sprintf(name, "recojt1dbar_pt_%i",jk);
+    sprintf(title, "Et_{recojet1dbar}_%g", etarange[jk]);
+    recojt1dbar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1dbar_pt[jk]->Sumw2();
+
+    sprintf(name, "recojt2dbar_pt_%i",jk);
+    sprintf(title, "Et_{recojet2dbar}_%g", etarange[jk]);
+    recojt2dbar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2dbar_pt[jk]->Sumw2();
+
     //u-jet
     sprintf(name, "recojtu_pt_%i",jk);
     sprintf(title, "Et_{recojetu}_%g", etarange[jk]);
@@ -2332,6 +2722,22 @@ for(int id=0; id<ndef; id++){
     sprintf(title, "Et_{recojet2u}_%g", etarange[jk]);
     recojt2u_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2u_pt[jk]->Sumw2();
+
+    //ubar-jet
+    sprintf(name, "recojtubar_pt_%i",jk);
+    sprintf(title, "Et_{recojetubar}_%g", etarange[jk]);
+    recojtubar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojtubar_pt[jk]->Sumw2();
+
+    sprintf(name, "recojt1ubar_pt_%i",jk);
+    sprintf(title, "Et_{recojet1ubar}_%g", etarange[jk]);
+    recojt1ubar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt1ubar_pt[jk]->Sumw2();
+
+    sprintf(name, "recojt2ubar_pt_%i",jk);
+    sprintf(title, "Et_{recojet2ubar}_%g", etarange[jk]);
+    recojt2ubar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    recojt2ubar_pt[jk]->Sumw2();
 
     //others
     sprintf(name, "recojto_pt_%i",jk);
@@ -2896,12 +3302,16 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #ifdef FLAV
   double RecoJCO_gjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double RecoJCO_ujet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double RecoJCO_ubarjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double RecoJCO_djet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double RecoJCO_dbarjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double RecoJCO_ojet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
 
   double recomomJCO_gjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_ujet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_ubarjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_djet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_dbarjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_ojet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
 
   //Second-set Flavor Tagging
@@ -2957,9 +3367,17 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double ijet1candsmom_num_ujet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_ujet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_ujet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_ujet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_ujet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_ujet[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num_ujet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_ujet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_ujet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_ujet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_ujet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_ujet[nkappa][njecmx] = {{0.0}};
 
+  //ubar-jet
+  double ijet1candsmom_num_ubarjet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_ubarjet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_ubarjet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_ubarjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_ubarjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_ubarjet[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_num_ubarjet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_ubarjet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_ubarjet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_ubarjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_ubarjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_ubarjet[nkappa][njecmx] = {{0.0}};
+
   //d-jet
   double ijet1candsmom_num_djet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_djet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_djet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_djet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_djet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_djet[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num_djet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_djet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_djet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_djet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_djet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_djet[nkappa][njecmx] = {{0.0}};
+
+  //dbar-jet
+  double ijet1candsmom_num_dbarjet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_dbarjet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_dbarjet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_dbarjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_dbarjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_dbarjet[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_num_dbarjet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_dbarjet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_dbarjet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_dbarjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_dbarjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_dbarjet[nkappa][njecmx] = {{0.0}};
 
   //others
   double ijet1candsmom_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_ojet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_ojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_ojet[nkappa][njecmx] = {{0.0}};
@@ -3099,6 +3517,10 @@ if (!isGoodTrack) return;
 				pdfwt[weightIndex-9] = EvtHandle->weights()[weightIndex].wgt/EvtHandle->originalXWGTUP(); 
 				//std::cout << weightIndex << " " << EvtHandle->weights()[weightIndex].id << " " << EvtHandle->weights()[weightIndex].wgt <<" "<<pdfwt[weightIndex-9]<< std::endl;
 				}
+			if (weightIndex>0 && weightIndex<10) {
+				mgscale[weightIndex] = EvtHandle->weights()[weightIndex].wgt/EvtHandle->originalXWGTUP();
+				//std::cout << weightIndex << " " << EvtHandle->weights()[weightIndex].id << " " << EvtHandle->weights()[weightIndex].wgt <<" "<<mgscale[weightIndex]<< std::endl;
+				}
     			}
 #endif
 
@@ -3138,12 +3560,13 @@ if (!isGoodTrack) return;
       }
     }
   }
+
  
 #ifdef PREFIRE
 edm::Handle< double > theprefweight;
 iEvent.getByToken(prefweight_token, theprefweight ) ;
 double _prefiringweight =(*theprefweight);
-/*
+
 edm::Handle< double > theprefweightup;
 iEvent.getByToken(prefweightup_token, theprefweightup ) ;
 double _prefiringweightup =(*theprefweightup);
@@ -3151,7 +3574,7 @@ double _prefiringweightup =(*theprefweightup);
 edm::Handle< double > theprefweightdown;
 iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
 double _prefiringweightdown =(*theprefweightdown);
-*/
+
 //cout << "Prefire  wt : " << _prefiringweight << endl;
 //cout << "Prefire up wt : " << _prefiringweightup << endl;
 //cout << "Prefire down wt : " << _prefiringweightdown << endl;
@@ -3416,8 +3839,8 @@ double _prefiringweightdown =(*theprefweightdown);
 #ifdef PREFIRE
 double tmpwt = weighttrg;
 weighttrg = tmpwt*_prefiringweight;
-//weighttrg = tmpwt*_prefiringweightup;
-//weighttrg = tmpwt*_prefiringweightdown;
+double weighttrgL1up = tmpwt*_prefiringweightup;
+double weighttrgL1down = tmpwt*_prefiringweightdown;
 #endif
 
 //---------------Lumiweight------------------
@@ -3683,14 +4106,14 @@ if(isMC) {
 #if defined(JETRESO)&&(!defined(JETENERGY))
       //resolution file 
       JME::JetResolution resolution;
-      //resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
-      resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
+      resolution = JME::JetResolution("Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt");    // for DATA
+      //resolution = JME::JetResolution("Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt");      // for MC
  
       //Scalefactor file
       JME::JetResolutionScaleFactor res_sf;
       //cout<<"Filename="<<scalefile<<endl;
-      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
-      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
+      res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt");        // for DATA
+      //res_sf = JME::JetResolutionScaleFactor("Summer19UL17_JRV2_MC_SF_AK4PFchs.txt");          // for MC
       
       edm::Handle<double> rho;
       iEvent.getByToken(m_rho_token, rho);
@@ -3876,7 +4299,9 @@ match_jet = false;
 		
 		int ireorjt = jetindx[isrc][ijet];
 #ifdef FLAV		
-		int jetflav = (*ak4PFJets)[ireorjt].partonFlavour();	
+		int jetflav = (*ak4PFJets)[ireorjt].partonFlavour();
+		//int jetflav = (*ak4PFJets)[ireorjt].hadronFlavour();	
+		//cout<<"Jet Flavor : "<<jetflav<<endl;
 		//if(jetflav==5){cout << "Flavour : "<<jetflav<<endl;}	
 #endif	
 		double pt = jetptx[isrc][ijet];
@@ -3956,10 +4381,18 @@ match_jet = false;
 				if (isInEtaRange[iet]) {recojtu_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 	                        if (isPt && iet==0) {recojtu_eta->Fill(tmp4v.eta(), weighttrg);}
         	                if (isEta && isPt) {recojtu_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==-2){//ubar-jet
+                                if (isInEtaRange[iet]) {recojtubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojtubar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojtubar_phi->Fill(tmp4v.phi(), weighttrg);}
 			}else if(jetflav==1){//d-jet
 				if (isInEtaRange[iet]) {recojtd_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 	                        if (isPt && iet==0) {recojtd_eta->Fill(tmp4v.eta(), weighttrg);}
         	                if (isEta && isPt) {recojtd_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==-1){//dbar-jet
+                                if (isInEtaRange[iet]) {recojtdbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojtdbar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojtdbar_phi->Fill(tmp4v.phi(), weighttrg);}
 			}else{//others
 				if (isInEtaRange[iet]) {recojto_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojto_eta->Fill(tmp4v.eta(), weighttrg);}
@@ -4001,10 +4434,18 @@ match_jet = false;
 				if (isInEtaRange[iet]) {recojt1u_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1u_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1u_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==-2){//ubar-jet
+                                if (isInEtaRange[iet]) {recojt1ubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojt1ubar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojt1ubar_phi->Fill(tmp4v.phi(), weighttrg);}
                         }else if(jetflav==1){//d-jet
 				if (isInEtaRange[iet]) {recojt1d_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1d_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1d_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==-1){//dbar-jet
+                                if (isInEtaRange[iet]) {recojt1dbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojt1dbar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojt1dbar_phi->Fill(tmp4v.phi(), weighttrg);}
                         }else{//others
 				if (isInEtaRange[iet]) {recojt1o_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1o_eta->Fill(tmp4v.eta(), weighttrg);}
@@ -4056,10 +4497,18 @@ match_jet = false;
                         	if (isInEtaRange[iet]) {recojt2u_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2u_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2u_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==1){//d-jet
+                        }else if(jetflav==-2){//ubar-jet
+                                if (isInEtaRange[iet]) {recojt2ubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojt2ubar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojt2ubar_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==1){//d-jet
                         	if (isInEtaRange[iet]) {recojt2d_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2d_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2d_phi->Fill(tmp4v.phi(), weighttrg);}
+			}else if(jetflav==-1){//dbar-jet
+                                if (isInEtaRange[iet]) {recojt2dbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
+                                if (isPt && iet==0) {recojt2dbar_eta->Fill(tmp4v.eta(), weighttrg);}
+                                if (isEta && isPt) {recojt2dbar_phi->Fill(tmp4v.phi(), weighttrg);}
                         }else{//others
                                 if (isInEtaRange[iet]) {recojt2o_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2o_eta->Fill(tmp4v.eta(), weighttrg);}
@@ -4115,8 +4564,8 @@ match_jet = false;
 		  //tmpcand4v.push_back(cand4v);	
                   //nchg++;
 		  if(charge !=0){nchg++;}
-		  if(ijet==0 && charge !=0){nchg1++;}
-		  if(ijet==1 && charge !=0){nchg2++;}	
+		  //if(ijet==0 && charge !=0){nchg1++;}
+		  //if(ijet==1 && charge !=0){nchg2++;}	
                   //h_nchg[iet]->Fill(nchg, weighttrg);   // need to check
 		  //if (cand4v.perp()<0.5) continue;
 		  //if (ncount<=2 && isEta && isPt) { 
@@ -4141,11 +4590,31 @@ match_jet = false;
                         recochg1_phi->Fill(cand4v.phi(), weighttrg);
                         recochg1_pt->Fill(cand4v.perp(), weighttrg);
                         recochg1_eta->Fill(cand4v.eta(), weighttrg);
+
+			nchg1++;
+			hchpt1->Fill(tmp4v.perp(), nchg1, weighttrg);
+#ifdef FLAV
+			if(abs(jetflav==21 || jetflav==9)){hchpt1_gjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(jetflav==2){hchpt1_ujet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(jetflav==-2){hchpt1_ubarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(jetflav==1){hchpt1_djet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(jetflav==-1){hchpt1_dbarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+#endif
 		      }
                      else if (ijet==1 && charge !=0) {
                         recochg2_phi->Fill(cand4v.phi(), weighttrg);
                         recochg2_pt->Fill(cand4v.perp(), weighttrg);
                         recochg2_eta->Fill(cand4v.eta(), weighttrg);
+
+			nchg2++;
+			hchpt2->Fill(tmp4v.perp(), nchg2, weighttrg);
+#ifdef FLAV
+			if(abs(jetflav==21 || jetflav==9)){hchpt2_gjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(jetflav==2){hchpt2_ujet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(jetflav==-2){hchpt2_ubarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(jetflav==1){hchpt2_djet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(jetflav==-1){hchpt2_dbarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+#endif
                       }
                      else if (ijet==2 && charge !=0) {
                         recochg3_phi->Fill(cand4v.phi(), weighttrg);
@@ -4202,6 +4671,15 @@ if(ijet==0){
 
                                         ijet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}else if(jetflav==-2){//ubar-jet
+                                        ijet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
+
+                                        ijet1_long_num_ubarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_ubarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        ijet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }else if(jetflav==1){//d-jet
                                         ijet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
@@ -4211,6 +4689,15 @@ if(ijet==0){
 
                                         ijet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}else if(jetflav==-1){//dbar-jet
+                                        ijet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
+
+                                        ijet1_long_num_dbarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_dbarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        ijet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }else{//others
                                         ijet1candsmom_num_ojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ojet[ik][isrc] += (cand3v.perp());
@@ -4351,6 +4838,15 @@ if(ijet==0){
 
                                         ijet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}else if(jetflav==-2){//ubar-jet
+                                        ijet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
+
+                                        ijet1_long_num_ubarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_ubarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        ijet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }else if(jetflav==1){//d-jet
                                         ijet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
@@ -4360,6 +4856,15 @@ if(ijet==0){
 
                                         ijet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}else if(jetflav==-1){//dbar-jet
+                                        ijet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
+
+                                        ijet1_long_num_dbarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_dbarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        ijet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }else{//others
                                         ijet1candsmom_num_ojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ojet[ik][isrc] += (cand3v.perp());
@@ -4486,10 +4991,11 @@ if(ijet==0){
 #endif
 	for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
                 const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
-                int charge = recocand.charge();
+                //int charge = recocand.charge();
                         Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
-				ijet1candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				//ijet1candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				ijet1candsmom_alltracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 			}
 		}
 	}
@@ -4538,6 +5044,15 @@ if(ijet==1){
 
                                 ijet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+			}else if(jetflav==-2){//ubar-jet
+                                ijet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
+
+                                ijet2_long_num_ubarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_ubarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }else if(jetflav==1){//d-jet
                                 ijet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
@@ -4547,6 +5062,15 @@ if(ijet==1){
 
                                 ijet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+			}else if(jetflav==-1){//dbar-jet
+                                ijet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
+
+                                ijet2_long_num_dbarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_dbarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }else{//others
                                 ijet2candsmom_num_ojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ojet[ik][isrc] += (cand3v.perp());
@@ -4688,6 +5212,15 @@ if(ijet==1){
 
                                 ijet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+			}else if(jetflav==-2){//ubar-jet
+                                ijet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
+
+                                ijet2_long_num_ubarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_ubarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }else if(jetflav==1){//d-jet
                                 ijet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
@@ -4697,6 +5230,15 @@ if(ijet==1){
 
                                 ijet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+			}else if(jetflav==-1){//dbar-jet
+                                ijet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
+
+                                ijet2_long_num_dbarjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_dbarjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                ijet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }else{//others
                                 ijet2candsmom_num_ojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ojet[ik][isrc] += (cand3v.perp());
@@ -4823,10 +5365,11 @@ if(ijet==1){
 #endif
 	for (unsigned int ireco = 0; ireco < daus.size(); ++ireco) {
                 const pat::PackedCandidate& recocand = static_cast<const pat::PackedCandidate&>(*daus[ireco]);
-                int charge = recocand.charge();
+                //int charge = recocand.charge();
                 Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                 if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
-                        ijet2candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                        //ijet2candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+			ijet2candsmom_alltracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 			}
 		}
 	}
@@ -5159,7 +5702,8 @@ if(ijet==1){
                                 	igenjet1_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 	igenjet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 		
-					igenjet1candsmom_matchedtracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					//igenjet1candsmom_matchedtracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					igenjet1candsmom_matchedtracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));	
 						}
 					}
 				}
@@ -5205,10 +5749,11 @@ if(ijet==1){
 			for (unsigned int igen = 0; igen < daus.size(); ++igen) {
                         const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
 
-                        int charge = gencand.charge();
+                        //int charge = gencand.charge();
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
-				igenjet1candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				//igenjet1candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet1candsmom_alltracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 			}	
 		}			
 	}
@@ -5238,7 +5783,8 @@ if(ijet==1){
                         	        igenjet2_tran_num[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 	igenjet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
-					igenjet2candsmom_matchedtracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					//igenjet2candsmom_matchedtracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+					igenjet2candsmom_matchedtracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 						}
 					}
 				}
@@ -5286,10 +5832,11 @@ if(ijet==1){
 			for (unsigned int igen = 0; igen < daus.size(); ++igen) {
                         const pat::PackedCandidate& gencand = static_cast<const pat::PackedCandidate&>(*daus[igen]);
 
-                        int charge = gencand.charge();
+                        //int charge = gencand.charge();
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
-				igenjet2candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				//igenjet2candsmom_alltracks[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+				igenjet2candsmom_alltracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 				}
 			}
 	}
@@ -5427,6 +5974,25 @@ for (int ik=0; ik<nkappa; ik++){
                 recomomJCO_ujet[2][0][ik][isrc] = (ijet1_tran_den_ujet[ik][isrc]);
                 recomomJCO_ujet[2][1][ik][isrc] = (ijet2_tran_den_ujet[ik][isrc]);
 
+		//ubar-jet
+		RecoJCO_ubarjet[0][0][ik][isrc] = (ijet1candsmom_num_ubarjet[ik][isrc]/(pow(ijet1candsmom_den_ubarjet[ik][isrc],kappa[ik])));
+                RecoJCO_ubarjet[0][1][ik][isrc] = (ijet2candsmom_num_ubarjet[ik][isrc]/(pow(ijet2candsmom_den_ubarjet[ik][isrc],kappa[ik])));
+
+                RecoJCO_ubarjet[1][0][ik][isrc] = (ijet1_long_num_ubarjet[ik][isrc]/ijet1_long_den_ubarjet[ik][isrc]);
+                RecoJCO_ubarjet[1][1][ik][isrc] = (ijet2_long_num_ubarjet[ik][isrc]/ijet2_long_den_ubarjet[ik][isrc]);
+
+                RecoJCO_ubarjet[2][0][ik][isrc] = (ijet1_tran_num_ubarjet[ik][isrc]/ijet1_tran_den_ubarjet[ik][isrc]);
+                RecoJCO_ubarjet[2][1][ik][isrc] = (ijet2_tran_num_ubarjet[ik][isrc]/ijet2_tran_den_ubarjet[ik][isrc]);
+
+                recomomJCO_ubarjet[0][0][ik][isrc] = (pow(ijet1candsmom_den_ubarjet[ik][isrc],kappa[ik]));
+                recomomJCO_ubarjet[0][1][ik][isrc] = (pow(ijet2candsmom_den_ubarjet[ik][isrc],kappa[ik]));
+
+                recomomJCO_ubarjet[1][0][ik][isrc] = (ijet1_long_den_ubarjet[ik][isrc]);
+                recomomJCO_ubarjet[1][1][ik][isrc] = (ijet2_long_den_ubarjet[ik][isrc]);
+
+                recomomJCO_ubarjet[2][0][ik][isrc] = (ijet1_tran_den_ubarjet[ik][isrc]);
+                recomomJCO_ubarjet[2][1][ik][isrc] = (ijet2_tran_den_ubarjet[ik][isrc]);
+
 		//d-jet
 		RecoJCO_djet[0][0][ik][isrc] = (ijet1candsmom_num_djet[ik][isrc]/(pow(ijet1candsmom_den_djet[ik][isrc],kappa[ik])));
                 RecoJCO_djet[0][1][ik][isrc] = (ijet2candsmom_num_djet[ik][isrc]/(pow(ijet2candsmom_den_djet[ik][isrc],kappa[ik])));
@@ -5445,6 +6011,25 @@ for (int ik=0; ik<nkappa; ik++){
 
                 recomomJCO_djet[2][0][ik][isrc] = (ijet1_tran_den_djet[ik][isrc]);
                 recomomJCO_djet[2][1][ik][isrc] = (ijet2_tran_den_djet[ik][isrc]);
+
+		//dbar-jet
+		RecoJCO_dbarjet[0][0][ik][isrc] = (ijet1candsmom_num_dbarjet[ik][isrc]/(pow(ijet1candsmom_den_dbarjet[ik][isrc],kappa[ik])));
+                RecoJCO_dbarjet[0][1][ik][isrc] = (ijet2candsmom_num_dbarjet[ik][isrc]/(pow(ijet2candsmom_den_dbarjet[ik][isrc],kappa[ik])));
+
+                RecoJCO_dbarjet[1][0][ik][isrc] = (ijet1_long_num_dbarjet[ik][isrc]/ijet1_long_den_dbarjet[ik][isrc]);
+                RecoJCO_dbarjet[1][1][ik][isrc] = (ijet2_long_num_dbarjet[ik][isrc]/ijet2_long_den_dbarjet[ik][isrc]);
+
+                RecoJCO_dbarjet[2][0][ik][isrc] = (ijet1_tran_num_dbarjet[ik][isrc]/ijet1_tran_den_dbarjet[ik][isrc]);
+                RecoJCO_dbarjet[2][1][ik][isrc] = (ijet2_tran_num_dbarjet[ik][isrc]/ijet2_tran_den_dbarjet[ik][isrc]);
+
+                recomomJCO_dbarjet[0][0][ik][isrc] = (pow(ijet1candsmom_den_dbarjet[ik][isrc],kappa[ik]));
+                recomomJCO_dbarjet[0][1][ik][isrc] = (pow(ijet2candsmom_den_dbarjet[ik][isrc],kappa[ik]));
+
+                recomomJCO_dbarjet[1][0][ik][isrc] = (ijet1_long_den_dbarjet[ik][isrc]);
+                recomomJCO_dbarjet[1][1][ik][isrc] = (ijet2_long_den_dbarjet[ik][isrc]);
+
+                recomomJCO_dbarjet[2][0][ik][isrc] = (ijet1_tran_den_dbarjet[ik][isrc]);
+                recomomJCO_dbarjet[2][1][ik][isrc] = (ijet2_tran_den_dbarjet[ik][isrc]);
 
 		//others
 		RecoJCO_ojet[0][0][ik][isrc] = (ijet1candsmom_num_ojet[ik][isrc]/(pow(ijet1candsmom_den_ojet[ik][isrc],kappa[ik])));
@@ -5650,22 +6235,29 @@ for(int ik=0; ik<nkappa; ik++){
 	for (int isrc = 0; isrc < njecmx; isrc++) {
         	if(isrc==0){
 			if(recomomJCO[id][ij][ik][isrc]>0){hprof_reco_jco_pt[id][ij][ik]->Fill(recojetpt[ij],RecoJCO[id][ij][ik][isrc],weighttrg);}
+			if(recomomJCO[id][ij][ik][isrc]>0){hprof_reco_jco_pt_debug[id][ij][ik]->Fill(recojetpt[ij],RecoJCO[id][ij][ik][isrc],weighttrg);}
 #ifdef FLAV
 			if(recomomJCO_gjet[id][ij][ik][isrc]>0){hprof_jco_pt_gjet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_gjet[id][ij][ik][isrc],weighttrg);}
                         if(recomomJCO_ujet[id][ij][ik][isrc]>0){hprof_jco_pt_ujet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_ujet[id][ij][ik][isrc],weighttrg);}
+			if(recomomJCO_ubarjet[id][ij][ik][isrc]>0){hprof_jco_pt_ubarjet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_ubarjet[id][ij][ik][isrc],weighttrg);}
                         if(recomomJCO_djet[id][ij][ik][isrc]>0){hprof_jco_pt_djet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_djet[id][ij][ik][isrc],weighttrg);}
+			if(recomomJCO_dbarjet[id][ij][ik][isrc]>0){hprof_jco_pt_dbarjet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_dbarjet[id][ij][ik][isrc],weighttrg);}
                         if(recomomJCO_ojet[id][ij][ik][isrc]>0){hprof_jco_pt_ojet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_ojet[id][ij][ik][isrc],weighttrg);}
 #endif
 				}
 			}
 		}
+#ifdef MATCHING
 	if(isMC){
 	for (int isrc = 0; isrc < nGenReso; isrc++) {
 		if(isrc==0){
-			if(genjetpt[ij]>0 && GenJCO[id][ij][ik][isrc]>0){hprof_gen_jco_pt[id][ij][ik]->Fill(genjetpt[ij],GenJCO[id][ij][ik][isrc],weighttrg);}
+			//if(genjetpt[ij]>0 && GenJCO[id][ij][ik][isrc]>0){hprof_gen_jco_pt[id][ij][ik]->Fill(genjetpt[ij],GenJCO[id][ij][ik][isrc],weighttrg);}
+			//if(GenJCO[id][ij][ik][isrc]>0){hprof_gen_jco_pt[id][ij][ik]->Fill(genjetpt[ij],GenJCO[id][ij][ik][isrc],weighttrg);}
+			if(genmomJCO[id][ij][ik][isrc]>0){hprof_gen_jco_pt[id][ij][ik]->Fill(genjetpt[ij],GenJCO[id][ij][ik][isrc],weighttrg);}
 					}
 				}
 			}
+#endif
 		}
 	}
 }
@@ -5717,8 +6309,8 @@ for(int ik=0; ik<nkappa; ik++){
 
 //Charged particle multiplicity vs Jet pT (overall, lead & sub-lead)
 hchpt->Fill(recoJetpT,nchg,weighttrg);
-hchpt1->Fill(recojet1_pt, nchg1, weighttrg);
-hchpt2->Fill(recojet2_pt, nchg2, weighttrg);
+//hchpt1->Fill(recojet1_pt, nchg1, weighttrg);
+//hchpt2->Fill(recojet2_pt, nchg2, weighttrg);
 
 //cout<<"recojet1_pt : "<<recojet1_pt<<" nchg1 : "<<nchg1<<endl;
 //cout<<"recojet2_pt : "<<recojet2_pt<<" nchg2 : "<<nchg2<<endl;
@@ -5765,13 +6357,18 @@ for(int iet=0; iet<njetetamn; iet++){
                                                         if(ak4PFJets->size()>=2){
                                                         isRecoJCO1D[id][ij][ik][iet]=true;
 							h_recovar[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
+							h_recovarIB[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
 #ifdef FLAV
 							if(recomomJCO_gjet[id][ij][ik][isrc]>0){
 								h_recovar_gjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_gjet[id][ij][ik][isrc],weighttrg);}
 							if(recomomJCO_ujet[id][ij][ik][isrc]>0){
 								h_recovar_ujet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_ujet[id][ij][ik][isrc],weighttrg);}
+							if(recomomJCO_ubarjet[id][ij][ik][isrc]>0){
+                                                                h_recovar_ubarjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_ubarjet[id][ij][ik][isrc],weighttrg);}
 							if(recomomJCO_djet[id][ij][ik][isrc]>0){
 								h_recovar_djet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_djet[id][ij][ik][isrc],weighttrg);}
+							if(recomomJCO_dbarjet[id][ij][ik][isrc]>0){
+                                                                h_recovar_dbarjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_dbarjet[id][ij][ik][isrc],weighttrg);}
 							if(recomomJCO_ojet[id][ij][ik][isrc]>0){
 								h_recovar_ojet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_ojet[id][ij][ik][isrc],weighttrg);}
 
@@ -5788,6 +6385,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_recovar_prefire[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
+							h_recovar_prefireup[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1up);
+							h_recovar_prefiredown[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
 #ifdef TRACKEFF
@@ -5836,6 +6435,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_genvar_prefire[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
+							h_genvar_prefireup[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1up);
+							h_genvar_prefiredown[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
                                                                 }
@@ -5843,6 +6444,11 @@ for(int iet=0; iet<njetetamn; iet++){
                                                         for (int ix=1; ix<nnnmx; ix++) {
                                                                 if (genjets->size()>=2) {
                                                                         h_genvarpdf[id][ij][ik][iet][igenhtres[isrc]][ix]->Fill(GenJCO[id][ij][ik][isrc], weighttrg*pdfwt[ix]);
+                                                                        }
+                                                                }
+							for (int iy=0; iy<nmgscale; iy++) {
+                                                                if (genjets->size()>=2) {
+                                                                        h_genvarmgscale[id][ij][ik][iet][igenhtres[isrc]][iy]->Fill(GenJCO[id][ij][ik][isrc], weighttrg*mgscale[iy]);
                                                                         }
                                                                 }
 #endif
@@ -5871,6 +6477,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_RM_prefire[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],GenJCO[id][ij][ik][isrc],weighttrg);
+							h_RM_prefireup[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],GenJCO[id][ij][ik][isrc],weighttrgL1up);
+							h_RM_prefiredown[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],GenJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
                                                         }
@@ -5879,6 +6487,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_recofake_prefire[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
+							h_recofake_prefireup[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1up);
+							h_recofake_prefiredown[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
                                                         }
@@ -5887,6 +6497,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_genmiss_prefire[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
+							h_genmiss_prefireup[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1up);
+							h_genmiss_prefiredown[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
                                                         }
@@ -5897,6 +6509,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 								h_recofake_prefire[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrg);
+								h_recofake_prefireup[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1up);
+								h_recofake_prefiredown[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
 							}
@@ -5905,6 +6519,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 								h_genmiss_prefire[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrg);
+								h_genmiss_prefireup[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1up);
+								h_genmiss_prefiredown[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO[id][ij][ik][isrc],weighttrgL1down);
 #endif
 
                                                                 }
@@ -6063,10 +6679,16 @@ for(int iet=0; iet<njetetamn; iet++){
                                                         if(recomomJCO_ujet[id][ij][ik][isrc]>0){
 								int irecbin_ujet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_ujet[id][ij][ik][isrc],leadingptjec[isrc]);
 								h_recovar_ujet2D[id][ij][ik][iet]->Fill(irecbin_ujet,weighttrg);}
+							if(recomomJCO_ubarjet[id][ij][ik][isrc]>0){
+                                                                int irecbin_ubarjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_ubarjet[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                                h_recovar_ubarjet2D[id][ij][ik][iet]->Fill(irecbin_ubarjet,weighttrg);}
                                                         if(recomomJCO_djet[id][ij][ik][isrc]>0){
 								int irecbin_djet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_djet[id][ij][ik][isrc],leadingptjec[isrc]);
 								h_recovar_djet2D[id][ij][ik][iet]->Fill(irecbin_djet,weighttrg);}
-                                                        if(recomomJCO_ojet[id][ij][ik][isrc]>0){
+                                                        if(recomomJCO_dbarjet[id][ij][ik][isrc]>0){
+                                                                int irecbin_dbarjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_dbarjet[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                                h_recovar_dbarjet2D[id][ij][ik][iet]->Fill(irecbin_dbarjet,weighttrg);}
+							if(recomomJCO_ojet[id][ij][ik][isrc]>0){
 								int irecbin_ojet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_ojet[id][ij][ik][isrc],leadingptjec[isrc]);
 								h_recovar_ojet2D[id][ij][ik][iet]->Fill(irecbin_ojet,weighttrg);}
 
@@ -6087,6 +6709,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
                                                         h_recovar_prefire2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+							h_recovar_prefireup_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1up);
+							h_recovar_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1down);
 #endif
 
 
@@ -6143,6 +6767,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
                                                         h_genvar_prefire2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+							h_genvar_prefireup_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1up);
+							h_genvar_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1down);
 #endif
 
 							}
@@ -6154,6 +6780,12 @@ for(int iet=0; iet<njetetamn; iet++){
                         						h_genvarpdf2D[id][ij][ik][iet][ix]->Fill(igenbin, weighttrg*pdfwt[ix]);
                                                                     	}
                         					}
+							for (int iy=0; iy<nmgscale; iy++) {
+                                                                if (genjets->size()>=2) {
+                                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                                        h_genvarmgscale2D[id][ij][ik][iet][iy]->Fill(igenbin, weighttrg*mgscale[iy]);
+                                                                        }
+                                                                }
 #endif
 
 #ifdef SCALEUNC
@@ -6180,6 +6812,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_RM_prefire2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
+							h_RM_prefireup_2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrgL1up);
+							h_RM_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrgL1down);
 #endif
 
 							}
@@ -6189,6 +6823,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_recofake_prefire2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+							h_recofake_prefireup_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1up);
+							h_recofake_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1down);
 #endif
 
 							}
@@ -6198,6 +6834,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 							h_genmiss_prefire2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+							h_genmiss_prefireup_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1up);
+							h_genmiss_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1down);
 #endif
 
 							}
@@ -6209,6 +6847,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 								h_recofake_prefire2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+								h_recofake_prefireup_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1up);
+								h_recofake_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin, weighttrgL1down);
 #endif
 
 								}
@@ -6218,6 +6858,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef PREFIRE
 								h_genmiss_prefire2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+								h_genmiss_prefireup_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1up);
+								h_genmiss_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin, weighttrgL1down);
 #endif
 
 								}												
@@ -6383,8 +7025,8 @@ QCDEventShape::beginJob() {
 #ifdef JETENERGY
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
-    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
+    JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
     vsrc.push_back(unc);
@@ -6414,7 +7056,9 @@ QCDEventShape::endJob()
 #ifdef FLAV
 					h_recovar_gjet2D[id][ij][ik][iet]->Write();
 					h_recovar_ujet2D[id][ij][ik][iet]->Write();
+					h_recovar_ubarjet2D[id][ij][ik][iet]->Write();
 					h_recovar_djet2D[id][ij][ik][iet]->Write();
+					h_recovar_dbarjet2D[id][ij][ik][iet]->Write();
 					h_recovar_ojet2D[id][ij][ik][iet]->Write();
 
 					//Second-Set Flavor Tagging
@@ -6426,6 +7070,7 @@ QCDEventShape::endJob()
 	
 #ifdef  LHAPDF
             				for (int ix=1; ix<nnnmx; ix++) {h_genvarpdf2D[id][ij][ik][iet][ix]->Write();}
+					for (int iy=0; iy<nmgscale; iy++) {h_genvarmgscale2D[id][ij][ik][iet][iy]->Write();}
 #endif
 
 #ifdef  SCALEUNC
@@ -6449,6 +7094,18 @@ QCDEventShape::endJob()
                                         h_recofake_prefire2D[id][ij][ik][iet]->Write();
                                         h_genmiss_prefire2D[id][ij][ik][iet]->Write();
                                         h_RM_prefire2D[id][ij][ik][iet]->Write();
+
+					h_recovar_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_genvar_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_RM_prefireup_2D[id][ij][ik][iet]->Write();
+
+					h_recovar_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_genvar_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_RM_prefiredown_2D[id][ij][ik][iet]->Write();
 #endif
 
 #ifdef TRACKEFF

@@ -221,7 +221,7 @@ g17
 tp93
 Rp94
 sg87
-S'/store/user/sobarman/JetCharge/Analysis'
+S'/store/user/sobarman/JetCharge/Analysis/2017'
 p95
 sg30
 Nsg85
@@ -293,7 +293,7 @@ S'prod'
 p121
 sS'RequestName'
 p122
-V230913_184813:sobarman_crab_Pt-15to7000_TuneCP5_Flat_pythia8
+V231124_144211:sobarman_crab_Pt-15to7000_TuneCP5_Flat_pythia8
 p123
 sS'voRole'
 p124
