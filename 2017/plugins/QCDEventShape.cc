@@ -1079,9 +1079,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   float inslumi;
   int nsicls, ntottrk;
 //#ifdef FLAT 
-  //bool isFlat=1;
+  bool isFlat=1;
 //#else 
-  bool isFlat=0;
+  //bool isFlat=0;
 //#endif
 
    float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
@@ -1154,19 +1154,19 @@ class QCDEventShape : public edm::EDAnalyzer {
 #endif
 
 //#ifdef TRACKEFF
+  TH1* h_recovar_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_trackeff2D[ndef][njet][nkappa][njetetamn];
+
+  //Track Matching
+//#ifdef TRACKEFFDEBUG 
   TH1* h_recovar_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH1* h_genvar_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH1* h_recofake_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
-
-  //Track Matching
-//#ifdef TRACKEFFDEBUG 
-  TH1* h_recovar_trackeff2D_debug_v2[ndef][njet][nkappa][njetetamn];
-  TH1* h_genvar_trackeff2D_debug_v2[ndef][njet][nkappa][njetetamn];
-  TH1* h_recofake_trackeff2D_debug_v2[ndef][njet][nkappa][njetetamn];
-  TH1* h_genmiss_trackeff2D_debug_v2[ndef][njet][nkappa][njetetamn];
-  TH2* h_RM_trackeff2D_debug_v2[ndef][njet][nkappa][njetetamn];
 //#endif  
 //#endif
 
@@ -2046,61 +2046,61 @@ for(int id=0; id<ndef; id++){
 
 #ifdef TRACKEFF
 					if (isReconstruct) {
-						sprintf(name, "dd_reco_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                                sprintf(title, "2D Reco Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                                h_recovar_trackeff2D_debug[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                                h_recovar_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
+						sprintf(name, "dd_reco_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                                h_recovar_trackeff2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recovar_trackeff2D[id][ij][ik][iet]->Sumw2();
 
-						sprintf(name, "dd_recofake_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                                sprintf(title, "2D Reco Fake Track Eff debug Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
-                                                h_recofake_trackeff2D_debug[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                                h_recofake_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
+						sprintf(name, "dd_recofake_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco Fake Track Eff Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                                h_recofake_trackeff2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recofake_trackeff2D[id][ij][ik][iet]->Sumw2();
 
-						sprintf(name, "dd_corr_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                                sprintf(title, "Gen_Reco Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                                h_RM_trackeff2D_debug[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
-                                                h_RM_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
+						sprintf(name, "dd_corr_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "Gen_Reco Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                                h_RM_trackeff2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
+                                                h_RM_trackeff2D[id][ij][ik][iet]->Sumw2();
 						}
 			
-					sprintf(name, "dd_gen_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        h_genvar_trackeff2D_debug[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genvar_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
+					sprintf(name, "dd_gen_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genvar_trackeff2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_trackeff2D[id][ij][ik][iet]->Sumw2();
 
-					sprintf(name, "dd_genmiss_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen Miss Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
+					sprintf(name, "dd_genmiss_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_trackeff2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_trackeff2D[id][ij][ik][iet]->Sumw2();
 #endif
 
 #ifdef TRACKEFFDEBUG
 					//Track Matching
 					if (isReconstruct) {
-						sprintf(name, "dd_reco_trackeff_debug_v2_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                	                        sprintf(title, "2D Reco Track Eff debug v2 Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                        	                h_recovar_trackeff2D_debug_v2[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                	        h_recovar_trackeff2D_debug_v2[id][ij][ik][iet]->Sumw2();
+						sprintf(name, "dd_reco_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                	                        sprintf(title, "2D Reco Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                        	                h_recovar_trackeff2D_debug[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                	        h_recovar_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 
-                                        	sprintf(name, "dd_recofake_trackeff_debug_v2_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                       	 	sprintf(title, "2D Reco Fake Track Eff debug v2 Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
-                                        	h_recofake_trackeff2D_debug_v2[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        	h_recofake_trackeff2D_debug_v2[id][ij][ik][iet]->Sumw2();
+                                        	sprintf(name, "dd_recofake_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                       	 	sprintf(title, "2D Reco Fake Track Eff debug Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        	h_recofake_trackeff2D_debug[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        	h_recofake_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 
-                                        	sprintf(name, "dd_corr_trackeff_debug_v2_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        	sprintf(title, "Gen_Reco Track Eff debug v2 Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        	h_RM_trackeff2D_debug_v2[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
-                                        	h_RM_trackeff2D_debug_v2[id][ij][ik][iet]->Sumw2();
+                                        	sprintf(name, "dd_corr_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        	sprintf(title, "Gen_Reco Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        	h_RM_trackeff2D_debug[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
+                                        	h_RM_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 					}
 
-					sprintf(name, "dd_gen_trackeff_debug_v2_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen Track Eff debug v2 Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        h_genvar_trackeff2D_debug_v2[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genvar_trackeff2D_debug_v2[id][ij][ik][iet]->Sumw2();
+					sprintf(name, "dd_gen_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genvar_trackeff2D_debug[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 
-                                        sprintf(name, "dd_genmiss_trackeff_debug_v2_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen Miss Track Eff debug v2 Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        h_genmiss_trackeff2D_debug_v2[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genmiss_trackeff2D_debug_v2[id][ij][ik][iet]->Sumw2();
+                                        sprintf(name, "dd_genmiss_trackeff_debug_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss Track Eff debug Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 #endif
 
 #ifdef TRACKPTUP
@@ -4046,14 +4046,14 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   //Debug using Matching for TrackEff
 #ifdef TRACKEFFDEBUG
-  double RecoJCO_trackeff_debug_v2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double recomomJCO_trackeff_debug_v2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double GenJCO_trackeff_debug_v2[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+  double RecoJCO_trackeff_debug[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_trackeff_debug[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double GenJCO_trackeff_debug[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 
 #ifdef TRACKEFFMATCHING
 #ifdef TRACKEFFDEBUG
-  double genmomJCO_trackeff_debug_v2[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+  double genmomJCO_trackeff_debug[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 #endif
 
@@ -4163,11 +4163,11 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 //Tracking Efficiency using Matching
 #ifdef TRACKEFFDEBUG
-double ijet1candsmom_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet1_long_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet2_long_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet2_long_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_trackeff_debug_v2[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_trackeff_debug_v2[nkappa][njecmx] = {{0.0}};
+  double ijet1candsmom_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_long_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackeff_debug[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet2candsmom_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet2_long_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet2_long_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_trackeff_debug[nkappa][njecmx] = {{0.0}};
 
-double igenjet1candsmom_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}};
-  double igenjet2candsmom_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}},igenjet2candsmom_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_trackeff_debug_v2[nkappa][nGenReso] = {{0.0}};
+  double igenjet1candsmom_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_trackeff_debug[nkappa][nGenReso] = {{0.0}};
+  double igenjet2candsmom_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_trackeff_debug[nkappa][nGenReso] = {{0.0}};
 #endif
 
 #ifdef TRACKPTUP
@@ -5908,18 +5908,6 @@ if(ijet==0){
                                 	ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 					}
 			}
-		/*
-			if(gRandom->Uniform() < 0.977){
-				ijet1candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet1candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
-
-                                ijet1_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                ijet1_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}
-		*/
 #endif
 
 #ifdef TRACKPTUP
@@ -6098,18 +6086,6 @@ if(ijet==0){
                                         ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
-		/*
-			if (gRandom->Uniform() < 0.977){
-                        	ijet1candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet1candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
-
-                                ijet1_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                ijet1_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-             		}
-		*/
 #endif
 
 #ifdef TRACKPTUP
@@ -6339,18 +6315,6 @@ if(ijet==1){
                                         ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
-		/*
-			if (gRandom->Uniform() < 0.977){
-                        	ijet2candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet2candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
-
-                                ijet2_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                ijet2_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-              		}
-		*/
 #endif
 
 #ifdef TRACKPTUP
@@ -6529,18 +6493,6 @@ if(ijet==1){
                                         ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
-		/*
-			if (gRandom->Uniform() < 0.977){
-                       		ijet2candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet2candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
-
-                                ijet2_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                ijet2_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                	}
-		*/
 #endif
 
 #ifdef TRACKPTUP
@@ -6624,14 +6576,14 @@ if(ijet==0){
                         Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                                ijet1candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet1candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                                ijet1candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet1candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                ijet1_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet1_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                ijet1_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet1_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet1_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet1_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                                         }
                                 }
@@ -6644,14 +6596,14 @@ if(ijet==0){
                 Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                 if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                        ijet1candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                        ijet1candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                        ijet1candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                        ijet1candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                        ijet1_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                        ijet1_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                        ijet1_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet1_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                        ijet1_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                        ijet1_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                        ijet1_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet1_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                         }
                 }
@@ -6675,14 +6627,14 @@ if(ijet==1){
                         Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                                ijet2candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet2candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                                ijet2candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                ijet2_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                ijet2_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                                         }
                                 }
@@ -6695,14 +6647,14 @@ if(ijet==1){
                 Hep3Vector cand3v(recocand.px(), recocand.py(), recocand.pz());
                 if(cand3v.perp()>1.0 && abs(cand3v.eta())<2.5 && recocand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                        ijet2candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                        ijet2candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                        ijet2candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                        ijet2candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                        ijet2_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                        ijet2_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                        ijet2_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                        ijet2_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                        ijet2_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                        ijet2_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                        ijet2_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                         }
                 }
@@ -7463,7 +7415,7 @@ if(ijet==1){
                                                 igenjet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 #ifdef TRACKEFF
-					if(cand3v.perp()<20.0){
+					if(cand3v.perp() < 20.0){
 						if (gRandom->Uniform() < 0.977){
                                                 	igenjet2candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 	igenjet2candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
@@ -7578,7 +7530,7 @@ if(ijet==1){
                                                 igenjet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 #ifdef TRACKEFF	
-					if(cand3v.perp()<20.0){
+					if(cand3v.perp() < 20.0){
 						if (gRandom->Uniform() < 0.977){
                                                 	igenjet2candsmom_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 	igenjet2candsmom_den_trackeff[ik][isrc] += (cand3v.perp());
@@ -7723,14 +7675,14 @@ if(ijet==0){
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                        	igenjet1candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                               	igenjet1candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                        	igenjet1candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                               	igenjet1candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                igenjet1_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet1_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet1_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                igenjet1_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet1_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet1_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
 					}
 				}
@@ -7744,14 +7696,14 @@ if(ijet==0){
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                                igenjet1candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                igenjet1candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                                igenjet1candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                igenjet1candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                igenjet1_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet1_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet1_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                igenjet1_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet1_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet1_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet1_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
 			}
 		}		
@@ -7776,14 +7728,14 @@ if(ijet==1){
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                                igenjet2candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                igenjet2candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                                igenjet2candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                igenjet2candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                igenjet2_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet2_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet2_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                igenjet2_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet2_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet2_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                                         }
                                 }
@@ -7797,14 +7749,14 @@ if(ijet==1){
                         Hep3Vector cand3v(gencand.px(), gencand.py(), gencand.pz());
                         if(cand3v.perp()>1.0 && abs(cand3v.eta()<2.5) && gencand.charge()!=0){
 #ifdef TRACKEFFDEBUG
-                                igenjet2candsmom_num_trackeff_debug_v2[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                igenjet2candsmom_den_trackeff_debug_v2[ik][isrc] += (cand3v.perp());
+                                igenjet2candsmom_num_trackeff_debug[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                igenjet2candsmom_den_trackeff_debug[ik][isrc] += (cand3v.perp());
 
-                                igenjet2_long_num_trackeff_debug_v2[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet2_long_den_trackeff_debug_v2[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet2_long_num_trackeff_debug[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_long_den_trackeff_debug[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                igenjet2_tran_num_trackeff_debug_v2[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                igenjet2_tran_den_trackeff_debug_v2[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                igenjet2_tran_num_trackeff_debug[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                igenjet2_tran_den_trackeff_debug[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 #endif
                         }
                 }
@@ -8141,24 +8093,24 @@ for (int ik=0; ik<nkappa; ik++){
 
 #ifdef TRACKEFFDEBUG
 		//Debug using Matching TrackEff
-		RecoJCO_trackeff_debug_v2[0][0][ik][isrc] = (ijet1candsmom_num_trackeff_debug_v2[ik][isrc]/(pow(ijet1candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik])));
-                RecoJCO_trackeff_debug_v2[0][1][ik][isrc] = (ijet2candsmom_num_trackeff_debug_v2[ik][isrc]/(pow(ijet2candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik])));
+		RecoJCO_trackeff_debug[0][0][ik][isrc] = (ijet1candsmom_num_trackeff_debug[ik][isrc]/(pow(ijet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
+                RecoJCO_trackeff_debug[0][1][ik][isrc] = (ijet2candsmom_num_trackeff_debug[ik][isrc]/(pow(ijet2candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
 
-                RecoJCO_trackeff_debug_v2[1][0][ik][isrc] = (ijet1_long_num_trackeff_debug_v2[ik][isrc]/ijet1_long_den_trackeff_debug_v2[ik][isrc]);
-                RecoJCO_trackeff_debug_v2[1][1][ik][isrc] = (ijet2_long_num_trackeff_debug_v2[ik][isrc]/ijet2_long_den_trackeff_debug_v2[ik][isrc]);
+                RecoJCO_trackeff_debug[1][0][ik][isrc] = (ijet1_long_num_trackeff_debug[ik][isrc]/ijet1_long_den_trackeff_debug[ik][isrc]);
+                RecoJCO_trackeff_debug[1][1][ik][isrc] = (ijet2_long_num_trackeff_debug[ik][isrc]/ijet2_long_den_trackeff_debug[ik][isrc]);
 
-                RecoJCO_trackeff_debug_v2[2][0][ik][isrc] = (ijet1_tran_num_trackeff_debug_v2[ik][isrc]/ijet1_tran_den_trackeff_debug_v2[ik][isrc]);
-                RecoJCO_trackeff_debug_v2[2][1][ik][isrc] = (ijet2_tran_num_trackeff_debug_v2[ik][isrc]/ijet2_tran_den_trackeff_debug_v2[ik][isrc]);
+                RecoJCO_trackeff_debug[2][0][ik][isrc] = (ijet1_tran_num_trackeff_debug[ik][isrc]/ijet1_tran_den_trackeff_debug[ik][isrc]);
+                RecoJCO_trackeff_debug[2][1][ik][isrc] = (ijet2_tran_num_trackeff_debug[ik][isrc]/ijet2_tran_den_trackeff_debug[ik][isrc]);
 
 
-                recomomJCO_trackeff_debug_v2[0][0][ik][isrc] = (pow(ijet1candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik]));
-                recomomJCO_trackeff_debug_v2[0][1][ik][isrc] = (pow(ijet2candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik]));
+                recomomJCO_trackeff_debug[0][0][ik][isrc] = (pow(ijet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik]));
+                recomomJCO_trackeff_debug[0][1][ik][isrc] = (pow(ijet2candsmom_den_trackeff_debug[ik][isrc],kappa[ik]));
 
-                recomomJCO_trackeff_debug_v2[1][0][ik][isrc] = (ijet1_long_den_trackeff_debug_v2[ik][isrc]);
-                recomomJCO_trackeff_debug_v2[1][1][ik][isrc] = (ijet2_long_den_trackeff_debug_v2[ik][isrc]);
+                recomomJCO_trackeff_debug[1][0][ik][isrc] = (ijet1_long_den_trackeff_debug[ik][isrc]);
+                recomomJCO_trackeff_debug[1][1][ik][isrc] = (ijet2_long_den_trackeff_debug[ik][isrc]);
 
-                recomomJCO_trackeff_debug_v2[2][0][ik][isrc] = (ijet1_tran_den_trackeff_debug_v2[ik][isrc]);
-                recomomJCO_trackeff_debug_v2[2][1][ik][isrc] = (ijet2_tran_den_trackeff_debug_v2[ik][isrc]);
+                recomomJCO_trackeff_debug[2][0][ik][isrc] = (ijet1_tran_den_trackeff_debug[ik][isrc]);
+                recomomJCO_trackeff_debug[2][1][ik][isrc] = (ijet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
 
 #ifdef TRACKPTUP
@@ -8237,14 +8189,14 @@ for (int ik=0; ik<nkappa; ik++){
 
 #ifdef TRACKEFFDEBUG
 		//Debug using Matching Trackeff
-		GenJCO_trackeff_debug_v2[0][0][ik][isrc] = (igenjet1candsmom_num_trackeff_debug_v2[ik][isrc]/(pow(igenjet1candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik])));
-                GenJCO_trackeff_debug_v2[0][1][ik][isrc] = (igenjet2candsmom_num_trackeff_debug_v2[ik][isrc]/(pow(igenjet2candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik])));
+		GenJCO_trackeff_debug[0][0][ik][isrc] = (igenjet1candsmom_num_trackeff_debug[ik][isrc]/(pow(igenjet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
+                GenJCO_trackeff_debug[0][1][ik][isrc] = (igenjet2candsmom_num_trackeff_debug[ik][isrc]/(pow(igenjet2candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
 
-                GenJCO_trackeff_debug_v2[1][0][ik][isrc] = (igenjet1_long_num_trackeff_debug_v2[ik][isrc]/igenjet1_long_den_trackeff_debug_v2[ik][isrc]);
-                GenJCO_trackeff_debug_v2[1][1][ik][isrc] = (igenjet2_long_num_trackeff_debug_v2[ik][isrc]/igenjet2_long_den_trackeff_debug_v2[ik][isrc]);
+                GenJCO_trackeff_debug[1][0][ik][isrc] = (igenjet1_long_num_trackeff_debug[ik][isrc]/igenjet1_long_den_trackeff_debug[ik][isrc]);
+                GenJCO_trackeff_debug[1][1][ik][isrc] = (igenjet2_long_num_trackeff_debug[ik][isrc]/igenjet2_long_den_trackeff_debug[ik][isrc]);
 
-                GenJCO_trackeff_debug_v2[2][0][ik][isrc] = (igenjet1_tran_num_trackeff_debug_v2[ik][isrc]/igenjet1_tran_den_trackeff_debug_v2[ik][isrc]);
-                GenJCO_trackeff_debug_v2[2][1][ik][isrc] = (igenjet2_tran_num_trackeff_debug_v2[ik][isrc]/igenjet2_tran_den_trackeff_debug_v2[ik][isrc]);
+                GenJCO_trackeff_debug[2][0][ik][isrc] = (igenjet1_tran_num_trackeff_debug[ik][isrc]/igenjet1_tran_den_trackeff_debug[ik][isrc]);
+                GenJCO_trackeff_debug[2][1][ik][isrc] = (igenjet2_tran_num_trackeff_debug[ik][isrc]/igenjet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
 
 #ifdef MATCHING
@@ -8401,14 +8353,14 @@ for (int ik=0; ik<nkappa; ik++){
 
 #ifdef TRACKEFFMATCHING
 #ifdef TRACKEFFDEBUG
-                genmomJCO_trackeff_debug_v2[0][0][ik][isrc] = (pow(igenjet1candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik]));
-                genmomJCO_trackeff_debug_v2[0][1][ik][isrc] = (pow(igenjet2candsmom_den_trackeff_debug_v2[ik][isrc],kappa[ik]));
+                genmomJCO_trackeff_debug[0][0][ik][isrc] = (pow(igenjet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik]));
+                genmomJCO_trackeff_debug[0][1][ik][isrc] = (pow(igenjet2candsmom_den_trackeff_debug[ik][isrc],kappa[ik]));
 
-                genmomJCO_trackeff_debug_v2[1][0][ik][isrc] = (igenjet1_long_den_trackeff_debug_v2[ik][isrc]);
-                genmomJCO_trackeff_debug_v2[1][1][ik][isrc] = (igenjet2_long_den_trackeff_debug_v2[ik][isrc]);
+                genmomJCO_trackeff_debug[1][0][ik][isrc] = (igenjet1_long_den_trackeff_debug[ik][isrc]);
+                genmomJCO_trackeff_debug[1][1][ik][isrc] = (igenjet2_long_den_trackeff_debug[ik][isrc]);
 
-                genmomJCO_trackeff_debug_v2[2][0][ik][isrc] = (igenjet1_tran_den_trackeff_debug_v2[ik][isrc]);
-                genmomJCO_trackeff_debug_v2[2][1][ik][isrc] = (igenjet2_tran_den_trackeff_debug_v2[ik][isrc]);
+                genmomJCO_trackeff_debug[2][0][ik][isrc] = (igenjet1_tran_den_trackeff_debug[ik][isrc]);
+                genmomJCO_trackeff_debug[2][1][ik][isrc] = (igenjet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
 #endif	
 		}
@@ -9091,7 +9043,7 @@ for(int iet=0; iet<njetetamn; iet++){
 						if(ak4PFJets->size()>=2){
                                 			isRecoJCO_TrackEff2D[id][ij][ik][iet]=true;
                                         		int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
-                                        		h_recovar_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin,weighttrg);
+                                        		h_recovar_trackeff2D[id][ij][ik][iet]->Fill(irecbin,weighttrg);
                                         		}
 						}
 					}
@@ -9104,7 +9056,7 @@ for(int iet=0; iet<njetetamn; iet++){
                                                 if(genjets->size()>=2){
                                                 	isGenJCO_TrackEff2D[id][ij][ik][iet]=true;
 							int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
-							h_genvar_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin,weighttrg);
+							h_genvar_trackeff2D[id][ij][ik][iet]->Fill(igenbin,weighttrg);
                                                 	}
                                         	}
                                 	}
@@ -9115,25 +9067,25 @@ for(int iet=0; iet<njetetamn; iet++){
 					if(ak4PFJets->size()>=2 && genjets->size()>=2){
                                         	int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
                                                 int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_RM_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
+                                                h_RM_trackeff2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
                                         }
 					else if(ak4PFJets->size()>=2){
                                                 int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                h_recofake_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+                                                h_recofake_trackeff2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
                                         }
 					else if(genjets->size()>=2){
 						int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                h_genmiss_trackeff2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
 					}
 				}
 				else{
 					if(isRecoJCO_TrackEff2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
                                                 int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                h_recofake_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+                                                h_recofake_trackeff2D[id][ij][ik][iet]->Fill(irecbin, weighttrg);
                                         }
                                         if(isGenJCO_TrackEff2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
                                         	int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                h_genmiss_trackeff2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
                                 		}
                  			}
 				}
@@ -9148,8 +9100,8 @@ for(int iet=0; iet<njetetamn; iet++){
 
 //Tracking Efficiency using Matching
 #ifdef TRACKEFFDEBUG
-bool isRecoJCO_TrackEff2D_debug_v2[ndef][njet][nkappa][njetetamn];
-bool isGenJCO_TrackEff2D_debug_v2[ndef][njet][nkappa][njetetamn];
+bool isRecoJCO_TrackEff2D_debug[ndef][njet][nkappa][njetetamn];
+bool isGenJCO_TrackEff2D_debug[ndef][njet][nkappa][njetetamn];
 
 for(int id=0; id<ndef; id++){
 for(int ij=0; ij<njet; ij++){
@@ -9157,16 +9109,16 @@ for(int ik=0; ik<nkappa; ik++){
 for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef TRACKEFFMATCHING
-        if(recomomJCO_trackeff_debug_v2[id][ij][ik][0]<=0 || recomomJCO_trackeff_debug_v2[id][ij][ik][1]<=0 || recomomJCO_trackeff_debug_v2[id][ij][ik][2]<=0 || genmomJCO_trackeff_debug_v2[id][ij][ik][0]<=0) continue;
+        if(recomomJCO_trackeff_debug[id][ij][ik][0]<=0 || recomomJCO_trackeff_debug[id][ij][ik][1]<=0 || recomomJCO_trackeff_debug[id][ij][ik][2]<=0 || genmomJCO_trackeff_debug[id][ij][ik][0]<=0) continue;
 #endif
                 if (isReconstruct) {
                         for (int isrc=0; isrc<njecmx; isrc++) {
                                 if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
                                         if (isrc==0) {
                                                 if(ak4PFJets->size()>=2){
-                                                        isRecoJCO_TrackEff2D_debug_v2[id][ij][ik][iet]=true;
-                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug_v2[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                        h_recovar_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(irecbin,weighttrg);
+                                                        isRecoJCO_TrackEff2D_debug[id][ij][ik][iet]=true;
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                        h_recovar_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin,weighttrg);
                                                         }
                                                 }
                                         }
@@ -9177,38 +9129,38 @@ for(int iet=0; iet<njetetamn; iet++){
                                 if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
                                         if(isrc==0){
                                                 if(genjets->size()>=2){
-                                                        isGenJCO_TrackEff2D_debug_v2[id][ij][ik][iet]=true;
-                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug_v2[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                        h_genvar_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(igenbin,weighttrg);
+                                                        isGenJCO_TrackEff2D_debug[id][ij][ik][iet]=true;
+                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                        h_genvar_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin,weighttrg);
                                                         }
                                                 }
                                         }
                                 if(isrc==0 && isReconstruct){
 #ifdef TRACKEFFMATCHING
-                                if(isRecoJCO_TrackEff2D_debug_v2[id][ij][ik][iet] && isGenJCO_TrackEff2D_debug_v2[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && TrackJet_matches){
+                                if(isRecoJCO_TrackEff2D_debug[id][ij][ik][iet] && isGenJCO_TrackEff2D_debug[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && TrackJet_matches){
 #endif
                                         if(ak4PFJets->size()>=2 && genjets->size()>=2){
-                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug_v2[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug_v2[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_RM_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_RM_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg);
                                         }
                                         else if(ak4PFJets->size()>=2){
-                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug_v2[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                h_recofake_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin, weighttrg);
                                         }
                                         else if(genjets->size()>=2){
-                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug_v2[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_genmiss_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin, weighttrg);
                                         }
                                 }
                                 else{
-                                        if(isRecoJCO_TrackEff2D_debug_v2[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
-                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug_v2[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                h_recofake_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(irecbin, weighttrg);
+                                        if(isRecoJCO_TrackEff2D_debug[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_trackeff_debug[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_trackeff2D_debug[id][ij][ik][iet]->Fill(irecbin, weighttrg);
                                         }
-                                        if(isGenJCO_TrackEff2D_debug_v2[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug_v2[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_genmiss_trackeff2D_debug_v2[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                        if(isGenJCO_TrackEff2D_debug[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_trackeff_debug[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Fill(igenbin, weighttrg);
                                                 }
                                         }
                                 }
@@ -9655,19 +9607,19 @@ QCDEventShape::endJob()
 #endif
 
 #ifdef TRACKEFF
-					h_recovar_trackeff2D_debug[id][ij][ik][iet]->Write();
-					h_genvar_trackeff2D_debug[id][ij][ik][iet]->Write();
-                                        h_recofake_trackeff2D_debug[id][ij][ik][iet]->Write();
-                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Write();
-                                        h_RM_trackeff2D_debug[id][ij][ik][iet]->Write();
+					h_recovar_trackeff2D[id][ij][ik][iet]->Write();
+					h_genvar_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_recofake_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_RM_trackeff2D[id][ij][ik][iet]->Write();
 #endif
 
 #ifdef TRACKEFFDEBUG
-					h_recovar_trackeff2D_debug_v2[id][ij][ik][iet]->Write();
-                                        h_genvar_trackeff2D_debug_v2[id][ij][ik][iet]->Write();
-                                        h_recofake_trackeff2D_debug_v2[id][ij][ik][iet]->Write();
-                                        h_genmiss_trackeff2D_debug_v2[id][ij][ik][iet]->Write();
-                                        h_RM_trackeff2D_debug_v2[id][ij][ik][iet]->Write();
+					h_recovar_trackeff2D_debug[id][ij][ik][iet]->Write();
+                                        h_genvar_trackeff2D_debug[id][ij][ik][iet]->Write();
+                                        h_recofake_trackeff2D_debug[id][ij][ik][iet]->Write();
+                                        h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Write();
+                                        h_RM_trackeff2D_debug[id][ij][ik][iet]->Write();
 #endif
 
 #ifdef TRACKPTUP

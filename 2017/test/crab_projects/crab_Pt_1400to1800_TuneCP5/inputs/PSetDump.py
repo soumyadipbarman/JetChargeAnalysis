@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Test")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/0086E683-690A-A84C-8769-8C1A1BEB7CC4.root')
+    fileNames = cms.untracked.vstring('/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root')
 )
 process.EmptyJetIdParams = cms.PSet(
     Pt010_Loose = cms.vdouble(-999.0, -999.0, -999.0, -999.0),
