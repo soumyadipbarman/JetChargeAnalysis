@@ -35,7 +35,7 @@
 #define JETRESO
 #define TRIGGER
 #define MATCHING
-#define TRACKEFFMATCHING        // For TrackEffi Matching
+//#define TRACKEFFMATCHING        // For TrackEffi Matching
 ////For MC Flavor Tagging 
 #define FLAV
 
@@ -64,7 +64,7 @@
 
 ////For Track Reconstruction Efficiency
 #define TRACKEFF
-#define TRACKEFFDEBUG
+//#define TRACKEFFDEBUG
 
 ////For Track pT Resolution
 #define TRACKPTUP
@@ -1159,7 +1159,9 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1* h_recofake_trackeff2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackeff2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackeff2D[ndef][njet][nkappa][njetetamn];
+//#endif
 
+/*
   //Track Matching
 //#ifdef TRACKEFFDEBUG 
   TH1* h_recovar_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
@@ -1167,8 +1169,8 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1* h_recofake_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackeff2D_debug[ndef][njet][nkappa][njetetamn];
-//#endif  
 //#endif
+*/
 
 //#ifdef TRACKPTUP
   TH1* h_recovar_trackpt1_2D[ndef][njet][nkappa][njetetamn];
@@ -2073,6 +2075,7 @@ for(int id=0; id<ndef; id++){
                                         h_genmiss_trackeff2D[id][ij][ik][iet]->Sumw2();
 #endif
 
+/*
 #ifdef TRACKEFFDEBUG
 					//Track Matching
 					if (isReconstruct) {
@@ -2102,6 +2105,7 @@ for(int id=0; id<ndef; id++){
                                         h_genmiss_trackeff2D_debug[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Sumw2();
 #endif
+*/
 
 #ifdef TRACKPTUP
 					if (isReconstruct) {
@@ -4044,6 +4048,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #endif
 #endif
 
+/*
   //Debug using Matching for TrackEff
 #ifdef TRACKEFFDEBUG
   double RecoJCO_trackeff_debug[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
@@ -4056,6 +4061,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double genmomJCO_trackeff_debug[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 #endif
+*/
 
 #ifdef TRACKPTUP
   double RecoJCO_trackpt1[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
@@ -4161,6 +4167,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double igenjet2candsmom_num_trackeff[nkappa][nGenReso] = {{0.0}},igenjet2candsmom_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_trackeff[nkappa][nGenReso] = {{0.0}};
 #endif
 
+/*
 //Tracking Efficiency using Matching
 #ifdef TRACKEFFDEBUG
   double ijet1candsmom_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_long_den_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackeff_debug[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackeff_debug[nkappa][njecmx] = {{0.0}};
@@ -4169,6 +4176,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double igenjet1candsmom_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_trackeff_debug[nkappa][nGenReso] = {{0.0}};
   double igenjet2candsmom_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_trackeff_debug[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_trackeff_debug[nkappa][nGenReso] = {{0.0}};
 #endif
+*/
 
 #ifdef TRACKPTUP
   double ijet1candsmom_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackpt1[nkappa][njecmx] = {{0.0}},ijet1_long_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackpt1[nkappa][njecmx] = {{0.0}};
@@ -4875,6 +4883,7 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
 
 #endif
 
+/*
 //Tracking Efficiency
 #ifdef TRACKEFFMATCHING
 bool TrackJet_matches = false;
@@ -4992,16 +5001,16 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
                         		matched_trackgendaus[igen] = true;
                         		matched_recotrackparts.push_back(trackrecodaus[ireco]);
                         		matched_gentrackparts.push_back(trackgendaus[igen]);
-/*
-				cout<<"------Particle Matching START for killed tracks--------"<<endl;
-                	        if(itrackjet==0){
-         	                cout<<"Leading RecoJet pt : "<<(*ak4PFJets)[itrackjet].pt()<<endl;
-                        	cout<<"Leading GenJet pt : "<<(*genjets)[igtrackjet].pt()<<endl;
-                        	cout << "Leading RecoJet Particle check : pt: " << trackrecocand.pt() << " eta: " << trackrecocand.eta() << " ID: " << trackrecocand.pdgId() << " charge: " << trackrecocand.charge() << endl;
-                        	cout << "Leading GenJet Particle check : pt: " << trackgencand.pt() << " eta: " <<trackgencand.eta() << " ID: " << trackgencand.pdgId() << " charge: " << trackgencand.charge() << endl;
-        			}
-                        	cout<<"------Particle Matching END for killed tracks--------"<<endl;
-*/
+
+				//cout<<"------Particle Matching START for killed tracks--------"<<endl;
+                	        //if(itrackjet==0){
+         	                //cout<<"Leading RecoJet pt : "<<(*ak4PFJets)[itrackjet].pt()<<endl;
+                        	//cout<<"Leading GenJet pt : "<<(*genjets)[igtrackjet].pt()<<endl;
+                        	//cout << "Leading RecoJet Particle check : pt: " << trackrecocand.pt() << " eta: " << trackrecocand.eta() << " ID: " << trackrecocand.pdgId() << " charge: " << trackrecocand.charge() << endl;
+                        	//cout << "Leading GenJet Particle check : pt: " << trackgencand.pt() << " eta: " <<trackgencand.eta() << " ID: " << trackgencand.pdgId() << " charge: " << trackgencand.charge() << endl;
+        			//}
+                        	//cout<<"------Particle Matching END for killed tracks--------"<<endl;
+
 				}
 			}
 					}
@@ -5011,6 +5020,7 @@ if (ak4PFJets.isValid() && ak4PFJets->size() >= 2 && genjets.isValid() && genjet
 	}
 }
 #endif
+*/
 
 if(isMC) {
 
@@ -6560,6 +6570,7 @@ if(ijet==1){
 	}
 }
 
+/*
 //Tracking Effciency using Matching
 if(ijet==0){
         for (int ik=0; ik<10; ik++){
@@ -6662,7 +6673,7 @@ if(ijet==1){
 #endif
 	}
 }
-
+*/
 
 		//  if(isEta && isPt) {ncount++;}
 	   	//  }//if (abs((*ak4PFJets)[jetindx[isrc][0]].eta())<etarange[iet] && abs((*ak4PFJets)[jetindx[isrc][1]].eta())<etarange[iet])
@@ -7658,6 +7669,7 @@ if(ijet==1){
 	}
 }
 
+/*
 //Tracking Efficiency using Matching
 if(ijet==0){
         for (int ik=0; ik<10; ik++){
@@ -7764,6 +7776,7 @@ if(ijet==1){
 #endif
         }
 }
+*/
 
 		  //  if (isEta && isPt) {ncount++;}
 		} // if (abs((*genjets)[genjetindx[isrc][0]].eta())<etarange[iet] && 
@@ -8091,6 +8104,7 @@ for (int ik=0; ik<nkappa; ik++){
                 recomomJCO_trackeff[2][1][ik][isrc] = (ijet2_tran_den_trackeff[ik][isrc]);
 #endif
 
+/*
 #ifdef TRACKEFFDEBUG
 		//Debug using Matching TrackEff
 		RecoJCO_trackeff_debug[0][0][ik][isrc] = (ijet1candsmom_num_trackeff_debug[ik][isrc]/(pow(ijet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
@@ -8112,6 +8126,7 @@ for (int ik=0; ik<nkappa; ik++){
                 recomomJCO_trackeff_debug[2][0][ik][isrc] = (ijet1_tran_den_trackeff_debug[ik][isrc]);
                 recomomJCO_trackeff_debug[2][1][ik][isrc] = (ijet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
+*/
 
 #ifdef TRACKPTUP
 		RecoJCO_trackpt1[0][0][ik][isrc] = (ijet1candsmom_num_trackpt1[ik][isrc]/(pow(ijet1candsmom_den_trackpt1[ik][isrc],kappa[ik])));
@@ -8187,6 +8202,7 @@ for (int ik=0; ik<nkappa; ik++){
                 GenJCO_trackeff[2][1][ik][isrc] = (igenjet2_tran_num_trackeff[ik][isrc]/igenjet2_tran_den_trackeff[ik][isrc]);
 #endif
 
+/*
 #ifdef TRACKEFFDEBUG
 		//Debug using Matching Trackeff
 		GenJCO_trackeff_debug[0][0][ik][isrc] = (igenjet1candsmom_num_trackeff_debug[ik][isrc]/(pow(igenjet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik])));
@@ -8198,6 +8214,7 @@ for (int ik=0; ik<nkappa; ik++){
                 GenJCO_trackeff_debug[2][0][ik][isrc] = (igenjet1_tran_num_trackeff_debug[ik][isrc]/igenjet1_tran_den_trackeff_debug[ik][isrc]);
                 GenJCO_trackeff_debug[2][1][ik][isrc] = (igenjet2_tran_num_trackeff_debug[ik][isrc]/igenjet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
+*/
 
 #ifdef MATCHING
 
@@ -8351,6 +8368,7 @@ for (int ik=0; ik<nkappa; ik++){
                 imatched_all_pt[1][ik][isrc] = igenjet2candsmom_matchedtracks[ik][isrc]/igenjet2candsmom_alltracks[ik][isrc];
 #endif	
 
+/*
 #ifdef TRACKEFFMATCHING
 #ifdef TRACKEFFDEBUG
                 genmomJCO_trackeff_debug[0][0][ik][isrc] = (pow(igenjet1candsmom_den_trackeff_debug[ik][isrc],kappa[ik]));
@@ -8362,7 +8380,8 @@ for (int ik=0; ik<nkappa; ik++){
                 genmomJCO_trackeff_debug[2][0][ik][isrc] = (igenjet1_tran_den_trackeff_debug[ik][isrc]);
                 genmomJCO_trackeff_debug[2][1][ik][isrc] = (igenjet2_tran_den_trackeff_debug[ik][isrc]);
 #endif
-#endif	
+#endif
+*/
 		}
 	}
 
@@ -9097,7 +9116,7 @@ for(int iet=0; iet<njetetamn; iet++){
 }
 #endif
 
-
+/*
 //Tracking Efficiency using Matching
 #ifdef TRACKEFFDEBUG
 bool isRecoJCO_TrackEff2D_debug[ndef][njet][nkappa][njetetamn];
@@ -9171,7 +9190,7 @@ for(int iet=0; iet<njetetamn; iet++){
         }
 }
 #endif
-
+*/
 
 #ifdef TRACKPTUP
 //Trackpt up
@@ -9614,6 +9633,7 @@ QCDEventShape::endJob()
                                         h_RM_trackeff2D[id][ij][ik][iet]->Write();
 #endif
 
+/*
 #ifdef TRACKEFFDEBUG
 					h_recovar_trackeff2D_debug[id][ij][ik][iet]->Write();
                                         h_genvar_trackeff2D_debug[id][ij][ik][iet]->Write();
@@ -9621,6 +9641,7 @@ QCDEventShape::endJob()
                                         h_genmiss_trackeff2D_debug[id][ij][ik][iet]->Write();
                                         h_RM_trackeff2D_debug[id][ij][ik][iet]->Write();
 #endif
+*/
 
 #ifdef TRACKPTUP
 					h_recovar_trackpt1_2D[id][ij][ik][iet]->Write();
