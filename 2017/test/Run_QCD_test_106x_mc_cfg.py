@@ -28,9 +28,9 @@ process.source = cms.Source("PoolSource",
 #eventRanges = cms.untracked.VEventRange('1:1000-1:2000'),
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(30000) )
 
@@ -186,6 +186,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+	BtagScaleFacFile = cms.string("btagging.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
          'pfCombinedInclusiveSecondaryVertexV2BJetTags',
          'pfDeepCSVJetTags:probb',
@@ -194,6 +195,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
          'pfDeepCSVJetTags:probudsg'
     )
  )
+
 
 #process.options = cms.untracked.PSet(
 #SkipEvent = cms.untracked.vstring('ProductNotFound')
