@@ -71,9 +71,9 @@ def main():
                 config.Data.inputDBS = 'global'
 		config.JobType.inputFiles= ["Summer20UL16_JRV3_MC_PtResolution_AK4PFchs.txt","Summer20UL16_JRV3_MC_SF_AK4PFchs.txt","Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt"]
 
-#               config.JobType.maxMemoryMB = 2500
-		config.JobType.maxJobRuntimeMin = 3000
-                config.JobType.numCores = 2
+                config.JobType.maxMemoryMB = 2500
+		#config.JobType.maxJobRuntimeMin = 3000
+                #config.JobType.numCores = 2
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
                 config.Data.splitting = 'FileBased'

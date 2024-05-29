@@ -6,6 +6,10 @@ process = cms.Process("Test")
 #process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
 
+process.options = cms.untracked.PSet(
+    SkipEvent = cms.untracked.vstring('ProductNotFound')
+)
+
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
@@ -23,10 +27,10 @@ process.source = cms.Source("PoolSource",
 )
 
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(30000) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
@@ -37,17 +41,8 @@ process.load("Configuration.Geometry.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.MagneticField_cff")
 
 from Configuration.AlCa.GlobalTag import GlobalTag
-#process.GlobalTag = GlobalTag(process.GlobalTag,'94X_mc2017_realistic_v17')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'94X_mc2017_realistic_v14')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v7')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'76X_mcRun2_asymptotic_RunIIFall15DR76_v1')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'76X_mcRun2_asymptotic_v12')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'74X_mcRun2_asymptotic_realisticBS_v1')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'MCRUN2_74_V9')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v8')
-#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mc2017_realistic_v9')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mcRun2_asymptotic_preVFP_v11')  #MC 2016APV
-#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mcRun2_asymptotic_v17')          #MC 2016
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mcRun2_asymptotic_preVFP_v11')  #MC 2016APV
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_mcRun2_asymptotic_v17')          #MC 2016
 
 
 from PhysicsTools.PatAlgos.tools.coreTools import *
@@ -79,17 +74,39 @@ process.MessageLogger = cms.Service("MessageLogger",
  destinations = cms.untracked.vstring('cout')  
 )  
 
+# For Pileup JetID 
+process.load('RecoJets.JetProducers.PileupJetID_cfi')
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL17
+process.pileupJetIdUpdated = process.pileupJetId.clone(
+        jets=cms.InputTag("slimmedJets"),
+        inputIsCorrected=True,
+        applyJec=False,
+        vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
+        algos = cms.VPSet(_chsalgos_106X_UL17),
+    )
+
+
 #For L1Prefiring
 '''
 from PhysicsTools.PatUtils.l1ECALPrefiringWeightProducer_cfi import l1ECALPrefiringWeightProducer
 process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
     TheJets = cms.InputTag("slimmedJets"), #this should be the slimmedJets collection with up to date JECs !
     #L1Maps = cms.string("L1PrefiringMaps.root"),
-    DataEra = cms.string("UL2017BtoF"), #Use 2016BtoH for 2016
+    DataEra = cms.string("UL2016BtoH"), #Use 2016BtoH for 2016
     UseJetEMPt = cms.bool(False),
     PrefiringRateSystematicUncty = cms.double(0.2),
     SkipWarnings = False)
 '''
+
+from PhysicsTools.PatUtils.l1PrefiringWeightProducer_cfi import l1PrefiringWeightProducer
+process.prefiringweight = l1PrefiringWeightProducer.clone(
+TheJets = cms.InputTag("slimmedJets"), #this should be the slimmedJets collection with up to date JECs !
+DataEraECAL = cms.string("UL2016BtoH"),
+DataEraMuon = cms.string("2016"),
+UseJetEMPt = cms.bool(False),
+PrefiringRateSystematicUnctyECAL = cms.double(0.2),
+PrefiringRateSystematicUnctyMuon = cms.double(0.2)
+)
 
 #ak5 PF & Gen Jets
 #from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets
@@ -161,7 +178,17 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #  PtThreshold = cms.untracked.double(12.0),
   	EtaRange =  cms.untracked.double(3.0),
   	PtThreshold = cms.untracked.double(55.0), #effective is 21
-  	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81       
+  	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81      
+        tracks = cms.InputTag("generalTracks"),
+        filterGoodVertices = cms.InputTag("Flag_goodVertices"),
+        filterglobalSuperTightHalo2016Filter  = cms.InputTag("Flag_globalSuperTightHalo2016Filter"),
+        filterHBHENoiseFilter = cms.InputTag("Flag_HBHENoiseFilter"),
+        filterHBHENoiseIsoFilter = cms.InputTag("Flag_HBHENoiseIsoFilter"),
+        filterEcalDeadCellTriggerPrimitiveFilter = cms.InputTag("Flag_EcalDeadCellTriggerPrimitiveFilter"),
+        filterBadPFMuonFilter = cms.InputTag("Flag_BadPFMuonFilter"),
+        filterBadPFMuonDzFilter = cms.InputTag("Flag_BadPFMuonDzFilter"),
+        filtereeBadScFilter = cms.InputTag("Flag_eeBadScFilter"),
+        filterecalBadCalibFilter = cms.InputTag("Flag_ecalBadCalibFilter"), 
 #        scaleFactorsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),

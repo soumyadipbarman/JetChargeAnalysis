@@ -73,8 +73,8 @@ def main():
 
 #               config.JobType.maxMemoryMB = 2500
 #               config.JobType.priority = 9999
-		config.JobType.maxJobRuntimeMin = 3000
-		config.JobType.numCores = 2
+		#config.JobType.maxJobRuntimeMin = 3000
+		#config.JobType.numCores = 2
 #               config.Data.splitting = 'EventAwareLumiBased'
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
@@ -109,13 +109,12 @@ def main():
 	'/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM',
 	'/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM',
 	'/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM',
-	'/QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM']
 	
-		
     	  	requestName =['Pt_15to30_TuneCP5','Pt_30to50_TuneCP5','Pt_50to80_TuneCP5','Pt_80to120_TuneCP5','Pt_120to170_TuneCP5','Pt_170to300_TuneCP5',
                                'Pt_300to470_TuneCP5','Pt_470to600_TuneCP5','Pt_600to800_TuneCP5','Pt_800to1000_TuneCP5','Pt_1000to1400_TuneCP5',
 				'Pt_1400to1800_TuneCP5','Pt_1800to2400_TuneCP5','Pt_2400to3200_TuneCP5','Pt_3200toinf_TuneCP5']
+		
                 ireq = 0
                 for inDS in inputDatasets: 
                         config.General.requestName = requestName[ireq]

@@ -72,10 +72,10 @@ def main():
 		config.JobType.inputFiles= ["Summer20UL16APV_JRV3_MC_PtResolution_AK4PFchs.txt","Summer20UL16APV_JRV3_MC_SF_AK4PFchs.txt","Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt"]
 
 #               config.JobType.maxMemoryMB = 2500
-		config.JobType.maxJobRuntimeMin = 2750
+		#config.JobType.maxJobRuntimeMin = 2750
 #               config.JobType.priority = 9999
 #               config.Data.splitting = 'EventAwareLumiBased'
-		config.JobType.numCores = 2
+		#config.JobType.numCores = 2
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
 #               config.Data.useParent = True
@@ -99,7 +99,6 @@ def main():
 	'/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_HT200to300_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
-	'/QCD_HT500to700_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_HT500to700_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_HT700to1000_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
 	'/QCD_HT1000to1500_TuneCP5_PSWeights_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM',
