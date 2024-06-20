@@ -2,8 +2,8 @@
 
 ### How to run :
 ```
-cmsrel  CMSSW_10_6_20
-cd  CMSSW_10_6_20/src
+cmsrel  CMSSW_10_6_30
+cd  CMSSW_10_6_30/src
 cmsenv
 mkdir Test
 cd Test
