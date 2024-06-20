@@ -6,6 +6,10 @@ process = cms.Process("Test")
 #process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
 
+#process.options = cms.untracked.PSet(
+#    SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
+
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
@@ -70,7 +74,9 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag,'102X_dataRun2_v12')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v28')
 #process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v32')
-process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v35')
+#process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v35')
+process.GlobalTag = GlobalTag(process.GlobalTag,'106X_dataRun2_v37')
+
 from PhysicsTools.PatAlgos.tools.coreTools import *
 # produce PAT Layer 1
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -141,6 +147,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         prescales = cms.InputTag("patTrigger"),
         objects = cms.InputTag("selectedPatTrigger"),
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+	#genparticles = cms.InputTag("prunedGenParticles"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
 	genJetFlavourInfos = cms.InputTag('slimmedGenJetsFlavourInfos'),
@@ -172,12 +179,14 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
 #       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+ 	BTagEffFile = cms.string("BTagEfficiency2017_09Jun2024.root"),
+	BtagScaleFacFile = cms.string("btagging_2017.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
-         'pfCombinedInclusiveSecondaryVertexV2BJetTags',
-         'pfDeepCSVJetTags:probb',
+	 'pfDeepCSVJetTags:probb',
          'pfDeepCSVJetTags:probbb',
-         'pfDeepCSVJetTags:probc',
-         'pfDeepCSVJetTags:probudsg'
+         'pfDeepFlavourJetTags:probb',
+         'pfDeepFlavourJetTags:probbb',
+         'pfDeepFlavourJetTags:problepb'
     )    
  )
 

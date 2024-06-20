@@ -6,18 +6,17 @@ process = cms.Process("Test")
 #process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
 
-process.options = cms.untracked.PSet(
-    SkipEvent = cms.untracked.vstring('ProductNotFound')
-)
+#process.options = cms.untracked.PSet(
+#    SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
 
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/08747118-9574-3542-97A8-8DDB07DD9837.root',
-#'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/0A4429CF-BCEE-8346-BF45-8704E78918A5.root',
-#'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/3E812CAB-6642-1341-9A81-7A6CEEA97460.root' 
+#'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/08747118-9574-3542-97A8-8DDB07DD9837.root',
+'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/110000/0FE7C8C9-B319-104D-9A8D-9929821BC80E.root',
 )
 
 #eventsToSkip = cms.untracked.VEventRange('1:1950-1:2000'),
@@ -49,12 +48,11 @@ process.load("PhysicsTools.PatAlgos.patSequences_cff")
 #process.load("HLTrigger.HLTcore.hltPrescaleRecorder_cfi")
 
 process.options = cms.untracked.PSet(
-
 )
 
 #Setup FWK for multithreaded
-#process.options.numberOfThreads=cms.untracked.uint32(2)
-#process.options.numberOfStreams=cms.untracked.uint32(0)
+process.options.numberOfThreads=cms.untracked.uint32(2)
+process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
  cout = cms.untracked.PSet(  
@@ -72,6 +70,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 )  
 
 # For Pileup JetID 
+'''
 process.load('RecoJets.JetProducers.PileupJetID_cfi')
 from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL17
 process.pileupJetIdUpdated = process.pileupJetId.clone(
@@ -80,6 +79,16 @@ process.pileupJetIdUpdated = process.pileupJetId.clone(
         applyJec=False,
         vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
         algos = cms.VPSet(_chsalgos_106X_UL17),
+    )
+'''
+process.load('RecoJets.JetProducers.PileupJetID_cfi')
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL18
+process.pileupJetIdUpdated = process.pileupJetId.clone( 
+        jets=cms.InputTag("slimmedJets"),
+        inputIsCorrected=True,
+        applyJec=False,
+        vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
+        algos = cms.VPSet(_chsalgos_106X_UL18),
     )
 
 
@@ -113,6 +122,7 @@ PrefiringRateSystematicUnctyMuon = cms.double(0.2)
 process.TFileService=cms.Service("TFileService",
     fileName=cms.string("Test_MC_2018UL.root")
 )
+
 print "test1"
 # Produce PDF weights (maximum is 3)
 process.pdfWeights = cms.EDProducer("PdfWeightProducer",
@@ -139,12 +149,17 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         metSrc = cms.InputTag("slimmedMETs"),
         genSrc = cms.untracked.InputTag("packedGenParticles"),
         pfSrc = cms.InputTag("packedPFCandidates"),
+	metPATSrc = cms.InputTag("TriggerResults","","PAT"),
+	metRECOSrc = cms.InputTag("TriggerResults","","RECO"),
         bits = cms.InputTag("TriggerResults","","HLT"),
         prescales = cms.InputTag("patTrigger"),
-        objects = cms.InputTag("selectedPatTrigger"),
+	objects = cms.InputTag("slimmedPatTrigger"),
+        #objects = cms.InputTag("selectedPatTrigger"),
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+	#genparticles = cms.InputTag("prunedGenParticles"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
+	genJetFlavourInfos = cms.InputTag('slimmedGenJetsFlavourInfos'),
         pileupSrc =cms.InputTag("slimmedAddPileupInfo"),
         ak5pfJetSrc = cms.InputTag("ak5PFJets"),
         ak5genJetSrc = cms.InputTag("ak5GenJets"),
@@ -166,22 +181,36 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #  PtThreshold = cms.untracked.double(12.0),
   	EtaRange =  cms.untracked.double(3.0),
   	PtThreshold = cms.untracked.double(55.0), #effective is 21
-  	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81       
-        tracks = cms.InputTag("generalTracks"),
+  	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81     
+        tracks = cms.InputTag("generalTracks"), 
         filterGoodVertices = cms.InputTag("Flag_goodVertices"),
-        filterglobalSuperTightHalo2016Filter  = cms.InputTag("Flag_globalSuperTightHalo2016Filter"),
-        filterHBHENoiseFilter = cms.InputTag("Flag_HBHENoiseFilter"),
-        filterHBHENoiseIsoFilter = cms.InputTag("Flag_HBHENoiseIsoFilter"),
-        filterEcalDeadCellTriggerPrimitiveFilter = cms.InputTag("Flag_EcalDeadCellTriggerPrimitiveFilter"),
-        filterBadPFMuonFilter = cms.InputTag("Flag_BadPFMuonFilter"),
-        filterBadPFMuonDzFilter = cms.InputTag("Flag_BadPFMuonDzFilter"),
-        filtereeBadScFilter = cms.InputTag("Flag_eeBadScFilter"),
-        filterecalBadCalibFilter = cms.InputTag("Flag_ecalBadCalibFilter"),
+	filterglobalSuperTightHalo2016Filter  = cms.InputTag("Flag_globalSuperTightHalo2016Filter"),
+	filterHBHENoiseFilter = cms.InputTag("Flag_HBHENoiseFilter"),
+	filterHBHENoiseIsoFilter = cms.InputTag("Flag_HBHENoiseIsoFilter"),
+	filterEcalDeadCellTriggerPrimitiveFilter = cms.InputTag("Flag_EcalDeadCellTriggerPrimitiveFilter"),
+	filterBadPFMuonFilter = cms.InputTag("Flag_BadPFMuonFilter"),
+	filterBadPFMuonDzFilter = cms.InputTag("Flag_BadPFMuonDzFilter"),
+	filtereeBadScFilter = cms.InputTag("Flag_eeBadScFilter"),
+	filterecalBadCalibFilter = cms.InputTag("Flag_ecalBadCalibFilter"), 
 #        scaleFactorsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
+	BtagScaleFacFile = cms.string("btagging_2018.json.gz"),
+	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
+         'pfDeepCSVJetTags:probb',
+         'pfDeepCSVJetTags:probbb',
+	 'pfDeepFlavourJetTags:probb',
+	 'pfDeepFlavourJetTags:probbb',
+	 'pfDeepFlavourJetTags:problepb'
+    )
  )
+
+
+#process.options = cms.untracked.PSet(
+#SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
 
 #process.ak5PFJets = ak5PFJets.clone(src = 'packedPFCandidates')
 #process.analyzeBasicPat.append("keep *_ak5PFJets_*_EX")

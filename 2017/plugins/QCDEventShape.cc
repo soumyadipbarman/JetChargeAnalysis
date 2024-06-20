@@ -21,7 +21,7 @@
 
 #define DIJETAVE 
 
-////for data
+////For Data
 //#define JETENERGY
 //#define TRIGGER
 
@@ -35,26 +35,18 @@
 #define JETRESO
 #define TRIGGER
 #define MATCHING
-//#define TRACKEFFMATCHING        // For TrackEffi Matching
-////For MC Flavor Tagging 
+
+////For MC Reco Flavour
 #define FLAV
 
-////For MC Flat Sample
-////Change the bool Flat later part of the code
-////This switch don't work
-//#define FLAT
-
-////For GenParticle only
-//#define GENPART
-
-//#define LUMIWEIGHT
-//#define MERGE_BIN
-//#define TRACKSYS
-
 ////For PileUp
-#define PUNOMI
+//#define PUNOMI
 //#define PUUP
-//#define PUDOWN
+#define PUDOWN
+
+///////////////////
+//--Uncertainty--//
+///////////////////
 
 ////For Hybrid JER
 #define STOCHASTIC
@@ -64,14 +56,36 @@
 
 ////For Track Reconstruction Efficiency
 #define TRACKEFF
-//#define TRACKEFFDEBUG
 
 ////For Track pT Resolution
 #define TRACKPTUP
 #define TRACKPTDOWN
 
-////For Scale Variation for PY8Flat
+////For Scale Variation PY8Flat Only
 #define SCALEUNC
+
+////For BTag Scale Factor (efficiency)
+#define BTAGUNC
+
+////////////////////
+//--Not Required--//
+////////////////////
+
+////Track Reconstruction Efficiency Uncertainty by Matching
+//#define TRACKEFFMATCHING
+//#define TRACKEFFDEBUG
+
+////For MC Flat Sample
+////Change the "bool Flat" later part of the code
+////This switch don't work
+//#define FLAT
+
+////For GenParticle only
+//#define GENPART
+
+//#define LUMIWEIGHT
+//#define MERGE_BIN
+//#define TRACKSYS
 
 
 #include <memory>
@@ -116,7 +130,7 @@
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Tau.h"
 
-//b-jet info
+//BJet info
 #include "DataFormats/PatCandidates/interface/Jet.h"
 #include "DataFormats/PatCandidates/interface/MET.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
@@ -207,8 +221,8 @@ static const int nhist=10;
 static const int nHLTmx=10; //10 triggers
 static const int ngenPT=5;  // event PT bins : merged two trigger phase-space into one
 
-const int ndef=3; // 3 JCO definition
-const int njet=2; // 2 Jets 
+const int ndef=3;    // 3 JCO definition
+const int njet=2;    // 2 Jets 
 const int nkappa=10; // 10 kappas
 const int range=200; // bin-edge range
 
@@ -216,10 +230,9 @@ const char* jcodef[ndef]={"D","L","T"}; // 3 JCO definitions
 double jetname[njet]={1,2};             // 2 Jets
 double kappa[nkappa]={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0}; // 10 kappa values
 
-double recoJetpT, recojet1_pt, recojet2_pt, /*recobjet1_pt, recobjet2_pt,*/ recobjet1_pt_WPT, recobjet2_pt_WPT, genrecojet1_pt, genrecojet2_pt, genrecobjet1_pt, genrecobjet2_pt;
+double recoJetpT, recojet1_pt, recojet2_pt, recobjet1_pt_deepJETT, recobjet2_pt_deepJETT, genrecojet1_pt, genrecojet2_pt, genrecobjet1_pt, genrecobjet2_pt;
 double recoCandX1_J1, recoCandX2_J1, recoCandX3_J1,recoCandX1_J2, recoCandX2_J2, recoCandX3_J2;
-//double recoCandX1_bjet_J1, recoCandX2_bjet_J1, recoCandX3_bjet_J1,recoCandX1_bjet_J2, recoCandX2_bjet_J2, recoCandX3_bjet_J2;
-double recoCandX1_bjet_WPT_J1, recoCandX2_bjet_WPT_J1, recoCandX3_bjet_WPT_J1,recoCandX1_bjet_WPT_J2, recoCandX2_bjet_WPT_J2, recoCandX3_bjet_WPT_J2;
+double recoCandX1_bjet_deepJETT_J1, recoCandX2_bjet_deepJETT_J1, recoCandX3_bjet_deepJETT_J1,recoCandX1_bjet_deepJETT_J2, recoCandX2_bjet_deepJETT_J2, recoCandX3_bjet_deepJETT_J2;
 
 #ifdef FLAV
 double recobjet1_pt, recobjet2_pt;
@@ -548,7 +561,7 @@ double genrng[ndef][njet][nkappa][range]={{{{-3.67,-3.00,-2.33,-1.67,-1.00,-0.67
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////Date_02Apr2024
-//b-Jets
+//BJet
 double nrecobins_bjet[ndef][njet][nkappa]={{{36,28,24,16,12,12,20,16,16,16},{44,32,28,20,20,20,24,20,20,16}},{{12,12,20,20,20,20,20,16,16,16},{12,12,24,24,24,20,20,20,20,16}},{{12,12,20,16,16,20,16,16,16,16},{12,12,20,20,20,20,20,20,20,20}}};
 
 double ngenbins_bjet[ndef][njet][nkappa]={{{18,14,12,8,6,6,10,8,8,8},{22,16,14,10,10,10,12,10,10,8}},{{6,6,10,10,10,10,10,8,8,8},{6,6,12,12,12,10,10,10,10,8}},{{6,6,10,8,8,10,8,8,8,8},{6,6,10,10,10,10,10,10,10,10}}};
@@ -717,6 +730,10 @@ double genmax[ndef][njet][nkappa]={{{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4
                                         {{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0},{4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0}}};
 */
 
+//BJet Stuff
+static const int BJetEffnbins = 9;
+double BJetEffPT[BJetEffnbins+1] = {0, 30, 50, 70, 100, 140, 200, 300, 600, 1000};
+
 //----------------------------------------PT Binning For 2D unfold 
 double recohtbins[nHLTmx+1] = {92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; // 10 trigger phase-space
 double genhtbins[ngenPT+1] = {92, 185, 319, 467, 579, 3000.0};   // 5 PT binning
@@ -830,7 +847,7 @@ const int njetptbin=120;
 const char* jethlt_name[nHLTmx]={"HLT_PFJet60_v","HLT_PFJet80_v","HLT_PFJet140_v","HLT_PFJet200_v","HLT_PFJet260_v","HLT_PFJet320_v","HLT_PFJet400_v","HLT_PFJet450_v","HLT_PFJet500_v","HLT_PFJet550_v"};
 const char* jethlt_lowest={"HLT_PFJet40_v"};
 
-const char* METFilters[11]={"Flag_goodVertices","Flag_globalSuperTightHalo2016Filter","Flag_HBHENoiseFilter","Flag_HBHENoiseIsoFilter","Flag_EcalDeadCellTriggerPrimitiveFilter","Flag_BadPFMuonFilter","Flag_BadPFMuonDzFilter","Flag_hfNoisyHitsFilter","Flag_BadChargedCandidateFilter","Flag_eeBadScFilter","Flag_ecalBadCalibFilter"};
+const char* METFilters[10]={"Flag_goodVertices","Flag_globalSuperTightHalo2016Filter","Flag_HBHENoiseFilter","Flag_HBHENoiseIsoFilter","Flag_EcalDeadCellTriggerPrimitiveFilter","Flag_BadPFMuonFilter","Flag_BadPFMuonDzFilter","Flag_hfNoisyHitsFilter",/*"Flag_BadChargedCandidateFilter",*/"Flag_eeBadScFilter","Flag_ecalBadCalibFilter"};
 
 //double leadingPtThreshold[njetptmn+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
 double leadingPtThreshold[nHLTmx+1] ={92, 119, 185, 251, 319, 388, 467, 518, 579, 669, 3000.0}; //trigger turn on for 2017 UL JetHT sample
@@ -872,6 +889,8 @@ double pdfwt[nnnmx];
 //TH1F* h_genvarpdf[ndef][njet][nkappa][njetetamn][njetptmn][nnnmx];
 TH1F* h_genvarpdf[ndef][njet][nkappa][njetetamn][ngenPT][nnnmx];
 TH1* h_genvarpdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+//BJet
+TH1* h_genvar_BJet_pdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
 
 //Second Method for PDF Uncertainty -> include the weight in the RM
 TH1* h_recovarpdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
@@ -879,10 +898,18 @@ TH2* h_RMpdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
 TH1* h_recofakepdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
 TH1* h_genmisspdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
 
+//BJet
+TH1* h_recovar_bjet_deepJETT_pdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+TH2* h_RM_bjet_deepJETT_pdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+TH1* h_recofake_bjet_deepJETT_pdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+TH1* h_genmiss_BJet_pdf2D[ndef][njet][nkappa][njetetamn][nnnmx];
+
 const int nmgscale=9;
 double mgscale[nmgscale];
 TH1F* h_genvarmgscale[ndef][njet][nkappa][njetetamn][ngenPT][nmgscale];
 TH1* h_genvarmgscale2D[ndef][njet][nkappa][njetetamn][nmgscale];
+//BJet
+TH1* h_genvar_BJet_mgscale2D[ndef][njet][nkappa][njetetamn][nmgscale];
 #endif
 
 #ifdef SCALEUNC
@@ -891,6 +918,8 @@ const int nscale=46;
 double scalewt[nscale];
 TH1F* h_genvarscaleunc[ndef][njet][nkappa][njetetamn][ngenPT][nscale];
 TH1* h_genvarscaleunc2D[ndef][njet][nkappa][njetetamn][nscale];
+//BJet
+TH1* h_genvar_BJet_scaleunc2D[ndef][njet][nkappa][njetetamn][nscale];
 #endif
 
 #ifdef  JETENERGY
@@ -899,6 +928,8 @@ const int njecmx=2*nsrc+1;
 //TH1F* h_recovarjec[ndef][njet][nkappa][njetetamn][njetptmn][njecmx];
 TH1F* h_recovarjec[ndef][njet][nkappa][njetetamn][ngenPT][njecmx];
 TH1* h_recovarjec2D[ndef][njet][nkappa][njetetamn][njecmx];
+//BJet
+TH1* h_recovar_bjet_deepJETT_jec2D[ndef][njet][nkappa][njetetamn][njecmx];
 #elif defined(JETRESO)
 const int njecmx = 3;
 //TH1F* h_recovarres[ndef][njet][nkappa][njetetamn][njetptmn][njecmx];
@@ -915,16 +946,22 @@ TH2* h_RM_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
 TH1* h_recovarres2D[ndef][njet][nkappa][njetetamn][njecmx];
 TH1* h_genmiss_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
 TH1* h_recofake_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
+
+//BJet
+TH2* h_RM_bjet_deepJETT_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
+TH1* h_recovar_bjet_deepJETT_res2D[ndef][njet][nkappa][njetetamn][njecmx];
+TH1* h_genmiss_BJet_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
+TH1* h_recofake_bjet_deepJETT_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
 #else
 const int njecmx=1;
 #endif
 
 const int nGenReso=1;
-double etarange[njetetamn] ={2.1}; //2.5
-double resetarange[njetetamn+4] ={0, 0.5, 1.0, 1.5}; //, 2.0, 2.5, 3.0, 3.5};
-double par0[njetetamn+4]={1.02, 1.02, 1.022, 1.017, 0.98}; //, 0.9327};
-double par1[njetetamn+4]={7.3e-6, -7.3e-6, -5.66e-6, -9.9e-6, 1.41e-4}; //, 4.6e-4};
-double par2[njetetamn+4]={-8.2e-9, -8.2e-9, -3.58e-9, -4.18e-9, -6.104e-8}; //, -4.041e-7};
+double etarange[njetetamn] ={2.1};                                           //2.5
+double resetarange[njetetamn+4] ={0, 0.5, 1.0, 1.5};                         //,2.0, 2.5, 3.0, 3.5};
+double par0[njetetamn+4]={1.02, 1.02, 1.022, 1.017, 0.98};                   //,0.9327};
+double par1[njetetamn+4]={7.3e-6, -7.3e-6, -5.66e-6, -9.9e-6, 1.41e-4};      //,4.6e-4};
+double par2[njetetamn+4]={-8.2e-9, -8.2e-9, -3.58e-9, -4.18e-9, -6.104e-8};  //,-4.041e-7};
 double particlept[4]={0.0, 0.25, 0.50, 1.00};
 
 #ifdef TRACKSYS
@@ -965,9 +1002,9 @@ double dPT(double pt1, double pt2){
 }
 
  int sbitx(unsigned ival, int ibit) {
- unsigned den = mypow_2[ibit]; // unsigned(pow(2., double(ibit)));
+ unsigned den = mypow_2[ibit];    // unsigned(pow(2., double(ibit)));
  int isel = unsigned(ival/den)%2;
- //  int isel = unsigned(ival/den);
+ //int isel = unsigned(ival/den);
  //cout <<"iv "<< ival<<" "<<ibit<<" "<<den<<" "<<ival/den<<" "<<unsigned(ival/den)<<" "<<isel<<endl;
 
  return isel;
@@ -1027,19 +1064,19 @@ class QCDEventShape : public edm::EDAnalyzer {
   bool isMC;
   //bool isRECOJC;
   //bool isGENJC;
-  //bool isParticle; //Do we want particle level informations, other than jets ?
-  //bool isGenParticle; //Do we want Simulated particle level informations, other than jets ?
-  bool isReconstruct; // otherwise Only generator level informations  
-  //bool isPartQCD; //For tracker variables, recosntruct QCD EVT variables
-  bool isJetQCD;  //For Jet variables, recosntruct QCD EVT variables
-  bool isGenJET; // Genjet information or note (for herwig/alpgen, donot store this ?)
-  //double trackPtThreshold; //Threshold of track Pt to store it in root file, -ve implies don't store
+  //bool isParticle;          //Do we want particle level informations, other than jets ?
+  //bool isGenParticle;       //Do we want Simulated particle level informations, other than jets ?
+  bool isReconstruct;         //otherwise Only generator level informations  
+  //bool isPartQCD;           //For tracker variables, recosntruct QCD EVT variables
+  bool isJetQCD;              //For Jet variables, recosntruct QCD EVT variables
+  bool isGenJET;              //Genjet information or note (for herwig/alpgen, donot store this ?)
+  //double trackPtThreshold;  //Threshold of track Pt to store it in root file, -ve implies don't store
 
-  //double etarange; //Eta range of all jets
-  double ptthreshold; //Pt threshold of JEC jets
-  double leadingPtthreshold; //Pt threshold of JEC leading jet
-  bool   isOtherAlgo; // store Kt4 and ak7 variables or not
-  double weight=1; //weight for histogramme fit
+  //double etarange;          //Eta range of all jets
+  double ptthreshold;         //Pt threshold of JEC jets
+  double leadingPtthreshold;  //Pt threshold of JEC leading jet
+  bool   isOtherAlgo;         //store Kt4 and ak7 variables or not
+  double weight=1;            //weight for histogramme fit
   double weight2=1;
  
   std::string m_resolutions_file;
@@ -1052,7 +1089,7 @@ class QCDEventShape : public edm::EDAnalyzer {
   std::string theRootFileName;
   //TFile* //theFile;
   //TTree* //T1;
-
+  TFile *bTagEff_file;
   //ifstream myfile ("example.txt");
   //std::ofstream myfile;
   //myfile.open("txt.log");
@@ -1078,18 +1115,19 @@ class QCDEventShape : public edm::EDAnalyzer {
   //identical binning & range for all the variables
   //To plot 10 kappa vlues for one observable in same canvas
   TH1F* h_recovarIB[ndef][njet][nkappa][njetetamn][ngenPT];          //Inclusive Jets
-  TH1F* h_recovarIB_bjet[ndef][njet][nkappa][njetetamn][ngenPT];     //b-Jets
+  TH1F* h_recovarIB_bjet_deepJETT[ndef][njet][nkappa][njetetamn][ngenPT];     //BJets
+  TH1F* h_recovarIB_bjet_deepJETT_NoSF[ndef][njet][nkappa][njetetamn][ngenPT];
 
   //b-jet  Data->Tight Working Point 
-  TH1F* h_recovar_bjet_WPT[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_genvar_bjet_WPT[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_recofake_bjet_WPT[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_genmiss_bjet_WPT[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH2F* h_RM_bjet_WPT[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recovar_bjet_deepJETT[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recovar_bjet_deepJETT_NoSF[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genvar_BJet[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_recofake_bjet_deepJETT[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH1F* h_genmiss_BJet[ndef][njet][nkappa][njetetamn][ngenPT];
+  TH2F* h_RM_bjet_deepJETT[ndef][njet][nkappa][njetetamn][ngenPT];
 
 #ifdef FLAV
   //RecoJet Flavour
-  //First-set Flavor Tagging
   TH1F* h_recovar_gjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_ujet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_ubarjet[ndef][njet][nkappa][njetetamn][ngenPT];
@@ -1098,14 +1136,6 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F* h_recovar_bjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_bbarjet[ndef][njet][nkappa][njetetamn][ngenPT];
   TH1F* h_recovar_ojet[ndef][njet][nkappa][njetetamn][ngenPT];
-
-/*
-  //Second-set Flavor Tagging
-  TH1F* h_recovar_qjet[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_recovar_aqjet[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_recovar_aqgjet[ndef][njet][nkappa][njetetamn][ngenPT];
-  TH1F* h_recovar_aqojet[ndef][njet][nkappa][njetetamn][ngenPT];
-*/
 
 #endif
 
@@ -1171,9 +1201,12 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH2F* hchpt2_bbarjet;
 #endif
 
-  //b-jet Tight Working Point
-  TH2F* hchpt1_bjet_WPT;
-  TH2F* hchpt2_bjet_WPT;
+  //BJet Tight Working Point
+  TH2F* hchpt1_bjet_deepJETT;
+  TH2F* hchpt2_bjet_deepJETT;
+
+  TH2F* hchpt1_bjet_deepJETT_NoSF;
+  TH2F* hchpt2_bjet_deepJETT_NoSF;
 
   //Profile Histograms
 
@@ -1208,25 +1241,40 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH1F *Reco_X12[njet];
   TH1F *Reco_X123[njet];
 
-  //b-jet Tight Working Point
-  TH2F* hprof_reco_jco_pt_bjet_WPT[ndef][njet][nkappa];
-  TH2F* hprof_gen_jco_pt_bjet_WPT[ndef][njet][nkappa];
+  //BJet Tight Working Point
+  TH2F* hprof_reco_jco_pt_bjet_deepJETT[ndef][njet][nkappa];
+  TH2F* hprof_reco_jco_pt_bjet_deepJETT_NoSF[ndef][njet][nkappa];
+
+  TH2F* hprof_gen_jco_pt_bjet_deepJETT[ndef][njet][nkappa];
 
   //PT related to tracks 
-  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1;
-  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2;
+  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1;
+  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2;
+
+  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF;
+  TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF;
   
   //Track dependence w.r.t JCO
-  TH2F *hprof_Reco_ntrack_vs_jco_bjet_WPT[ndef][njet][nkappa];
+  TH2F *hprof_Reco_ntrack_vs_jco_bjet_deepJETT[ndef][njet][nkappa];
+  TH2F *hprof_Reco_ntrack_vs_jco_bjet_deepJETT_NoSF[ndef][njet][nkappa];
 
   //Energy Fraction w.r.t JCO
-  TH2F *hprof_Reco_X1_vs_jco_bjet_WPT[ndef][njet][nkappa];
-  TH2F *hprof_Reco_X12_vs_jco_bjet_WPT[ndef][njet][nkappa];
-  TH2F *hprof_Reco_X123_vs_jco_bjet_WPT[ndef][njet][nkappa];
+  TH2F *hprof_Reco_X1_vs_jco_bjet_deepJETT[ndef][njet][nkappa];
+  TH2F *hprof_Reco_X12_vs_jco_bjet_deepJETT[ndef][njet][nkappa];
+  TH2F *hprof_Reco_X123_vs_jco_bjet_deepJETT[ndef][njet][nkappa];
 
-  TH1F *Reco_X1_bjet_WPT[njet];
-  TH1F *Reco_X12_bjet_WPT[njet];
-  TH1F *Reco_X123_bjet_WPT[njet];
+  TH2F *hprof_Reco_X1_vs_jco_bjet_deepJETT_NoSF[ndef][njet][nkappa];
+  TH2F *hprof_Reco_X12_vs_jco_bjet_deepJETT_NoSF[ndef][njet][nkappa];
+  TH2F *hprof_Reco_X123_vs_jco_bjet_deepJETT_NoSF[ndef][njet][nkappa];
+
+
+  TH1F *Reco_X1_bjet_deepJETT[njet];
+  TH1F *Reco_X12_bjet_deepJETT[njet];
+  TH1F *Reco_X123_bjet_deepJETT[njet];
+
+  TH1F *Reco_X1_bjet_deepJETT_NoSF[njet];
+  TH1F *Reco_X12_bjet_deepJETT_NoSF[njet];
+  TH1F *Reco_X123_bjet_deepJETT_NoSF[njet];
 
 #ifdef FLAV 
   //Flavor Tagging
@@ -1239,9 +1287,10 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH2F* hprof_reco_jco_pt_bbarjet[ndef][njet][nkappa];
   TH2F* hprof_reco_jco_pt_ojet[ndef][njet][nkappa];
 
-  TH2F* hprof_reco_jco_pt_bjetTag[ndef][njet][nkappa];  //w.r.t only b-jet PT
+  //w.r.t only BJet PT
+  TH2F* hprof_reco_jco_pt_bjetTag[ndef][njet][nkappa];
 
-  //b-jet True Flavour
+  //BJet True Flavour
   //PT related to tracks
   TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_J1;
   TH2F *hprof_Reco_ntrack_vs_PTtrack_bjet_J2;
@@ -1268,11 +1317,12 @@ class QCDEventShape : public edm::EDAnalyzer {
   TH2F* hprof_gen_jco_pt_bbarjet[ndef][njet][nkappa];
   TH2F* hprof_gen_jco_pt_ojet[ndef][njet][nkappa];
 
-  TH2F* hprof_gen_jco_pt_bjetTag[ndef][njet][nkappa];  //w.r.t only b-jet PT
+  //w.r.t only BJet PT
+  TH2F* hprof_gen_jco_pt_bjetTag[ndef][njet][nkappa];
 
   //static const int njetmx =30;
   //int npfjets; 
-  int nchg, nchg1, nchg2, /*nchg1_bjet, nchg2_bjet,*/ nchg1_bjet_WPT, nchg2_bjet_WPT; /*ngenchg1, ngenchg2, ngenchg1_bjet, ngenchg2_bjet;*/
+  int nchg, nchg1, nchg2, nchg1_bjet_deepJETT, nchg2_bjet_deepJETT;
 #ifdef FLAV
 int nchg1_bjet, nchg2_bjet;
 #endif
@@ -1292,15 +1342,17 @@ int nchg1_bjet, nchg2_bjet;
   unsigned int ievt;
   float inslumi;
   int nsicls, ntottrk;
+
 //#ifdef FLAT 
-  bool isFlat=1;
+  //bool isFlat=1;
 //#else 
-  //bool isFlat=0;
+  bool isFlat=0;
 //#endif
 
-   float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
-//-------------------------------------------TunfoldBinning
-//-------------------------------------------2D Bining using TUnfoldBinning Jet Charge
+  float defweight=1.0, weighttrg=1., qlow=-10., qhigh=100000.;
+  float BTagWt=1.0, BTagWt_upCorr=1.0, BTagWt_downCorr=1.0, BTagWt_upUncorr=1.0, BTagWt_downUncorr=1.0;
+//TunfoldBinning
+//2D Bining using TUnfoldBinning Jet Charge
 
   //Inclusive Jets
   TUnfoldBinning *binsRec2D[ndef][njet][nkappa][njetetamn];
@@ -1314,7 +1366,7 @@ int nchg1_bjet, nchg2_bjet;
   TUnfoldBinning *RecoBinningbjet2D[ndef][njet][nkappa][njetetamn];
   TUnfoldBinning *GenBinningbjet2D[ndef][njet][nkappa][njetetamn]; 
 
-//-------------------------------------------Jet Charge 2D TUnfoldBinning Histograms
+//Jet Charge 2D TUnfoldBinning Histograms
 
   TH1* h_recovar2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genvar2D[ndef][njet][nkappa][njetetamn];
@@ -1322,16 +1374,16 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_genmiss2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM2D[ndef][njet][nkappa][njetetamn];
 
-  //b-jet  Data->Tight Working Point
-  TH1* h_recovar_bjet2D_WPT[ndef][njet][nkappa][njetetamn];
-  TH1* h_genvar_bjet2D_WPT[ndef][njet][nkappa][njetetamn];
-  TH1* h_recofake_bjet2D_WPT[ndef][njet][nkappa][njetetamn];
-  TH1* h_genmiss_bjet2D_WPT[ndef][njet][nkappa][njetetamn];
-  TH2* h_RM_bjet2D_WPT[ndef][njet][nkappa][njetetamn];
+  //BJet  Data->Tight Working Point
+  TH1* h_recovar_bjet2D_deepJETT[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_bjet2D_deepJETT_NoSF[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet2D_deepJETT[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet2D_deepJETT[ndef][njet][nkappa][njetetamn];
 
 #ifdef FLAV
   //RecoJet Flavour
-  //First-set Flavor Tagging
   TH1* h_recovar_gjet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_ujet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_ubarjet2D[ndef][njet][nkappa][njetetamn];
@@ -1341,13 +1393,6 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_recovar_bbarjet2D[ndef][njet][nkappa][njetetamn];
   TH1* h_recovar_ojet2D[ndef][njet][nkappa][njetetamn];
 
-/*
-  //Second-set Flavor Tagging
-  TH1* h_recovar_qjet2D[ndef][njet][nkappa][njetetamn];
-  TH1* h_recovar_aqjet2D[ndef][njet][nkappa][njetetamn];
-  TH1* h_recovar_aqgjet2D[ndef][njet][nkappa][njetetamn];
-  TH1* h_recovar_aqojet2D[ndef][njet][nkappa][njetetamn];
-*/
 #endif
 
   //GenJet Flavor
@@ -1378,6 +1423,25 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_recofake_prefiredown_2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_prefiredown_2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+
+  //BJet Data->Tight Working Point
+  TH1* h_recovar_bjet_deepJETT_prefire2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_prefire2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_prefire2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_prefire2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_prefire2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_bjet_deepJETT_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_prefireup_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_prefireup_2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_bjet_deepJETT_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_prefiredown_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_prefiredown_2D[ndef][njet][nkappa][njetetamn];
 #endif
 
 //#ifdef TRACKEFF
@@ -1386,6 +1450,12 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_recofake_trackeff2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackeff2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackeff2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_bjet_deepJETT_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_trackeff2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_trackeff2D[ndef][njet][nkappa][njetetamn];
 //#endif
 
 /*
@@ -1404,6 +1474,11 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_recofake_trackpt1_2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackpt1_2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackpt1_2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recovar_bjet_deepJETT_trackpt1_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_trackpt1_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_trackpt1_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_trackpt1_2D[ndef][njet][nkappa][njetetamn];
 //#endif
 
 //#ifdef TRACKPTDOWN
@@ -1411,9 +1486,39 @@ int nchg1_bjet, nchg2_bjet;
   TH1* h_recofake_trackpt2_2D[ndef][njet][nkappa][njetetamn];
   TH1* h_genmiss_trackpt2_2D[ndef][njet][nkappa][njetetamn];
   TH2* h_RM_trackpt2_2D[ndef][njet][nkappa][njetetamn];
-//#endif
-//-------------------------------------------
 
+  TH1* h_recovar_bjet_deepJETT_trackpt2_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_trackpt2_2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_trackpt2_2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_trackpt2_2D[ndef][njet][nkappa][njetetamn];
+//#endif
+
+#ifdef BTAGUNC
+  TH1* h_recovar_bjet_deepJETT_BTagWt_upCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_bjet_deepJETT_BTagWt_downCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_bjet_deepJETT_BTagWt_upUncorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recovar_bjet_deepJETT_BTagWt_downUncorr2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_recofake_bjet_deepJETT_BTagWt_upCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_BTagWt_downCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_genvar_BJet_BTagWt_upCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_BTagWt_downCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_BTagWt_upUncorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genvar_BJet_BTagWt_downUncorr2D[ndef][njet][nkappa][njetetamn];
+
+  TH1* h_genmiss_BJet_BTagWt_upCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_BTagWt_downCorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_BTagWt_upUncorr2D[ndef][njet][nkappa][njetetamn];
+  TH1* h_genmiss_BJet_BTagWt_downUncorr2D[ndef][njet][nkappa][njetetamn];
+
+  TH2* h_RM_bjet_deepJETT_BTagWt_upCorr2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_BTagWt_downCorr2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_BTagWt_upUncorr2D[ndef][njet][nkappa][njetetamn];
+  TH2* h_RM_bjet_deepJETT_BTagWt_downUncorr2D[ndef][njet][nkappa][njetetamn];
+#endif
   //Jet ID distributions
   TH1F* recojt_CHF;
   TH1F* recojt_NHF;
@@ -1473,13 +1578,16 @@ int nchg1_bjet, nchg2_bjet;
   TH1F* recochg3_eta;
   TH1F* recochg3_phi;
 
-  //highest pt particle inside Lead & sub-lead inclusive jet jet & b-jet
+  //highest pt particle inside Lead & sub-lead inclusive jet jet & BJet
   TH1F* recojetchg1_cand1;
   TH1F* recojetchg2_cand1;
 
-  //b-jet Tight Working Point
-  TH1F* recobjetchg1_WPT_cand1;
-  TH1F* recobjetchg2_WPT_cand1;
+  //BJet Tight Working Point
+  TH1F* recobjetchg1_deepJETT_cand1;
+  TH1F* recobjetchg2_deepJETT_cand1;
+
+  TH1F* recobjetchg1_deepJETT_cand1_NoSF;
+  TH1F* recobjetchg2_deepJETT_cand1_NoSF;
 
   //TH1F* recobjetchg1_cand1;
   //TH1F* recobjetchg2_cand1;
@@ -1591,158 +1699,427 @@ int nchg1_bjet, nchg2_bjet;
   TH1F* recojt2o_eta;
   TH1F* recojt2o_phi;
 
-  /*
- //Second-set Flavor Tagging
-  TH1F* recojt_qjet_pt[njetetamn];
-  TH1F* recojt_qjet_eta;
-  TH1F* recojt_qjet_phi;
-
-  TH1F* recojt_aqjet_pt[njetetamn];
-  TH1F* recojt_aqjet_eta;
-  TH1F* recojt_aqjet_phi;
-
-  TH1F* recojt_aqgjet_pt[njetetamn];
-  TH1F* recojt_aqgjet_eta;
-  TH1F* recojt_aqgjet_phi;
-
-  TH1F* recojt_aqojet_pt[njetetamn];
-  TH1F* recojt_aqojet_eta;
-  TH1F* recojt_aqojet_phi;
-
-  TH1F* recojt1_qjet_pt[njetetamn];
-  TH1F* recojt1_qjet_eta;
-  TH1F* recojt1_qjet_phi;
-
-  TH1F* recojt1_aqjet_pt[njetetamn];
-  TH1F* recojt1_aqjet_eta;
-  TH1F* recojt1_aqjet_phi;
-
-  TH1F* recojt1_aqgjet_pt[njetetamn];
-  TH1F* recojt1_aqgjet_eta;
-  TH1F* recojt1_aqgjet_phi;
-
-  TH1F* recojt1_aqojet_pt[njetetamn];
-  TH1F* recojt1_aqojet_eta;
-  TH1F* recojt1_aqojet_phi;
-
-  TH1F* recojt2_qjet_pt[njetetamn];
-  TH1F* recojt2_qjet_eta;
-  TH1F* recojt2_qjet_phi;
-
-  TH1F* recojt2_aqjet_pt[njetetamn];
-  TH1F* recojt2_aqjet_eta;
-  TH1F* recojt2_aqjet_phi;
-
-  TH1F* recojt2_aqgjet_pt[njetetamn];
-  TH1F* recojt2_aqgjet_eta;
-  TH1F* recojt2_aqgjet_phi;
-
-  TH1F* recojt2_aqojet_pt[njetetamn];
-  TH1F* recojt2_aqojet_eta;
-  TH1F* recojt2_aqojet_phi;
-  */
-
-  //highest pt particle inside Lead & sub-lead b-jet
+  //highest pt particle inside Lead & sub-lead BJet
   TH1F* recobjetchg1_cand1;
   TH1F* recobjetchg2_cand1;
 #endif
 
-  //b-jet info
+  //BJet info
   //Tagger-discriminator values
-  TH2F* h_bTagger;
-  TH2F* h_cTagger;
-  TH2F* h_LTagger; 
+  TH2D* h_BTag_CSV;
+  TH2D* h_CTag_CSV;
+  TH2D* h_udsgTag_CSV; 
 
-/*
-  //Loose Working-point
-  TH1F *h_bjet_WPL_pt[njetetamn];
-  TH1F *h_bjet_WPL_eta;
-  TH1F *h_bjet_WPL_phi;
-
-  TH1F *h_bjet1_WPL_pt[njetetamn];
-  TH1F *h_bjet1_WPL_eta;
-  TH1F *h_bjet1_WPL_phi;
-  
-  TH1F *h_bjet2_WPL_pt[njetetamn];
-  TH1F *h_bjet2_WPL_eta;
-  TH1F *h_bjet2_WPL_phi;
-
-  TH1F *h_nonbjet_WPL_pt[njetetamn];
-  TH1F *h_nonbjet_WPL_eta;
-  TH1F *h_nonbjet_WPL_phi;
-
-  TH1F *h_nonbjet1_WPL_pt[njetetamn];
-  TH1F *h_nonbjet1_WPL_eta;
-  TH1F *h_nonbjet1_WPL_phi;
-
-  TH1F *h_nonbjet2_WPL_pt[njetetamn];
-  TH1F *h_nonbjet2_WPL_eta;
-  TH1F *h_nonbjet2_WPL_phi;
-
-  //Medium Working-point
-  TH1F *h_bjet_WPM_pt[njetetamn];
-  TH1F *h_bjet_WPM_eta;
-  TH1F *h_bjet_WPM_phi;
-
-  TH1F *h_bjet1_WPM_pt[njetetamn];
-  TH1F *h_bjet1_WPM_eta;
-  TH1F *h_bjet1_WPM_phi;
-
-  TH1F *h_bjet2_WPM_pt[njetetamn];
-  TH1F *h_bjet2_WPM_eta;
-  TH1F *h_bjet2_WPM_phi;
-
-  TH1F *h_nonbjet_WPM_pt[njetetamn];
-  TH1F *h_nonbjet_WPM_eta;
-  TH1F *h_nonbjet_WPM_phi;
-
-  TH1F *h_nonbjet1_WPM_pt[njetetamn];
-  TH1F *h_nonbjet1_WPM_eta;
-  TH1F *h_nonbjet1_WPM_phi;
-
-  TH1F *h_nonbjet2_WPM_pt[njetetamn];
-  TH1F *h_nonbjet2_WPM_eta;
-  TH1F *h_nonbjet2_WPM_phi;
-*/  
+  TH2D* h_BTag_JET;
+  TH2D* h_CTag_JET;
+  TH2D* h_udsgTag_JET;
+ 
   //Tight Working-point
-  TH1F *h_bjet_WPT_pt[njetetamn];
-  TH1F *h_bjet_WPT_eta;
-  TH1F *h_bjet_WPT_phi;
+  TH1F *h_bjet_deepJETT_pt[njetetamn];
+  TH1F *h_bjet_deepJETT_eta;
+  TH1F *h_bjet_deepJETT_phi;
 
-  TH1F *h_bjet1_WPT_pt[njetetamn];
-  TH1F *h_bjet1_WPT_eta;
-  TH1F *h_bjet1_WPT_phi;
+  TH1F *h_bjet_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_bjet_deepJETT_eta_NoSF;
+  TH1F *h_bjet_deepJETT_phi_NoSF;
 
-  TH1F *h_bjet2_WPT_pt[njetetamn];
-  TH1F *h_bjet2_WPT_eta;
-  TH1F *h_bjet2_WPT_phi;
+  TH1F *h_bjet1_deepJETT_pt[njetetamn];
+  TH1F *h_bjet1_deepJETT_eta;
+  TH1F *h_bjet1_deepJETT_phi;
 
-  TH1F *h_nonbjet_WPT_pt[njetetamn];
-  TH1F *h_nonbjet_WPT_eta;
-  TH1F *h_nonbjet_WPT_phi;
+  TH1F *h_bjet1_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_bjet1_deepJETT_eta_NoSF;
+  TH1F *h_bjet1_deepJETT_phi_NoSF;
 
-  TH1F *h_nonbjet1_WPT_pt[njetetamn];
-  TH1F *h_nonbjet1_WPT_eta;
-  TH1F *h_nonbjet1_WPT_phi;
+  TH1F *h_bjet2_deepJETT_pt[njetetamn];
+  TH1F *h_bjet2_deepJETT_eta;
+  TH1F *h_bjet2_deepJETT_phi;
 
-  TH1F *h_nonbjet2_WPT_pt[njetetamn];
-  TH1F *h_nonbjet2_WPT_eta;
-  TH1F *h_nonbjet2_WPT_phi;
+  TH1F *h_bjet2_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_bjet2_deepJETT_eta_NoSF;
+  TH1F *h_bjet2_deepJETT_phi_NoSF;
 
-  //b-tag stuffs
-  TH2F *Reco_CSVT_bjet_eff_den;
-  TH2F *Reco_CSVT_bjet_eff_num;
+  TH1F *h_nonbjet_deepJETT_pt[njetetamn];
+  TH1F *h_nonbjet_deepJETT_eta;
+  TH1F *h_nonbjet_deepJETT_phi;
 
-  TH2F *Reco_CSVT_bjet_miss_den;
-  TH2F *Reco_CSVT_bjet_miss_num;
+  TH1F *h_nonbjet_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_nonbjet_deepJETT_eta_NoSF;
+  TH1F *h_nonbjet_deepJETT_phi_NoSF;
 
-  TH2F *Reco_CSVT_bjet_pur_den;
-  TH2F *Reco_CSVT_bjet_pur_num;
+  TH1F *h_nonbjet1_deepJETT_pt[njetetamn];
+  TH1F *h_nonbjet1_deepJETT_eta;
+  TH1F *h_nonbjet1_deepJETT_phi;
 
-  TH2F *Reco_CSVT_bjet_con_den;
-  TH2F *Reco_CSVT_bjet_con_num;
+  TH1F *h_nonbjet1_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_nonbjet1_deepJETT_eta_NoSF;
+  TH1F *h_nonbjet1_deepJETT_phi_NoSF;
 
-//-------------------------------------------
+  TH1F *h_nonbjet2_deepJETT_pt[njetetamn];
+  TH1F *h_nonbjet2_deepJETT_eta;
+  TH1F *h_nonbjet2_deepJETT_phi;
+
+  TH1F *h_nonbjet2_deepJETT_pt_NoSF[njetetamn];
+  TH1F *h_nonbjet2_deepJETT_eta_NoSF;
+  TH1F *h_nonbjet2_deepJETT_phi_NoSF;
+
+  //BTag stuffs
+ 
+  TH2D *LdeepCSVT_SF;
+  TH2D *LdeepCSVM_SF;
+  TH2D *LdeepCSVL_SF;
+
+  TH2D *LdeepJETT_SF;
+  TH2D *LdeepJETM_SF;
+  TH2D *LdeepJETL_SF;
+
+  TH2D *CdeepCSVT_SF;
+  TH2D *CdeepCSVM_SF;
+  TH2D *CdeepCSVL_SF;
+
+  TH2D *CdeepJETT_SF;
+  TH2D *CdeepJETM_SF;
+  TH2D *CdeepJETL_SF;
+
+  TH2D *BdeepCSVT_SF;
+  TH2D *BdeepCSVM_SF;
+  TH2D *BdeepCSVL_SF;
+
+  TH2D *BdeepJETT_SF;
+  TH2D *BdeepJETM_SF;
+  TH2D *BdeepJETL_SF;
+
+
+  TH2D *Reco_bjet_fra;
+  TH2D *Reco_bjet_fra_NoSF;
+
+  TH2D *Reco_CSVT_bjet_fra;
+  TH2D *Reco_CSVM_bjet_fra;
+  TH2D *Reco_CSVL_bjet_fra;
+
+  TH2D *Reco_CSVT_bjet_fra_NoSF;
+  TH2D *Reco_CSVM_bjet_fra_NoSF;
+  TH2D *Reco_CSVL_bjet_fra_NoSF;
+
+  
+  TH2D *Reco_JETT_bjet_fra;
+  TH2D *Reco_JETM_bjet_fra;
+  TH2D *Reco_JETL_bjet_fra;
+
+  TH2D *Reco_JETT_bjet_fra_NoSF;
+  TH2D *Reco_JETM_bjet_fra_NoSF;
+  TH2D *Reco_JETL_bjet_fra_NoSF;
+
+
+  //DeepCSV Tight Working Point
+  //Efficiency
+  TH2D *Reco_CSVT_bjet_eff_den;
+  TH2D *Reco_CSVT_bjet_eff_num;
+
+  TH2D *Reco_CSVT_cjet_eff_den;
+  TH2D *Reco_CSVT_cjet_eff_num;
+
+  TH2D *Reco_CSVT_ljet_eff_den;
+  TH2D *Reco_CSVT_ljet_eff_num;
+
+
+  TH2D *Reco_CSVT_bjet_eff_den_NoSF;
+  TH2D *Reco_CSVT_bjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVT_cjet_eff_den_NoSF;
+  TH2D *Reco_CSVT_cjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVT_ljet_eff_den_NoSF;
+  TH2D *Reco_CSVT_ljet_eff_num_NoSF;
+
+
+  //MisTag
+  TH2D *Reco_CSVT_bjet_miss_den;
+  TH2D *Reco_CSVT_bjet_miss_num;
+
+  TH2D *Reco_CSVT_cjet_miss_den;
+  TH2D *Reco_CSVT_cjet_miss_num;
+
+  TH2D *Reco_CSVT_ljet_miss_den;
+  TH2D *Reco_CSVT_ljet_miss_num;
+
+
+  TH2D *Reco_CSVT_bjet_miss_den_NoSF;
+  TH2D *Reco_CSVT_bjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVT_cjet_miss_den_NoSF;
+  TH2D *Reco_CSVT_cjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVT_ljet_miss_den_NoSF;
+  TH2D *Reco_CSVT_ljet_miss_num_NoSF;
+
+
+  //Purity
+  TH2D *Reco_CSVT_bjet_pur_den;
+  TH2D *Reco_CSVT_bjet_pur_num;
+
+  TH2D *Reco_CSVT_bjet_pur_den_NoSF;
+  TH2D *Reco_CSVT_bjet_pur_num_NoSF;
+
+  //Contamination
+  TH2D *Reco_CSVT_bjet_con_den;
+  TH2D *Reco_CSVT_bjet_con_num;
+
+  TH2D *Reco_CSVT_bjet_con_den_NoSF;
+  TH2D *Reco_CSVT_bjet_con_num_NoSF;
+
+  //DeepCSV Medium Working Point
+  TH2D *Reco_CSVM_bjet_eff_den;
+  TH2D *Reco_CSVM_bjet_eff_num;
+
+  TH2D *Reco_CSVM_cjet_eff_den;
+  TH2D *Reco_CSVM_cjet_eff_num;
+
+  TH2D *Reco_CSVM_ljet_eff_den;
+  TH2D *Reco_CSVM_ljet_eff_num;
+
+  TH2D *Reco_CSVM_bjet_miss_den;
+  TH2D *Reco_CSVM_bjet_miss_num;
+
+  TH2D *Reco_CSVM_cjet_miss_den;
+  TH2D *Reco_CSVM_cjet_miss_num;
+
+  TH2D *Reco_CSVM_ljet_miss_den;
+  TH2D *Reco_CSVM_ljet_miss_num;
+
+  TH2D *Reco_CSVM_bjet_pur_den;
+  TH2D *Reco_CSVM_bjet_pur_num;
+
+  TH2D *Reco_CSVM_bjet_con_den;
+  TH2D *Reco_CSVM_bjet_con_num;
+
+  
+  TH2D *Reco_CSVM_bjet_eff_den_NoSF;
+  TH2D *Reco_CSVM_bjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVM_cjet_eff_den_NoSF;
+  TH2D *Reco_CSVM_cjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVM_ljet_eff_den_NoSF;
+  TH2D *Reco_CSVM_ljet_eff_num_NoSF;
+
+  TH2D *Reco_CSVM_bjet_miss_den_NoSF;
+  TH2D *Reco_CSVM_bjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVM_cjet_miss_den_NoSF;
+  TH2D *Reco_CSVM_cjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVM_ljet_miss_den_NoSF;
+  TH2D *Reco_CSVM_ljet_miss_num_NoSF;
+
+  TH2D *Reco_CSVM_bjet_pur_den_NoSF;
+  TH2D *Reco_CSVM_bjet_pur_num_NoSF;
+
+  TH2D *Reco_CSVM_bjet_con_den_NoSF;
+  TH2D *Reco_CSVM_bjet_con_num_NoSF;
+
+
+  //DeepCSV Light Working Point
+  TH2D *Reco_CSVL_bjet_eff_den;
+  TH2D *Reco_CSVL_bjet_eff_num;
+
+  TH2D *Reco_CSVL_cjet_eff_den;
+  TH2D *Reco_CSVL_cjet_eff_num;
+
+  TH2D *Reco_CSVL_ljet_eff_den;
+  TH2D *Reco_CSVL_ljet_eff_num;
+
+  TH2D *Reco_CSVL_bjet_miss_den;
+  TH2D *Reco_CSVL_bjet_miss_num;
+
+  TH2D *Reco_CSVL_cjet_miss_den;
+  TH2D *Reco_CSVL_cjet_miss_num;
+
+  TH2D *Reco_CSVL_ljet_miss_den;
+  TH2D *Reco_CSVL_ljet_miss_num;
+
+  TH2D *Reco_CSVL_bjet_pur_den;
+  TH2D *Reco_CSVL_bjet_pur_num;
+
+  TH2D *Reco_CSVL_bjet_con_den;
+  TH2D *Reco_CSVL_bjet_con_num;
+
+
+  TH2D *Reco_CSVL_bjet_eff_den_NoSF;
+  TH2D *Reco_CSVL_bjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVL_cjet_eff_den_NoSF;
+  TH2D *Reco_CSVL_cjet_eff_num_NoSF;
+
+  TH2D *Reco_CSVL_ljet_eff_den_NoSF;
+  TH2D *Reco_CSVL_ljet_eff_num_NoSF;
+
+  TH2D *Reco_CSVL_bjet_miss_den_NoSF;
+  TH2D *Reco_CSVL_bjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVL_cjet_miss_den_NoSF;
+  TH2D *Reco_CSVL_cjet_miss_num_NoSF;
+
+  TH2D *Reco_CSVL_ljet_miss_den_NoSF;
+  TH2D *Reco_CSVL_ljet_miss_num_NoSF;
+
+  TH2D *Reco_CSVL_bjet_pur_den_NoSF;
+  TH2D *Reco_CSVL_bjet_pur_num_NoSF;
+
+  TH2D *Reco_CSVL_bjet_con_den_NoSF;
+  TH2D *Reco_CSVL_bjet_con_num_NoSF;
+
+  //DeepJET Tight Working Point
+  TH2D *Reco_JETT_bjet_eff_den;
+  TH2D *Reco_JETT_bjet_eff_num;
+
+  TH2D *Reco_JETT_cjet_eff_den;
+  TH2D *Reco_JETT_cjet_eff_num;
+
+  TH2D *Reco_JETT_ljet_eff_den;
+  TH2D *Reco_JETT_ljet_eff_num;
+
+  TH2D *Reco_JETT_bjet_miss_den;
+  TH2D *Reco_JETT_bjet_miss_num;
+
+  TH2D *Reco_JETT_cjet_miss_den;
+  TH2D *Reco_JETT_cjet_miss_num;
+
+  TH2D *Reco_JETT_ljet_miss_den;
+  TH2D *Reco_JETT_ljet_miss_num;
+
+  TH2D *Reco_JETT_bjet_pur_den;
+  TH2D *Reco_JETT_bjet_pur_num;
+
+  TH2D *Reco_JETT_bjet_con_den;
+  TH2D *Reco_JETT_bjet_con_num;
+
+
+  TH2D *Reco_JETT_bjet_eff_den_NoSF;
+  TH2D *Reco_JETT_bjet_eff_num_NoSF;
+
+  TH2D *Reco_JETT_cjet_eff_den_NoSF;
+  TH2D *Reco_JETT_cjet_eff_num_NoSF;
+
+  TH2D *Reco_JETT_ljet_eff_den_NoSF;
+  TH2D *Reco_JETT_ljet_eff_num_NoSF;
+
+  TH2D *Reco_JETT_bjet_miss_den_NoSF;
+  TH2D *Reco_JETT_bjet_miss_num_NoSF;
+
+  TH2D *Reco_JETT_cjet_miss_den_NoSF;
+  TH2D *Reco_JETT_cjet_miss_num_NoSF;
+
+  TH2D *Reco_JETT_ljet_miss_den_NoSF;
+  TH2D *Reco_JETT_ljet_miss_num_NoSF;
+
+  TH2D *Reco_JETT_bjet_pur_den_NoSF;
+  TH2D *Reco_JETT_bjet_pur_num_NoSF;
+
+  TH2D *Reco_JETT_bjet_con_den_NoSF;
+  TH2D *Reco_JETT_bjet_con_num_NoSF;
+
+  //DeepJET Medium Working Point
+  TH2D *Reco_JETM_bjet_eff_den;
+  TH2D *Reco_JETM_bjet_eff_num;
+
+  TH2D *Reco_JETM_cjet_eff_den;
+  TH2D *Reco_JETM_cjet_eff_num;
+
+  TH2D *Reco_JETM_ljet_eff_den;
+  TH2D *Reco_JETM_ljet_eff_num;
+
+  TH2D *Reco_JETM_bjet_miss_den;
+  TH2D *Reco_JETM_bjet_miss_num;
+
+  TH2D *Reco_JETM_cjet_miss_den;
+  TH2D *Reco_JETM_cjet_miss_num;
+
+  TH2D *Reco_JETM_ljet_miss_den;
+  TH2D *Reco_JETM_ljet_miss_num;
+
+  TH2D *Reco_JETM_bjet_pur_den;
+  TH2D *Reco_JETM_bjet_pur_num;
+
+  TH2D *Reco_JETM_bjet_con_den;
+  TH2D *Reco_JETM_bjet_con_num;
+
+
+  TH2D *Reco_JETM_bjet_eff_den_NoSF;
+  TH2D *Reco_JETM_bjet_eff_num_NoSF;
+
+  TH2D *Reco_JETM_cjet_eff_den_NoSF;
+  TH2D *Reco_JETM_cjet_eff_num_NoSF;
+
+  TH2D *Reco_JETM_ljet_eff_den_NoSF;
+  TH2D *Reco_JETM_ljet_eff_num_NoSF;
+
+  TH2D *Reco_JETM_bjet_miss_den_NoSF;
+  TH2D *Reco_JETM_bjet_miss_num_NoSF;
+
+  TH2D *Reco_JETM_cjet_miss_den_NoSF;
+  TH2D *Reco_JETM_cjet_miss_num_NoSF;
+
+  TH2D *Reco_JETM_ljet_miss_den_NoSF;
+  TH2D *Reco_JETM_ljet_miss_num_NoSF;
+
+  TH2D *Reco_JETM_bjet_pur_den_NoSF;
+  TH2D *Reco_JETM_bjet_pur_num_NoSF;
+
+  TH2D *Reco_JETM_bjet_con_den_NoSF;
+  TH2D *Reco_JETM_bjet_con_num_NoSF;
+
+  //DeepJET Light Working Point
+  TH2D *Reco_JETL_bjet_eff_den;
+  TH2D *Reco_JETL_bjet_eff_num;
+
+  TH2D *Reco_JETL_cjet_eff_den;
+  TH2D *Reco_JETL_cjet_eff_num;
+
+  TH2D *Reco_JETL_ljet_eff_den;
+  TH2D *Reco_JETL_ljet_eff_num;
+
+  TH2D *Reco_JETL_bjet_miss_den;
+  TH2D *Reco_JETL_bjet_miss_num;
+
+  TH2D *Reco_JETL_cjet_miss_den;
+  TH2D *Reco_JETL_cjet_miss_num;
+
+  TH2D *Reco_JETL_ljet_miss_den;
+  TH2D *Reco_JETL_ljet_miss_num;
+
+  TH2D *Reco_JETL_bjet_pur_den;
+  TH2D *Reco_JETL_bjet_pur_num;
+
+  TH2D *Reco_JETL_bjet_con_den;
+  TH2D *Reco_JETL_bjet_con_num;
+
+
+  TH2D *Reco_JETL_bjet_eff_den_NoSF;
+  TH2D *Reco_JETL_bjet_eff_num_NoSF;
+
+  TH2D *Reco_JETL_cjet_eff_den_NoSF;
+  TH2D *Reco_JETL_cjet_eff_num_NoSF;
+
+  TH2D *Reco_JETL_ljet_eff_den_NoSF;
+  TH2D *Reco_JETL_ljet_eff_num_NoSF;
+
+  TH2D *Reco_JETL_bjet_miss_den_NoSF;
+  TH2D *Reco_JETL_bjet_miss_num_NoSF;
+
+  TH2D *Reco_JETL_cjet_miss_den_NoSF;
+  TH2D *Reco_JETL_cjet_miss_num_NoSF;
+
+  TH2D *Reco_JETL_ljet_miss_den_NoSF;
+  TH2D *Reco_JETL_ljet_miss_num_NoSF;
+
+  TH2D *Reco_JETL_bjet_pur_den_NoSF;
+  TH2D *Reco_JETL_bjet_pur_num_NoSF;
+
+  TH2D *Reco_JETL_bjet_con_den_NoSF;
+  TH2D *Reco_JETL_bjet_con_num_NoSF;
+
+
   //GenJet basic distributions
   //TH1F* genjt_hist;
   TH1F* genjt_pt[njetetamn];
@@ -1786,7 +2163,7 @@ int nchg1_bjet, nchg2_bjet;
   TH1F* genchg3_eta;
   TH1F* genchg3_phi;
 
-  //highest pt particle inside Lead & sub-lead inclusive jet jet & b-jet
+  //highest pt particle inside Lead & sub-lead Inclusive jet & BJet
   TH1F* genjetchg1_cand1;
   TH1F* genjetchg2_cand1;
   TH1F* genbjetchg1_cand1;
@@ -1872,6 +2249,7 @@ int nchg1_bjet, nchg2_bjet;
   edm::EDGetTokenT<reco::PFJetCollection> ak5PFjetToken_;
   edm::EDGetTokenT<reco::GenJetCollection> ak5GenJetToken_;
   edm::EDGetTokenT<reco::JetFlavourInfoMatchingCollection> genjetFlavorToken_;
+  //edm::EDGetTokenT<reco::GenParticleCollection> genParticlesToken_;
   const edm::EDGetTokenT<std::vector<double> > pdfCTEQWeightsInputToken_;
   const edm::EDGetTokenT<std::vector<double> > pdfMMTHWeightsInputToken_;
   const edm::EDGetTokenT<std::vector<double> > pdfNNPDFWeightsInputToken_;
@@ -1883,10 +2261,9 @@ int nchg1_bjet, nchg2_bjet;
   edm::EDGetTokenT< double > prefweightup_token;
   edm::EDGetTokenT< double > prefweightdown_token;
 #endif
-
-  const std::vector<std::string> bDiscriminators_;  //b-tag info
-  const std::string btagSFFile_ ;              //b-tag Scale-Factor File
-  
+  const std::vector<std::string> bDiscriminators_;  //BTag info
+  const std::string btagSFFile_ ;                   //BTag Scale-Factor File
+  const std::string btagEffFile_;
   //edm::EDGetTokenT<reco::TrackCollection> tracksToken_;
 
   /*
@@ -1902,8 +2279,8 @@ int nchg1_bjet, nchg2_bjet;
   */
 
   float qscale;
-  float wtfact; //MC : eventinfo->weight(); data : hltpres[ihltfill]*l1pres[ihltfill];
-  int procid, npilup1, npilup2; //1:-5 to -1, 2:0 to 3
+  float wtfact;                  //MC : eventinfo->weight(); data : hltpres[ihltfill]*l1pres[ihltfill];
+  int procid, npilup1, npilup2;  //1:-5 to -1, 2:0 to 3
 
   int idall;
   float xfrac1, xfrac2, xpdf1, xpdf2;  
@@ -1913,12 +2290,14 @@ int nchg1_bjet, nchg2_bjet;
   int nreco, naa, nbb, ncc;
   //int Reco=0,Gen=0,RM=0;
 
-  //b-tag info
+  //BTag info
   std::unique_ptr<CorrectionSet> SFBTag;
-  Correction::Ref corrector_deepCSV_bFlav;
-  Correction::Ref corrector_deepJet_bFlav;
+  Correction::Ref corrector_deepCSV_bcFlav;
+  Correction::Ref corrector_deepCSV_lFlav;
+  Correction::Ref corrector_deepJet_bcFlav;
+  Correction::Ref corrector_deepJet_lFlav;
 
-  std::vector<JetCorrectionUncertainty*> vsrc; // (nsrc);
+  std::vector<JetCorrectionUncertainty*> vsrc; //(nsrc);
   reweight::PoissonMeanShifter PShiftUp_;
   reweight::PoissonMeanShifter PShiftDown_;
   edm::LumiReWeighting *LumiWeights_;
@@ -1953,6 +2332,7 @@ int nchg1_bjet, nchg2_bjet;
   ak5PFjetToken_(consumes<reco::PFJetCollection>(iConfig.getParameter<edm::InputTag>("ak5pfJetSrc"))),
   ak5GenJetToken_(consumes<reco::GenJetCollection>(iConfig.getParameter<edm::InputTag>("ak5genJetSrc"))),
   genjetFlavorToken_(consumes<reco::JetFlavourInfoMatchingCollection>(iConfig.getParameter<edm::InputTag>("genJetFlavourInfos"))),
+  //genParticlesToken_(consumes<reco::GenParticleCollection>(iConfig.getParameter<edm::InputTag>("genparticles"))),
   pdfCTEQWeightsInputToken_(consumes<std::vector<double> >(iConfig.getParameter<edm::InputTag>("PDFCTEQWeightsInputTag"))),
   pdfMMTHWeightsInputToken_(consumes<std::vector<double> >(iConfig.getParameter<edm::InputTag>("PDFMMTHWeightsInputTag"))),
   pdfNNPDFWeightsInputToken_(consumes<std::vector<double> >(iConfig.getParameter<edm::InputTag>("PDFNNPDFWeightsInputTag"))),
@@ -1965,6 +2345,7 @@ int nchg1_bjet, nchg2_bjet;
 #endif
   bDiscriminators_(iConfig.getParameter<std::vector<std::string> >("bDiscriminators")),
   btagSFFile_(iConfig.getParameter<std::string>("BtagScaleFacFile")),
+  btagEffFile_(iConfig.getParameter<std::string>("BTagEffFile")),
   //tracksToken_(consumes<reco::TrackCollection>(iConfig.getParameter<edm::InputTag>("tracks"))),
   hltPrescaleProvider_(iConfig, consumesCollector(), *this)
 
@@ -1991,18 +2372,24 @@ int nchg1_bjet, nchg2_bjet;
   weight = weight2;
   theHLTTag = iConfig.getUntrackedParameter<string>("HLTTag", "HLT");
   theRootFileName = iConfig.getUntrackedParameter<string>("RootFileName");
-
+  
+  //BTag Stuff
   SFBTag = CorrectionSet::from_file(btagSFFile_);
-  corrector_deepCSV_bFlav = SFBTag->at("deepCSV_comb");
-  corrector_deepJet_bFlav = SFBTag->at("deepJet_comb");
+  corrector_deepCSV_bcFlav = SFBTag->at("deepCSV_mujets");
+  corrector_deepCSV_lFlav = SFBTag->at("deepCSV_incl");
 
+  corrector_deepJet_bcFlav = SFBTag->at("deepJet_mujets"); //deepJet_mujets  OR deepJet_comb
+  corrector_deepJet_lFlav = SFBTag->at("deepJet_incl");
+
+
+  bTagEff_file = new TFile(btagEffFile_.c_str());
   //cout << "Testing 1 ==== " <<njecmx<< endl;
 
   char RecoBinName[100], GenBinName[100], RecoBinbjetName[100], GenBinbjetName[100], Axisname[100]; 
   char name[200];
   char title[200];
 
-//-------------------------------------------Define TUnfoldBinning Jet Charge
+//Define TUnfoldBinning Jet Charge
 //Binning scheme for both RECO & GEN and for all 3 definition, 2 jets and 10 kappas using array
 	for(int id=0; id<ndef; id++){
 		for(int ij=0; ij<njet; ij++){
@@ -2033,7 +2420,7 @@ int nchg1_bjet, nchg2_bjet;
 				//GenBinning2D[iet][id][ij][ik]->AddAxis(Axisname, PTbins, recohtbins2D, false, false);
 				
 
-				//b-Jets
+				//BJets
 				sprintf(RecoBinbjetName, "Detectorbjet2d_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
                                 binsRecbjet2D[id][ij][ik][iet] = new TUnfoldBinning(RecoBinbjetName);
                                 sprintf(RecoBinbjetName, "Recobinbjet2d_d%i_j%i_k%i_eta%i",id,ij,ik,iet);
@@ -2067,11 +2454,16 @@ for(int id=0; id<ndef; id++){
                         		h_recovar2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
 					h_recovar2D[id][ij][ik][iet]->Sumw2();
 
-					sprintf(name, "dd_reco_bjet_WPT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco bjet WPT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                        h_recovar_bjet2D_WPT[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recovar_bjet2D_WPT[id][ij][ik][iet]->Sumw2();
+					sprintf(name, "dd_reco_bjet_deepJETT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet2D_deepJETT[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet2D_deepJETT[id][ij][ik][iet]->Sumw2();
 
+					//NoSF
+					sprintf(name, "dd_reco_bjet_deepJETT_NoSF_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT No SF Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet2D_deepJETT_NoSF[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet2D_deepJETT_NoSF[id][ij][ik][iet]->Sumw2();
 #ifdef FLAV
 					//Flavor Tagging
 					sprintf(name, "dd_reco_gjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2113,29 +2505,6 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Reco oJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
                                         h_recovar_ojet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_recovar_ojet2D[id][ij][ik][iet]->Sumw2();
-
-					/*
-					//Second-set Flavor Tagging
-					sprintf(name, "dd_reco_qjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco qJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                        h_recovar_qjet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recovar_qjet2D[id][ij][ik][iet]->Sumw2();
-
-					sprintf(name, "dd_reco_aqjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco aqJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                        h_recovar_aqjet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recovar_aqjet2D[id][ij][ik][iet]->Sumw2();
-
-					sprintf(name, "dd_reco_aqgjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco aqgJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                        h_recovar_aqgjet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recovar_aqgjet2D[id][ij][ik][iet]->Sumw2();
-
-					sprintf(name, "dd_reco_aqojet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco aqoJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
-                                        h_recovar_aqojet2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recovar_aqojet2D[id][ij][ik][iet]->Sumw2();
-					*/
 #endif
 
 					sprintf(name, "dd_recofake_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2143,11 +2512,10 @@ for(int id=0; id<ndef; id++){
                                         h_recofake2D[id][ij][ik][iet] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_recofake2D[id][ij][ik][iet]->Sumw2(); 
 
-					sprintf(name, "dd_recofake_bjet_WPT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Reco Fake bjet WPT Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
-                                        h_recofake_bjet2D_WPT[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_recofake_bjet2D_WPT[id][ij][ik][iet]->Sumw2();
-
+					sprintf(name, "dd_recofake_bjet_deepJETT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake bjet deepJETT Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_bjet2D_deepJETT[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet2D_deepJETT[id][ij][ik][iet]->Sumw2();
 					}
 #ifdef  LHAPDF
             			for (int ix=1; ix<nnnmx; ix++) {
@@ -2155,6 +2523,12 @@ for(int id=0; id<ndef; id++){
             				sprintf(title, "2D Genpdf Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
             				h_genvarpdf2D[id][ij][ik][iet][ix] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
             				h_genvarpdf2D[id][ij][ik][iet][ix]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_genpdf_BJet_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Genpdf BJet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_genvar_BJet_pdf2D[id][ij][ik][iet][ix] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_pdf2D[id][ij][ik][iet][ix]->Sumw2();
            				}
 
 				for(int iy=0; iy<nmgscale; iy++){
@@ -2162,6 +2536,12 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Genmgscale Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],iy);
                                         h_genvarmgscale2D[id][ij][ik][iet][iy] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genvarmgscale2D[id][ij][ik][iet][iy]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_gen_BJet_mgscale_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, iy);
+                                        sprintf(title, "2D Genmgscale BJet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],iy);
+                                        h_genvar_BJet_mgscale2D[id][ij][ik][iet][iy] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_mgscale2D[id][ij][ik][iet][iy]->Sumw2();
 					}
 
 				for (int ix=1; ix<nnnmx; ix++) {
@@ -2184,6 +2564,27 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Corrpdf Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
                                         h_RMpdf2D[id][ij][ik][iet][ix] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                         h_RMpdf2D[id][ij][ik][iet][ix]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_recopdf_bjet_deepJETT_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Recopdf bjet deepJETT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_recovar_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_pdf_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D RecoFake bjet deepJETT pdf  Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_recofake_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_pdf_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D GenMiss BJet pdf Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_genmiss_BJet_pdf2D[id][ij][ik][iet][ix] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_pdf2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_corr_bjet_deepJETT_pdf_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Corr bjet deepJETT pdf Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_RM_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Sumw2();
 				}
 #endif
 
@@ -2193,6 +2594,12 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Gen Scale Unc Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
                                         h_genvarscaleunc2D[id][ij][ik][iet][ix] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genvarscaleunc2D[id][ij][ik][iet][ix]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_gen_BJet_scaleunc_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Gen BJet Scale Unc Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_genvar_BJet_scaleunc2D[id][ij][ik][iet][ix] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_scaleunc2D[id][ij][ik][iet][ix]->Sumw2();
                                         }
 #endif
 
@@ -2202,6 +2609,12 @@ for(int id=0; id<ndef; id++){
             				sprintf(title, "2D Recojec Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
             				h_recovarjec2D[id][ij][ik][iet][ix] = binsRec2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
             				h_recovarjec2D[id][ij][ik][iet][ix]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_recojec_bjet_deepJETT_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Recojec bjet deepJETT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_recovar_bjet_deepJETT_jec2D[id][ij][ik][iet][ix] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_jec2D[id][ij][ik][iet][ix]->Sumw2();
             				}
 #elif defined(JETRESO)
 	      			for (int ix=0; ix<njecmx; ix++ ) {
@@ -2224,6 +2637,27 @@ for(int id=0; id<ndef; id++){
               				sprintf(title, "2D miss reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
               				h_genmiss_JER_2D[id][ij][ik][iet][ix] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
               				h_genmiss_JER_2D[id][ij][ik][iet][ix]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_reco_bjet_deepJETT_reso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Reco bjet deepJETT reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_recovar_bjet_deepJETT_res2D[id][ij][ik][iet][ix] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_res2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_corr_bjet_deepJETT_reso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D Corr bjet deepJETT reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_RM_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_fake_bjet_deepJETT_reso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D fake bjet deepJETT reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_recofake_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix]->Sumw2();
+
+                                        sprintf(name, "dd_miss_BJet_reso_d%i_j%i_k%i_eta%i_%i", id, ij, ik, iet, ix);
+                                        sprintf(title, "2D miss BJet reso Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet],ix);
+                                        h_genmiss_BJet_JER_2D[id][ij][ik][iet][ix] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_JER_2D[id][ij][ik][iet][ix]->Sumw2();
             				}
 #endif					
 					sprintf(name, "dd_gen_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2236,15 +2670,15 @@ for(int id=0; id<ndef; id++){
                                         h_genmiss2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss2D[id][ij][ik][iet]->Sumw2();
 
-					sprintf(name, "dd_gen_bjet_WPT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen bjet WPT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
-                                        h_genvar_bjet2D_WPT[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genvar_bjet2D_WPT[id][ij][ik][iet]->Sumw2();
+					sprintf(name, "dd_gen_BJet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_BJet2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet2D[id][ij][ik][iet]->Sumw2();
 
-                                        sprintf(name, "dd_genmiss_bjet_WPT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                        sprintf(title, "2D Gen Miss bjet WPT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                        h_genmiss_bjet2D_WPT[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
-                                        h_genmiss_bjet2D_WPT[id][ij][ik][iet]->Sumw2();			
+                                        sprintf(name, "dd_genmiss_BJet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet2D[id][ij][ik][iet]->Sumw2();			
 
 					//GenJet Flavour
 					sprintf(name, "dd_gen_gjet_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2293,10 +2727,10 @@ for(int id=0; id<ndef; id++){
                 		                h_RM2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                 		h_RM2D[id][ij][ik][iet]->Sumw2();
 
-						sprintf(name, "dd_corr_bjet_WPT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
-                                                sprintf(title, "Gen_Reco bjet WPT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
-                                                h_RM_bjet2D_WPT[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
-                                                h_RM_bjet2D_WPT[id][ij][ik][iet]->Sumw2();
+						sprintf(name, "dd_corr_bjet_deepJETT_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "Gen_Reco bjet deepJETT Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                                h_RM_bjet2D_deepJETT[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                                h_RM_bjet2D_deepJETT[id][ij][ik][iet]->Sumw2();
 						}
 
 #ifdef PREFIRE
@@ -2347,6 +2781,56 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "Gen_Reco PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_RM_prefiredown_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                         h_RM_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+					
+					//BJet
+					sprintf(name, "dd_reco_bjet_deepJETT_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_prefire2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake bjet deepJETT PreFire Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_bjet_deepJETT_prefire2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_corr_bjet_deepJETT_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_prefire2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Sumw2();
+
+					
+					//up
+					sprintf(name, "dd_reco_bjet_deepJETT_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_prefireup_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake bjet deepJETT PreFire up Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_bjet_deepJETT_prefireup_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_corr_bjet_deepJETT_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_prefireup_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+					//Down
+					sprintf(name, "dd_reco_bjet_deepJETT_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco Fake bjet deepJETT PreFire down Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                        h_recofake_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_corr_bjet_deepJETT_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Sumw2();
                                         }
 
 					sprintf(name, "dd_gen_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2380,6 +2864,39 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Gen Miss PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_genmiss_prefiredown_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_gen_BJet_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_prefire2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_prefire2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_prefire_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet PreFire Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_prefire2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_prefire2D[id][ij][ik][iet]->Sumw2();
+
+					//up
+					sprintf(name, "dd_gen_BJet_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_prefireup_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_prefireup_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet PreFire up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_prefireup_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_prefireup_2D[id][ij][ik][iet]->Sumw2();
+
+					//down
+					sprintf(name, "dd_gen_BJet_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_prefiredown_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_prefiredown_2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_prefiredown_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet PreFire down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_prefiredown_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_prefiredown_2D[id][ij][ik][iet]->Sumw2();
 #endif
 
 #ifdef TRACKEFF
@@ -2398,6 +2915,21 @@ for(int id=0; id<ndef; id++){
                                                 sprintf(title, "Gen_Reco Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                                 h_RM_trackeff2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                                 h_RM_trackeff2D[id][ij][ik][iet]->Sumw2();
+
+						//BJet
+						sprintf(name, "dd_reco_bjet_deepJETT_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco bjet deepJETT Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                                h_recovar_bjet_deepJETT_trackeff2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recovar_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_recofake_bjet_deepJETT_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco Fake bjet deepJETT Track Eff Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                                h_recofake_bjet_deepJETT_trackeff2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recofake_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_corr_bjet_deepJETT_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "Gen_Reco bjet deepJETT Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                                h_RM_bjet_deepJETT_trackeff2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
 						}
 			
 					sprintf(name, "dd_gen_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
@@ -2409,6 +2941,17 @@ for(int id=0; id<ndef; id++){
                                         sprintf(title, "2D Gen Miss Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_genmiss_trackeff2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_trackeff2D[id][ij][ik][iet]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_gen_BJet_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genvar_BJet_trackeff2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_trackeff2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_trackeff_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet Track Eff Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_trackeff2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_trackeff2D[id][ij][ik][iet]->Sumw2();
 #endif
 
 /*
@@ -2459,11 +3002,33 @@ for(int id=0; id<ndef; id++){
                                                 sprintf(title, "Gen_Reco Track pT up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                                 h_RM_trackpt1_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                                 h_RM_trackpt1_2D[id][ij][ik][iet]->Sumw2();
+
+						//BJet
+						sprintf(name, "dd_reco_bjet_deepJETT_trackpt_up_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco bjet deepJETT Track pT up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                                h_recovar_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recovar_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_recofake_bjet_deepJETT_trackpt_up_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco Fake bjet deepJETT Track pT up Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                                h_recofake_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recofake_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_corr_bjet_deepJETT_trackpt_up_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "Gen_Reco bjet deepJETT Track pT up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                                h_RM_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                                h_RM_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Sumw2();
                                                 }
 					sprintf(name, "dd_genmiss_trackpt_up_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
                                         sprintf(title, "2D Gen Miss Track pT up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_genmiss_trackpt1_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_trackpt1_2D[id][ij][ik][iet]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_genmiss_BJet_trackpt_up_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet Track pT up Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_trackpt1_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_trackpt1_2D[id][ij][ik][iet]->Sumw2();
 #endif
 
 #ifdef TRACKPTDOWN
@@ -2482,18 +3047,147 @@ for(int id=0; id<ndef; id++){
                                                 sprintf(title, "Gen_Reco Track pT down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                                 h_RM_trackpt2_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRec2D[id][ij][ik][iet], binsGen2D[id][ij][ik][iet], name ,0,0, title);
                                                 h_RM_trackpt2_2D[id][ij][ik][iet]->Sumw2();
+
+						//BJet
+						sprintf(name, "dd_reco_bjet_deepJETT_trackpt_down_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco bjet deepJETT Track pT down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                                h_recovar_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recovar_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_recofake_bjet_deepJETT_trackpt_down_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "2D Reco Fake bjet deepJETT Track pT down Q_{%s,%g}^{%g} %g ",jcodef[id], jetname[ij], kappa[ik],etarange[iet]);
+                                                h_recofake_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                                h_recofake_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Sumw2();
+
+                                                sprintf(name, "dd_corr_bjet_deepJETT_trackpt_down_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                                sprintf(title, "Gen_Reco bjet deepJETT Track pT down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                                h_RM_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                                h_RM_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Sumw2();
                                                 }
 					sprintf(name, "dd_genmiss_trackpt_down_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
                                         sprintf(title, "2D Gen Miss Track pT down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
                                         h_genmiss_trackpt2_2D[id][ij][ik][iet] = binsGen2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
                                         h_genmiss_trackpt2_2D[id][ij][ik][iet]->Sumw2();
+
+					//BJet
+					sprintf(name, "dd_genmiss_BJet_trackpt_down_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen Miss BJet Track pT bjet down Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_genmiss_BJet_trackpt2_2D[id][ij][ik][iet] = binsGenbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_trackpt2_2D[id][ij][ik][iet]->Sumw2();
+#endif
+
+#ifdef BTAGUNC
+				if (isReconstruct) {
+					sprintf(name, "dd_reco_bjet_deepJETT_BTagWt_upCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT BTagWt_upCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_reco_bjet_deepJETT_BTagWt_downCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT BTagWt_downCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_reco_bjet_deepJETT_BTagWt_upUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT BTagWt_upUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_reco_bjet_deepJETT_BTagWt_downUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco bjet deepJETT BTagWt_downUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recovar_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recovar_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Sumw2();
+
+					
+					sprintf(name, "dd_recofake_bjet_deepJETT_BTagWt_upCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco fake bjet deepJETT BTagWt_upCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recofake_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_BTagWt_downCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco fake bjet deepJETT BTagWt_downCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recofake_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_BTagWt_upUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco fake bjet deepJETT BTagWt_upUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_recofake_bjet_deepJETT_BTagWt_downUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Reco fake bjet deepJETT BTagWt_downUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Sumw2();
+
+			
+					sprintf(name, "dd_corr_bjet_deepJETT_BTagWt_upCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT BTagWt_upCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_corr_bjet_deepJETT_BTagWt_downCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT BTagWt_downCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_corr_bjet_deepJETT_BTagWt_upUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT BTagWt_upUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Sumw2();
+
+					sprintf(name, "dd_corr_bjet_deepJETT_BTagWt_downUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "Gen_Reco bjet deepJETT BTagWt_downUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij],kappa[ik],etarange[iet]);
+                                        h_RM_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet] = TUnfoldBinning::CreateHistogramOfMigrations(binsRecbjet2D[id][ij][ik][iet], binsGenbjet2D[id][ij][ik][iet], name ,0,0, title);
+                                        h_RM_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Sumw2();
+					}
+					
+					sprintf(name, "dd_gen_BJet_BTagWt_upCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet BTagWt_upCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_BTagWt_upCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_gen_BJet_BTagWt_downCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet BTagWt_downCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_BTagWt_downCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_gen_BJet_BTagWt_upUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet BTagWt_upUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_BTagWt_upUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_gen_BJet_BTagWt_downUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen BJet BTagWt_downUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genvar_BJet_BTagWt_downUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genvar_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Sumw2();
+					
+
+					sprintf(name, "dd_genmiss_BJet_BTagWt_upCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen miss BJet BTagWt_upCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genmiss_BJet_BTagWt_upCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_BTagWt_downCorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen miss BJet BTagWt_downCorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genmiss_BJet_BTagWt_downCorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_BTagWt_upUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen miss BJet BTagWt_upUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genmiss_BJet_BTagWt_upUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Sumw2();
+
+                                        sprintf(name, "dd_genmiss_BJet_BTagWt_downUncorr_d%i_j%i_k%i_eta%i", id,ij,ik,iet);
+                                        sprintf(title, "2D Gen miss BJet BTagWt_downUncorr Q_{%s,%g}^{%g} %g", jcodef[id], jetname[ij], kappa[ik], etarange[iet]);
+                                        h_genmiss_BJet_BTagWt_downUncorr2D[id][ij][ik][iet] = binsRecbjet2D[id][ij][ik][iet]->CreateHistogram(name,false,0,title);
+                                        h_genmiss_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Sumw2();		
 #endif
 				}
 			}
 		}
 	}
 /*
-//-------------------------------------------Jet Charge Histogram
+//Jet Charge Histogram
 //1D Histogram for RECO & GEN for 3 definition, 2 jets, 10 kappa using array
 for(int id=0; id<ndef; id++){
 	for(int ij=0; ij<njet; ij++){
@@ -2601,17 +3295,27 @@ for(int id=0; id<ndef; id++){
                                         h_recovarIB[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
                                         h_recovarIB[id][ij][ik][iet][ipt]->Sumw2();
 
-					//b-jet
-                                        sprintf(name, "reco_bjet_WPT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco bjet WPT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovar_bjet_WPT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik]);
+					//BJet
+                                        sprintf(name, "reco_bjet_deepJETT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco bjet deepJETT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_bjet_deepJETT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik]);
 					//h_recovar_bjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobins[id][ij][ik], recomin[id][ij][ik], recomax[id][ij][ik]);
-                                        h_recovar_bjet_WPT[id][ij][ik][iet][ipt]->Sumw2();
+                                        h_recovar_bjet_deepJETT[id][ij][ik][iet][ipt]->Sumw2();
 
-					sprintf(name, "reco_bjet_jc_ib_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco bjet identical binning Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovarIB_bjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                                        h_recovarIB_bjet[id][ij][ik][iet][ipt]->Sumw2();
+					sprintf(name, "reco_bjet_deepJETT_NoSF_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco bjet deepJETT No SF Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovar_bjet_deepJETT_NoSF[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik]);
+					h_recovar_bjet_deepJETT_NoSF[id][ij][ik][iet][ipt]->Sumw2();
+
+					sprintf(name, "reco_bjet_deepJETT_jc_ib_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco bjet deepJETT identical binning Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovarIB_bjet_deepJETT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                                        h_recovarIB_bjet_deepJETT[id][ij][ik][iet][ipt]->Sumw2();
+
+					sprintf(name, "reco_bjet_deepJETT_NoSF_jc_ib_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Reco bjet deepJETT No SF identical binning Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recovarIB_bjet_deepJETT_NoSF[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                                        h_recovarIB_bjet_deepJETT_NoSF[id][ij][ik][iet][ipt]->Sumw2();
 #ifdef FLAV
 					//RecoJet Flavour
 					//Flavor Tagging
@@ -2655,29 +3359,6 @@ for(int id=0; id<ndef; id++){
                                         h_recovar_ojet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
                                         h_recovar_ojet[id][ij][ik][iet][ipt]->Sumw2();
 
-					/*
-					//Second-set Flavor Tagging
-					sprintf(name, "reco_qjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco qjet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovar_qjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
-                                        h_recovar_qjet[id][ij][ik][iet][ipt]->Sumw2();
-
-					sprintf(name, "reco_aqjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco aqjet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovar_aqjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
-                                        h_recovar_aqjet[id][ij][ik][iet][ipt]->Sumw2();
-
-					sprintf(name, "reco_aqgjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco aqgjet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovar_aqgjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
-                                        h_recovar_aqgjet[id][ij][ik][iet][ipt]->Sumw2();
-
-					sprintf(name, "reco_aqojet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Reco aqojet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recovar_aqojet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins[id][ij][ik], recorng[id][ij][ik]);
-                                        h_recovar_aqojet[id][ij][ik][iet][ipt]->Sumw2();
-					*/
-
 #endif
                                         sprintf(name, "recofake_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
                                         //sprintf(title, "Reco Fake Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(leadingPtThreshold[ipt]));
@@ -2692,17 +3373,17 @@ for(int id=0; id<ndef; id++){
                                         h_RM[id][ij][ik][iet][ipt]->Sumw2();
 
 					//b-jet
-					sprintf(name, "recofake_bjet_WPT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-					sprintf(title, "Reco Fake bjet WPT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_recofake_bjet_WPT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik]);
+					sprintf(name, "recofake_bjet_deepJETT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+					sprintf(title, "Reco Fake bjet deepJETT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_recofake_bjet_deepJETT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik]);
 					//h_recofake_bjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, recobins[id][ij][ik], recomin[id][ij][ik], recomax[id][ij][ik]);
-                                        h_recofake_bjet_WPT[id][ij][ik][iet][ipt]->Sumw2();
+                                        h_recofake_bjet_deepJETT[id][ij][ik][iet][ipt]->Sumw2();
 
-					sprintf(name, "RM_bjet_WPT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
-					sprintf(title, "RM bjet WPT Q_{%s,%g}^{%g} %g %i",jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_RM_bjet_WPT[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik], ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
+					sprintf(name, "RM_bjet_deepJETT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+					sprintf(title, "RM bjet deepJETT Q_{%s,%g}^{%g} %g %i",jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_RM_bjet_deepJETT[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, nrecobins_bjet[id][ij][ik], recorng_bjet[id][ij][ik], ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
 					//h_RM_bjet[id][ij][ik][iet][ipt] = fs->make<TH2F>(name, title, recobins[id][ij][ik], recomin[id][ij][ik], recomax[id][ij][ik], genbins[id][ij][ik], genmin[id][ij][ik], genmax[id][ij][ik]);
-                                        h_RM_bjet_WPT[id][ij][ik][iet][ipt]->Sumw2();
+                                        h_RM_bjet_deepJETT[id][ij][ik][iet][ipt]->Sumw2();
                                         }
 					
 #ifdef  LHAPDF
@@ -2777,18 +3458,18 @@ for(int id=0; id<ndef; id++){
                                         h_genmiss[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins[id][ij][ik], genrng[id][ij][ik]);
                                         h_genmiss[id][ij][ik][iet][ipt]->Sumw2();
 
-					//b-jet
-					sprintf(name, "gen_bjet_WPT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
-                                        sprintf(title, "Gen bjet WPT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_genvar_bjet_WPT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
+					//BJet
+					sprintf(name, "gen_BJet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
+                                        sprintf(title, "Gen BJet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genvar_BJet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
 					//h_genvar_bjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, genbins[id][ij][ik], genmin[id][ij][ik], genmax[id][ij][ik]);
-                                        h_genvar_bjet_WPT[id][ij][ik][iet][ipt]->Sumw2();
+                                        h_genvar_BJet[id][ij][ik][iet][ipt]->Sumw2();
 
-                                        sprintf(name, "genmiss_bjet_WPT_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
-                                        sprintf(title, "Gen Miss bjet WPT Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
-                                        h_genmiss_bjet_WPT[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
+                                        sprintf(name, "genmiss_BJet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet, ipt);
+                                        sprintf(title, "Gen Miss BJet Q_{%s,%g}^{%g} %g %i", jcodef[id], jetname[ij], kappa[ik], etarange[iet], int(genhtbins[ipt]));
+                                        h_genmiss_BJet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, ngenbins_bjet[id][ij][ik], genrng_bjet[id][ij][ik]);
 					//h_genmiss_bjet[id][ij][ik][iet][ipt] = fs->make<TH1F>(name, title, genbins[id][ij][ik], genmin[id][ij][ik], genmax[id][ij][ik]);
-                                        h_genmiss_bjet_WPT[id][ij][ik][iet][ipt]->Sumw2();
+                                        h_genmiss_BJet[id][ij][ik][iet][ipt]->Sumw2();
 
 					//GenJet Flavour Info
 					sprintf(name, "gen_gjet_jc_d%i_j%i_k%i_eta%i_pt%i",id, ij, ik,iet,ipt);
@@ -3057,38 +3738,63 @@ for(int id=0; id<ndef; id++){
                         hprof_Reco_X123_vs_jco[id][ij][ik]->Sumw2();
 
 
-			//b-jet
-			sprintf(name, "reco_jco_pt_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "JCO vs pT Reco bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-			hprof_reco_jco_pt_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_reco_jco_pt_bjet_WPT[id][ij][ik]->Sumw2();
+			//BJet
+			sprintf(name, "reco_jco_pt_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT Reco bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+			hprof_reco_jco_pt_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_reco_jco_pt_bjet_deepJETT[id][ij][ik]->Sumw2();
 
-			sprintf(name, "gen_jco_pt_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "JCO vs pT Gen bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_gen_jco_pt_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_gen_jco_pt_bjet_WPT[id][ij][ik]->Sumw2();
+			sprintf(name, "reco_jco_pt_bjet_deepJETT_NoSF_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT Reco bjet deepJETT No SF Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_reco_jco_pt_bjet_deepJETT_NoSF[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_reco_jco_pt_bjet_deepJETT_NoSF[id][ij][ik]->Sumw2();
+
+			sprintf(name, "gen_jco_pt_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "JCO vs pT Gen bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_gen_jco_pt_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_gen_jco_pt_bjet_deepJETT[id][ij][ik]->Sumw2();
 	
 
-			sprintf(name, "reco_ntrack_vs_jco_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "nTrack vs JCO Reco bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_Reco_ntrack_vs_jco_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,99,1,100, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_Reco_ntrack_vs_jco_bjet_WPT[id][ij][ik]->Sumw2();
+			sprintf(name, "reco_ntrack_vs_jco_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "nTrack vs JCO Reco bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_ntrack_vs_jco_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,99,1,100, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_ntrack_vs_jco_bjet_deepJETT[id][ij][ik]->Sumw2();
+
+ 			sprintf(name, "reco_ntrack_vs_jco_bjet_deepJETT_NoSF_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "nTrack vs JCO Reco bjet deepJETT No SF Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_ntrack_vs_jco_bjet_deepJETT_NoSF[id][ij][ik] = fs->make<TH2F>(name,title,99,1,100, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_ntrack_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Sumw2();
 		
 			
-			sprintf(name, "reco_X1_vs_jco_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "X1 vs JCO Reco bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_Reco_X1_vs_jco_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_Reco_X1_vs_jco_bjet_WPT[id][ij][ik]->Sumw2();
+			sprintf(name, "reco_X1_vs_jco_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X1 vs JCO Reco bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X1_vs_jco_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X1_vs_jco_bjet_deepJETT[id][ij][ik]->Sumw2();
 
-                        sprintf(name, "reco_X12_vs_jco_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "X12 vs JCO Reco bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_Reco_X12_vs_jco_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_Reco_X12_vs_jco_bjet_WPT[id][ij][ik]->Sumw2();
+			sprintf(name, "reco_X1_vs_jco_bjet_deepJETT_NoSF_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X1 vs JCO Reco bjet deepJETT No SF Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X1_vs_jco_bjet_deepJETT_NoSF[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X1_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Sumw2();
 
-                        sprintf(name, "reco_X123_vs_jco_bjet_WPT_d%i_j%i_k%i",id, ij, ik);
-                        sprintf(title, "X123 vs JCO Reco bjet WPT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
-                        hprof_Reco_X123_vs_jco_bjet_WPT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
-                        hprof_Reco_X123_vs_jco_bjet_WPT[id][ij][ik]->Sumw2();
+                        sprintf(name, "reco_X12_vs_jco_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X12 vs JCO Reco bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X12_vs_jco_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X12_vs_jco_bjet_deepJETT[id][ij][ik]->Sumw2();
+
+			sprintf(name, "reco_X12_vs_jco_bjet_deepJETT_NoSF_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X12 vs JCO Reco bjet deepJETT No SF Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X12_vs_jco_bjet_deepJETT_NoSF[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X12_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Sumw2();
+
+                        sprintf(name, "reco_X123_vs_jco_bjet_deepJETT_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X123 vs JCO Reco bjet deepJETT Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X123_vs_jco_bjet_deepJETT[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X123_vs_jco_bjet_deepJETT[id][ij][ik]->Sumw2();
+
+			sprintf(name, "reco_X123_vs_jco_bjet_deepJETT_NoSF_d%i_j%i_k%i",id, ij, ik);
+                        sprintf(title, "X123 vs JCO Reco bjet deepJETT No SF Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
+                        hprof_Reco_X123_vs_jco_bjet_deepJETT_NoSF[id][ij][ik] = fs->make<TH2F>(name,title,10,0,1, recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
+                        hprof_Reco_X123_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Sumw2();
 			
 #ifdef FLAV
 			//RecJet Flavor Tagging
@@ -3132,7 +3838,7 @@ for(int id=0; id<ndef; id++){
 			hprof_reco_jco_pt_ojet[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
                         hprof_reco_jco_pt_ojet[id][ij][ik]->Sumw2();
 
-			//b-jet
+			//BJet
 			sprintf(name, "reco_jco_pt_bjetTag_d%i_j%i_k%i",id, ij, ik);
                         sprintf(title, "JCO vs pT bjetTag Q_{%s,%g}^{%g}", jcodef[id], jetname[ij], kappa[ik]);
                         hprof_reco_jco_pt_bjetTag[id][ij][ik] = fs->make<TH2F>(name,title,30,30,1500,recobinskappa[id][ij][ik], recominkappa[id][ij][ik], recomaxkappa[id][ij][ik]);
@@ -3226,21 +3932,37 @@ for(int ij=0; ij<njet; ij++){
         Reco_X123[ij] = fs->make<TH1F>(name,title,10,0,1);
         Reco_X123[ij]->Sumw2();
 
-	//bJet
-	sprintf(name, "Reco_X1_bjet_WPT_j%i",ij);
-        sprintf(title, "Energy Fraction Particle PT1/Jet PT nJet_{%g} bjet WPT", jetname[ij]);
-        Reco_X1_bjet_WPT[ij] = fs->make<TH1F>(name,title,10,0,1);
-        Reco_X1_bjet_WPT[ij]->Sumw2();
+	//BJet
+	sprintf(name, "Reco_X1_bjet_deepJETT_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1/Jet PT nJet_{%g} bjet deepJETT", jetname[ij]);
+        Reco_X1_bjet_deepJETT[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X1_bjet_deepJETT[ij]->Sumw2();
 
-        sprintf(name, "Reco_X12_bjet_WPT_j%i",ij);
-        sprintf(title, "Energy Fraction Particle PT1+PT2/Jet PT nJet_{%g} bjet WPT", jetname[ij]);
-        Reco_X12_bjet_WPT[ij] = fs->make<TH1F>(name,title,10,0,1);
-        Reco_X12_bjet_WPT[ij]->Sumw2();
+        sprintf(name, "Reco_X12_bjet_deepJETT_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1+PT2/Jet PT nJet_{%g} bjet deepJETT", jetname[ij]);
+        Reco_X12_bjet_deepJETT[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X12_bjet_deepJETT[ij]->Sumw2();
 
-        sprintf(name, "Reco_X123_bjet_WPT_j%i",ij);
-        sprintf(title, "Energy Fraction Particle PT1+PT2+PT3/Jet PT nJet_{%g} bjet WPT", jetname[ij]);
-        Reco_X123_bjet_WPT[ij] = fs->make<TH1F>(name,title,10,0,1);
-        Reco_X123_bjet_WPT[ij]->Sumw2();	
+        sprintf(name, "Reco_X123_bjet_deepJETT_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1+PT2+PT3/Jet PT nJet_{%g} bjet deepJETT", jetname[ij]);
+        Reco_X123_bjet_deepJETT[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X123_bjet_deepJETT[ij]->Sumw2();
+
+
+        sprintf(name, "Reco_X1_bjet_deepJETT_NoSF_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1/Jet PT nJet_{%g} bjet deepJETT NoSF", jetname[ij]);
+        Reco_X1_bjet_deepJETT_NoSF[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X1_bjet_deepJETT_NoSF[ij]->Sumw2();
+
+        sprintf(name, "Reco_X12_bjet_deepJETT_NoSF_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1+PT2/Jet PT nJet_{%g} bjet deepJETT NoSF", jetname[ij]);
+        Reco_X12_bjet_deepJETT_NoSF[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X12_bjet_deepJETT_NoSF[ij]->Sumw2();
+
+        sprintf(name, "Reco_X123_bjet_deepJETT_NoSF_j%i",ij);
+        sprintf(title, "Energy Fraction Particle PT1+PT2+PT3/Jet PT nJet_{%g} bjet deepJETT NoSF", jetname[ij]);
+        Reco_X123_bjet_deepJETT_NoSF[ij] = fs->make<TH1F>(name,title,10,0,1);
+        Reco_X123_bjet_deepJETT_NoSF[ij]->Sumw2();	
 
 #ifdef FLAV
 	sprintf(name, "Reco_X1_bjet_j%i",ij);
@@ -3447,171 +4169,87 @@ for(int ij=0; ij<njet; ij++){
   recojt2o_eta->Sumw2();
   recojt2o_phi = fs->make<TH1F>("recojt2o_phi","#phi_{recojetso}",100,-M_PI, M_PI);
   recojt2o_phi->Sumw2(); 
-
-  /*
-  //Second-set Flavor 
-  recojt_qjet_eta = fs->make<TH1F>("recojt_qjet_eta","#eta_{recojetsq}",100,-2.5, 2.5);
-  recojt_qjet_eta->Sumw2();
-  recojt_qjet_phi = fs->make<TH1F>("recojt_qjet_phi","#phi_{recojetsq}",100,-M_PI, M_PI);
-  recojt_qjet_phi->Sumw2();
-
-  recojt_aqjet_eta = fs->make<TH1F>("recojt_aqjet_eta","#eta_{recojetsaq}",100,-2.5, 2.5);
-  recojt_aqjet_eta->Sumw2();
-  recojt_aqjet_phi = fs->make<TH1F>("recojt_aqjet_phi","#phi_{recojetsaq}",100,-M_PI, M_PI);
-  recojt_aqjet_phi->Sumw2();
-
-  recojt_aqgjet_eta = fs->make<TH1F>("recojt_aqgjet_eta","#eta_{recojetsaqg}",100,-2.5, 2.5);
-  recojt_aqgjet_eta->Sumw2();
-  recojt_aqgjet_phi = fs->make<TH1F>("recojt_aqgjet_phi","#phi_{recojetsaqg}",100,-M_PI, M_PI);
-  recojt_aqgjet_phi->Sumw2();
-
-  recojt_aqojet_eta = fs->make<TH1F>("recojt_aqojet_eta","#eta_{recojetsaqo}",100,-2.5, 2.5);
-  recojt_aqojet_eta->Sumw2();
-  recojt_aqojet_phi = fs->make<TH1F>("recojt_aqojet_phi","#phi_{recojetsaqo}",100,-M_PI, M_PI);
-  recojt_aqojet_phi->Sumw2();
-
-  recojt1_qjet_eta = fs->make<TH1F>("recojt1_qjet_eta","#eta_{reco1jetsq}",100,-2.5, 2.5);
-  recojt1_qjet_eta->Sumw2();
-  recojt1_qjet_phi = fs->make<TH1F>("recojt1_qjet_phi","#phi_{reco1jetsq}",100,-M_PI, M_PI);
-  recojt1_qjet_phi->Sumw2();
-
-  recojt1_aqjet_eta = fs->make<TH1F>("recojt1_aqjet_eta","#eta_{reco1jetsaq}",100,-2.5, 2.5);
-  recojt1_aqjet_eta->Sumw2();
-  recojt1_aqjet_phi = fs->make<TH1F>("recojt1_aqjet_phi","#phi_{reco1jetsaq}",100,-M_PI, M_PI);
-  recojt1_aqjet_phi->Sumw2();
-
-  recojt1_aqgjet_eta = fs->make<TH1F>("recojt1_aqgjet_eta","#eta_{reco1jetsaqg}",100,-2.5, 2.5);
-  recojt1_aqgjet_eta->Sumw2();
-  recojt1_aqgjet_phi = fs->make<TH1F>("recojt1_aqgjet_phi","#phi_{reco1jetsaqg}",100,-M_PI, M_PI);
-  recojt1_aqgjet_phi->Sumw2();
-
-  recojt1_aqojet_eta = fs->make<TH1F>("recojt1_aqojet_eta","#eta_{reco1jetsaqo}",100,-2.5, 2.5);
-  recojt1_aqojet_eta->Sumw2();
-  recojt1_aqojet_phi = fs->make<TH1F>("recojt1_aqojet_phi","#phi_{reco1jetsaqo}",100,-M_PI, M_PI);
-  recojt1_aqojet_phi->Sumw2();
-
-  recojt2_qjet_eta = fs->make<TH1F>("recojt2_qjet_eta","#eta_{reco2jetsq}",100,-2.5, 2.5);
-  recojt2_qjet_eta->Sumw2();
-  recojt2_qjet_phi = fs->make<TH1F>("recojt2_qjet_phi","#phi_{reco2jetsq}",100,-M_PI, M_PI);
-  recojt2_qjet_phi->Sumw2();
-
-  recojt2_aqjet_eta = fs->make<TH1F>("recojt2_aqjet_eta","#eta_{reco2jetsaq}",100,-2.5, 2.5);
-  recojt2_aqjet_eta->Sumw2();
-  recojt2_aqjet_phi = fs->make<TH1F>("recojt2_aqjet_phi","#phi_{reco2jetsaq}",100,-M_PI, M_PI);
-  recojt2_aqjet_phi->Sumw2();
-
-  recojt2_aqgjet_eta = fs->make<TH1F>("recojt2_aqgjet_eta","#eta_{reco2jetsaqg}",100,-2.5, 2.5);
-  recojt2_aqgjet_eta->Sumw2();
-  recojt2_aqgjet_phi = fs->make<TH1F>("recojt2_aqgjet_phi","#phi_{reco2jetsaqg}",100,-M_PI, M_PI);
-  recojt2_aqgjet_phi->Sumw2();
-
-  recojt2_aqojet_eta = fs->make<TH1F>("recojt2_aqojet_eta","#eta_{reco2jetsaqo}",100,-2.5, 2.5);
-  recojt2_aqojet_eta->Sumw2();
-  recojt2_aqojet_phi = fs->make<TH1F>("recojt2_aqojet_phi","#phi_{reco2jetsaqo}",100,-M_PI, M_PI);
-  recojt2_aqojet_phi->Sumw2();
-  */
 #endif
 
-  h_bTagger = fs->make<TH2F>("h_bTagger","CSVbTagger",40,30,2030,60,-3, 3);
-  h_bTagger->Sumw2();
+  h_BTag_CSV = fs->make<TH2D>("h_BTag_CSV","deepCSV BTagger",40,30,2030,100,0, 1);
+  h_BTag_CSV->Sumw2();
 
-  h_cTagger = fs->make<TH2F>("h_cTagger","CSVcTagger",40,30,2030,60,-3, 3);
-  h_cTagger->Sumw2();
+  h_CTag_CSV = fs->make<TH2D>("h_CTag_CSV","deepCSV CTagger",40,30,2030,100,0, 1);
+  h_CTag_CSV->Sumw2();
 
-  h_LTagger = fs->make<TH2F>("h_LTagger","CSVLTagger",40,30,2030,60,-3, 3);
-  h_LTagger->Sumw2();
+  h_udsgTag_CSV = fs->make<TH2D>("h_udsgTag_CSV","deepCSV udsgTagger",40,30,2030,100,0, 1);
+  h_udsgTag_CSV->Sumw2();
+
   
+  h_BTag_JET = fs->make<TH2D>("h_BTag_JET","deepJET BTagger",40,30,2030,100,0, 1);
+  h_BTag_JET->Sumw2();
 
-/*  
-  h_bjet_WPL_eta = fs->make<TH1F>("bjet_WPL_eta","#eta_{bjet_WPL}",100,-2.5, 2.5);
-  h_bjet_WPL_eta->Sumw2();
-  h_bjet_WPL_phi = fs->make<TH1F>("bjet_WPL_phi","#phi_{bjet_WPL}",100,-M_PI, M_PI);
-  h_bjet_WPL_phi->Sumw2();
+  h_CTag_JET = fs->make<TH2D>("h_CTag_JET","deepJET CTagger",40,30,2030,100,0, 1);
+  h_CTag_JET->Sumw2();
 
-  h_bjet1_WPL_eta = fs->make<TH1F>("bjet1_WPL_eta","#eta_{bjet_WPL}",100,-2.5, 2.5);
-  h_bjet1_WPL_eta->Sumw2();
-  h_bjet1_WPL_phi = fs->make<TH1F>("bjet1_WPL_phi","#phi_{bjet_WPL}",100,-M_PI, M_PI);
-  h_bjet1_WPL_phi->Sumw2();
+  h_udsgTag_JET = fs->make<TH2D>("h_udsgTag_JET","deepJET udsgTagger",40,30,2030,100,0, 1);
+  h_udsgTag_JET->Sumw2();
+ 
+ 
+  h_bjet_deepJETT_eta = fs->make<TH1F>("bjet_deepJETT_eta","#eta_{bjet_deepJETT}",100,-2.5, 2.5);
+  h_bjet_deepJETT_eta->Sumw2();
+  h_bjet_deepJETT_phi = fs->make<TH1F>("bjet_deepJETT_phi","#phi_{bjet_deepJETT}",100,-M_PI, M_PI);
+  h_bjet_deepJETT_phi->Sumw2();
 
-  h_bjet2_WPL_eta = fs->make<TH1F>("bjet2_WPL_eta","#eta_{bjet_WPL}",100,-2.5, 2.5);
-  h_bjet2_WPL_eta->Sumw2();
-  h_bjet2_WPL_phi = fs->make<TH1F>("bjet2_WPL_phi","#phi_{bjet_WPL}",100,-M_PI, M_PI);
-  h_bjet2_WPL_phi->Sumw2();
+  h_bjet_deepJETT_eta_NoSF = fs->make<TH1F>("bjet_deepJETT_eta_NoSF","#eta_{bjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_bjet_deepJETT_eta_NoSF->Sumw2();
+  h_bjet_deepJETT_phi_NoSF = fs->make<TH1F>("bjet_deepJETT_phi_NoSF","#phi_{bjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_bjet_deepJETT_phi_NoSF->Sumw2();
 
-  h_nonbjet_WPL_eta = fs->make<TH1F>("nonbjet_WPL_eta","#eta_{nonbjet_WPL}",100,-2.5, 2.5);
-  h_nonbjet_WPL_eta->Sumw2();
-  h_nonbjet_WPL_phi = fs->make<TH1F>("nonbjet_WPL_phi","#phi_{nonbjet_WPL}",100,-M_PI, M_PI);
-  h_nonbjet_WPL_phi->Sumw2();
+  h_bjet1_deepJETT_eta = fs->make<TH1F>("bjet1_deepJETT_eta","#eta_{bjet_deepJETT}",100,-2.5, 2.5);
+  h_bjet1_deepJETT_eta->Sumw2();
+  h_bjet1_deepJETT_phi = fs->make<TH1F>("bjet1_deepJETT_phi","#phi_{bjet_deepJETT}",100,-M_PI, M_PI);
+  h_bjet1_deepJETT_phi->Sumw2();
 
-  h_nonbjet1_WPL_eta = fs->make<TH1F>("nonbjet1_WPL_eta","#eta_{nonbjet_WPL}",100,-2.5, 2.5);
-  h_nonbjet1_WPL_eta->Sumw2();
-  h_nonbjet1_WPL_phi = fs->make<TH1F>("nonbjet1_WPL_phi","#phi_{nonbjet_WPL}",100,-M_PI, M_PI);
-  h_nonbjet1_WPL_phi->Sumw2();
+  h_bjet1_deepJETT_eta_NoSF = fs->make<TH1F>("bjet1_deepJETT_eta_NoSF","#eta_{bjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_bjet1_deepJETT_eta_NoSF->Sumw2();
+  h_bjet1_deepJETT_phi_NoSF = fs->make<TH1F>("bjet1_deepJETT_phi_NoSF","#phi_{bjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_bjet1_deepJETT_phi_NoSF->Sumw2();
 
-  h_nonbjet2_WPL_eta = fs->make<TH1F>("nonbjet2_WPL_eta","#eta_{nonbjet_WPL}",100,-2.5, 2.5);
-  h_nonbjet2_WPL_eta->Sumw2();
-  h_nonbjet2_WPL_phi = fs->make<TH1F>("nonbjet2_WPL_phi","#phi_{nonbjet_WPL}",100,-M_PI, M_PI);
-  h_nonbjet2_WPL_phi->Sumw2();
+  h_bjet2_deepJETT_eta = fs->make<TH1F>("bjet2_deepJETT_eta","#eta_{bjet_deepJETT}",100,-2.5, 2.5);
+  h_bjet2_deepJETT_eta->Sumw2();
+  h_bjet2_deepJETT_phi = fs->make<TH1F>("bjet2_deepJETT_phi","#phi_{bjet_deepJETT}",100,-M_PI, M_PI);
+  h_bjet2_deepJETT_phi->Sumw2();
 
-  h_bjet_WPM_eta = fs->make<TH1F>("bjet_WPM_eta","#eta_{bjet_WPM}",100,-2.5, 2.5);
-  h_bjet_WPM_eta->Sumw2();
-  h_bjet_WPM_phi = fs->make<TH1F>("bjet_WPM_phi","#phi_{bjet_WPM}",100,-M_PI, M_PI);
-  h_bjet_WPM_phi->Sumw2();
+  h_bjet2_deepJETT_eta_NoSF = fs->make<TH1F>("bjet2_deepJETT_eta_NoSF","#eta_{bjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_bjet2_deepJETT_eta_NoSF->Sumw2();
+  h_bjet2_deepJETT_phi_NoSF = fs->make<TH1F>("bjet2_deepJETT_phi_NoSF","#phi_{bjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_bjet2_deepJETT_phi_NoSF->Sumw2();
 
-  h_bjet1_WPM_eta = fs->make<TH1F>("bjet1_WPM_eta","#eta_{bjet_WPM}",100,-2.5, 2.5);
-  h_bjet1_WPM_eta->Sumw2();
-  h_bjet1_WPM_phi = fs->make<TH1F>("bjet1_WPM_phi","#phi_{bjet_WPM}",100,-M_PI, M_PI);
-  h_bjet1_WPM_phi->Sumw2();
+  h_nonbjet_deepJETT_eta = fs->make<TH1F>("nonbjet_deepJETT_eta","#eta_{nonbjet_deepJETT}",100,-2.5, 2.5);
+  h_nonbjet_deepJETT_eta->Sumw2();
+  h_nonbjet_deepJETT_phi = fs->make<TH1F>("nonbjet_deepJETT_phi","#phi_{nonbjet_deepJETT}",100,-M_PI, M_PI);
+  h_nonbjet_deepJETT_phi->Sumw2();
 
-  h_bjet2_WPM_eta = fs->make<TH1F>("bjet2_WPM_eta","#eta_{bjet_WPM}",100,-2.5, 2.5);
-  h_bjet2_WPM_eta->Sumw2();
-  h_bjet2_WPM_phi = fs->make<TH1F>("bjet2_WPM_phi","#phi_{bjet_WPM}",100,-M_PI, M_PI);
-  h_bjet2_WPM_phi->Sumw2();
+  h_nonbjet_deepJETT_eta_NoSF = fs->make<TH1F>("nonbjet_deepJETT_eta_NoSF","#eta_{nonbjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_nonbjet_deepJETT_eta_NoSF->Sumw2();
+  h_nonbjet_deepJETT_phi_NoSF = fs->make<TH1F>("nonbjet_deepJETT_phi_NoSF","#phi_{nonbjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_nonbjet_deepJETT_phi_NoSF->Sumw2();
 
-  h_nonbjet_WPM_eta = fs->make<TH1F>("nonbjet_WPM_eta","#eta_{nonbjet_WPM}",100,-2.5, 2.5);
-  h_nonbjet_WPM_eta->Sumw2();
-  h_nonbjet_WPM_phi = fs->make<TH1F>("nonbjet_WPM_phi","#phi_{nonbjet_WPM}",100,-M_PI, M_PI);
-  h_nonbjet_WPM_phi->Sumw2();
+  h_nonbjet1_deepJETT_eta = fs->make<TH1F>("nonbjet1_deepJETT_eta","#eta_{nonbjet_deepJETT}",100,-2.5, 2.5);
+  h_nonbjet1_deepJETT_eta->Sumw2();
+  h_nonbjet1_deepJETT_phi = fs->make<TH1F>("nonbjet1_deepJETT_phi","#phi_{nonbjet_deepJETT}",100,-M_PI, M_PI);
+  h_nonbjet1_deepJETT_phi->Sumw2();
 
-  h_nonbjet1_WPM_eta = fs->make<TH1F>("nonbjet1_WPM_eta","#eta_{nonbjet_WPM}",100,-2.5, 2.5);
-  h_nonbjet1_WPM_eta->Sumw2();
-  h_nonbjet1_WPM_phi = fs->make<TH1F>("nonbjet1_WPM_phi","#phi_{nonbjet_WPM}",100,-M_PI, M_PI);
-  h_nonbjet1_WPM_phi->Sumw2();
+  h_nonbjet1_deepJETT_eta_NoSF = fs->make<TH1F>("nonbjet1_deepJETT_eta_NoSF","#eta_{nonbjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_nonbjet1_deepJETT_eta_NoSF->Sumw2();
+  h_nonbjet1_deepJETT_phi_NoSF = fs->make<TH1F>("nonbjet1_deepJETT_phi_NoSF","#phi_{nonbjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_nonbjet1_deepJETT_phi_NoSF->Sumw2();
 
-  h_nonbjet2_WPM_eta = fs->make<TH1F>("nonbjet2_WPM_eta","#eta_{nonbjet_WPM}",100,-2.5, 2.5);
-  h_nonbjet2_WPM_eta->Sumw2();
-  h_nonbjet2_WPM_phi = fs->make<TH1F>("nonbjet2_WPM_phi","#phi_{nonbjet_WPM}",100,-M_PI, M_PI);
-  h_nonbjet2_WPM_phi->Sumw2();
-*/
-  h_bjet_WPT_eta = fs->make<TH1F>("bjet_WPT_eta","#eta_{bjet_WPT}",100,-2.5, 2.5);
-  h_bjet_WPT_eta->Sumw2();
-  h_bjet_WPT_phi = fs->make<TH1F>("bjet_WPT_phi","#phi_{bjet_WPT}",100,-M_PI, M_PI);
-  h_bjet_WPT_phi->Sumw2();
+  h_nonbjet2_deepJETT_eta = fs->make<TH1F>("nonbjet2_deepJETT_eta","#eta_{nonbjet_deepJETT}",100,-2.5, 2.5);
+  h_nonbjet2_deepJETT_eta->Sumw2();
+  h_nonbjet2_deepJETT_phi = fs->make<TH1F>("nonbjet2_deepJETT_phi","#phi_{nonbjet_deepJETT}",100,-M_PI, M_PI);
+  h_nonbjet2_deepJETT_phi->Sumw2();
 
-  h_bjet1_WPT_eta = fs->make<TH1F>("bjet1_WPT_eta","#eta_{bjet_WPT}",100,-2.5, 2.5);
-  h_bjet1_WPT_eta->Sumw2();
-  h_bjet1_WPT_phi = fs->make<TH1F>("bjet1_WPT_phi","#phi_{bjet_WPT}",100,-M_PI, M_PI);
-  h_bjet1_WPT_phi->Sumw2();
-
-  h_bjet2_WPT_eta = fs->make<TH1F>("bjet2_WPT_eta","#eta_{bjet_WPT}",100,-2.5, 2.5);
-  h_bjet2_WPT_eta->Sumw2();
-  h_bjet2_WPT_phi = fs->make<TH1F>("bjet2_WPT_phi","#phi_{bjet_WPT}",100,-M_PI, M_PI);
-  h_bjet2_WPT_phi->Sumw2();
-
-  h_nonbjet_WPT_eta = fs->make<TH1F>("nonbjet_WPT_eta","#eta_{nonbjet_WPT}",100,-2.5, 2.5);
-  h_nonbjet_WPT_eta->Sumw2();
-  h_nonbjet_WPT_phi = fs->make<TH1F>("nonbjet_WPT_phi","#phi_{nonbjet_WPT}",100,-M_PI, M_PI);
-  h_nonbjet_WPT_phi->Sumw2();
-
-  h_nonbjet1_WPT_eta = fs->make<TH1F>("nonbjet1_WPT_eta","#eta_{nonbjet_WPT}",100,-2.5, 2.5);
-  h_nonbjet1_WPT_eta->Sumw2();
-  h_nonbjet1_WPT_phi = fs->make<TH1F>("nonbjet1_WPT_phi","#phi_{nonbjet_WPT}",100,-M_PI, M_PI);
-  h_nonbjet1_WPT_phi->Sumw2();
-
-  h_nonbjet2_WPT_eta = fs->make<TH1F>("nonbjet2_WPT_eta","#eta_{nonbjet_WPT}",100,-2.5, 2.5);
-  h_nonbjet2_WPT_eta->Sumw2();
-  h_nonbjet2_WPT_phi = fs->make<TH1F>("nonbjet2_WPT_phi","#phi_{nonbjet_WPT}",100,-M_PI, M_PI);
-  h_nonbjet2_WPT_phi->Sumw2();
+  h_nonbjet2_deepJETT_eta_NoSF = fs->make<TH1F>("nonbjet2_deepJETT_eta_NoSF","#eta_{nonbjet_deepJETT_NoSF}",100,-2.5, 2.5);
+  h_nonbjet2_deepJETT_eta_NoSF->Sumw2();
+  h_nonbjet2_deepJETT_phi_NoSF = fs->make<TH1F>("nonbjet2_deepJETT_phi_NoSF","#phi_{nonbjet_deepJETT_NoSF}",100,-M_PI, M_PI);
+  h_nonbjet2_deepJETT_phi_NoSF->Sumw2();
 
   //Profile Histogram
   //Charge Multiplicity Vs. Jet PT   
@@ -3675,22 +4313,35 @@ for(int ij=0; ij<njet; ij++){
   hprof_Reco_ntrack_vs_PTtrack_J2 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_J2","hprof_Reco_ntrack_vs_PTtrack_J2",30,30,1500,99,1,100);
   hprof_Reco_ntrack_vs_PTtrack_J2->Sumw2();
 
-  //b-jet Working Point
-  hchpt1_bjet_WPT = fs->make<TH2F>("hchpt1_bjet_WPT","hchpt1_bjet_WPT",30,30,1500,99,1,100);
-  hchpt1_bjet_WPT->Sumw2();
+  //BJet Working Point
+  hchpt1_bjet_deepJETT = fs->make<TH2F>("hchpt1_bjet_deepJETT","hchpt1_bjet_deepJETT",30,30,1500,99,1,100);
+  hchpt1_bjet_deepJETT->Sumw2();
 
-  hchpt2_bjet_WPT = fs->make<TH2F>("hchpt2_bjet_WPT","hchpt2_bjet_WPT",30,30,1500,99,1,100);
-  hchpt2_bjet_WPT->Sumw2();
+  hchpt2_bjet_deepJETT = fs->make<TH2F>("hchpt2_bjet_deepJETT","hchpt2_bjet_deepJETT",30,30,1500,99,1,100);
+  hchpt2_bjet_deepJETT->Sumw2();
 
 
-  hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1","hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1",30,30,1500,99,1,100);
-  hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1->Sumw2();
+  hchpt1_bjet_deepJETT_NoSF = fs->make<TH2F>("hchpt1_bjet_deepJETT_NoSF","hchpt1_bjet_deepJETT_NoSF",30,30,1500,99,1,100);
+  hchpt1_bjet_deepJETT_NoSF->Sumw2();
 
-  hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2","hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2",30,30,1500,99,1,100);
-  hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2->Sumw2();
+  hchpt2_bjet_deepJETT_NoSF = fs->make<TH2F>("hchpt2_bjet_deepJETT_NoSF","hchpt2_bjet_deepJETT_NoSF",30,30,1500,99,1,100);
+  hchpt2_bjet_deepJETT_NoSF->Sumw2();
+
+
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1","hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1",30,30,1500,99,1,100);
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1->Sumw2();
+
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2","hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2",30,30,1500,99,1,100);
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2->Sumw2();
+
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF","hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF",30,30,1500,99,1,100);
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF->Sumw2();
+
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF","hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF",30,30,1500,99,1,100);
+  hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF->Sumw2();
 
 #ifdef FLAV
-  //b-Jet True Flavor
+  //BJet True Flavor
   hprof_Reco_ntrack_vs_PTtrack_bjet_J1 = fs->make<TH2F>("hprof_Reco_ntrack_vs_PTtrack_bjet_J1","hprof_Reco_ntrack_vs_PTtrack_bjet_J1",30,30,1500,99,1,100);
   hprof_Reco_ntrack_vs_PTtrack_bjet_J1->Sumw2();
 
@@ -3810,7 +4461,7 @@ for(int ij=0; ij<njet; ij++){
     recojt2ubar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2ubar_pt[jk]->Sumw2();
 
-    //b-jet
+    //BJet
     sprintf(name, "recojtb_pt_%i",jk);
     sprintf(title, "Et_{recojetb}_%g", etarange[jk]);
     recojtb_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
@@ -3826,7 +4477,7 @@ for(int ij=0; ij<njet; ij++){
     recojt2b_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2b_pt[jk]->Sumw2();
 
-    //bbar-jet
+    //Bbar-jet
     sprintf(name, "recojtbbar_pt_%i",jk);
     sprintf(title, "Et_{recojetbbar}_%g", etarange[jk]);
     recojtbbar_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
@@ -3857,163 +4508,68 @@ for(int ij=0; ij<njet; ij++){
     sprintf(title, "Et_{recojet2o}_%g", etarange[jk]);
     recojt2o_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     recojt2o_pt[jk]->Sumw2();
-
-    /*
-    //Second-set Flavor Tagging
-    sprintf(name, "recojt_qjet_pt_%i",jk);
-    sprintf(title, "Et_{reco_qjet}_%g", etarange[jk]);
-    recojt_qjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt_qjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_aqjet_pt_%i",jk);
-    sprintf(title, "Et_{reco_aqjet}_%g", etarange[jk]);
-    recojt_aqjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt_aqjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_aqgjet_pt_%i",jk);
-    sprintf(title, "Et_{reco_aqgjet}_%g", etarange[jk]);
-    recojt_aqgjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt_aqgjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_aqojet_pt_%i",jk);
-    sprintf(title, "Et_{reco_aqojet}_%g", etarange[jk]);
-    recojt_aqojet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt_aqojet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt1_qjet_pt_%i",jk);
-    sprintf(title, "Et_{reco1_qjet}_%g", etarange[jk]);
-    recojt1_qjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt1_qjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt1_aqjet_pt_%i",jk);
-    sprintf(title, "Et_{reco1_aqjet}_%g", etarange[jk]);
-    recojt1_aqjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt1_aqjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt1_aqgjet_pt_%i",jk);
-    sprintf(title, "Et_{reco1_aqgjet}_%g", etarange[jk]);
-    recojt1_aqgjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt1_aqgjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt1_aqojet_pt_%i",jk);
-    sprintf(title, "Et_{reco1_aqojet}_%g", etarange[jk]);
-    recojt1_aqojet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt1_aqojet_pt[jk]->Sumw2();
- 
-    sprintf(name, "recojt2_qjet_pt_%i",jk);
-    sprintf(title, "Et_{reco2_qjet}_%g", etarange[jk]);
-    recojt2_qjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt2_qjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt12_aqjet_pt_%i",jk);
-    sprintf(title, "Et_{reco12_aqjet}_%g", etarange[jk]);
-    recojt2_aqjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt2_aqjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt2_aqgjet_pt_%i",jk);
-    sprintf(title, "Et_{reco2_aqgjet}_%g", etarange[jk]);
-    recojt2_aqgjet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt2_aqgjet_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt2_aqojet_pt_%i",jk);
-    sprintf(title, "Et_{reco2_aqojet}_%g", etarange[jk]);
-    recojt2_aqojet_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    recojt2_aqojet_pt[jk]->Sumw2();
-    */
 #endif
 
-/*
-    sprintf(name, "recojt_bjet_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet_WPL}_%g", etarange[jk]);
-    h_bjet_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet_WPL_pt[jk]->Sumw2();
+    //BJet Tight Working Point
+    sprintf(name, "recojt_bjet_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_bjet_deepJETT}_%g", etarange[jk]);
+    h_bjet_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_bjet1_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet1_WPL}_%g", etarange[jk]);
-    h_bjet1_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet1_WPL_pt[jk]->Sumw2();
+    sprintf(name, "recojt_bjet_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_bjet_deepJETT_NoSF}_%g", etarange[jk]);
+    h_bjet_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet_deepJETT_pt_NoSF[jk]->Sumw2();
 
-    sprintf(name, "recojt_bjet2_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet2_WPL}_%g", etarange[jk]);
-    h_bjet2_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet2_WPL_pt[jk]->Sumw2();
+    sprintf(name, "recojt_bjet1_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_bjet1_deepJETT}_%g", etarange[jk]);
+    h_bjet1_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet1_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet_WPL}_%g", etarange[jk]);
-    h_nonbjet_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet_WPL_pt[jk]->Sumw2();
+    sprintf(name, "recojt_bjet1_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_bjet1_deepJETT_NoSF}_%g", etarange[jk]);
+    h_bjet1_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet1_deepJETT_pt_NoSF[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet1_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet1_WPL}_%g", etarange[jk]);
-    h_nonbjet1_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet1_WPL_pt[jk]->Sumw2();
+    sprintf(name, "recojt_bjet2_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_bjet2_deepJETT}_%g", etarange[jk]);
+    h_bjet2_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet2_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet2_WPL_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet2_WPL}_%g", etarange[jk]);
-    h_nonbjet2_WPL_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet2_WPL_pt[jk]->Sumw2();
+    sprintf(name, "recojt_bjet2_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_bjet2_deepJETT_NoSF}_%g", etarange[jk]);
+    h_bjet2_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_bjet2_deepJETT_pt_NoSF[jk]->Sumw2();
 
-    sprintf(name, "recojt_bjet_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet_WPM}_%g", etarange[jk]);
-    h_bjet_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet_WPM_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet_deepJETT}_%g", etarange[jk]);
+    h_nonbjet_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_bjet1_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet1_WPM}_%g", etarange[jk]);
-    h_bjet1_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet1_WPM_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet_deepJETT_NoSF}_%g", etarange[jk]);
+    h_nonbjet_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet_deepJETT_pt_NoSF[jk]->Sumw2();
 
-    sprintf(name, "recojt_bjet2_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet2_WPM}_%g", etarange[jk]);
-    h_bjet2_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet2_WPM_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet1_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet1_deepJETT}_%g", etarange[jk]);
+    h_nonbjet1_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet1_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet_WPM}_%g", etarange[jk]);
-    h_nonbjet_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet_WPM_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet1_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet1_deepJETT_NoSF}_%g", etarange[jk]);
+    h_nonbjet1_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet1_deepJETT_pt_NoSF[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet1_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet1_WPM}_%g", etarange[jk]);
-    h_nonbjet1_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet1_WPM_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet2_deepJETT_pt_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet2_deepJETT}_%g", etarange[jk]);
+    h_nonbjet2_deepJETT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet2_deepJETT_pt[jk]->Sumw2();
 
-    sprintf(name, "recojt_nonbjet2_WPM_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet2_WPM}_%g", etarange[jk]);
-    h_nonbjet2_WPM_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet2_WPM_pt[jk]->Sumw2();
-*/
-
-    //b-Jet Tight Working Point
-    sprintf(name, "recojt_bjet_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet_WPT}_%g", etarange[jk]);
-    h_bjet_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet_WPT_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_bjet1_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet1_WPT}_%g", etarange[jk]);
-    h_bjet1_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet1_WPT_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_bjet2_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_bjet2_WPT}_%g", etarange[jk]);
-    h_bjet2_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_bjet2_WPT_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_nonbjet_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet_WPT}_%g", etarange[jk]);
-    h_nonbjet_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet_WPT_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_nonbjet1_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet1_WPT}_%g", etarange[jk]);
-    h_nonbjet1_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet1_WPT_pt[jk]->Sumw2();
-
-    sprintf(name, "recojt_nonbjet2_WPT_pt_%i",jk);
-    sprintf(title, "Et_{reco_nonbjet2_WPT}_%g", etarange[jk]);
-    h_nonbjet2_WPT_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
-    h_nonbjet2_WPT_pt[jk]->Sumw2();
+    sprintf(name, "recojt_nonbjet2_deepJETT_pt_NoSF_%i",jk);
+    sprintf(title, "Et_{reco_nonbjet2_deepJETT_NoSF}_%g", etarange[jk]);
+    h_nonbjet2_deepJETT_pt_NoSF[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
+    h_nonbjet2_deepJETT_pt_NoSF[jk]->Sumw2();
 
     //sprintf(title, "Et_{recojets3}_%g", etarange[jk]);
     //recojt3_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
@@ -4108,11 +4664,17 @@ for(int ij=0; ij<njet; ij++){
   recojetchg2_cand1->Sumw2(); 
 
 
-  recobjetchg1_WPT_cand1 = fs->make<TH1F>("recobjetchg1_WPT_cand1","Et_{recobjetchg_LeadJet_WPT_cand1}",100, 20., 520.);
-  recobjetchg1_WPT_cand1->Sumw2();
+  recobjetchg1_deepJETT_cand1 = fs->make<TH1F>("recobjetchg1_deepJETT_cand1","Et_{recobjetchg_LeadJet_deepJETT_cand1}",100, 20., 520.);
+  recobjetchg1_deepJETT_cand1->Sumw2();
 
-  recobjetchg2_WPT_cand1 = fs->make<TH1F>("recobjetchg2_WPT_cand1","Et_{recobjetchg_SubLeadJet_WPT_cand1}",100, 20., 520.);
-  recobjetchg2_WPT_cand1->Sumw2();
+  recobjetchg2_deepJETT_cand1 = fs->make<TH1F>("recobjetchg2_deepJETT_cand1","Et_{recobjetchg_SubLeadJet_deepJETT_cand1}",100, 20., 520.);
+  recobjetchg2_deepJETT_cand1->Sumw2();
+
+  recobjetchg1_deepJETT_cand1_NoSF = fs->make<TH1F>("recobjetchg1_deepJETT_cand1_NoSF","Et_{recobjetchg_LeadJet_deepJETT_cand1_NoSF}",100, 20., 520.);
+  recobjetchg1_deepJETT_cand1_NoSF->Sumw2();
+
+  recobjetchg2_deepJETT_cand1_NoSF = fs->make<TH1F>("recobjetchg2_deepJETT_cand1_NoSF","Et_{recobjetchg_SubLeadJet_deepJETT_cand1_NoSF}",100, 20., 520.);
+  recobjetchg2_deepJETT_cand1_NoSF->Sumw2();
 
 #ifdef FLAV
   recobjetchg1_cand1 = fs->make<TH1F>("recobjetchg1_cand1","Et_{recobjetchg_LeadJet_cand1}",100, 20., 520.);
@@ -4122,30 +4684,708 @@ for(int ij=0; ij<njet; ij++){
   recobjetchg2_cand1->Sumw2();
 #endif
 
+
+  LdeepJETT_SF = fs->make<TH2D>("LdeepJETT_SF","LdeepJETT_SF",30,30,2000,5,0,2);
+  LdeepJETT_SF->Sumw2();
+
+  LdeepJETM_SF = fs->make<TH2D>("LdeepJETM_SF","LdeepJETM_SF",30,30,2000,5,0,2);
+  LdeepJETM_SF->Sumw2();
+
+  LdeepJETL_SF = fs->make<TH2D>("LdeepJETL_SF","LdeepJETL_SF",30,30,2000,5,0,2);
+  LdeepJETL_SF->Sumw2();
+
+  LdeepCSVT_SF = fs->make<TH2D>("LdeepCSVT_SF","LdeepCSVT_SF",30,30,2000,5,0,2);
+  LdeepCSVT_SF->Sumw2();
+
+  LdeepCSVM_SF = fs->make<TH2D>("LdeepCSVM_SF","LdeepCSVM_SF",30,30,2000,5,0,2);
+  LdeepCSVM_SF->Sumw2();
+
+  LdeepCSVL_SF = fs->make<TH2D>("LdeepCSVL_SF","LdeepCSVL_SF",30,30,2000,5,0,2);
+  LdeepCSVL_SF->Sumw2();
+
+  
+  CdeepJETT_SF = fs->make<TH2D>("CdeepJETT_SF","CdeepJETT_SF",30,30,2000,5,0,2);
+  CdeepJETT_SF->Sumw2();
+
+  CdeepJETM_SF = fs->make<TH2D>("CdeepJETM_SF","CdeepJETM_SF",30,30,2000,5,0,2);
+  CdeepJETM_SF->Sumw2();
+
+  CdeepJETL_SF = fs->make<TH2D>("CdeepJETL_SF","CdeepJETL_SF",30,30,2000,5,0,2);
+  CdeepJETL_SF->Sumw2();
+
+  CdeepCSVT_SF = fs->make<TH2D>("CdeepCSVT_SF","CdeepCSVT_SF",30,30,2000,5,0,2);
+  CdeepCSVT_SF->Sumw2();
+
+  CdeepCSVM_SF = fs->make<TH2D>("CdeepCSVM_SF","CdeepCSVM_SF",30,30,2000,5,0,2);
+  CdeepCSVM_SF->Sumw2();
+
+  CdeepCSVL_SF = fs->make<TH2D>("CdeepCSVL_SF","CdeepCSVL_SF",30,30,2000,5,0,2);
+  CdeepCSVL_SF->Sumw2();
+
+
+  BdeepJETT_SF = fs->make<TH2D>("BdeepJETT_SF","BdeepJETT_SF",30,30,2000,5,0,2);
+  BdeepJETT_SF->Sumw2();
+
+  BdeepJETM_SF = fs->make<TH2D>("BdeepJETM_SF","BdeepJETM_SF",30,30,2000,5,0,2);
+  BdeepJETM_SF->Sumw2();
+
+  BdeepJETL_SF = fs->make<TH2D>("BdeepJETL_SF","BdeepJETL_SF",30,30,2000,5,0,2);
+  BdeepJETL_SF->Sumw2();
+
+  BdeepCSVT_SF = fs->make<TH2D>("BdeepCSVT_SF","BdeepCSVT_SF",30,30,2000,5,0,2);
+  BdeepCSVT_SF->Sumw2();
+
+  BdeepCSVM_SF = fs->make<TH2D>("BdeepCSVM_SF","BdeepCSVM_SF",30,30,2000,5,0,2);
+  BdeepCSVM_SF->Sumw2();
+
+  BdeepCSVL_SF = fs->make<TH2D>("BdeepCSVL_SF","BdeepCSVL_SF",30,30,2000,5,0,2);
+  BdeepCSVL_SF->Sumw2();
+
+
+  Reco_bjet_fra = fs->make<TH2D>("Reco_bjet_fra","Reco_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_bjet_fra->Sumw2();
+
+  Reco_bjet_fra_NoSF = fs->make<TH2D>("Reco_bjet_fra_NoSF","Reco_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_bjet_fra_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_fra = fs->make<TH2D>("Reco_CSVT_bjet_fra","Reco_CSVT_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_fra->Sumw2();
+
+  Reco_CSVM_bjet_fra = fs->make<TH2D>("Reco_CSVM_bjet_fra","Reco_CSVM_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_fra->Sumw2();
+
+  Reco_CSVL_bjet_fra = fs->make<TH2D>("Reco_CSVL_bjet_fra","Reco_CSVL_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_fra->Sumw2();
+
+  
+  Reco_CSVT_bjet_fra_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_fra_NoSF","Reco_CSVT_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_fra_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_fra_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_fra_NoSF","Reco_CSVM_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_fra_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_fra_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_fra_NoSF","Reco_CSVL_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_fra_NoSF->Sumw2();
+
+  
+  Reco_JETT_bjet_fra = fs->make<TH2D>("Reco_JETT_bjet_fra","Reco_JETT_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_fra->Sumw2();
+
+  Reco_JETM_bjet_fra = fs->make<TH2D>("Reco_JETM_bjet_fra","Reco_JETM_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_fra->Sumw2();
+
+  Reco_JETL_bjet_fra = fs->make<TH2D>("Reco_JETL_bjet_fra","Reco_JETL_bjet_fra",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_fra->Sumw2();
+
+  
+  Reco_JETT_bjet_fra_NoSF = fs->make<TH2D>("Reco_JETT_bjet_fra_NoSF","Reco_JETT_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_fra_NoSF->Sumw2();
+
+  Reco_JETM_bjet_fra_NoSF = fs->make<TH2D>("Reco_JETM_bjet_fra_NoSF","Reco_JETM_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_fra_NoSF->Sumw2();
+
+  Reco_JETL_bjet_fra_NoSF = fs->make<TH2D>("Reco_JETL_bjet_fra_NoSF","Reco_JETL_bjet_fra_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_fra_NoSF->Sumw2();
+
+/*
   Reco_CSVT_bjet_eff_den = fs->make<TH2F>("Reco_CSVT_bjet_eff_den","Reco_CSVT_bjet_eff_den",100, 20., 520.,60, -3.0, 3.0);
   Reco_CSVT_bjet_eff_den->Sumw2();
 
   Reco_CSVT_bjet_eff_num = fs->make<TH2F>("Reco_CSVT_bjet_eff_num","Reco_CSVT_bjet_eff_num",100, 20., 520.,60, -3.0, 3.0);
   Reco_CSVT_bjet_eff_num->Sumw2();
+*/
 
-  Reco_CSVT_bjet_miss_den = fs->make<TH2F>("Reco_CSVT_bjet_miss_den","Reco_CSVT_bjet_miss_den",100, 20., 520.,60, -3.0, 3.0);
+
+  //DeepCSV Tight Working Point
+  Reco_CSVT_bjet_eff_den = fs->make<TH2D>("Reco_CSVT_bjet_eff_den","Reco_CSVT_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_eff_den->Sumw2();
+
+  Reco_CSVT_bjet_eff_num = fs->make<TH2D>("Reco_CSVT_bjet_eff_num","Reco_CSVT_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_eff_num->Sumw2();
+
+  Reco_CSVT_cjet_eff_den = fs->make<TH2D>("Reco_CSVT_cjet_eff_den","Reco_CSVT_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_eff_den->Sumw2();
+
+  Reco_CSVT_cjet_eff_num = fs->make<TH2D>("Reco_CSVT_cjet_eff_num","Reco_CSVT_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_eff_num->Sumw2();
+
+  Reco_CSVT_ljet_eff_den = fs->make<TH2D>("Reco_CSVT_ljet_eff_den","Reco_CSVT_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_eff_den->Sumw2();
+
+  Reco_CSVT_ljet_eff_num = fs->make<TH2D>("Reco_CSVT_ljet_eff_num","Reco_CSVT_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_eff_num->Sumw2();
+
+  Reco_CSVT_bjet_miss_den = fs->make<TH2D>("Reco_CSVT_bjet_miss_den","Reco_CSVT_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_miss_den->Sumw2();
 
-  Reco_CSVT_bjet_miss_num = fs->make<TH2F>("Reco_CSVT_bjet_miss_num","Reco_CSVT_bjet_miss_num",100, 20., 520.,60, -3.0, 3.0);
+  Reco_CSVT_bjet_miss_num = fs->make<TH2D>("Reco_CSVT_bjet_miss_num","Reco_CSVT_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_miss_num->Sumw2();
+
+  Reco_CSVT_cjet_miss_den = fs->make<TH2D>("Reco_CSVT_cjet_miss_den","Reco_CSVT_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_miss_den->Sumw2();
+
+  Reco_CSVT_cjet_miss_num = fs->make<TH2D>("Reco_CSVT_cjet_miss_num","Reco_CSVT_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_miss_num->Sumw2();
  
-  Reco_CSVT_bjet_pur_den = fs->make<TH2F>("Reco_CSVT_bjet_pur_den","Reco_CSVT_bjet_pur_den",100, 20., 520.,60, -3.0, 3.0);
+  Reco_CSVT_ljet_miss_den = fs->make<TH2D>("Reco_CSVT_ljet_miss_den","Reco_CSVT_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_miss_den->Sumw2();
+
+  Reco_CSVT_ljet_miss_num = fs->make<TH2D>("Reco_CSVT_ljet_miss_num","Reco_CSVT_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_miss_num->Sumw2();
+
+  Reco_CSVT_bjet_pur_den = fs->make<TH2D>("Reco_CSVT_bjet_pur_den","Reco_CSVT_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_pur_den->Sumw2();
 
-  Reco_CSVT_bjet_pur_num = fs->make<TH2F>("Reco_CSVT_bjet_pur_num","Reco_CSVT_bjet_pur_num",100, 20., 520.,60, -3.0, 3.0);
+  Reco_CSVT_bjet_pur_num = fs->make<TH2D>("Reco_CSVT_bjet_pur_num","Reco_CSVT_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_pur_num->Sumw2();
 
-  Reco_CSVT_bjet_con_den = fs->make<TH2F>("Reco_CSVT_bjet_con_den","Reco_CSVT_bjet_con_den",100, 20., 520.,60, -3.0, 3.0);
+  Reco_CSVT_bjet_con_den = fs->make<TH2D>("Reco_CSVT_bjet_con_den","Reco_CSVT_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_con_den->Sumw2();
 
-  Reco_CSVT_bjet_con_num = fs->make<TH2F>("Reco_CSVT_bjet_con_num","Reco_CSVT_bjet_con_num",100, 20., 520.,60, -3.0, 3.0);
+  Reco_CSVT_bjet_con_num = fs->make<TH2D>("Reco_CSVT_bjet_con_num","Reco_CSVT_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
   Reco_CSVT_bjet_con_num->Sumw2();
+
+
+
+  Reco_CSVT_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_eff_den_NoSF","Reco_CSVT_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_eff_num_NoSF","Reco_CSVT_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVT_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVT_cjet_eff_den_NoSF","Reco_CSVT_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVT_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVT_cjet_eff_num_NoSF","Reco_CSVT_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVT_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVT_ljet_eff_den_NoSF","Reco_CSVT_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVT_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVT_ljet_eff_num_NoSF","Reco_CSVT_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_miss_den_NoSF","Reco_CSVT_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_miss_num_NoSF","Reco_CSVT_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVT_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVT_cjet_miss_den_NoSF","Reco_CSVT_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVT_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVT_cjet_miss_num_NoSF","Reco_CSVT_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVT_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVT_ljet_miss_den_NoSF","Reco_CSVT_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVT_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVT_ljet_miss_num_NoSF","Reco_CSVT_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_pur_den_NoSF","Reco_CSVT_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_pur_num_NoSF","Reco_CSVT_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_con_den_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_con_den_NoSF","Reco_CSVT_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_con_den_NoSF->Sumw2();
+
+  Reco_CSVT_bjet_con_num_NoSF = fs->make<TH2D>("Reco_CSVT_bjet_con_num_NoSF","Reco_CSVT_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVT_bjet_con_num_NoSF->Sumw2();
+
  
+  //DeepCSV Medium Working Point
+  Reco_CSVM_bjet_eff_den = fs->make<TH2D>("Reco_CSVM_bjet_eff_den","Reco_CSVM_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_eff_den->Sumw2();
+
+  Reco_CSVM_bjet_eff_num = fs->make<TH2D>("Reco_CSVM_bjet_eff_num","Reco_CSVM_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_eff_num->Sumw2();
+
+  Reco_CSVM_cjet_eff_den = fs->make<TH2D>("Reco_CSVM_cjet_eff_den","Reco_CSVM_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_eff_den->Sumw2();
+
+  Reco_CSVM_cjet_eff_num = fs->make<TH2D>("Reco_CSVM_cjet_eff_num","Reco_CSVM_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_eff_num->Sumw2();
+
+  Reco_CSVM_ljet_eff_den = fs->make<TH2D>("Reco_CSVM_ljet_eff_den","Reco_CSVM_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_eff_den->Sumw2();
+
+  Reco_CSVM_ljet_eff_num = fs->make<TH2D>("Reco_CSVM_ljet_eff_num","Reco_CSVM_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_eff_num->Sumw2();
+
+  Reco_CSVM_bjet_miss_den = fs->make<TH2D>("Reco_CSVM_bjet_miss_den","Reco_CSVM_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_miss_den->Sumw2();
+
+  Reco_CSVM_bjet_miss_num = fs->make<TH2D>("Reco_CSVM_bjet_miss_num","Reco_CSVM_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_miss_num->Sumw2();
+
+  Reco_CSVM_cjet_miss_den = fs->make<TH2D>("Reco_CSVM_cjet_miss_den","Reco_CSVM_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_miss_den->Sumw2();
+
+  Reco_CSVM_cjet_miss_num = fs->make<TH2D>("Reco_CSVM_cjet_miss_num","Reco_CSVM_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_miss_num->Sumw2();
+
+  Reco_CSVM_ljet_miss_den = fs->make<TH2D>("Reco_CSVM_ljet_miss_den","Reco_CSVM_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_miss_den->Sumw2();
+
+  Reco_CSVM_ljet_miss_num = fs->make<TH2D>("Reco_CSVM_ljet_miss_num","Reco_CSVM_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_miss_num->Sumw2();
+
+  Reco_CSVM_bjet_pur_den = fs->make<TH2D>("Reco_CSVM_bjet_pur_den","Reco_CSVM_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_pur_den->Sumw2();
+
+  Reco_CSVM_bjet_pur_num = fs->make<TH2D>("Reco_CSVM_bjet_pur_num","Reco_CSVM_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_pur_num->Sumw2();
+
+  Reco_CSVM_bjet_con_den = fs->make<TH2D>("Reco_CSVM_bjet_con_den","Reco_CSVM_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_con_den->Sumw2();
+
+  Reco_CSVM_bjet_con_num = fs->make<TH2D>("Reco_CSVM_bjet_con_num","Reco_CSVM_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_con_num->Sumw2();
+ 
+
+  Reco_CSVM_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_eff_den_NoSF","Reco_CSVM_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_eff_num_NoSF","Reco_CSVM_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVM_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVM_cjet_eff_den_NoSF","Reco_CSVM_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVM_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVM_cjet_eff_num_NoSF","Reco_CSVM_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVM_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVM_ljet_eff_den_NoSF","Reco_CSVM_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVM_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVM_ljet_eff_num_NoSF","Reco_CSVM_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_miss_den_NoSF","Reco_CSVM_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_miss_num_NoSF","Reco_CSVM_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVM_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVM_cjet_miss_den_NoSF","Reco_CSVM_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVM_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVM_cjet_miss_num_NoSF","Reco_CSVM_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVM_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVM_ljet_miss_den_NoSF","Reco_CSVM_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVM_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVM_ljet_miss_num_NoSF","Reco_CSVM_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_pur_den_NoSF","Reco_CSVM_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_pur_num_NoSF","Reco_CSVM_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_con_den_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_con_den_NoSF","Reco_CSVM_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_con_den_NoSF->Sumw2();
+
+  Reco_CSVM_bjet_con_num_NoSF = fs->make<TH2D>("Reco_CSVM_bjet_con_num_NoSF","Reco_CSVM_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVM_bjet_con_num_NoSF->Sumw2();
+
+  //DeepCSV Light working Point
+  Reco_CSVL_bjet_eff_den = fs->make<TH2D>("Reco_CSVL_bjet_eff_den","Reco_CSVL_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_eff_den->Sumw2();
+
+  Reco_CSVL_bjet_eff_num = fs->make<TH2D>("Reco_CSVL_bjet_eff_num","Reco_CSVL_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_eff_num->Sumw2();
+
+  Reco_CSVL_cjet_eff_den = fs->make<TH2D>("Reco_CSVL_cjet_eff_den","Reco_CSVL_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_eff_den->Sumw2();
+
+  Reco_CSVL_cjet_eff_num = fs->make<TH2D>("Reco_CSVL_cjet_eff_num","Reco_CSVL_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_eff_num->Sumw2();
+
+  Reco_CSVL_ljet_eff_den = fs->make<TH2D>("Reco_CSVL_ljet_eff_den","Reco_CSVL_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_eff_den->Sumw2();
+
+  Reco_CSVL_ljet_eff_num = fs->make<TH2D>("Reco_CSVL_ljet_eff_num","Reco_CSVL_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_eff_num->Sumw2();
+
+  Reco_CSVL_bjet_miss_den = fs->make<TH2D>("Reco_CSVL_bjet_miss_den","Reco_CSVL_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_miss_den->Sumw2();
+
+  Reco_CSVL_bjet_miss_num = fs->make<TH2D>("Reco_CSVL_bjet_miss_num","Reco_CSVL_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_miss_num->Sumw2();
+
+  Reco_CSVL_cjet_miss_den = fs->make<TH2D>("Reco_CSVL_cjet_miss_den","Reco_CSVL_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_miss_den->Sumw2();
+
+  Reco_CSVL_cjet_miss_num = fs->make<TH2D>("Reco_CSVL_cjet_miss_num","Reco_CSVL_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_miss_num->Sumw2();
+
+  Reco_CSVL_ljet_miss_den = fs->make<TH2D>("Reco_CSVL_ljet_miss_den","Reco_CSVL_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_miss_den->Sumw2();
+
+  Reco_CSVL_ljet_miss_num = fs->make<TH2D>("Reco_CSVL_ljet_miss_num","Reco_CSVL_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_miss_num->Sumw2();
+
+  Reco_CSVL_bjet_pur_den = fs->make<TH2D>("Reco_CSVL_bjet_pur_den","Reco_CSVL_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_pur_den->Sumw2();
+
+  Reco_CSVL_bjet_pur_num = fs->make<TH2D>("Reco_CSVL_bjet_pur_num","Reco_CSVL_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_pur_num->Sumw2();
+
+  Reco_CSVL_bjet_con_den = fs->make<TH2D>("Reco_CSVL_bjet_con_den","Reco_CSVL_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_con_den->Sumw2();
+
+  Reco_CSVL_bjet_con_num = fs->make<TH2D>("Reco_CSVL_bjet_con_num","Reco_CSVL_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_con_num->Sumw2();
+
+
+  Reco_CSVL_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_eff_den_NoSF","Reco_CSVL_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_eff_num_NoSF","Reco_CSVL_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVL_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVL_cjet_eff_den_NoSF","Reco_CSVL_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVL_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVL_cjet_eff_num_NoSF","Reco_CSVL_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVL_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_CSVL_ljet_eff_den_NoSF","Reco_CSVL_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_CSVL_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_CSVL_ljet_eff_num_NoSF","Reco_CSVL_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_miss_den_NoSF","Reco_CSVL_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_miss_num_NoSF","Reco_CSVL_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVL_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVL_cjet_miss_den_NoSF","Reco_CSVL_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVL_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVL_cjet_miss_num_NoSF","Reco_CSVL_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVL_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_CSVL_ljet_miss_den_NoSF","Reco_CSVL_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_CSVL_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_CSVL_ljet_miss_num_NoSF","Reco_CSVL_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_pur_den_NoSF","Reco_CSVL_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_pur_num_NoSF","Reco_CSVL_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_con_den_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_con_den_NoSF","Reco_CSVL_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_con_den_NoSF->Sumw2();
+
+  Reco_CSVL_bjet_con_num_NoSF = fs->make<TH2D>("Reco_CSVL_bjet_con_num_NoSF","Reco_CSVL_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_CSVL_bjet_con_num_NoSF->Sumw2();
+
+  //DeepJET Tight Working Point
+  Reco_JETT_bjet_eff_den = fs->make<TH2D>("Reco_JETT_bjet_eff_den","Reco_JETT_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_eff_den->Sumw2();
+
+  Reco_JETT_bjet_eff_num = fs->make<TH2D>("Reco_JETT_bjet_eff_num","Reco_JETT_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_eff_num->Sumw2();
+
+  Reco_JETT_cjet_eff_den = fs->make<TH2D>("Reco_JETT_cjet_eff_den","Reco_JETT_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_eff_den->Sumw2();
+
+  Reco_JETT_cjet_eff_num = fs->make<TH2D>("Reco_JETT_cjet_eff_num","Reco_JETT_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_eff_num->Sumw2();
+
+  Reco_JETT_ljet_eff_den = fs->make<TH2D>("Reco_JETT_ljet_eff_den","Reco_JETT_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_eff_den->Sumw2();
+
+  Reco_JETT_ljet_eff_num = fs->make<TH2D>("Reco_JETT_ljet_eff_num","Reco_JETT_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_eff_num->Sumw2();
+
+  Reco_JETT_bjet_miss_den = fs->make<TH2D>("Reco_JETT_bjet_miss_den","Reco_JETT_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_miss_den->Sumw2();
+
+  Reco_JETT_bjet_miss_num = fs->make<TH2D>("Reco_JETT_bjet_miss_num","Reco_JETT_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_miss_num->Sumw2();
+
+  Reco_JETT_cjet_miss_den = fs->make<TH2D>("Reco_JETT_cjet_miss_den","Reco_JETT_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_miss_den->Sumw2();
+
+  Reco_JETT_cjet_miss_num = fs->make<TH2D>("Reco_JETT_cjet_miss_num","Reco_JETT_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_miss_num->Sumw2();
+
+  Reco_JETT_ljet_miss_den = fs->make<TH2D>("Reco_JETT_ljet_miss_den","Reco_JETT_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_miss_den->Sumw2();
+
+  Reco_JETT_ljet_miss_num = fs->make<TH2D>("Reco_JETT_ljet_miss_num","Reco_JETT_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_miss_num->Sumw2();
+
+  Reco_JETT_bjet_pur_den = fs->make<TH2D>("Reco_JETT_bjet_pur_den","Reco_JETT_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_pur_den->Sumw2();
+
+  Reco_JETT_bjet_pur_num = fs->make<TH2D>("Reco_JETT_bjet_pur_num","Reco_JETT_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_pur_num->Sumw2();
+
+  Reco_JETT_bjet_con_den = fs->make<TH2D>("Reco_JETT_bjet_con_den","Reco_JETT_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_con_den->Sumw2();
+
+  Reco_JETT_bjet_con_num = fs->make<TH2D>("Reco_JETT_bjet_con_num","Reco_JETT_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_con_num->Sumw2();
+
+  
+  Reco_JETT_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETT_bjet_eff_den_NoSF","Reco_JETT_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETT_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETT_bjet_eff_num_NoSF","Reco_JETT_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETT_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETT_cjet_eff_den_NoSF","Reco_JETT_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETT_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETT_cjet_eff_num_NoSF","Reco_JETT_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETT_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_JETT_ljet_eff_den_NoSF","Reco_JETT_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_JETT_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_JETT_ljet_eff_num_NoSF","Reco_JETT_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_JETT_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETT_bjet_miss_den_NoSF","Reco_JETT_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETT_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETT_bjet_miss_num_NoSF","Reco_JETT_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETT_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETT_cjet_miss_den_NoSF","Reco_JETT_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETT_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETT_cjet_miss_num_NoSF","Reco_JETT_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETT_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_JETT_ljet_miss_den_NoSF","Reco_JETT_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_JETT_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_JETT_ljet_miss_num_NoSF","Reco_JETT_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_JETT_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_JETT_bjet_pur_den_NoSF","Reco_JETT_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_JETT_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_JETT_bjet_pur_num_NoSF","Reco_JETT_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_JETT_bjet_con_den_NoSF = fs->make<TH2D>("Reco_JETT_bjet_con_den_NoSF","Reco_JETT_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_con_den_NoSF->Sumw2();
+
+  Reco_JETT_bjet_con_num_NoSF = fs->make<TH2D>("Reco_JETT_bjet_con_num_NoSF","Reco_JETT_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETT_bjet_con_num_NoSF->Sumw2();
+
+
+  //DeepJET Medium Working Point
+  Reco_JETM_bjet_eff_den = fs->make<TH2D>("Reco_JETM_bjet_eff_den","Reco_JETM_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_eff_den->Sumw2();
+
+  Reco_JETM_bjet_eff_num = fs->make<TH2D>("Reco_JETM_bjet_eff_num","Reco_JETM_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_eff_num->Sumw2();
+
+  Reco_JETM_cjet_eff_den = fs->make<TH2D>("Reco_JETM_cjet_eff_den","Reco_JETM_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_eff_den->Sumw2();
+
+  Reco_JETM_cjet_eff_num = fs->make<TH2D>("Reco_JETM_cjet_eff_num","Reco_JETM_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_eff_num->Sumw2();
+
+  Reco_JETM_ljet_eff_den = fs->make<TH2D>("Reco_JETM_ljet_eff_den","Reco_JETM_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_eff_den->Sumw2();
+
+  Reco_JETM_ljet_eff_num = fs->make<TH2D>("Reco_JETM_ljet_eff_num","Reco_JETM_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_eff_num->Sumw2();
+
+  Reco_JETM_bjet_miss_den = fs->make<TH2D>("Reco_JETM_bjet_miss_den","Reco_JETM_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_miss_den->Sumw2();
+
+  Reco_JETM_bjet_miss_num = fs->make<TH2D>("Reco_JETM_bjet_miss_num","Reco_JETM_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_miss_num->Sumw2();
+
+  Reco_JETM_cjet_miss_den = fs->make<TH2D>("Reco_JETM_cjet_miss_den","Reco_JETM_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_miss_den->Sumw2();
+
+  Reco_JETM_cjet_miss_num = fs->make<TH2D>("Reco_JETM_cjet_miss_num","Reco_JETM_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_miss_num->Sumw2();
+
+  Reco_JETM_ljet_miss_den = fs->make<TH2D>("Reco_JETM_ljet_miss_den","Reco_JETM_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_miss_den->Sumw2();
+
+  Reco_JETM_ljet_miss_num = fs->make<TH2D>("Reco_JETM_ljet_miss_num","Reco_JETM_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_miss_num->Sumw2();
+
+  Reco_JETM_bjet_pur_den = fs->make<TH2D>("Reco_JETM_bjet_pur_den","Reco_JETM_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_pur_den->Sumw2();
+
+  Reco_JETM_bjet_pur_num = fs->make<TH2D>("Reco_JETM_bjet_pur_num","Reco_JETM_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_pur_num->Sumw2();
+
+  Reco_JETM_bjet_con_den = fs->make<TH2D>("Reco_JETM_bjet_con_den","Reco_JETM_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_con_den->Sumw2();
+
+  Reco_JETM_bjet_con_num = fs->make<TH2D>("Reco_JETM_bjet_con_num","Reco_JETM_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_con_num->Sumw2();
+ 
+
+  Reco_JETM_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETM_bjet_eff_den_NoSF","Reco_JETM_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETM_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETM_bjet_eff_num_NoSF","Reco_JETM_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETM_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETM_cjet_eff_den_NoSF","Reco_JETM_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETM_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETM_cjet_eff_num_NoSF","Reco_JETM_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETM_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_JETM_ljet_eff_den_NoSF","Reco_JETM_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_JETM_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_JETM_ljet_eff_num_NoSF","Reco_JETM_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_JETM_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETM_bjet_miss_den_NoSF","Reco_JETM_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETM_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETM_bjet_miss_num_NoSF","Reco_JETM_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETM_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETM_cjet_miss_den_NoSF","Reco_JETM_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETM_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETM_cjet_miss_num_NoSF","Reco_JETM_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETM_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_JETM_ljet_miss_den_NoSF","Reco_JETM_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_JETM_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_JETM_ljet_miss_num_NoSF","Reco_JETM_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_JETM_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_JETM_bjet_pur_den_NoSF","Reco_JETM_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_JETM_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_JETM_bjet_pur_num_NoSF","Reco_JETM_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_JETM_bjet_con_den_NoSF = fs->make<TH2D>("Reco_JETM_bjet_con_den_NoSF","Reco_JETM_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_con_den_NoSF->Sumw2();
+
+  Reco_JETM_bjet_con_num_NoSF = fs->make<TH2D>("Reco_JETM_bjet_con_num_NoSF","Reco_JETM_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETM_bjet_con_num_NoSF->Sumw2();
+
+  //DeepJET Loose Working Point
+  Reco_JETL_bjet_eff_den = fs->make<TH2D>("Reco_JETL_bjet_eff_den","Reco_JETL_bjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_eff_den->Sumw2();
+
+  Reco_JETL_bjet_eff_num = fs->make<TH2D>("Reco_JETL_bjet_eff_num","Reco_JETL_bjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_eff_num->Sumw2();
+
+  Reco_JETL_cjet_eff_den = fs->make<TH2D>("Reco_JETL_cjet_eff_den","Reco_JETL_cjet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_eff_den->Sumw2();
+
+  Reco_JETL_cjet_eff_num = fs->make<TH2D>("Reco_JETL_cjet_eff_num","Reco_JETL_cjet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_eff_num->Sumw2();
+
+  Reco_JETL_ljet_eff_den = fs->make<TH2D>("Reco_JETL_ljet_eff_den","Reco_JETL_ljet_eff_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_eff_den->Sumw2();
+
+  Reco_JETL_ljet_eff_num = fs->make<TH2D>("Reco_JETL_ljet_eff_num","Reco_JETL_ljet_eff_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_eff_num->Sumw2();
+
+  Reco_JETL_bjet_miss_den = fs->make<TH2D>("Reco_JETL_bjet_miss_den","Reco_JETL_bjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_miss_den->Sumw2();
+
+  Reco_JETL_bjet_miss_num = fs->make<TH2D>("Reco_JETL_bjet_miss_num","Reco_JETL_bjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_miss_num->Sumw2();
+
+  Reco_JETL_cjet_miss_den = fs->make<TH2D>("Reco_JETL_cjet_miss_den","Reco_JETL_cjet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_miss_den->Sumw2();
+
+  Reco_JETL_cjet_miss_num = fs->make<TH2D>("Reco_JETL_cjet_miss_num","Reco_JETL_cjet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_miss_num->Sumw2();
+
+  Reco_JETL_ljet_miss_den = fs->make<TH2D>("Reco_JETL_ljet_miss_den","Reco_JETL_ljet_miss_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_miss_den->Sumw2();
+
+  Reco_JETL_ljet_miss_num = fs->make<TH2D>("Reco_JETL_ljet_miss_num","Reco_JETL_ljet_miss_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_miss_num->Sumw2();
+
+  Reco_JETL_bjet_pur_den = fs->make<TH2D>("Reco_JETL_bjet_pur_den","Reco_JETL_bjet_pur_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_pur_den->Sumw2();
+
+  Reco_JETL_bjet_pur_num = fs->make<TH2D>("Reco_JETL_bjet_pur_num","Reco_JETL_bjet_pur_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_pur_num->Sumw2();
+
+  Reco_JETL_bjet_con_den = fs->make<TH2D>("Reco_JETL_bjet_con_den","Reco_JETL_bjet_con_den",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_con_den->Sumw2();
+
+  Reco_JETL_bjet_con_num = fs->make<TH2D>("Reco_JETL_bjet_con_num","Reco_JETL_bjet_con_num",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_con_num->Sumw2();
+
+
+  Reco_JETL_bjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETL_bjet_eff_den_NoSF","Reco_JETL_bjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETL_bjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETL_bjet_eff_num_NoSF","Reco_JETL_bjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETL_cjet_eff_den_NoSF = fs->make<TH2D>("Reco_JETL_cjet_eff_den_NoSF","Reco_JETL_cjet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_eff_den_NoSF->Sumw2();
+
+  Reco_JETL_cjet_eff_num_NoSF = fs->make<TH2D>("Reco_JETL_cjet_eff_num_NoSF","Reco_JETL_cjet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_eff_num_NoSF->Sumw2();
+
+  Reco_JETL_ljet_eff_den_NoSF = fs->make<TH2D>("Reco_JETL_ljet_eff_den_NoSF","Reco_JETL_ljet_eff_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_eff_den_NoSF->Sumw2();
+
+  Reco_JETL_ljet_eff_num_NoSF = fs->make<TH2D>("Reco_JETL_ljet_eff_num_NoSF","Reco_JETL_ljet_eff_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_eff_num_NoSF->Sumw2();
+
+  Reco_JETL_bjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETL_bjet_miss_den_NoSF","Reco_JETL_bjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETL_bjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETL_bjet_miss_num_NoSF","Reco_JETL_bjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETL_cjet_miss_den_NoSF = fs->make<TH2D>("Reco_JETL_cjet_miss_den_NoSF","Reco_JETL_cjet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_miss_den_NoSF->Sumw2();
+
+  Reco_JETL_cjet_miss_num_NoSF = fs->make<TH2D>("Reco_JETL_cjet_miss_num_NoSF","Reco_JETL_cjet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_cjet_miss_num_NoSF->Sumw2();
+
+  Reco_JETL_ljet_miss_den_NoSF = fs->make<TH2D>("Reco_JETL_ljet_miss_den_NoSF","Reco_JETL_ljet_miss_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_miss_den_NoSF->Sumw2();
+
+  Reco_JETL_ljet_miss_num_NoSF = fs->make<TH2D>("Reco_JETL_ljet_miss_num_NoSF","Reco_JETL_ljet_miss_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_ljet_miss_num_NoSF->Sumw2();
+
+  Reco_JETL_bjet_pur_den_NoSF = fs->make<TH2D>("Reco_JETL_bjet_pur_den_NoSF","Reco_JETL_bjet_pur_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_pur_den_NoSF->Sumw2();
+
+  Reco_JETL_bjet_pur_num_NoSF = fs->make<TH2D>("Reco_JETL_bjet_pur_num_NoSF","Reco_JETL_bjet_pur_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_pur_num_NoSF->Sumw2();
+
+  Reco_JETL_bjet_con_den_NoSF = fs->make<TH2D>("Reco_JETL_bjet_con_den_NoSF","Reco_JETL_bjet_con_den_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_con_den_NoSF->Sumw2();
+
+  Reco_JETL_bjet_con_num_NoSF = fs->make<TH2D>("Reco_JETL_bjet_con_num_NoSF","Reco_JETL_bjet_con_num_NoSF",BJetEffnbins,BJetEffPT,1, -2.5, 2.5);
+  Reco_JETL_bjet_con_num_NoSF->Sumw2();
 #endif
 //-------------------------------------------
 
@@ -4182,7 +5422,8 @@ for(int ij=0; ij<njet; ij++){
     genjt3_pt[jk] = fs->make<TH1F>(name,title, 400, 20., 2020.);
     genjt3_pt[jk]->Sumw2();
 
-    /*sprintf(name, "genjt_oth_pt_%i",jk);
+    /*
+    sprintf(name, "genjt_oth_pt_%i",jk);
     sprintf(title, "#Et_{genjets_oth}_%g", etarange[jk]);
     genjt_oth_pt[jk] = fs->make<TH1F>(name,title,100, 20., 2020.);
     genjt_oth_pt[jk]->Sumw2();
@@ -4239,6 +5480,7 @@ for(int ij=0; ij<njet; ij++){
   
   //genjt_oth_pt = fs->make<TH1F>("genjt_oth_pt","Et_{genjets_oth}",100, 20., 2020.);
   //genjt_oth_pt->Sumw2();
+  
   /*  
   genjt_oth_eta = fs->make<TH1F>("genjt_oth_eta","#eta_{genjets_oth}",100,-5., 5.);
   genjt_oth_eta->Sumw2();
@@ -4291,6 +5533,7 @@ for(int ij=0; ij<njet; ij++){
 
   //genchg_oth_hist = fs->make<TH1F>("genchg_oth_hist","# of genchargeds (others)",120,-0.5, 239.5);
   //genchg_oth_hist->Sumw2();
+  
   /* 
   genchg_oth_pt = fs->make<TH1F>("genchg_oth_pt","Et_{genchargeds_oth}",100,1., 101.);
   genchg_oth_pt->Sumw2();
@@ -4395,7 +5638,7 @@ for(int ij=0; ij<njet; ij++){
     gen_njets[ij] = fs->make<TH1F>(name, title, 9, 1, 10);
     gen_njets[ij]->Sumw2();
   }
-//-------------------------------------------
+
 #ifdef TRIGGER
   const char* trigvar[2]={"L1", "HLT"};
   for(int ij=0; ij<nHLTmx; ij++){
@@ -4432,9 +5675,8 @@ for(int ij=0; ij<njet; ij++){
     }
   } 
 #endif
-//Trigger special
 
-//-------------------------------------------
+//Trigger special
 	if (isReconstruct) { 
 		for(int ij=0; ij<nHLTmx; ij++){
 			for(int jk=0; jk<njetetamn; jk++){
@@ -4455,7 +5697,7 @@ for(int ij=0; ij<njet; ij++){
   for(int ij=0; ij<nHLTmx; ij++){
 
     sprintf(name, "jeteta_%i", ij);
-    sprintf(title, "jetphi_%s", jethlt_name[ij]);//, jetvar[ij]);
+    sprintf(title, "jetphi_%s", jethlt_name[ij]);           //, jetvar[ij]);
     h_jeteta[ij] = fs->make<TH1F>(name, title, 100, -5, 5);
     h_jeteta[ij]->Sumw2();
 
@@ -4552,10 +5794,10 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double recomomJCO[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double GenJCO[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 
-  //b-jet
-  double RecoJCO_bjet_WPT[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double recomomJCO_bjet_WPT[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double GenJCO_bjet_WPT[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+  //BJet
+  double RecoJCO_bjet_deepJETT[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_bjet_deepJETT[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double GenJCO_BJet[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 
 #ifdef MATCHING
   //GenJet Flavour Info
@@ -4578,8 +5820,8 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double genmomJCO_ojet[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 
   double genmomJCO[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
-  //b-jet
-  double genmomJCO_bjet_WPT[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+  //BJet
+  double genmomJCO_BJet[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 
 #ifdef FLAV
@@ -4600,19 +5842,6 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double recomomJCO_bjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_bbarjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_ojet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-
-  /*
-  //Second-set Flavor Tagging
-  double RecoJCO_qjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double RecoJCO_aqjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double RecoJCO_aqgjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double RecoJCO_aqojet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-
-  double recomomJCO_qjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double recomomJCO_aqjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double recomomJCO_aqgjet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  double recomomJCO_aqojet[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
-  */
 #endif
 
 #ifdef MATCHING
@@ -4623,11 +5852,17 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double RecoJCO_trackeff[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_trackeff[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double GenJCO_trackeff[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+
+  //BJet
+  double RecoJCO_bjet_deepJETT_trackeff[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_bjet_deepJETT_trackeff[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double GenJCO_BJet_trackeff[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 
 #ifdef MATCHING
 #ifdef TRACKEFF
   double genmomJCO_trackeff[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
+  double genmomJCO_BJet_trackeff[ndef][njet][nkappa][nGenReso] = {{{{0.0}}}};
 #endif
 #endif
 
@@ -4649,15 +5884,20 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #ifdef TRACKPTUP
   double RecoJCO_trackpt1[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_trackpt1[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+
+  //BJet
+  double RecoJCO_bjet_deepJETT_trackpt1[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_bjet_deepJETT_trackpt1[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
 #endif
 
 #ifdef TRACKPTDOWN
   double RecoJCO_trackpt2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
   double recomomJCO_trackpt2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+
+  double RecoJCO_bjet_deepJETT_trackpt2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
+  double recomomJCO_bjet_deepJETT_trackpt2[ndef][njet][nkappa][njecmx] = {{{{0.0}}}};
 #endif
  
-//------------------------------------------
-
   //Reco JCO initialize
   double ijet1candsmom_num[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den[nkappa][njecmx] = {{0.0}}, ijet1_long_num[nkappa][njecmx] = {{0.0}}, ijet1_long_den[nkappa][njecmx] = {{0.0}}, ijet1_tran_num[nkappa][njecmx] = {{0.0}}, ijet1_tran_den[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num[nkappa][njecmx] = {{0.0}},ijet2candsmom_den[nkappa][njecmx] = {{0.0}}, ijet2_long_num[nkappa][njecmx] = {{0.0}}, ijet2_long_den[nkappa][njecmx] = {{0.0}}, ijet2_tran_num[nkappa][njecmx] = {{0.0}}, ijet2_tran_den[nkappa][njecmx] = {{0.0}};  
@@ -4665,14 +5905,14 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double igenjet1candsmom_num[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den[nkappa][nGenReso] = {{0.0}}; 
   double igenjet2candsmom_num[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den[nkappa][nGenReso] = {{0.0}};
 
-  //b-Jet Tight Working Point
-  //Reco b-jet
-  double ijet1candsmom_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet1_long_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet1_long_den_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_bjet_WPT[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet2candsmom_den_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet2_long_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet2_long_den_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_bjet_WPT[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_bjet_WPT[nkappa][njecmx] = {{0.0}};
+  //BJet Tight Working Point
+  //Reco BJet
+  double ijet1candsmom_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet1_long_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet1_long_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet2candsmom_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet2_long_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet2_long_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_bjet_deepJETT[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_bjet_deepJETT[nkappa][njecmx] = {{0.0}};
 
-  //Gen b-jet
-  double igenjet1candsmom_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_bjet_WPT[nkappa][nGenReso] = {{0.0}};
-  double igenjet2candsmom_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_bjet_WPT[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_bjet_WPT[nkappa][nGenReso] = {{0.0}};
+  //Gen BJet
+  double igenjet1candsmom_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_BJet[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_BJet[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_BJet[nkappa][nGenReso] = {{0.0}};
+  double igenjet2candsmom_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet2candsmom_den_BJet[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_BJet[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_BJet[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_BJet[nkappa][nGenReso] = {{0.0}};
 
   //GenJet Flavour
   //g-jet 
@@ -4740,25 +5980,6 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //others
   double ijet1candsmom_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_ojet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_ojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_ojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_ojet[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num_ojet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_ojet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_ojet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_ojet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_ojet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_ojet[nkappa][njecmx] = {{0.0}};
-
-  /*
-  //Second-set Flavor Tagging
-  //quark
-  double ijet1candsmom_num_qjet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_qjet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_qjet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_qjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_qjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_qjet[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_qjet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_qjet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_qjet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_qjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_qjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_qjet[nkappa][njecmx] = {{0.0}};
-
-  //ant-quark
-  double ijet1candsmom_num_aqjet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_aqjet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_aqjet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_aqjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_aqjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_aqjet[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_aqjet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_aqjet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_aqjet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_aqjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_aqjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_aqjet[nkappa][njecmx] = {{0.0}};
-  
-  //gluon
-  double ijet1candsmom_num_aqgjet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_aqgjet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_aqgjet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_aqgjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_aqgjet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_aqgjet[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_aqgjet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_aqgjet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_aqgjet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_aqgjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_aqgjet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_aqgjet[nkappa][njecmx] = {{0.0}};
-
-  //others
-  double ijet1candsmom_num_aqojet[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_aqojet[nkappa][njecmx] = {{0.0}}, ijet1_long_num_aqojet[nkappa][njecmx] = {{0.0}}, ijet1_long_den_aqojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_aqojet[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_aqojet[nkappa][njecmx] = {{0.0}};
-  double ijet2candsmom_num_aqojet[nkappa][njecmx] = {{0.0}},ijet2candsmom_den_aqojet[nkappa][njecmx] = {{0.0}}, ijet2_long_num_aqojet[nkappa][njecmx] = {{0.0}}, ijet2_long_den_aqojet[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_aqojet[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_aqojet[nkappa][njecmx] = {{0.0}};
-  */
 #endif
 
 #ifdef TRACKEFF 
@@ -4767,6 +5988,13 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   double igenjet1candsmom_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_long_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_long_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_tran_den_trackeff[nkappa][nGenReso] = {{0.0}};
   double igenjet2candsmom_num_trackeff[nkappa][nGenReso] = {{0.0}},igenjet2candsmom_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_long_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_long_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_tran_den_trackeff[nkappa][nGenReso] = {{0.0}};
+
+//BJet
+  double ijet1candsmom_bjet_deepJETT_num_trackeff[nkappa][njecmx] = {{0.0}}, ijet1candsmom_bjet_deepJETT_den_trackeff[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_long_num_trackeff[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_long_den_trackeff[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_num_trackeff[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_den_trackeff[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_bjet_deepJETT_num_trackeff[nkappa][njecmx] = {{0.0}},ijet2candsmom_bjet_deepJETT_den_trackeff[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_num_trackeff[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_den_trackeff[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_num_trackeff[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_den_trackeff[nkappa][njecmx] = {{0.0}};
+
+  double igenjet1candsmom_BJet_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1candsmom_BJet_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_BJet_long_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_BJet_long_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_BJet_tran_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet1_BJet_tran_den_trackeff[nkappa][nGenReso] = {{0.0}};
+  double igenjet2candsmom_BJet_num_trackeff[nkappa][nGenReso] = {{0.0}},igenjet2candsmom_BJet_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_BJet_long_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_BJet_long_den_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_BJet_tran_num_trackeff[nkappa][nGenReso] = {{0.0}}, igenjet2_BJet_tran_den_trackeff[nkappa][nGenReso] = {{0.0}};
 #endif
 
 /*
@@ -4783,11 +6011,19 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #ifdef TRACKPTUP
   double ijet1candsmom_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackpt1[nkappa][njecmx] = {{0.0}},ijet1_long_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackpt1[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2candsmom_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_long_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_long_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_trackpt1[nkappa][njecmx] = {{0.0}};
+
+//BJet
+  double ijet1candsmom_bjet_deepJETT_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1candsmom_bjet_deepJETT_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_long_num_trackpt1[nkappa][njecmx] = {{0.0}},ijet1_bjet_deepJETT_long_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_den_trackpt1[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_bjet_deepJETT_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2candsmom_bjet_deepJETT_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_den_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_num_trackpt1[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_den_trackpt1[nkappa][njecmx] = {{0.0}};
 #endif
 
 #ifdef TRACKPTDOWN
   double ijet1candsmom_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1candsmom_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_long_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_long_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_tran_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_tran_den_trackpt2[nkappa][njecmx] = {{0.0}};
   double ijet2candsmom_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2candsmom_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_long_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_long_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_tran_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_tran_den_trackpt2[nkappa][njecmx] = {{0.0}};
+
+//BJet
+  double ijet1candsmom_bjet_deepJETT_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1candsmom_bjet_deepJETT_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_long_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_long_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet1_bjet_deepJETT_tran_den_trackpt2[nkappa][njecmx] = {{0.0}};
+  double ijet2candsmom_bjet_deepJETT_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2candsmom_bjet_deepJETT_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_long_den_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_num_trackpt2[nkappa][njecmx] = {{0.0}}, ijet2_bjet_deepJETT_tran_den_trackpt2[nkappa][njecmx] = {{0.0}};
 #endif
 
   double igenjet1candsmom_alltracks[nkappa][njecmx] = {{0.0}}, igenjet2candsmom_alltracks[nkappa][njecmx] = {{0.0}};
@@ -4796,7 +6032,7 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   double igenjet1candsmom_matchedtracks[nkappa][njecmx] = {{0.0}};
   double igenjet2candsmom_matchedtracks[nkappa][njecmx] = {{0.0}};
 #endif
-//-------------------------------------------
+
   wtfact=1.0;
   //double px=0;
   //double py=0;
@@ -4807,23 +6043,22 @@ void QCDEventShape::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //double recterm=0;
   //int ithird=-1;
   int irecoht=-1;
-	//#ifdef JETENERGY
-	int irecohtjec[njecmx];
-	for (int ij=0; ij<njecmx; ij++) { irecohtjec[ij]=-1;}
-	//#endif	
-  double leadingptjec[njecmx] ={0};   // jet charge 
-
+//#ifdef JETENERGY
+  int irecohtjec[njecmx];
+  for (int ij=0; ij<njecmx; ij++) { irecohtjec[ij]=-1;}
+//#endif	
+  double leadingptjec[njecmx] ={0};
   //int igenht=-1;
-	//#ifdef  JETRESO
-	int igenhtres[nGenReso];
-	for (int ij=0; ij<nGenReso; ij++) { igenhtres[ij]=-1;}
-	//#endif
-	double leadgenptres[nGenReso]={0};// jet charge
+//#ifdef  JETRESO
+  int igenhtres[nGenReso];
+  for (int ij=0; ij<nGenReso; ij++) { igenhtres[ij]=-1;}
+//#endif
+  double leadgenptres[nGenReso]={0};
 
-edm::Handle<reco::VertexCollection> primaryVertices;
-iEvent.getByToken(vtxToken_, primaryVertices);
+  edm::Handle<reco::VertexCollection> primaryVertices;
+  iEvent.getByToken(vtxToken_, primaryVertices);
 
-//Select events with at least one good primary vertex with ndof>4 with abs(z)<24 and rho<2
+//Select events with good primary vertex with ndof>4 with abs(z)<24 and rho<2
 bool PVEvent=false;
 if (primaryVertices.isValid() && primaryVertices->size()>0) {
         for (reco::VertexCollection::const_iterator vert=primaryVertices->begin(); vert<primaryVertices->end(); vert++) {
@@ -4833,15 +6068,28 @@ if (primaryVertices.isValid() && primaryVertices->size()>0) {
                         }
                 }
         }
-
 if(!PVEvent) return;
 
 /*
 if (primaryVertices->empty()) return; // skip the event if no PV found
 */
 
-edm::Handle<pat::METCollection> pfmet;
-iEvent.getByToken(metToken_, pfmet);
+/*
+//Generator Vertex Info
+  edm::Handle<reco::GenParticleCollection> genVtx;
+  iEvent.getByToken(genParticlesToken_, genVtx);
+
+const auto& rv = (*primaryVertices)[0].position();
+const auto& gv = (*genVtx)[0].daughter(0)->vertex();
+double distGen = hypot( rv.x() - gv.x(), hypot( rv.y() - gv.y(), rv.z() - gv.z()) );
+
+if(distGen>1) return;
+//cout<<"PU Cleaning : "<<distGen<<endl;
+*/
+
+//MET Info
+  edm::Handle<pat::METCollection> pfmet;
+  iEvent.getByToken(metToken_, pfmet);
 
 //MET should be within 0.3
 double miset=0, /*misphi=0,*/ sumEt=0;
@@ -4870,6 +6118,21 @@ for(unsigned trk =0; trk !=tracks->size(); trk++){
 if (!isGoodTrack) return;
 */
 
+//Track Quality Info
+/*
+edm::Handle<pat::PackedCandidateCollection> tracks;
+iEvent.getByToken(PFSrcToken_, tracks);
+
+//bool isGoodTrack = false;
+if(tracks.isValid() && tracks->size()>1){
+	for(unsigned trk =0; trk !=tracks->size(); trk++){
+		if((*tracks)[trk].hasTrackDetails() && (*tracks)[trk].charge() != 0 && (*tracks)[trk].trackHighPurity()){
+		//isGoodTrack = true;
+		}
+	}
+}
+*/
+
 #ifdef TRIGGER
   const char* variab1;
   const char* variab3;
@@ -4880,8 +6143,8 @@ if (!isGoodTrack) return;
 
   if (isMC) {
 #ifdef LHAPDF
-    edm::Handle<LHEEventProduct> EvtHandle ;
-    iEvent.getByToken( lheEventProductToken_ , EvtHandle ) ;
+  edm::Handle<LHEEventProduct> EvtHandle ;
+  iEvent.getByToken( lheEventProductToken_ , EvtHandle ) ;
 		
 		for ( unsigned int weightIndex = 0; weightIndex < EvtHandle->weights().size(); ++weightIndex ) {
 			//cout<< EvtHandle->weights()[weightIndex].wgt <<endl;
@@ -4897,17 +6160,17 @@ if (!isGoodTrack) return;
     			}
 #endif
 
-    edm::Handle<GenEventInfoProduct> eventinfo;
-    iEvent.getByToken(generator1_, eventinfo);
+  edm::Handle<GenEventInfoProduct> eventinfo;
+  iEvent.getByToken(generator1_, eventinfo);
  
 #ifdef SCALEUNC 
-    for(unsigned int scaleIndex = 0 ; scaleIndex < eventinfo->weights().size(); ++scaleIndex){
-	scalewt[scaleIndex] = eventinfo->weights()[scaleIndex];
+  for(unsigned int scaleIndex = 0 ; scaleIndex < eventinfo->weights().size(); ++scaleIndex){
+  	scalewt[scaleIndex] = eventinfo->weights()[scaleIndex];
 	//cout<<"scaleIndex : "<<scaleIndex<<" weight : "<<eventinfo->weights()[scaleIndex]<<endl;
 	}
 #endif
 
-    if (eventinfo.isValid()) { 
+      if(eventinfo.isValid()) { 
       qscale = eventinfo->qScale(); 
       wtfact = eventinfo->weight();
       //cout<<"wtfact : "<<wtfact<<endl;
@@ -4915,7 +6178,7 @@ if (!isGoodTrack) return;
       procid = eventinfo->signalProcessID();
       //cout << " qscale = " <<setw(14)<< qscale << " ; wtfact = " << wtfact << " ; procid = " << procid  << endl;
 
-      if (eventinfo->hasPDF()) {
+      if(eventinfo->hasPDF()) {
 	const gen::PdfInfo* xpdf = eventinfo->pdf();
 	
 	int id1 = xpdf->id.first;
@@ -4936,21 +6199,21 @@ if (!isGoodTrack) return;
 
  
 #ifdef PREFIRE
-edm::Handle< double > theprefweight;
-iEvent.getByToken(prefweight_token, theprefweight ) ;
-double _prefiringweight =(*theprefweight);
+  edm::Handle< double > theprefweight;
+  iEvent.getByToken(prefweight_token, theprefweight ) ;
+  double _prefiringweight =(*theprefweight);
 
-edm::Handle< double > theprefweightup;
-iEvent.getByToken(prefweightup_token, theprefweightup ) ;
-double _prefiringweightup =(*theprefweightup);
+  edm::Handle< double > theprefweightup;
+  iEvent.getByToken(prefweightup_token, theprefweightup ) ;
+  double _prefiringweightup =(*theprefweightup);
 
-edm::Handle< double > theprefweightdown;
-iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
-double _prefiringweightdown =(*theprefweightdown);
+  edm::Handle< double > theprefweightdown;
+  iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
+  double _prefiringweightdown =(*theprefweightdown);
 
-//cout << "Prefire  wt : " << _prefiringweight << endl;
-//cout << "Prefire up wt : " << _prefiringweightup << endl;
-//cout << "Prefire down wt : " << _prefiringweightdown << endl;
+  //cout << "Prefire  wt : " << _prefiringweight << endl;
+  //cout << "Prefire up wt : " << _prefiringweightup << endl;
+  //cout << "Prefire down wt : " << _prefiringweightdown << endl;
 #endif
  
 #ifdef TRIGGER
@@ -4976,19 +6239,18 @@ double _prefiringweightdown =(*theprefweightdown);
   //int ihltfill = -1;
 #endif
   
-  tmpjt4v.clear();   //Reco level
+  tmpjt4v.clear();     //Reco level
   //tmpcand4v.clear();
-  tmpgen4v.clear();  // Gen level
+  tmpgen4v.clear();    // Gen level
 
-  //double aveleadingpt =0;  //ESVs (dijet)
-  double leadingpt = 0;    //Jet charge (single jet)
+  //double aveleadingpt =0;         //ESVs (dijet)
+  double leadingpt = 0;             //Jet charge (single jet)
   bool isInEtaRange[njetetamn]={0}; //GMA{0,0,0,0};
 
   recoJetpT = 0.0; 
-  recojet1_pt = 0.0, recojet2_pt = 0.0, /*recobjet1_pt = 0.0, recobjet2_pt = 0.0,*/ recobjet1_pt_WPT = 0.0, recobjet2_pt_WPT = 0.0;
+  recojet1_pt = 0.0, recojet2_pt = 0.0, recobjet1_pt_deepJETT = 0.0, recobjet2_pt_deepJETT = 0.0;
   recoCandX1_J1 = 0.0, recoCandX2_J1 = 0.0, recoCandX3_J1 = 0.0, recoCandX1_J2 = 0.0, recoCandX2_J2 = 0.0, recoCandX3_J2 = 0.0; 
-  recoCandX1_bjet_WPT_J1 = 0.0, recoCandX2_bjet_WPT_J1 = 0.0, recoCandX3_bjet_WPT_J1 = 0.0, recoCandX1_bjet_WPT_J2 = 0.0, recoCandX2_bjet_WPT_J2 = 0.0, recoCandX3_bjet_WPT_J2 = 0.0;
-  //recoCandX1_bjet_J1 = 0.0, recoCandX2_bjet_J1 = 0.0, recoCandX3_bjet_J1 = 0.0, recoCandX1_bjet_J2 = 0.0, recoCandX2_bjet_J2 = 0.0, recoCandX3_bjet_J2 = 0.0;  
+  recoCandX1_bjet_deepJETT_J1 = 0.0, recoCandX2_bjet_deepJETT_J1 = 0.0, recoCandX3_bjet_deepJETT_J1 = 0.0, recoCandX1_bjet_deepJETT_J2 = 0.0, recoCandX2_bjet_deepJETT_J2 = 0.0, recoCandX3_bjet_deepJETT_J2 = 0.0;
   genrecojet1_pt = 0.0, genrecojet2_pt = 0.0, genrecobjet1_pt = 0.0, genrecobjet2_pt = 0.0; 
 
 #ifdef FLAV
@@ -5015,7 +6277,7 @@ recoCandX1_bjet_J1 = 0.0, recoCandX2_bjet_J1 = 0.0, recoCandX3_bjet_J1 = 0.0, re
 	if (abs((*ak4PFJets)[ij].eta())>etarange[iet]) { isInEtaRange[iet] = false;}
       }
       
-      //Jet ID ================= 2017 & 2018 UL jetID recomendation 
+      //Jet ID 2017 & 2018 UL JetID recomendation 
       double NHF = (*ak4PFJets)[ij].neutralHadronEnergyFraction();
       double NEMF = (*ak4PFJets)[ij].neutralEmEnergyFraction();
       double CHF = (*ak4PFJets)[ij].chargedHadronEnergyFraction();
@@ -5136,12 +6398,12 @@ recoCandX1_bjet_J1 = 0.0, recoCandX2_bjet_J1 = 0.0, recoCandX3_bjet_J1 = 0.0, re
   }
 
 //MET Filters
-bool METFilterspas[11]={0,0,0,0,0,0,0,0,0,0,0};
+bool METFilterspas[10]={0,0,0,0,0,0,0,0,0,0};
 bool METFilter_prev=false;
 for (unsigned int i = 0; i<metpatRes->size(); ++i) {
 	std::string METFiltername = metPATnames.triggerName(i);
 		variab3 = METFiltername.c_str();
-		for (unsigned ij=0; ij<11; ij++){
+		for (unsigned ij=0; ij<10; ij++){
 		if (strstr(variab3,METFilters[ij]) && strlen(variab3)-strlen(METFilters[ij])<5) {
 			//cout<<"Filter Name : "<<variab3<<endl;
 			if(metpatRes->accept(ij)){
@@ -5329,6 +6591,7 @@ weighttrg = tmpwt*lumiwtt;
   
 edm::Handle<reco::GenJetCollection> genjets;
 edm::Handle<reco::JetFlavourInfoMatchingCollection> genjetsFlavor;
+
 if(isMC) {
 iEvent.getByToken(genjetToken_,genjets);
 iEvent.getByToken(genjetFlavorToken_, genjetsFlavor);
@@ -5647,8 +6910,8 @@ if(isMC) {
     for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
       double pt = (*ak4PFJets)[ijet].pt();
       
-      //#ifndef JETENERGY
-      //#ifdef JETRESO
+//#ifndef JETENERGY
+//#ifdef JETRESO
       
 #if defined(JETRESO)&&(!defined(JETENERGY))
       //resolution file 
@@ -5674,8 +6937,8 @@ if(isMC) {
       float sf = res_sf.getScaleFactor({{JME::Binning::JetEta, eta}});
       float sf_up= res_sf.getScaleFactor({{JME::Binning::JetEta, eta}}, Variation::UP);
       float sf_dn= res_sf.getScaleFactor({{JME::Binning::JetEta, eta}}, Variation::DOWN);
-      //#endif
-      //#endif
+//#endif
+//#endif
 #endif 
       for (int isrc = 0; isrc < njecmx; isrc++) {
 	double sup = 1;
@@ -5723,10 +6986,8 @@ if(isMC) {
      	 	match_jet=true;
          	matched_genJetPt = (*genjets)[igjet].pt(); 
                 }
-
 		//cout << "mindR = " << min_dR << endl;
 		}
-
 	//cout << " match_jet " << match_jet <<" "<< ijet << endl;
 	
 #ifdef STOCHASTIC
@@ -5776,8 +7037,8 @@ match_jet = false;
 	jetindx[isrc].push_back(ijet);
       }
     }
-//#if defined(JETENERGY)||defined(JETRESO)
-    
+
+//#if defined(JETENERGY)||defined(JETRESO)    
     for (int isrc = 0; isrc < njecmx; isrc++) {
       for (unsigned int ij=0; ij<jetptx[isrc].size()-1; ij++) {
 	for (unsigned int jk=ij+1; jk<jetptx[isrc].size(); jk++) {
@@ -5797,7 +7058,7 @@ match_jet = false;
 	}
       }
     }
-    //#endif
+//#endif
     
     for (int isrc = 0; isrc < njecmx; isrc++) {
       if (jetptx[isrc].size()>=2) {
@@ -5830,7 +7091,7 @@ match_jet = false;
 	    //tmpcand4v.clear();
 	    //tmpgen4v.clear();
 	    
-	    //if (abs((*ak4PFJets)[0].eta())<etarange[iet] && abs((*ak4PFJets)[1].eta())<etarange[iet]) {
+	    //if(abs((*ak4PFJets)[0].eta())<etarange[iet] && abs((*ak4PFJets)[1].eta())<etarange[iet]) {
 	    //for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
 	    
 	    for(unsigned ijet = 0; ijet != ak4PFJets->size(); ijet++) {
@@ -5845,10 +7106,9 @@ match_jet = false;
 		
 		int ireorjt = jetindx[isrc][ijet];
 #ifdef FLAV		
-		int jetflav = (*ak4PFJets)[ireorjt].partonFlavour();
-		//int jetflav = (*ak4PFJets)[ireorjt].hadronFlavour();	
-		//cout<<"Jet Flavor : "<<jetflav<<endl;
-		//if(jetflav==5){cout << "Flavour : "<<jetflav<<endl;}	
+		int ParFlav = (*ak4PFJets)[ireorjt].partonFlavour();
+		int HadFlav = (*ak4PFJets)[ireorjt].hadronFlavour();	
+		//cout<<"Parton Flavor : "<<ParFlav<<" Hadron Flavor : "<<HadFlav<<endl;
 #endif	
 		double pt = jetptx[isrc][ijet];
 		double sup = jetscl[isrc][ijet];
@@ -5864,7 +7124,7 @@ match_jet = false;
 		if (isEta && isPt) {ncount++;}
 		
 		//cout<< "ncount = " << ncount << endl;
-		//Jet ID ================= Tight ID 2017 Recomendation  check for 2018
+		//Jet ID Tight ID 2017 & 2018 Recomendation
 		double NHF = (*ak4PFJets)[ireorjt].neutralHadronEnergyFraction();
 		double NEMF = (*ak4PFJets)[ireorjt].neutralEmEnergyFraction();
 		double CHF = (*ak4PFJets)[ireorjt].chargedHadronEnergyFraction();
@@ -5904,212 +7164,789 @@ match_jet = false;
 		  //ptxy +=tmp4v.perp();
 
 //---------------------------------------------------------------------------
-	
-		//b-jet info
-		//fill discriminator histograms
+///////////////////////	
+//-----BTag Info-----//
+///////////////////////
+
+		//DeepCSV
 		double deepCSV_probb = -999;
 		double deepCSV_probbb = -999;
 
-                //double deepCSV_probc = -999;
-		//double deepCSV_probudsg = -999;
-                
-		double deepCSV_b = -999;
-                //double deepCSV_cvsl = -999;
-                //double deepCSV_cvsb = -999;
+		//DeepJET
+		double deepJET_probb = -999;
+		double deepJET_probbb = -999;
+		double deepJET_problepb = -999;
+
+		double deepCSV = -999;
+		double deepJET = -999;
 
                 for( const std::string &bDiscr : bDiscriminators_ ){
                         if(bDiscr == "pfDeepCSVJetTags:probb"){
                                 deepCSV_probb = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
                         }else if(bDiscr == "pfDeepCSVJetTags:probbb"){
                                 deepCSV_probbb = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
-                        }
-			/*
-			else if(bDiscr == "pfDeepCSVJetTags:probc"){
-                                deepCSV_probc = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
-                        }else if(bDiscr == "pfDeepCSVJetTags:probudsg"){
-                                deepCSV_probudsg = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
-                        }
-			*/
+                        }else if(bDiscr == "pfDeepFlavourJetTags:probb"){
+                                deepJET_probb = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
+                        }else if(bDiscr == "pfDeepFlavourJetTags:probbb"){
+                                deepJET_probbb = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
+                        }else if(bDiscr == "pfDeepFlavourJetTags:problepb"){
+				deepJET_problepb = (*ak4PFJets)[ireorjt].bDiscriminator(bDiscr);
+			}
                 }
 
-		//total DeepCSV
-		deepCSV_b = deepCSV_probb + deepCSV_probbb;
-		/*
-                //total DeepCSV c tagger (CvsL)
-                deepCSV_cvsl = deepCSV_probc / ( deepCSV_probc + deepCSV_probudsg );
-                //total DeepCSV c tagger (CvsB)
-                deepCSV_cvsb = deepCSV_probc / ( deepCSV_probc + deepCSV_probb + deepCSV_probbb );
-		*/
-		//cout<<"b-tag discriminator value : "<<deepCSV_b<<endl;
-                //cout<<"cvsl value : "<<deepCSV_cvsl<<endl;
-                //cout<<"cvsb value : "<<deepCSV_cvsb<<endl;
+		//Total DeepCSV
+		deepCSV = deepCSV_probb + deepCSV_probbb;  			//pfDeepCSVJetTags:probb + pfDeepCSVJetTags:probbb
 
-		//h_bTagger->Fill(deepCSV_b);
-                //h_cTagger->Fill(deepCSV_cvsl);
-                //h_LTagger->Fill(deepCSV_cvsb);
-
-		//double WP_Loose = 0.1355;    //Loose Working Point
-		//double WP_Medium = 0.4506;   //Medium Working Point
-		double CSVT = 0.7738;      //Tight Working Point
+		//Total DeepJET
+		deepJET = deepJET_probb + deepJET_probbb + deepJET_problepb;    //pfDeepFlavourJetTags:probb + pfDeepFlavourJetTags:probbb + pfDeepFlavourJetTags:problepb
 		
-		if(abs(jetflav) == 5){
-			h_bTagger->Fill(tmp4v.perp(),deepCSV_b);
-		}else if(abs(jetflav) == 4){
-			h_cTagger->Fill(tmp4v.perp(),deepCSV_b);
-			}
-		else{h_cTagger->Fill(tmp4v.perp(),deepCSV_b);
-			}
+		//DeepCSV Working Point; Loose-> L, Medium-> M, Tight->T
+		double CSVL = 0.1355;
+		double CSVM = 0.4506;
+		double CSVT = 0.7738;
 
-		//double SF_deepCSV=1.0, SF_deepJet=1.0;
+		//DeepJET Working Point; Loose-> L, Medium-> M, Tight->T
+		double JETL = 0.0532;
+                double JETM = 0.3040;
+                double JETT = 0.7476;
+#ifdef FLAV		
+		//Discriminant Vs. Jet PT
+		if(HadFlav == 5){h_BTag_CSV->Fill(tmp4v.perp(),deepCSV,weighttrg);}
+		if(HadFlav == 4){h_CTag_CSV->Fill(tmp4v.perp(),deepCSV,weighttrg);}
+		if(HadFlav == 0){h_udsgTag_CSV->Fill(tmp4v.perp(),deepCSV,weighttrg);}
+
+		if(HadFlav == 5){h_BTag_JET->Fill(tmp4v.perp(),deepJET,weighttrg);}
+                if(HadFlav == 4){h_CTag_JET->Fill(tmp4v.perp(),deepJET,weighttrg);}
+                if(HadFlav == 0){h_udsgTag_JET->Fill(tmp4v.perp(),deepJET,weighttrg);}
+		
+		//Input Efficiency histograms for evaluating SF - deepJET
+		TH2D* DeepJET_LJetEff = (TH2D*)bTagEff_file->Get("Reco_JETT_ljet_eff_num");
+		TH2D* DeepJET_CJetEff = (TH2D*)bTagEff_file->Get("Reco_JETT_cjet_eff_num");
+		TH2D* DeepJET_BJetEff = (TH2D*)bTagEff_file->Get("Reco_JETT_bjet_eff_num");
+		
+		double bTagEffMap_PtRange = DeepJET_BJetEff->GetXaxis()->GetXmax();
+	      	double bTagEffMap_Eta_high = DeepJET_BJetEff->GetYaxis()->GetXmax();
+     	 	double bTagEffMap_Eta_low  = DeepJET_BJetEff->GetYaxis()->GetXmin();
+
+      		double bTagEffMap_nPtBins = DeepJET_BJetEff->GetNbinsX();
+      		double bTagEffMap_nEtaBins = DeepJET_BJetEff->GetNbinsY();
+
+		int xbin = (int)(tmp4v.perp()*bTagEffMap_nPtBins/bTagEffMap_PtRange) + 1;
+                int ybin = (int)((tmp4v.eta()-bTagEffMap_Eta_low)*bTagEffMap_nEtaBins/(bTagEffMap_Eta_high-bTagEffMap_Eta_low)) +1;
+
+
+		//cout << "bTagEffMap_nPtBins/bTagEffMap_PtRange/bTagEffMap_Eta_low/bTagEffMap_nEtaBins/bTagEffMap_Eta_high:" <<bTagEffMap_nPtBins << "/"  <<bTagEffMap_PtRange << "/" <<bTagEffMap_Eta_low << "/" <<bTagEffMap_nEtaBins << "/" <<bTagEffMap_Eta_high <<endl;
+
+
+		//B-tagging is done using deepJET Tight WP
+		double BTagEffValue;
+		double deepJetSF, deepJetSF_upCorr, deepJetSF_downCorr, deepJetSF_upUncorr, deepJetSF_downUncorr;
+
+		double MC_tagged=1.0, MC_notTagged=1.0, data_tagged=1.0, data_notTagged=1.0; 
+		double data_tagged_upCorr=1.0, data_notTagged_upCorr=1.0, data_tagged_upUncorr=1.0, data_notTagged_upUncorr=1.0;
+		double data_tagged_downCorr=1.0, data_notTagged_downCorr=1.0, data_tagged_downUncorr=1.0, data_notTagged_downUncorr=1.0;
+
+		//SF & Efficiency input for W_entry (weight) & uncertainty for deepJET Tight Working Point
+		if(HadFlav==0){
+                        BTagEffValue = DeepJET_LJetEff->GetBinContent(xbin,ybin);
+                        deepJetSF = corrector_deepJet_lFlav->evaluate({"central", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_upCorr = corrector_deepJet_lFlav->evaluate({"up_correlated", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_downCorr = corrector_deepJet_lFlav->evaluate({"down_correlated", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_upUncorr = corrector_deepJet_lFlav->evaluate({"up_uncorrelated", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_downUncorr = corrector_deepJet_lFlav->evaluate({"down_uncorrelated", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+			if(deepJET > JETT){
+				MC_tagged *= BTagEffValue;
+                                data_tagged *= deepJetSF*BTagEffValue;
+                                data_tagged_upCorr *= deepJetSF_upCorr*BTagEffValue;
+                                data_tagged_downCorr *= deepJetSF_downCorr*BTagEffValue;
+                                data_tagged_upUncorr *= deepJetSF_upUncorr*BTagEffValue;
+                                data_tagged_downUncorr *= deepJetSF_downUncorr*BTagEffValue;	
+			}
+			else{
+				MC_notTagged *= (1 - BTagEffValue);
+                                data_notTagged *= (1 - deepJetSF*BTagEffValue);
+                                data_notTagged_upCorr *= (1 - deepJetSF_upCorr*BTagEffValue);
+                                data_notTagged_downCorr *= (1 - deepJetSF_downCorr*BTagEffValue);
+                                data_notTagged_upUncorr *= (1 - deepJetSF_upUncorr*BTagEffValue);
+                                data_notTagged_downUncorr *= (1 - deepJetSF_downUncorr*BTagEffValue);		
+			}
+		}
+		else if(HadFlav==4){
+                        BTagEffValue = DeepJET_CJetEff->GetBinContent(xbin,ybin);
+                        deepJetSF = corrector_deepJet_bcFlav->evaluate({"central", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_upCorr = corrector_deepJet_bcFlav->evaluate({"up_correlated", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_downCorr = corrector_deepJet_bcFlav->evaluate({"down_correlated", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_upUncorr = corrector_deepJet_bcFlav->evaluate({"up_uncorrelated", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_downUncorr = corrector_deepJet_bcFlav->evaluate({"down_uncorrelated", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        if(deepJET > JETT){
+                                MC_tagged *= BTagEffValue;
+                                data_tagged *= deepJetSF*BTagEffValue;
+                                data_tagged_upCorr *= deepJetSF_upCorr*BTagEffValue;
+                                data_tagged_downCorr *= deepJetSF_downCorr*BTagEffValue;
+                                data_tagged_upUncorr *= deepJetSF_upUncorr*BTagEffValue;
+                                data_tagged_downUncorr *= deepJetSF_downUncorr*BTagEffValue;
+                        }
+                        else{
+                                MC_notTagged *= (1 - BTagEffValue);
+                                data_notTagged *= (1 - deepJetSF*BTagEffValue);
+                                data_notTagged_upCorr *= (1 - deepJetSF_upCorr*BTagEffValue);
+                                data_notTagged_downCorr *= (1 - deepJetSF_downCorr*BTagEffValue);
+                                data_notTagged_upUncorr *= (1 - deepJetSF_upUncorr*BTagEffValue);
+                                data_notTagged_downUncorr *= (1 - deepJetSF_downUncorr*BTagEffValue);
+                        }
+                }
+		else if(HadFlav==5){
+			BTagEffValue = DeepJET_BJetEff->GetBinContent(xbin,ybin);
+			deepJetSF = corrector_deepJet_bcFlav->evaluate({"central", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+			deepJetSF_upCorr = corrector_deepJet_bcFlav->evaluate({"up_correlated", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+			deepJetSF_downCorr = corrector_deepJet_bcFlav->evaluate({"down_correlated", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+			deepJetSF_upUncorr = corrector_deepJet_bcFlav->evaluate({"up_uncorrelated", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJetSF_downUncorr = corrector_deepJet_bcFlav->evaluate({"down_uncorrelated", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+			if(deepJET > JETT){
+                                MC_tagged *= BTagEffValue;
+				data_tagged *= deepJetSF*BTagEffValue;
+                  		data_tagged_upCorr *= deepJetSF_upCorr*BTagEffValue;
+                  		data_tagged_downCorr *= deepJetSF_downCorr*BTagEffValue;
+				data_tagged_upUncorr *= deepJetSF_upUncorr*BTagEffValue;
+                                data_tagged_downUncorr *= deepJetSF_downUncorr*BTagEffValue;
+			}
+			else{
+				MC_notTagged *= (1 - BTagEffValue);
+                                data_notTagged *= (1 - deepJetSF*BTagEffValue);
+                                data_notTagged_upCorr *= (1 - deepJetSF_upCorr*BTagEffValue);
+                                data_notTagged_downCorr *= (1 - deepJetSF_downCorr*BTagEffValue);
+                                data_notTagged_upUncorr *= (1 - deepJetSF_upUncorr*BTagEffValue);
+                                data_notTagged_downUncorr *= (1 - deepJetSF_downUncorr*BTagEffValue);
+			}
+		}
+
 		/*
-		if(jetflav==5){
-			SF_deepCSV = corrector_deepCSV_bFlav->evaluate({"central", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
-			SF_deepJet = corrector_deepJet_bFlav->evaluate({"central", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
-			cout<<"Jet Flavour : "<<jetflav<<" DeepCSV : "<<SF_deepCSV<<" DeepJet : "<<SF_deepJet<<endl;
+		double epsilon = 1e-12;
+            	if((abs(MC_tagged)<epsilon )||(abs(MC_notTagged)<epsilon )||(abs(data_tagged)<epsilon )||(abs(data_notTagged)<epsilon )){
+                	cout << "BTagEffValue/deepJetSF/MC_tagged/MC_notTagged/data_tagged/data_notTagged: " <<BTagEffValue<< " / " << deepJetSF<< " / " << MC_tagged<< " / " << MC_notTagged << " / " <<data_tagged << " / " << data_notTagged <<endl;
 		}
 		*/
+
+		//BTag Event Weight & uncerainty calculation
+		if(MC_tagged*MC_notTagged !=0){
+                        BTagWt =  (data_tagged*data_notTagged) / (MC_tagged*MC_notTagged);
+                 
+		        //MC portion doesn't contain any scale factor portion, so there is no "up" or "down"
+			BTagWt_upCorr  =  (data_tagged_upCorr*data_notTagged_upCorr) / (MC_tagged*MC_notTagged);
+                        BTagWt_downCorr = (data_tagged_downCorr*data_notTagged_downCorr) / (MC_tagged*MC_notTagged);
+                        BTagWt_upUncorr  =  (data_tagged_upUncorr*data_notTagged_upUncorr) / (MC_tagged*MC_notTagged);
+                        BTagWt_downUncorr = (data_tagged_downUncorr*data_notTagged_downUncorr) / (MC_tagged*MC_notTagged);
+                }
+		
+		/*
+		cout<<"BTagWt : "<<BTagWt<<endl;
+                if ((BTagWt != BTagWt) || (std::isinf(BTagWt)) || (BTagWt < 1e-9)){
+                        cout << "data_tagged/data_notTagged/MC_tagged/MC_notTagged: " <<data_tagged << "/" <<data_notTagged << "/" << MC_notTagged<< "/" << MC_notTagged<<endl;
+                }
+		*/
+
+		//SF Vs. Jet PT for deepCSV & deepJET for 3 WPs - No efficency applied - only Reco-level (like jets)
+		double deepJETT_SF, deepJETM_SF, deepJETL_SF;
+		double deepCSVT_SF, deepCSVM_SF, deepCSVL_SF;
+		if(HadFlav==0){
+			deepJETT_SF = corrector_deepJet_lFlav->evaluate({"central", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETM_SF = corrector_deepJet_lFlav->evaluate({"central", "M", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETL_SF = corrector_deepJet_lFlav->evaluate({"central", "L", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+
+			deepCSVT_SF = corrector_deepCSV_lFlav->evaluate({"central", "T", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+			deepCSVM_SF = corrector_deepCSV_lFlav->evaluate({"central", "M", 0, std::abs(tmp4v.eta()), tmp4v.perp()});
+			deepCSVL_SF = corrector_deepCSV_lFlav->evaluate({"central", "L", 0, std::abs(tmp4v.eta()), tmp4v.perp()});			
+
+			LdeepJETT_SF->Fill(tmp4v.perp(),deepJETT_SF,weighttrg); 
+			LdeepJETM_SF->Fill(tmp4v.perp(),deepJETM_SF,weighttrg);
+			LdeepJETL_SF->Fill(tmp4v.perp(),deepJETL_SF,weighttrg);
+
+			LdeepCSVT_SF->Fill(tmp4v.perp(),deepCSVT_SF,weighttrg);
+			LdeepCSVM_SF->Fill(tmp4v.perp(),deepCSVM_SF,weighttrg);
+			LdeepCSVL_SF->Fill(tmp4v.perp(),deepCSVL_SF,weighttrg);
+		}
+		else if(HadFlav==4){
+			deepJETT_SF = corrector_deepJet_bcFlav->evaluate({"central", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETM_SF = corrector_deepJet_bcFlav->evaluate({"central", "M", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETL_SF = corrector_deepJet_bcFlav->evaluate({"central", "L", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+
+                        deepCSVT_SF = corrector_deepCSV_bcFlav->evaluate({"central", "T", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepCSVM_SF = corrector_deepCSV_bcFlav->evaluate({"central", "M", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepCSVL_SF = corrector_deepCSV_bcFlav->evaluate({"central", "L", 4, std::abs(tmp4v.eta()), tmp4v.perp()});
+	
+			CdeepJETT_SF->Fill(tmp4v.perp(),deepJETT_SF,weighttrg);
+			CdeepJETM_SF->Fill(tmp4v.perp(),deepJETM_SF,weighttrg);
+			CdeepJETL_SF->Fill(tmp4v.perp(),deepJETL_SF,weighttrg);
+
+			CdeepCSVT_SF->Fill(tmp4v.perp(),deepCSVT_SF,weighttrg);
+			CdeepCSVM_SF->Fill(tmp4v.perp(),deepCSVM_SF,weighttrg);
+			CdeepCSVL_SF->Fill(tmp4v.perp(),deepCSVL_SF,weighttrg);
+		}
+		else if(HadFlav==5){
+			deepJETT_SF = corrector_deepJet_bcFlav->evaluate({"central", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETM_SF = corrector_deepJet_bcFlav->evaluate({"central", "M", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepJETL_SF = corrector_deepJet_bcFlav->evaluate({"central", "L", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+
+                        deepCSVT_SF = corrector_deepCSV_bcFlav->evaluate({"central", "T", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepCSVM_SF = corrector_deepCSV_bcFlav->evaluate({"central", "M", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+                        deepCSVL_SF = corrector_deepCSV_bcFlav->evaluate({"central", "L", 5, std::abs(tmp4v.eta()), tmp4v.perp()});
+
+			BdeepJETT_SF->Fill(tmp4v.perp(),deepJETT_SF,weighttrg);
+			BdeepJETM_SF->Fill(tmp4v.perp(),deepJETM_SF,weighttrg);
+			BdeepJETL_SF->Fill(tmp4v.perp(),deepJETL_SF,weighttrg);
+
+			BdeepCSVT_SF->Fill(tmp4v.perp(),deepCSVT_SF,weighttrg);
+			BdeepCSVM_SF->Fill(tmp4v.perp(),deepCSVM_SF,weighttrg);
+			BdeepCSVL_SF->Fill(tmp4v.perp(),deepCSVL_SF,weighttrg);
+		}
+#endif	
 //---------------------------------------------------------------------------
 	
 		if(isrc==0){
-			/*
-                	if(deepCSV_b >= WP_Loose) {
-				if ((isInEtaRange[iet])) {h_bjet_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-				if (isPt && iet==0) {h_bjet_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-	                        if (isEta && isPt) {h_bjet_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
+                        if(deepJET > JETT) {
+				if ((isInEtaRange[iet])) {
+					h_bjet_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+					h_bjet_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+				}
+                                if (isPt && iet==0) {
+					h_bjet_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+					h_bjet_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+				}
+                                if (isEta && isPt) {
+					h_bjet_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+					h_bjet_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+				}
                         }else{
-				if ((isInEtaRange[iet])) {h_nonbjet_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                if (isPt && iet==0) {h_nonbjet_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {h_nonbjet_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
-                       		}
-
-                        if(deepCSV_b >= WP_Medium) {
-				if ((isInEtaRange[iet])) {h_bjet_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                if (isPt && iet==0) {h_bjet_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {h_bjet_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else{
-				if ((isInEtaRange[iet])) {h_nonbjet_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                if (isPt && iet==0) {h_nonbjet_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {h_nonbjet_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-                                }
-			*/
-                        if(deepCSV_b >= CSVT) {
-				if ((isInEtaRange[iet])) {h_bjet_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                if (isPt && iet==0) {h_bjet_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {h_bjet_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else{
-				if ((isInEtaRange[iet])) {h_nonbjet_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                if (isPt && iet==0) {h_nonbjet_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {h_nonbjet_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
-                       		}
+				if ((isInEtaRange[iet])) {
+					h_nonbjet_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+					h_nonbjet_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+				}
+                                if (isPt && iet==0) {
+					h_nonbjet_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+					h_nonbjet_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+				}
+                                if (isEta && isPt) {
+					h_nonbjet_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+					h_nonbjet_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+				}
+                       	}
 
 			if(ijet==0){
-				/*
-				if(deepCSV_b >= WP_Loose) {
-					if ((isInEtaRange[iet])) {h_bjet1_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-	                                if (isPt && iet==0) {h_bjet1_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-        	                        if (isEta && isPt) {h_bjet1_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
+				if(deepJET > JETT) {
+					if ((isInEtaRange[iet])) {
+						h_bjet1_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+						h_bjet1_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+					}
+	                                if (isPt && iet==0) {
+						h_bjet1_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+						h_bjet1_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+					}
+        	                        if (isEta && isPt) {
+						h_bjet1_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+						h_bjet1_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+					}
 				}
 				else{
-					if ((isInEtaRange[iet])) {h_nonbjet1_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                	if (isPt && iet==0) {h_nonbjet1_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-                                	if (isEta && isPt) {h_nonbjet1_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
-				}	
-	
-				if(deepCSV_b >= WP_Medium) {
-					if ((isInEtaRange[iet])) {h_bjet1_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-	                                if (isPt && iet==0) {h_bjet1_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-        	                        if (isEta && isPt) {h_bjet1_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-				}	
-				else{
-					if ((isInEtaRange[iet])) {h_nonbjet1_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                	if (isPt && iet==0) {h_nonbjet1_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-                                	if (isEta && isPt) {h_nonbjet1_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-				}
-				*/
-				if(deepCSV_b >= CSVT) {
-					if ((isInEtaRange[iet])) {h_bjet1_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-	                                if (isPt && iet==0) {h_bjet1_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-        	                        if (isEta && isPt) {h_bjet1_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
-				}
-				else{
-					if ((isInEtaRange[iet])) {h_nonbjet1_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                	if (isPt && iet==0) {h_nonbjet1_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-                                	if (isEta && isPt) {h_nonbjet1_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
+					if ((isInEtaRange[iet])) {
+						h_nonbjet1_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+						h_nonbjet1_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+					}
+                                	if (isPt && iet==0) {
+						h_nonbjet1_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+						h_nonbjet1_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+					}
+                                	if (isEta && isPt) {
+						h_nonbjet1_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+						h_nonbjet1_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+					}
 				}
 			}//if(ijet==0){
 			
 			if(ijet==1){
-				/*
-				if(deepCSV_b >= WP_Loose) {
-                                        if ((isInEtaRange[iet])) {h_bjet2_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_bjet2_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_bjet2_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
+                                if(deepJET > JETT) {
+                                        if ((isInEtaRange[iet])) {
+						h_bjet2_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+						h_bjet2_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+					}
+                                        if (isPt && iet==0) {
+						h_bjet2_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+						h_bjet2_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+					}
+                                        if (isEta && isPt) {
+						h_bjet2_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+						h_bjet2_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+					}
                                 }
                                 else{
-                                        if ((isInEtaRange[iet])) {h_nonbjet2_WPL_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_nonbjet2_WPL_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_nonbjet2_WPL_phi->Fill(tmp4v.phi(), weighttrg);}
-                                }
-
-                                if(deepCSV_b >= WP_Medium) {
-                                        if ((isInEtaRange[iet])) {h_bjet2_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_bjet2_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_bjet2_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-                                }
-                                else{
-                                        if ((isInEtaRange[iet])) {h_nonbjet2_WPM_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_nonbjet2_WPM_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_nonbjet2_WPM_phi->Fill(tmp4v.phi(), weighttrg);}
-                                }
-				*/
-                                if(deepCSV_b >= CSVT) {
-                                        if ((isInEtaRange[iet])) {h_bjet2_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_bjet2_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_bjet2_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
-                                }
-                                else{
-                                        if ((isInEtaRange[iet])) {h_nonbjet2_WPT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);}
-                                        if (isPt && iet==0) {h_nonbjet2_WPT_eta->Fill(tmp4v.eta(), weighttrg);}
-                                        if (isEta && isPt) {h_nonbjet2_WPT_phi->Fill(tmp4v.phi(), weighttrg);}
+                                        if ((isInEtaRange[iet])) {
+						h_nonbjet2_deepJETT_pt_NoSF[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg);
+						h_nonbjet2_deepJETT_pt[iet]->Fill((*ak4PFJets)[ireorjt].pt(), weighttrg*BTagWt);
+					}
+                                        if (isPt && iet==0) {
+						h_nonbjet2_deepJETT_eta_NoSF->Fill(tmp4v.eta(), weighttrg);
+						h_nonbjet2_deepJETT_eta->Fill(tmp4v.eta(), weighttrg*BTagWt);
+					}
+                                        if (isEta && isPt) {
+						h_nonbjet2_deepJETT_phi_NoSF->Fill(tmp4v.phi(), weighttrg);
+						h_nonbjet2_deepJETT_phi->Fill(tmp4v.phi(), weighttrg*BTagWt);
+					}
                                 }
 			}//if(ijet==1){
 		}//if (isrc==0) {
 //--------------------------------------------------------------------------
-//b-Jet Stuff
-#ifdef FLAV
+//BJet Stuff
 			if(isrc==0){
 				if(isEta && isPt){
+					//Fraction
+					Reco_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+					Reco_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+			
+					if(deepCSV > CSVT){
+						Reco_CSVT_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+					        Reco_CSVT_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+                                        if(deepCSV > CSVM){
+						Reco_CSVM_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+					if(deepCSV > CSVL){
+						Reco_CSVL_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+
+					if(deepJET > JETT){
+						Reco_JETT_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+                                        if(deepJET > JETM){
+						Reco_JETM_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+                                        if(deepJET > JETL){
+						Reco_JETL_bjet_fra_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_bjet_fra->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+					}
+
+#ifdef FLAV
+					//DeepCSV Tight Working Point
 					//Efficiency
-					if(abs(jetflav) == 5){
-						Reco_CSVT_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta());
-						if(deepCSV_b >= CSVT){
-							Reco_CSVT_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta());
+					if(HadFlav == 5){
+						Reco_CSVT_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+						if(deepCSV > CSVT){
+							Reco_CSVT_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
 						}
 					}
+					if(HadFlav == 4){
+                                                Reco_CSVT_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVT){
+                                                        Reco_CSVT_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_CSVT_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVT){
+                                                        Reco_CSVT_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
 					//MisTag
-					if(abs(jetflav) == 4 || abs(jetflav) == 1 || abs(jetflav) == 2 ||abs(jetflav) == 3 || jetflav == 21){
-						Reco_CSVT_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta());
-						if(deepCSV_b >= CSVT){
-							Reco_CSVT_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta());
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_CSVT_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVT){
+                                                        Reco_CSVT_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+						Reco_CSVT_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+						if(deepCSV > CSVT){
+							Reco_CSVT_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
 						}
 					}
+					if(HadFlav == 0){
+                                                Reco_CSVT_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVT){
+                                                        Reco_CSVT_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
 					//Purity
-					if(deepCSV_b >= CSVT){
-						Reco_CSVT_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta());
-						if(abs(jetflav) == 5){
-							Reco_CSVT_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta());
+					if(deepCSV > CSVT){
+						Reco_CSVT_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+						if(HadFlav == 5){
+							Reco_CSVT_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
 						}
 					}
 					//Contamination
-					if(deepCSV_b >= CSVT){
-                                                Reco_CSVT_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta());
-                                                if(abs(jetflav) == 4 || abs(jetflav) == 1 || abs(jetflav) == 2 ||abs(jetflav) == 3 || jetflav == 21){
-                                                        Reco_CSVT_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta());
+					if(deepCSV > CSVT){
+                                                Reco_CSVT_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVT_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_CSVT_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVT_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
                                                 }
                                         }
+
+					//DeepCSV Medium Working Point
+					if(HadFlav == 5){
+                                                Reco_CSVM_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_CSVM_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_CSVM_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//MisTag
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_CSVM_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_CSVM_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_CSVM_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVM){
+                                                        Reco_CSVM_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Purity
+					if(deepCSV > CSVM){
+                                                Reco_CSVM_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 5){
+                                                        Reco_CSVM_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Contamination
+					 if(deepCSV > CSVM){
+                                                Reco_CSVM_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVM_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_CSVM_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVM_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+
+					//DeepCSV Loose Working Point
+					if(HadFlav == 5){
+                                                Reco_CSVL_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 4){
+                                                Reco_CSVL_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 0){
+                                                Reco_CSVL_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//MisTag
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_CSVL_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_CSVL_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_CSVL_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepCSV > CSVL){
+                                                        Reco_CSVL_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Purity
+					if(deepCSV > CSVL){
+                                                Reco_CSVL_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 5){
+                                                        Reco_CSVL_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Contamination
+					 if(deepCSV > CSVL){
+                                                Reco_CSVL_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_CSVL_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_CSVL_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_CSVL_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+
+					//DeepJET Tight Working Point
+					if(HadFlav == 5){
+                                                Reco_JETT_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 4){
+                                                Reco_JETT_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 0){
+                                                Reco_JETT_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//MisTag
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_JETT_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_JETT_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_JETT_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETT){
+                                                        Reco_JETT_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Purity
+					if(deepJET > JETT){
+                                                Reco_JETT_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 5){
+                                                        Reco_JETT_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Contamination
+					if(deepJET > JETT){
+                                                Reco_JETT_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETT_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_JETT_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETT_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					
+					//DeepJET Medium Working Point
+					if(HadFlav == 5){
+                                                Reco_JETM_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 4){
+                                                Reco_JETM_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 0){
+                                                Reco_JETM_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//MisTag
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_JETM_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_JETM_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_JETM_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETM){
+                                                        Reco_JETM_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Purity
+					if(deepJET > JETM){
+                                                Reco_JETM_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 5){
+                                                        Reco_JETM_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Contamination
+					if(deepJET > JETM){
+                                                Reco_JETM_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETM_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_JETM_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETM_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+
+					//DeepJET Light Working Point
+					if(HadFlav == 5){
+                                                Reco_JETL_bjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_bjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_bjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_bjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 4){
+                                                Reco_JETL_cjet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_cjet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_cjet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_cjet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+                                        if(HadFlav == 0){
+                                                Reco_JETL_ljet_eff_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_ljet_eff_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_ljet_eff_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_ljet_eff_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//MisTag
+					if(HadFlav == 4 || HadFlav == 0){
+                                                Reco_JETL_bjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_bjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_bjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_bjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 4){
+                                                Reco_JETL_cjet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_cjet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_cjet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_cjet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					if(HadFlav == 0){
+                                                Reco_JETL_ljet_miss_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_ljet_miss_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(deepJET > JETL){
+                                                        Reco_JETL_ljet_miss_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_ljet_miss_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Purity
+					if(deepJET >= JETL){
+                                                Reco_JETL_bjet_pur_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_bjet_pur_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 5){
+                                                        Reco_JETL_bjet_pur_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_bjet_pur_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+					//Contamination
+					if(deepJET > JETL){
+                                                Reco_JETL_bjet_con_den_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+						Reco_JETL_bjet_con_den->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                if(HadFlav == 4 || HadFlav == 0){
+                                                        Reco_JETL_bjet_con_num_NoSF->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg);
+							Reco_JETL_bjet_con_num->Fill(tmp4v.perp(),tmp4v.eta(),weighttrg*BTagWt);
+                                                }
+                                        }
+#endif
+
 				}
 			}	
-#endif		
+//#endif		
 //--------------------------------------------------------------------------
 		  if (isrc==0) {
 
@@ -6128,31 +7965,31 @@ match_jet = false;
 		    if (isEta && ncount==1) {recoht2_pt[iet]->Fill(0.5*(tmpjt4v[0].perp()+tmpjt4v[1].perp()),weighttrg);}
 
 #ifdef FLAV		
-			if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+			if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
 				if (isInEtaRange[iet]) {recojtg_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 	                        if (isPt && iet==0) {recojtg_eta->Fill(tmp4v.eta(), weighttrg);}
         	                if (isEta && isPt) {recojtg_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==2){//u-jet
+			}else if(ParFlav==2){//u-jet
 				if (isInEtaRange[iet]) {recojtu_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 	                        if (isPt && iet==0) {recojtu_eta->Fill(tmp4v.eta(), weighttrg);}
         	                if (isEta && isPt) {recojtu_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-2){//ubar-jet
+			}else if(ParFlav==-2){//ubar-jet
                                 if (isInEtaRange[iet]) {recojtubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojtubar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojtubar_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==1){//d-jet
+			}else if(ParFlav==1){//d-jet
 				if (isInEtaRange[iet]) {recojtd_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
 	                        if (isPt && iet==0) {recojtd_eta->Fill(tmp4v.eta(), weighttrg);}
         	                if (isEta && isPt) {recojtd_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-1){//dbar-jet
+			}else if(ParFlav==-1){//dbar-jet
                                 if (isInEtaRange[iet]) {recojtdbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojtdbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojtdbar_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==5){//b-jet
+			}else if(ParFlav==5){//b-jet
 				if (isInEtaRange[iet]) {recojtb_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojtb_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojtb_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-5){//bbar-jet
+			}else if(ParFlav==-5){//bbar-jet
                                 if (isInEtaRange[iet]) {recojtbbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojtbbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojtbbar_phi->Fill(tmp4v.phi(), weighttrg);}
@@ -6161,26 +7998,6 @@ match_jet = false;
                                 if (isPt && iet==0) {recojto_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojto_phi->Fill(tmp4v.phi(), weighttrg);}
 			}
-			/*
-			//Second-Set Flavor Tagging
-			if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-				if (isInEtaRange[iet]) {recojt_qjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt_qjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt_qjet_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                if (isInEtaRange[iet]) {recojt_aqjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt_aqjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt_aqjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(abs(jetflav==21 || jetflav==9)){
-				if (isInEtaRange[iet]) {recojt_aqgjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt_aqgjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt_aqgjet_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else{
-				if (isInEtaRange[iet]) {recojt_aqojet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt_aqojet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt_aqojet_phi->Fill(tmp4v.phi(), weighttrg);}
-			}
-			*/
 #endif
 		  }//if (isrc==0) {
 		
@@ -6190,33 +8007,33 @@ match_jet = false;
 		    if (isPt && iet==0) {recojt1_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isEta && isPt) {recojt1_phi->Fill(tmp4v.phi(), weighttrg);}
 	
-			if(deepCSV_b >= CSVT && isInEtaRange[iet]){recobjet1_pt_WPT = tmp4v.perp();};
+			if(deepJET > JETT && isInEtaRange[iet]){recobjet1_pt_deepJETT = tmp4v.perp();};
 #ifdef FLAV
-		    	if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+		    	if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
 		  	  	if (isInEtaRange[iet]) {recojt1g_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1g_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1g_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==2){//u-jet
+                        }else if(ParFlav==2){//u-jet
 				if (isInEtaRange[iet]) {recojt1u_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1u_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1u_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-2){//ubar-jet
+			}else if(ParFlav==-2){//ubar-jet
                                 if (isInEtaRange[iet]) {recojt1ubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1ubar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1ubar_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==1){//d-jet
+                        }else if(ParFlav==1){//d-jet
 				if (isInEtaRange[iet]) {recojt1d_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1d_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1d_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-1){//dbar-jet
+			}else if(ParFlav==-1){//dbar-jet
                                 if (isInEtaRange[iet]) {recojt1dbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1dbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1dbar_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==5){//b-jet
+			}else if(ParFlav==5){//b-jet
                                 if (isInEtaRange[iet]) {recojt1b_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1b_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1b_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-5){//bbar-jet
+			}else if(ParFlav==-5){//bbar-jet
                                 if (isInEtaRange[iet]) {recojt1bbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt1bbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1bbar_phi->Fill(tmp4v.phi(), weighttrg);}
@@ -6225,32 +8042,13 @@ match_jet = false;
                                 if (isPt && iet==0) {recojt1o_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt1o_phi->Fill(tmp4v.phi(), weighttrg);}
                         }
-			/*	
-			if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                if (isInEtaRange[iet]) {recojt1_qjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt1_qjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt1_qjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                if (isInEtaRange[iet]) {recojt1_aqjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt1_aqjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt1_aqjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(abs(jetflav==21 || jetflav==9)){
-                                if (isInEtaRange[iet]) {recojt1_aqgjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt1_aqgjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt1_aqgjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else{
-                                if (isInEtaRange[iet]) {recojt1_aqojet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt1_aqojet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt1_aqojet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }
-			*/
 #endif				
 		  } else if(ijet==1){
 		    if (isInEtaRange[iet]) {recojt2_pt[iet]->Fill(tmp4v.perp(), weighttrg); recojet2_pt = tmp4v.perp();}
 		    if (isPt && iet==0) {recojt2_eta->Fill(tmp4v.eta(), weighttrg);}
 		    if (isInEtaRange[iet] && isPt) {recojt2_phi->Fill(tmp4v.phi(), weighttrg);}
 
-			if(deepCSV_b >= CSVT && isInEtaRange[iet]){recobjet2_pt_WPT = tmp4v.perp();};
+			if(deepJET > JETT && isInEtaRange[iet]){recobjet2_pt_deepJETT = tmp4v.perp();};
 
 		    if (isInEtaRange[iet] && ncount==2) { 
 		      if (irecoht>=0 && irecoht<nHLTmx) { 
@@ -6266,31 +8064,31 @@ match_jet = false;
                       recojtallave_pt[iet]->Fill(0.5*(tmpjt4v[0].perp()+tmpjt4v[1].perp()), weighttrg);
 		    }
 #ifdef FLAV
-			if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+			if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
                                 if (isInEtaRange[iet]) {recojt2g_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2g_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2g_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==2){//u-jet
+                        }else if(ParFlav==2){//u-jet
                         	if (isInEtaRange[iet]) {recojt2u_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2u_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2u_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==-2){//ubar-jet
+                        }else if(ParFlav==-2){//ubar-jet
                                 if (isInEtaRange[iet]) {recojt2ubar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2ubar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2ubar_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==1){//d-jet
+			}else if(ParFlav==1){//d-jet
                         	if (isInEtaRange[iet]) {recojt2d_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2d_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2d_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-1){//dbar-jet
+			}else if(ParFlav==-1){//dbar-jet
                                 if (isInEtaRange[iet]) {recojt2dbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2dbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2dbar_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==5){//b-jet
+			}else if(ParFlav==5){//b-jet
                                 if (isInEtaRange[iet]) {recojt2b_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2b_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2b_phi->Fill(tmp4v.phi(), weighttrg);}
-			}else if(jetflav==-5){//bbar-jet
+			}else if(ParFlav==-5){//bbar-jet
                                 if (isInEtaRange[iet]) {recojt2bbar_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
                                 if (isPt && iet==0) {recojt2bbar_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2bbar_phi->Fill(tmp4v.phi(), weighttrg);}
@@ -6299,25 +8097,6 @@ match_jet = false;
                                 if (isPt && iet==0) {recojt2o_eta->Fill(tmp4v.eta(), weighttrg);}
                                 if (isEta && isPt) {recojt2o_phi->Fill(tmp4v.phi(), weighttrg);}
                         }
-		    	/*
-			if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                if (isInEtaRange[iet]) {recojt2_qjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt2_qjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt2_qjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                if (isInEtaRange[iet]) {recojt2_aqjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt2_aqjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt2_aqjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else if(abs(jetflav==21 || jetflav==9)){
-                                if (isInEtaRange[iet]) {recojt2_aqgjet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt2_aqgjet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt2_aqgjet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }else{
-                                if (isInEtaRange[iet]) {recojt2_aqojet_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
-                                if (isPt && iet==0) {recojt2_aqojet_eta->Fill(tmp4v.eta(), weighttrg);}
-                                if (isEta && isPt) {recojt2_aqojet_phi->Fill(tmp4v.phi(), weighttrg);}
-                        }
-			*/
 #endif
 		  } else if(ijet==2) {
 		    if (isInEtaRange[iet]) {recojt3_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
@@ -6339,7 +8118,7 @@ match_jet = false;
 		  } //if (isrc==0) {
 		
 		//int nchg=0;
-		nchg = 0, nchg1 = 0, nchg2 = 0, /*nchg1_bjet =0, nchg2_bjet =0,*/ nchg1_bjet_WPT =0, nchg2_bjet_WPT =0;
+		nchg = 0, nchg1 = 0, nchg2 = 0, /*nchg1_bjet =0, nchg2_bjet =0,*/ nchg1_bjet_deepJETT =0, nchg2_bjet_deepJETT =0;
 #ifdef FLAV
 		nchg1_bjet =0, nchg2_bjet =0;
 #endif
@@ -6383,17 +8162,22 @@ match_jet = false;
 			if(i2==1){recoCandX2_J1 = cand4v.perp();}
 			if(i2==2){recoCandX3_J1 = cand4v.perp();}
 
-			if(deepCSV_b >= CSVT){
-				nchg1_bjet_WPT++;
-                                hchpt1_bjet_WPT->Fill(tmp4v.perp(), nchg1, weighttrg);
-                                hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J1->Fill(cand4v.perp(), nchg1, weighttrg);
+			//BJet Tagging Info used
+			if(deepJET > JETT){
+				nchg1_bjet_deepJETT++;
+                                hchpt1_bjet_deepJETT->Fill(tmp4v.perp(), nchg1, weighttrg*BTagWt);
+                                hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1->Fill(cand4v.perp(), nchg1, weighttrg*BTagWt);
+
+				hchpt1_bjet_deepJETT_NoSF->Fill(tmp4v.perp(), nchg1, weighttrg);
+                                hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J1_NoSF->Fill(cand4v.perp(), nchg1, weighttrg);
 
 				if(i2==0){
-					recoCandX1_bjet_WPT_J1 = cand4v.perp();
-                                	recobjetchg1_WPT_cand1->Fill(cand4v.perp(),weighttrg);
+					recoCandX1_bjet_deepJETT_J1 = cand4v.perp();
+                                	recobjetchg1_deepJETT_cand1_NoSF->Fill(cand4v.perp(),weighttrg);
+					recobjetchg1_deepJETT_cand1->Fill(cand4v.perp(),weighttrg*BTagWt);
 				}	
-				if(i2==1){recoCandX2_bjet_WPT_J1 = cand4v.perp();}
-				if(i2==2){recoCandX3_bjet_WPT_J1 = cand4v.perp();}
+				if(i2==1){recoCandX2_bjet_deepJETT_J1 = cand4v.perp();}
+				if(i2==2){recoCandX3_bjet_deepJETT_J1 = cand4v.perp();}
 			}
 			
                         recochg1_phi->Fill(cand4v.phi(), weighttrg);
@@ -6404,14 +8188,14 @@ match_jet = false;
 			hchpt1->Fill(tmp4v.perp(), nchg1, weighttrg);
 			hprof_Reco_ntrack_vs_PTtrack_J1->Fill(cand4v.perp(), nchg1, weighttrg);
 #ifdef FLAV
-			if(abs(jetflav==21 || jetflav==9)){hchpt1_gjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==2){hchpt1_ujet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==-2){hchpt1_ubarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==1){hchpt1_djet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==-1){hchpt1_dbarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==5){hchpt1_bjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==-5){hchpt1_bbarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
-			if(jetflav==5 || jetflav==-5){
+			if(abs(ParFlav==21 || ParFlav==9)){hchpt1_gjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==2){hchpt1_ujet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==-2){hchpt1_ubarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==1){hchpt1_djet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==-1){hchpt1_dbarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==5){hchpt1_bjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==-5){hchpt1_bbarjet->Fill(tmp4v.perp(), nchg1, weighttrg);}
+			if(ParFlav==5 || ParFlav==-5){
 				nchg1_bjet++;
                                 hchpt1_bjet->Fill(tmp4v.perp(), nchg1, weighttrg);
                                 hprof_Reco_ntrack_vs_PTtrack_bjet_J1->Fill(cand4v.perp(), nchg1, weighttrg);
@@ -6433,17 +8217,21 @@ match_jet = false;
 			if(i2==1){recoCandX2_J2 = cand4v.perp();}
                         if(i2==2){recoCandX3_J2 = cand4v.perp();}
 
-			if(deepCSV_b >= CSVT){
-				nchg2_bjet_WPT++;
-                                hchpt2_bjet_WPT->Fill(tmp4v.perp(), nchg2, weighttrg);
-                                hprof_Reco_ntrack_vs_PTtrack_bjet_WPT_J2->Fill(cand4v.perp(), nchg2, weighttrg);
+			if(deepJET > JETT){
+				nchg2_bjet_deepJETT++;
+                                hchpt2_bjet_deepJETT->Fill(tmp4v.perp(), nchg2, weighttrg*BTagWt);
+                                hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2->Fill(cand4v.perp(), nchg2, weighttrg*BTagWt);
+
+				hchpt2_bjet_deepJETT_NoSF->Fill(tmp4v.perp(), nchg2, weighttrg);
+                                hprof_Reco_ntrack_vs_PTtrack_bjet_deepJETT_J2_NoSF->Fill(cand4v.perp(), nchg2, weighttrg);
 		
 				if(i2==0){
-					recoCandX1_bjet_WPT_J2 = cand4v.perp();
-                                	recobjetchg2_WPT_cand1->Fill(cand4v.perp(),weighttrg);
+					recoCandX1_bjet_deepJETT_J2 = cand4v.perp();
+                                	recobjetchg2_deepJETT_cand1_NoSF->Fill(cand4v.perp(),weighttrg);
+					recobjetchg2_deepJETT_cand1->Fill(cand4v.perp(),weighttrg*BTagWt);
 				}
-				if(i2==1){recoCandX2_bjet_WPT_J2 = cand4v.perp();}
-                                if(i2==2){recoCandX3_bjet_WPT_J2 = cand4v.perp();}		
+				if(i2==1){recoCandX2_bjet_deepJETT_J2 = cand4v.perp();}
+                                if(i2==2){recoCandX3_bjet_deepJETT_J2 = cand4v.perp();}		
 			}
 			
                         recochg2_phi->Fill(cand4v.phi(), weighttrg);
@@ -6454,14 +8242,14 @@ match_jet = false;
 			hchpt2->Fill(tmp4v.perp(), nchg2, weighttrg);
 			hprof_Reco_ntrack_vs_PTtrack_J2->Fill(cand4v.perp(), nchg2, weighttrg);	
 #ifdef FLAV
-			if(abs(jetflav==21 || jetflav==9)){hchpt2_gjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-                        if(jetflav==2){hchpt2_ujet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-                        if(jetflav==-2){hchpt2_ubarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-                        if(jetflav==1){hchpt2_djet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-                        if(jetflav==-1){hchpt2_dbarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-			if(jetflav==5){hchpt2_bjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-                        if(jetflav==-5){hchpt2_bbarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
-			if(jetflav==5 || jetflav==-5){
+			if(abs(ParFlav==21 || ParFlav==9)){hchpt2_gjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(ParFlav==2){hchpt2_ujet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(ParFlav==-2){hchpt2_ubarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(ParFlav==1){hchpt2_djet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(ParFlav==-1){hchpt2_dbarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+			if(ParFlav==5){hchpt2_bjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+                        if(ParFlav==-5){hchpt2_bbarjet->Fill(tmp4v.perp(), nchg2, weighttrg);}
+			if(ParFlav==5 || ParFlav==-5){
 				nchg2_bjet++;
                                 hchpt2_bjet->Fill(tmp4v.perp(), nchg2, weighttrg);
                                 hprof_Reco_ntrack_vs_PTtrack_bjet_J2->Fill(cand4v.perp(), nchg2, weighttrg);
@@ -6512,19 +8300,19 @@ if(ijet==0){
                       		ijet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 				
 				//b-jet Tight Working point
-				if(deepCSV_b >= CSVT) {
-                                        ijet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+				if(deepJET > JETT) {
+                                        ijet1candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                        ijet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                        ijet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
 #ifdef FLAV
 				//Flavor Tagging
-				if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+				if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
                                         ijet1candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -6533,7 +8321,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==2){//u-jet
+                                }else if(ParFlav==2){//u-jet
                                         ijet1candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -6542,7 +8330,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==-2){//ubar-jet
+				}else if(ParFlav==-2){//ubar-jet
                                         ijet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -6551,7 +8339,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==1){//d-jet
+                                }else if(ParFlav==1){//d-jet
                                         ijet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -6560,7 +8348,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==-1){//dbar-jet
+				}else if(ParFlav==-1){//dbar-jet
                                         ijet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -6569,7 +8357,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==5){//b-jet
+				}else if(ParFlav==5){//b-jet
                                         ijet1candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -6578,7 +8366,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==-5){//bbar-jet
+				}else if(ParFlav==-5){//bbar-jet
                                         ijet1candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -6597,46 +8385,6 @@ if(ijet==0){
                                         ijet1_tran_num_ojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
-				/*
-				//Second-Set Flavor Tagging
-				if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                        ijet1candsmom_num_qjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_qjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_qjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_qjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_qjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_qjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                        ijet1candsmom_num_aqjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(abs(jetflav==21 || jetflav==9)){
-                                        ijet1candsmom_num_aqgjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqgjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqgjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqgjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqgjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqgjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else{
-                                        ijet1candsmom_num_aqojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqojet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqojet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqojet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }
-				*/
 #endif
 
 #ifdef TRACKEFF
@@ -6664,7 +8412,37 @@ if(ijet==0){
 
                                 	ijet1_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 	ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+				}
+			}
+			
+			//BJet
+			if(deepJET > JETT) {
+				if(cand3v.perp()<20.0){
+                                	if (gRandom->Uniform() < 0.977){
+						ijet1candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                ijet1_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                ijet1_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+
 					}
+				}
+				else{
+					if (gRandom->Uniform() < 0.99){
+						ijet1candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                ijet1_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                ijet1_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+
+					}
+				}
 			}
 #endif
 
@@ -6677,6 +8455,18 @@ if(ijet==0){
 
                                 ijet1_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
                                 ijet1_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet1candsmom_bjet_deepJETT_num_trackpt1[ik][isrc] += charge*(pow((cand3v*1.015).perp(), kappa[ik]));
+                                	ijet1candsmom_bjet_deepJETT_den_trackpt1[ik][isrc] += ((cand3v*1.015).perp());
+
+                                	ijet1_bjet_deepJETT_long_num_trackpt1[ik][isrc] += (charge*(dotProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_long_den_trackpt1[ik][isrc] += (dotProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+                                	ijet1_bjet_deepJETT_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+				}
 #endif
 
 #ifdef TRACKPTDOWN
@@ -6688,6 +8478,18 @@ if(ijet==0){
 
                                 ijet1_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
                                 ijet1_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet1candsmom_bjet_deepJETT_num_trackpt2[ik][isrc] += charge*(pow((cand3v*0.985).perp(), kappa[ik]));
+                                	ijet1candsmom_bjet_deepJETT_den_trackpt2[ik][isrc] += ((cand3v*0.985).perp());
+
+                                	ijet1_bjet_deepJETT_long_num_trackpt2[ik][isrc] += (charge*(dotProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_long_den_trackpt2[ik][isrc] += (dotProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+                                	ijet1_bjet_deepJETT_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+				}
 #endif
 				}
 			}
@@ -6710,19 +8512,19 @@ if(ijet==0){
                                 ijet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 				//b-jet Tight Working point
-				if(deepCSV_b >= CSVT) {
-                                        ijet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+				if(deepJET > JETT) {
+                                        ijet1candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                        ijet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                        ijet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
 #ifdef FLAV
 				//Flavor Tagging
-				if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+				if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
                                         ijet1candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -6731,7 +8533,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==2){//u-jet
+                                }else if(ParFlav==2){//u-jet
                                         ijet1candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -6740,7 +8542,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==-2){//ubar-jet
+				}else if(ParFlav==-2){//ubar-jet
                                         ijet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -6749,7 +8551,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==1){//d-jet
+                                }else if(ParFlav==1){//d-jet
                                         ijet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -6758,7 +8560,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==-1){//dbar-jet
+				}else if(ParFlav==-1){//dbar-jet
                                         ijet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -6767,7 +8569,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				}else if(jetflav==5){//b-jet
+				}else if(ParFlav==5){//b-jet
                                         ijet1candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -6776,7 +8578,7 @@ if(ijet==0){
 
                                         ijet1_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==-5){//bbar-jet
+                                }else if(ParFlav==-5){//bbar-jet
                                         ijet1candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                         ijet1candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -6795,46 +8597,6 @@ if(ijet==0){
                                         ijet1_tran_num_ojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                         ijet1_tran_den_ojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
-				/*
-				//Second-set Flavor Tagging
-				if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                        ijet1candsmom_num_qjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_qjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_qjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_qjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_qjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_qjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                        ijet1candsmom_num_aqjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(abs(jetflav==21 || jetflav==9)){
-                                        ijet1candsmom_num_aqgjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqgjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqgjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqgjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqgjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqgjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else{
-                                        ijet1candsmom_num_aqojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_aqojet[ik][isrc] += (cand3v.perp());
-
-                                        ijet1_long_num_aqojet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_aqojet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet1_tran_num_aqojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_aqojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }
-				*/
 #endif
 
 #ifdef TRACKEFF
@@ -6863,6 +8625,34 @@ if(ijet==0){
                                         ijet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
+
+			//BJet
+			if(deepJET > JETT) {
+				if(cand3v.perp()<20.0){
+                                	if (gRandom->Uniform() < 0.977){
+						ijet1candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        	ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                        	ijet1_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet1_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}
+				else{
+					if (gRandom->Uniform() < 0.99){
+						ijet1candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                         	               	ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                	        ijet1_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet1_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}	
+			}
 #endif
 
 #ifdef TRACKPTUP
@@ -6874,6 +8664,18 @@ if(ijet==0){
 
                                 ijet1_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
                                 ijet1_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet1candsmom_bjet_deepJETT_num_trackpt1[ik][isrc] += charge*(pow((cand3v*1.015).perp(), kappa[ik]));
+                                	ijet1candsmom_bjet_deepJETT_den_trackpt1[ik][isrc] += ((cand3v*1.015).perp());
+
+                                	ijet1_bjet_deepJETT_long_num_trackpt1[ik][isrc] += (charge*(dotProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_long_den_trackpt1[ik][isrc] += (dotProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+                                	ijet1_bjet_deepJETT_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+				}
 #endif
 
 #ifdef TRACKPTDOWN
@@ -6885,6 +8687,18 @@ if(ijet==0){
 
                                 ijet1_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
                                 ijet1_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet1candsmom_bjet_deepJETT_num_trackpt2[ik][isrc] += charge*(pow((cand3v*0.985).perp(), kappa[ik]));
+                                	ijet1candsmom_bjet_deepJETT_den_trackpt2[ik][isrc] += ((cand3v*0.985).perp());
+
+                                	ijet1_bjet_deepJETT_long_num_trackpt2[ik][isrc] += (charge*(dotProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_long_den_trackpt2[ik][isrc] += (dotProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+                                	ijet1_bjet_deepJETT_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet1_bjet_deepJETT_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+				}
 #endif
 				}
 			}
@@ -6908,15 +8722,15 @@ if(ijet==0){
                                 ijet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 				//b-jet Tight Working point
-                                if(deepCSV_b >= CSVT) {
-                                        ijet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+                                if(deepJET > JETT) {
+                                        ijet1candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet1candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                        ijet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                        ijet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet1_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet1_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
 			}
 		}
@@ -6957,20 +8771,20 @@ if(ijet==1){
                         	ijet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 				
 				//b-jet Tight Working point
-				if(deepCSV_b >= CSVT) {
-                                        ijet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+				if(deepJET > JETT) {
+                                        ijet2candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        ijet2candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                        ijet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet2_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet2_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                        ijet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                        ijet2_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        ijet2_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                 }
 
 #ifdef FLAV	
 			//Flavor Tagging	
-			if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+			if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
                                 ijet2candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -6979,7 +8793,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==2){//u-jet
+                        }else if(ParFlav==2){//u-jet
                                 ijet2candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -6988,7 +8802,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==-2){//ubar-jet
+			}else if(ParFlav==-2){//ubar-jet
                                 ijet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -6997,7 +8811,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==1){//d-jet
+                        }else if(ParFlav==1){//d-jet
                                 ijet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -7006,7 +8820,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==-1){//dbar-jet
+			}else if(ParFlav==-1){//dbar-jet
                                 ijet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7015,7 +8829,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==5){//b-jet
+			}else if(ParFlav==5){//b-jet
                                 ijet2candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -7024,7 +8838,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==-5){//bbar-jet
+                        }else if(ParFlav==-5){//bbar-jet
                                 ijet2candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7043,46 +8857,6 @@ if(ijet==1){
                                 ijet2_tran_num_ojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }
-				/*
-				//Second-Set Flavor Tagging
-				if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                        ijet2candsmom_num_qjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_qjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_qjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_qjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_qjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_qjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                        ijet2candsmom_num_aqjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(abs(jetflav==21 || jetflav==9)){
-                                        ijet2candsmom_num_aqgjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqgjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqgjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqgjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqgjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqgjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else{
-                                        ijet2candsmom_num_aqojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqojet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqojet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqojet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }
-				*/
 #endif
 
 #ifdef TRACKEFF
@@ -7111,6 +8885,34 @@ if(ijet==1){
                                         ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
+
+			//BJet
+			if(deepJET > JETT) {
+				if(cand3v.perp()<20.0){
+                                	if (gRandom->Uniform() < 0.977){
+						ijet2candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        	ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                        	ijet2_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet2_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}
+				else{
+					if (gRandom->Uniform() < 0.99){
+						ijet2candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        	ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                        	ijet2_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet2_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}
+			}
 #endif
 
 #ifdef TRACKPTUP
@@ -7122,6 +8924,18 @@ if(ijet==1){
 
                                 ijet2_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
                                 ijet2_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet2candsmom_bjet_deepJETT_num_trackpt1[ik][isrc] += charge*(pow((cand3v*1.015).perp(), kappa[ik]));
+                                	ijet2candsmom_bjet_deepJETT_den_trackpt1[ik][isrc] += ((cand3v*1.015).perp());
+
+                                	ijet2_bjet_deepJETT_long_num_trackpt1[ik][isrc] += (charge*(dotProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_long_den_trackpt1[ik][isrc] += (dotProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+                                	ijet2_bjet_deepJETT_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+				}
 #endif
 
 #ifdef TRACKPTDOWN
@@ -7133,6 +8947,18 @@ if(ijet==1){
 
                                 ijet2_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
                                 ijet2_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet2candsmom_bjet_deepJETT_num_trackpt2[ik][isrc] += charge*(pow((cand3v*0.985).perp(), kappa[ik]));
+                                	ijet2candsmom_bjet_deepJETT_den_trackpt2[ik][isrc] += ((cand3v*0.985).perp());
+
+                                	ijet2_bjet_deepJETT_long_num_trackpt2[ik][isrc] += (charge*(dotProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_long_den_trackpt2[ik][isrc] += (dotProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+                                	ijet2_bjet_deepJETT_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+				}
 #endif
 					}
 				}
@@ -7155,19 +8981,19 @@ if(ijet==1){
                         ijet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 			//b-jet Tight Working point
-			if(deepCSV_b >= CSVT) {
-                        	ijet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+			if(deepJET > JETT) {
+                        	ijet2candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                ijet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                ijet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 			}
 #ifdef FLAV
 			//Flavor Tagging
-			if(abs(jetflav==21 || jetflav==9)){//gluon-jet
+			if(abs(ParFlav==21 || ParFlav==9)){//gluon-jet
                                 ijet2candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -7176,7 +9002,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==2){//u-jet
+                        }else if(ParFlav==2){//u-jet
                                 ijet2candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -7185,7 +9011,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==-2){//ubar-jet
+			}else if(ParFlav==-2){//ubar-jet
                                 ijet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -7194,7 +9020,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==1){//d-jet
+                        }else if(ParFlav==1){//d-jet
                                 ijet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -7203,7 +9029,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==-1){//dbar-jet
+			}else if(ParFlav==-1){//dbar-jet
                                 ijet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7212,7 +9038,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-			}else if(jetflav==5){//b-jet
+			}else if(ParFlav==5){//b-jet
                                 ijet2candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -7221,7 +9047,7 @@ if(ijet==1){
 
                                 ijet2_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                        }else if(jetflav==-5){//bbar-jet
+                        }else if(ParFlav==-5){//bbar-jet
                                 ijet2candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                 ijet2candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7240,46 +9066,6 @@ if(ijet==1){
                                 ijet2_tran_num_ojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 ijet2_tran_den_ojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                         }
-				/*
-				//Second-set Flavor Tagging
-				if(jetflav==1 || jetflav==2 || jetflav==3 || jetflav==4 || jetflav==5){
-                                        ijet2candsmom_num_qjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_qjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_qjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_qjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_qjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_qjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(jetflav==-1 || jetflav==-2 || jetflav==-3 || jetflav==-4 || jetflav==-5){
-                                        ijet2candsmom_num_aqjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else if(abs(jetflav==21 || jetflav==9)){
-                                        ijet2candsmom_num_aqgjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqgjet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqgjet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqgjet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqgjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqgjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }else{
-                                        ijet2candsmom_num_aqojet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                        ijet2candsmom_den_aqojet[ik][isrc] += (cand3v.perp());
-
-                                        ijet2_long_num_aqojet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_long_den_aqojet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
-
-                                        ijet2_tran_num_aqojet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                        ijet2_tran_den_aqojet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                }
-				*/
 #endif
 
 #ifdef TRACKEFF
@@ -7308,6 +9094,35 @@ if(ijet==1){
                                         ijet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
                         }
+
+			//BJet
+			if(deepJET > JETT) {
+				if(cand3v.perp()<20.0){
+                                	if (gRandom->Uniform() < 0.977){
+						ijet2candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        	ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                        	ijet2_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet2_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}
+				else{
+					if (gRandom->Uniform() < 0.99){
+						ijet2candsmom_bjet_deepJETT_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                        	ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                        	ijet2_bjet_deepJETT_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                        	ijet2_bjet_deepJETT_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+					}
+				}
+			}
+
 #endif
 
 #ifdef TRACKPTUP
@@ -7319,6 +9134,18 @@ if(ijet==1){
 
                                 ijet2_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
                                 ijet2_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet2candsmom_bjet_deepJETT_num_trackpt1[ik][isrc] += charge*(pow((cand3v*1.015).perp(), kappa[ik]));
+                                	ijet2candsmom_bjet_deepJETT_den_trackpt1[ik][isrc] += ((cand3v*1.015).perp());
+
+                                	ijet2_bjet_deepJETT_long_num_trackpt1[ik][isrc] += (charge*(dotProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_long_den_trackpt1[ik][isrc] += (dotProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+
+                                	ijet2_bjet_deepJETT_tran_num_trackpt1[ik][isrc] += (charge*(crossProductPower((cand3v*1.015),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_tran_den_trackpt1[ik][isrc] += (crossProductPower((cand3v*1.015),tmp3v,kappa[ik]));
+				}
 #endif
 
 #ifdef TRACKPTDOWN
@@ -7330,6 +9157,18 @@ if(ijet==1){
 
                                 ijet2_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
                                 ijet2_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+				//BJet
+				if(deepJET > JETT) {
+					ijet2candsmom_bjet_deepJETT_num_trackpt2[ik][isrc] += charge*(pow((cand3v*0.985).perp(), kappa[ik]));
+                                	ijet2candsmom_bjet_deepJETT_den_trackpt2[ik][isrc] += ((cand3v*0.985).perp());
+
+                                	ijet2_bjet_deepJETT_long_num_trackpt2[ik][isrc] += (charge*(dotProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_long_den_trackpt2[ik][isrc] += (dotProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+
+                                	ijet2_bjet_deepJETT_tran_num_trackpt2[ik][isrc] += (charge*(crossProductPower((cand3v*0.985),tmp3v,kappa[ik])));
+                                	ijet2_bjet_deepJETT_tran_den_trackpt2[ik][isrc] += (crossProductPower((cand3v*0.985),tmp3v,kappa[ik]));
+				}
 #endif
 				}
 			}
@@ -7353,15 +9192,15 @@ if(ijet==1){
                         ijet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 			//b-jet Tight Working point
-                        if(deepCSV_b >= CSVT) {
-                        	ijet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                ijet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+                        if(deepJET > JETT) {
+                        	ijet2candsmom_num_bjet_deepJETT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                ijet2candsmom_den_bjet_deepJETT[ik][isrc] += (cand3v.perp());
 
-                                ijet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_long_num_bjet_deepJETT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_long_den_bjet_deepJETT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                ijet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                ijet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                ijet2_tran_num_bjet_deepJETT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                ijet2_tran_den_bjet_deepJETT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
            		}
 		}
 	}
@@ -7681,17 +9520,18 @@ if(ijet==1){
 	
 		  if (isEta && isPt) {genmom[isrc][0][iet].push_back(tmp4v);}
 //---------------------------------------------------------------------------
-		//Generator-level Flavour Information
-		int GenJetPartonflavour = -999;
-		int GenJetHadronflavour = -999;
+		//True Flavour Info
+		//Generator-level Flavour Info
+		int GenJetParFlav = -999;
+		int GenJetHadFlav = -999;
 
 		for (const reco::JetFlavourInfoMatching& jetFlavourInfoMatching : *genjetsFlavor){
 			if(deltaR((*genjets)[igenjt].p4(),jetFlavourInfoMatching.first->p4()) < 0.01){
-				GenJetPartonflavour = jetFlavourInfoMatching.second.getPartonFlavour();
-				GenJetHadronflavour = jetFlavourInfoMatching.second.getHadronFlavour();
+				GenJetParFlav = jetFlavourInfoMatching.second.getPartonFlavour();
+				GenJetHadFlav = jetFlavourInfoMatching.second.getHadronFlavour();
 			}
 		}
-		//cout<<"GenJet Flavour Info : "<<" Partonflavour : "<<GenJetPartonflavour<<" Hadronflavour : "<<GenJetHadronflavour<<endl;
+		//cout<<"GenJet Flavour Info : "<<" Partonflavour : "<<GenJetParFlav<<" Hadronflavour : "<<GenJetHadFlav<<endl;
 //---------------------------------------------------------------------------
 		  if (isrc==0) { 
 		    if (isInEtaRange[iet]) {genjt_pt[iet]->Fill(tmp4v.perp(), weighttrg);}
@@ -7779,7 +9619,7 @@ if(ijet==1){
 		  	}
 		if (ijet==0 && charge !=0) {
 			if(i2==0){genjetchg1_cand1->Fill(cand4v.perp(),weighttrg);}
-			if(i2==0 && GenJetHadronflavour==5){genbjetchg1_cand1->Fill(cand4v.perp(),weighttrg);}
+			if(i2==0 && GenJetHadFlav==5){genbjetchg1_cand1->Fill(cand4v.perp(),weighttrg);}
 	
 			genchg1_phi->Fill(cand4v.phi(), weighttrg);
                         genchg1_pt->Fill(cand4v.perp(), weighttrg);
@@ -7787,7 +9627,7 @@ if(ijet==1){
 			}
 		else if (ijet==1 && charge !=0) {
 			if(i2==0){genjetchg2_cand1->Fill(cand4v.perp(),weighttrg);}
-			if(i2==0 && GenJetHadronflavour==5){genbjetchg2_cand1->Fill(cand4v.perp(),weighttrg);}
+			if(i2==0 && GenJetHadFlav==5){genbjetchg2_cand1->Fill(cand4v.perp(),weighttrg);}
 
 			genchg2_phi->Fill(cand4v.phi(), weighttrg);
                         genchg2_pt->Fill(cand4v.perp(), weighttrg);
@@ -7832,19 +9672,19 @@ if(ijet==1){
 					igenjet1candsmom_matchedtracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 
 					//GenJet b-jet for unfolding	
-					if(GenJetHadronflavour==5){
-                                                igenjet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet1candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet1candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 				
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
 						igenjet1candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
 	                                        igenjet1candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -7853,7 +9693,7 @@ if(ijet==1){
 
                         	                igenjet1_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                 	        igenjet1_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==2){
+					}else if(GenJetParFlav==2){
 						igenjet1candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -7862,7 +9702,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==-2){
+					}else if(GenJetParFlav==-2){
 						igenjet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -7871,7 +9711,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==1){
+					}else if(GenJetParFlav==1){
 						igenjet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -7880,7 +9720,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==-1){
+					}else if(GenJetParFlav==-1){
 						igenjet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7889,7 +9729,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-				 	}else if(GenJetPartonflavour==5){
+				 	}else if(GenJetParFlav==5){
                                                 igenjet1candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -7898,7 +9738,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));	
-					}else if(GenJetPartonflavour==-5){
+					}else if(GenJetParFlav==-5){
                                                 igenjet1candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -7941,6 +9781,34 @@ if(ijet==1){
                                                         igenjet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 						}
 					}
+
+					//BJet
+					if(GenJetHadFlav==5){
+						if(cand3v.perp() < 20.0){
+                                                	if (gRandom->Uniform() < 0.977){
+								igenjet1candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                        	igenjet1candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet1_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet1_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+						else{
+							if (gRandom->Uniform() < 0.99){
+								igenjet1candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                 	       	igenjet1candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet1_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet1_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+					}
 #endif
 
 						}
@@ -7965,19 +9833,19 @@ if(ijet==1){
                                 igenjet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 					//GenJet b-jet for unfolding
-					if(GenJetHadronflavour==5){
-                                                igenjet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet1candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet1candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
                                                 igenjet1candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -7986,7 +9854,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==2){
+                                        }else if(GenJetParFlav==2){
                                                 igenjet1candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -7995,7 +9863,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-2){
+                                        }else if(GenJetParFlav==-2){
                                                 igenjet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -8004,7 +9872,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==1){
+                                        }else if(GenJetParFlav==1){
                                                 igenjet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -8013,7 +9881,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-1){
+                                        }else if(GenJetParFlav==-1){
                                                 igenjet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8022,7 +9890,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==5){
+					}else if(GenJetParFlav==5){
                                                 igenjet1candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -8031,7 +9899,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-5){
+                                        }else if(GenJetParFlav==-5){
                                                 igenjet1candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8075,6 +9943,34 @@ if(ijet==1){
                                                         igenjet1_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                                 }	
 					}
+
+					//BJet
+					if(GenJetHadFlav==5){
+						if(cand3v.perp() < 20.0){
+                                                	if (gRandom->Uniform() < 0.977){
+								igenjet1candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+        	                                                igenjet1candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+	
+                        	                                igenjet1_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                	                                        igenjet1_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                	                        igenjet1_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                        	                igenjet1_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}	
+						}
+						else{
+							if (gRandom->Uniform() < 0.99){
+								igenjet1candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                        	igenjet1candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet1_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet1_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet1_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+					}
 #endif
 					}
 				}
@@ -8097,19 +9993,19 @@ if(ijet==1){
                                 igenjet1_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 					//GenJet b-jet for unfolding
-					if(GenJetHadronflavour==5){
-                                                igenjet1candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet1candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet1candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet1candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet1_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet1_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet1_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet1_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet1_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 					
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
                                                 igenjet1candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -8118,7 +10014,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==2){
+                                        }else if(GenJetParFlav==2){
                                                 igenjet1candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -8127,7 +10023,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-2){
+                                        }else if(GenJetParFlav==-2){
                                                 igenjet1candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -8136,7 +10032,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==1){
+                                        }else if(GenJetParFlav==1){
                                                 igenjet1candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -8145,7 +10041,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-1){
+                                        }else if(GenJetParFlav==-1){
                                                 igenjet1candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8154,7 +10050,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==5){
+					}else if(GenJetParFlav==5){
                                                 igenjet1candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -8163,7 +10059,7 @@ if(ijet==1){
 
                                                 igenjet1_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet1_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-5){
+                                        }else if(GenJetParFlav==-5){
                                                 igenjet1candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet1candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8223,19 +10119,19 @@ if(ijet==1){
 					igenjet2candsmom_matchedtracks[ik][isrc] += (pow(cand3v.perp(), kappa[ik]));
 					
 					//GenJet b-jet for unfolding
-					if(GenJetHadronflavour==5){
-                                                igenjet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet2candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet2candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
                                                 igenjet2candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -8244,7 +10140,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==2){
+                                        }else if(GenJetParFlav==2){
                                                 igenjet2candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -8253,7 +10149,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-2){
+                                        }else if(GenJetParFlav==-2){
                                                 igenjet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -8262,7 +10158,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==1){
+                                        }else if(GenJetParFlav==1){
                                                 igenjet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -8271,7 +10167,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-1){
+                                        }else if(GenJetParFlav==-1){
                                                 igenjet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8280,7 +10176,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==5){
+					}else if(GenJetParFlav==5){
                                                 igenjet2candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -8289,7 +10185,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-5){
+                                        }else if(GenJetParFlav==-5){
                                                 igenjet2candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8333,6 +10229,34 @@ if(ijet==1){
                                                         igenjet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                                 }
 					}
+
+					//BJet
+					if(GenJetHadFlav==5){
+						if(cand3v.perp() < 20.0){
+                                                	if (gRandom->Uniform() < 0.977){
+								igenjet2candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                       	 	igenjet2candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());	
+
+                                                        	igenjet2_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet2_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+						else{
+							if (gRandom->Uniform() < 0.99){
+								igenjet2candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                        	igenjet2candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet2_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet2_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+					}
 #endif
 
 						}
@@ -8357,19 +10281,19 @@ if(ijet==1){
                                 igenjet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 					
 					//GenJet b-jet for unfolding
-					if(GenJetHadronflavour==5){
-                                                igenjet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet2candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet2candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
                                                 igenjet2candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -8378,7 +10302,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==2){
+                                        }else if(GenJetParFlav==2){
                                                 igenjet2candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -8387,7 +10311,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-2){
+                                        }else if(GenJetParFlav==-2){
                                                 igenjet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -8396,7 +10320,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==1){
+                                        }else if(GenJetParFlav==1){
                                                 igenjet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -8405,7 +10329,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-1){
+                                        }else if(GenJetParFlav==-1){
                                                 igenjet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8414,7 +10338,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==5){
+					}else if(GenJetParFlav==5){
                                                 igenjet2candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -8423,7 +10347,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-5){
+                                        }else if(GenJetParFlav==-5){
                                                 igenjet2candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8467,6 +10391,34 @@ if(ijet==1){
                                                         igenjet2_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                                 }
 					}
+
+					//BJet
+					if(GenJetHadFlav==5){
+						if(cand3v.perp() < 20.0){
+                                                	if (gRandom->Uniform() < 0.977){
+								igenjet2candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                        	igenjet2candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet2_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet2_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+						else{
+							if (gRandom->Uniform() < 0.99){
+								igenjet2candsmom_BJet_num_trackeff[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                        	igenjet2candsmom_BJet_den_trackeff[ik][isrc] += (cand3v.perp());
+
+                                                        	igenjet2_BJet_long_num_trackeff[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_long_den_trackeff[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+
+                                                        	igenjet2_BJet_tran_num_trackeff[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                        	igenjet2_BJet_tran_den_trackeff[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+							}
+						}
+					}
 #endif
 				}
 			}
@@ -8490,19 +10442,19 @@ if(ijet==1){
                                 igenjet2_tran_den[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
 
 					//GenJet b-jet for unfolding	
-					if(GenJetHadronflavour==5){
-                                                igenjet2candsmom_num_bjet_WPT[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
-                                                igenjet2candsmom_den_bjet_WPT[ik][isrc] += (cand3v.perp());
+					if(GenJetHadFlav==5){
+                                                igenjet2candsmom_num_BJet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
+                                                igenjet2candsmom_den_BJet[ik][isrc] += (cand3v.perp());
 
-                                                igenjet2_long_num_bjet_WPT[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_long_den_bjet_WPT[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_long_num_BJet[ik][isrc] += (charge*(dotProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_long_den_BJet[ik][isrc] += (dotProductPower(cand3v,tmp3v,kappa[ik]));
 
-                                                igenjet2_tran_num_bjet_WPT[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
-                                                igenjet2_tran_den_bjet_WPT[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
+                                                igenjet2_tran_num_BJet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
+                                                igenjet2_tran_den_BJet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
                                         }
 
 					//GenJet Flavour Info
-					if(GenJetPartonflavour==21){
+					if(GenJetParFlav==21){
                                                 igenjet2candsmom_num_gjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_gjet[ik][isrc] += (cand3v.perp());
 
@@ -8511,7 +10463,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_gjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_gjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==2){
+                                        }else if(GenJetParFlav==2){
                                                 igenjet2candsmom_num_ujet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ujet[ik][isrc] += (cand3v.perp());
 
@@ -8520,7 +10472,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ujet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ujet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-2){
+                                        }else if(GenJetParFlav==-2){
                                                 igenjet2candsmom_num_ubarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_ubarjet[ik][isrc] += (cand3v.perp());
 
@@ -8529,7 +10481,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_ubarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_ubarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==1){
+                                        }else if(GenJetParFlav==1){
                                                 igenjet2candsmom_num_djet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_djet[ik][isrc] += (cand3v.perp());
 
@@ -8538,7 +10490,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_djet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_djet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-1){
+                                        }else if(GenJetParFlav==-1){
                                                 igenjet2candsmom_num_dbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_dbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8547,7 +10499,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_dbarjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_dbarjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-					}else if(GenJetPartonflavour==5){
+					}else if(GenJetParFlav==5){
                                                 igenjet2candsmom_num_bjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bjet[ik][isrc] += (cand3v.perp());
 
@@ -8556,7 +10508,7 @@ if(ijet==1){
 
                                                 igenjet2_tran_num_bjet[ik][isrc] += (charge*(crossProductPower(cand3v,tmp3v,kappa[ik])));
                                                 igenjet2_tran_den_bjet[ik][isrc] += (crossProductPower(cand3v,tmp3v,kappa[ik]));
-                                        }else if(GenJetPartonflavour==-5){
+                                        }else if(GenJetParFlav==-5){
                                                 igenjet2candsmom_num_bbarjet[ik][isrc] += charge*(pow(cand3v.perp(), kappa[ik]));
                                                 igenjet2candsmom_den_bbarjet[ik][isrc] += (cand3v.perp());
 
@@ -8794,24 +10746,24 @@ for (int ik=0; ik<nkappa; ik++){
                 recomomJCO[2][1][ik][isrc] = (ijet2_tran_den[ik][isrc]);
 
 		//b-jet Tight Working point
-		RecoJCO_bjet_WPT[0][0][ik][isrc] = (ijet1candsmom_num_bjet_WPT[ik][isrc]/(pow(ijet1candsmom_den_bjet_WPT[ik][isrc],kappa[ik])));
-                RecoJCO_bjet_WPT[0][1][ik][isrc] = (ijet2candsmom_num_bjet_WPT[ik][isrc]/(pow(ijet2candsmom_den_bjet_WPT[ik][isrc],kappa[ik])));
+		RecoJCO_bjet_deepJETT[0][0][ik][isrc] = (ijet1candsmom_num_bjet_deepJETT[ik][isrc]/(pow(ijet1candsmom_den_bjet_deepJETT[ik][isrc],kappa[ik])));
+                RecoJCO_bjet_deepJETT[0][1][ik][isrc] = (ijet2candsmom_num_bjet_deepJETT[ik][isrc]/(pow(ijet2candsmom_den_bjet_deepJETT[ik][isrc],kappa[ik])));
 
-                RecoJCO_bjet_WPT[1][0][ik][isrc] = (ijet1_long_num_bjet_WPT[ik][isrc]/ijet1_long_den_bjet_WPT[ik][isrc]);
-                RecoJCO_bjet_WPT[1][1][ik][isrc] = (ijet2_long_num_bjet_WPT[ik][isrc]/ijet2_long_den_bjet_WPT[ik][isrc]);
+                RecoJCO_bjet_deepJETT[1][0][ik][isrc] = (ijet1_long_num_bjet_deepJETT[ik][isrc]/ijet1_long_den_bjet_deepJETT[ik][isrc]);
+                RecoJCO_bjet_deepJETT[1][1][ik][isrc] = (ijet2_long_num_bjet_deepJETT[ik][isrc]/ijet2_long_den_bjet_deepJETT[ik][isrc]);
 
-                RecoJCO_bjet_WPT[2][0][ik][isrc] = (ijet1_tran_num_bjet_WPT[ik][isrc]/ijet1_tran_den_bjet_WPT[ik][isrc]);
-                RecoJCO_bjet_WPT[2][1][ik][isrc] = (ijet2_tran_num_bjet_WPT[ik][isrc]/ijet2_tran_den_bjet_WPT[ik][isrc]);
+                RecoJCO_bjet_deepJETT[2][0][ik][isrc] = (ijet1_tran_num_bjet_deepJETT[ik][isrc]/ijet1_tran_den_bjet_deepJETT[ik][isrc]);
+                RecoJCO_bjet_deepJETT[2][1][ik][isrc] = (ijet2_tran_num_bjet_deepJETT[ik][isrc]/ijet2_tran_den_bjet_deepJETT[ik][isrc]);
 
 
-                recomomJCO_bjet_WPT[0][0][ik][isrc] = (pow(ijet1candsmom_den_bjet_WPT[ik][isrc],kappa[ik]));
-                recomomJCO_bjet_WPT[0][1][ik][isrc] = (pow(ijet2candsmom_den_bjet_WPT[ik][isrc],kappa[ik]));
+                recomomJCO_bjet_deepJETT[0][0][ik][isrc] = (pow(ijet1candsmom_den_bjet_deepJETT[ik][isrc],kappa[ik]));
+                recomomJCO_bjet_deepJETT[0][1][ik][isrc] = (pow(ijet2candsmom_den_bjet_deepJETT[ik][isrc],kappa[ik]));
 
-                recomomJCO_bjet_WPT[1][0][ik][isrc] = (ijet1_long_den_bjet_WPT[ik][isrc]);
-                recomomJCO_bjet_WPT[1][1][ik][isrc] = (ijet2_long_den_bjet_WPT[ik][isrc]);
+                recomomJCO_bjet_deepJETT[1][0][ik][isrc] = (ijet1_long_den_bjet_deepJETT[ik][isrc]);
+                recomomJCO_bjet_deepJETT[1][1][ik][isrc] = (ijet2_long_den_bjet_deepJETT[ik][isrc]);
 
-                recomomJCO_bjet_WPT[2][0][ik][isrc] = (ijet1_tran_den_bjet_WPT[ik][isrc]);
-                recomomJCO_bjet_WPT[2][1][ik][isrc] = (ijet2_tran_den_bjet_WPT[ik][isrc]);
+                recomomJCO_bjet_deepJETT[2][0][ik][isrc] = (ijet1_tran_den_bjet_deepJETT[ik][isrc]);
+                recomomJCO_bjet_deepJETT[2][1][ik][isrc] = (ijet2_tran_den_bjet_deepJETT[ik][isrc]);
 #ifdef FLAV
 		//g-jet
 		RecoJCO_gjet[0][0][ik][isrc] = (ijet1candsmom_num_gjet[ik][isrc]/(pow(ijet1candsmom_den_gjet[ik][isrc],kappa[ik])));
@@ -8964,85 +10916,6 @@ for (int ik=0; ik<nkappa; ik++){
 
                 recomomJCO_ojet[2][0][ik][isrc] = (ijet1_tran_den_ojet[ik][isrc]);
                 recomomJCO_ojet[2][1][ik][isrc] = (ijet2_tran_den_ojet[ik][isrc]);
-
-		/*
-		//Second-Set Flavor Tagging
-		//quark
-		RecoJCO_qjet[0][0][ik][isrc] = (ijet1candsmom_num_qjet[ik][isrc]/(pow(ijet1candsmom_den_qjet[ik][isrc],kappa[ik])));
-                RecoJCO_qjet[0][1][ik][isrc] = (ijet2candsmom_num_qjet[ik][isrc]/(pow(ijet2candsmom_den_qjet[ik][isrc],kappa[ik])));
-
-                RecoJCO_qjet[1][0][ik][isrc] = (ijet1_long_num_qjet[ik][isrc]/ijet1_long_den_qjet[ik][isrc]);
-                RecoJCO_qjet[1][1][ik][isrc] = (ijet2_long_num_qjet[ik][isrc]/ijet2_long_den_qjet[ik][isrc]);
-
-                RecoJCO_qjet[2][0][ik][isrc] = (ijet1_tran_num_qjet[ik][isrc]/ijet1_tran_den_qjet[ik][isrc]);
-                RecoJCO_qjet[2][1][ik][isrc] = (ijet2_tran_num_qjet[ik][isrc]/ijet2_tran_den_qjet[ik][isrc]);
-
-                recomomJCO_qjet[0][0][ik][isrc] = (pow(ijet1candsmom_den_qjet[ik][isrc],kappa[ik]));
-                recomomJCO_qjet[0][1][ik][isrc] = (pow(ijet2candsmom_den_qjet[ik][isrc],kappa[ik]));
-
-                recomomJCO_qjet[1][0][ik][isrc] = (ijet1_long_den_qjet[ik][isrc]);
-                recomomJCO_qjet[1][1][ik][isrc] = (ijet2_long_den_qjet[ik][isrc]);
-
-                recomomJCO_qjet[2][0][ik][isrc] = (ijet1_tran_den_qjet[ik][isrc]);
-                recomomJCO_qjet[2][1][ik][isrc] = (ijet2_tran_den_qjet[ik][isrc]);
-
-		//ant-quark
-		RecoJCO_aqjet[0][0][ik][isrc] = (ijet1candsmom_num_aqjet[ik][isrc]/(pow(ijet1candsmom_den_aqjet[ik][isrc],kappa[ik])));
-                RecoJCO_aqjet[0][1][ik][isrc] = (ijet2candsmom_num_aqjet[ik][isrc]/(pow(ijet2candsmom_den_aqjet[ik][isrc],kappa[ik])));
-
-                RecoJCO_aqjet[1][0][ik][isrc] = (ijet1_long_num_aqjet[ik][isrc]/ijet1_long_den_aqjet[ik][isrc]);
-                RecoJCO_aqjet[1][1][ik][isrc] = (ijet2_long_num_aqjet[ik][isrc]/ijet2_long_den_aqjet[ik][isrc]);
-
-                RecoJCO_aqjet[2][0][ik][isrc] = (ijet1_tran_num_aqjet[ik][isrc]/ijet1_tran_den_aqjet[ik][isrc]);
-                RecoJCO_aqjet[2][1][ik][isrc] = (ijet2_tran_num_aqjet[ik][isrc]/ijet2_tran_den_aqjet[ik][isrc]);
-
-                recomomJCO_aqjet[0][0][ik][isrc] = (pow(ijet1candsmom_den_aqjet[ik][isrc],kappa[ik]));
-                recomomJCO_aqjet[0][1][ik][isrc] = (pow(ijet2candsmom_den_aqjet[ik][isrc],kappa[ik]));
-
-                recomomJCO_aqjet[1][0][ik][isrc] = (ijet1_long_den_aqjet[ik][isrc]);
-                recomomJCO_aqjet[1][1][ik][isrc] = (ijet2_long_den_aqjet[ik][isrc]);
-
-                recomomJCO_aqjet[2][0][ik][isrc] = (ijet1_tran_den_aqjet[ik][isrc]);
-                recomomJCO_aqjet[2][1][ik][isrc] = (ijet2_tran_den_aqjet[ik][isrc]);
-
-		//gluon
-		RecoJCO_aqgjet[0][0][ik][isrc] = (ijet1candsmom_num_aqgjet[ik][isrc]/(pow(ijet1candsmom_den_aqgjet[ik][isrc],kappa[ik])));
-                RecoJCO_aqgjet[0][1][ik][isrc] = (ijet2candsmom_num_aqgjet[ik][isrc]/(pow(ijet2candsmom_den_aqgjet[ik][isrc],kappa[ik])));
-
-                RecoJCO_aqgjet[1][0][ik][isrc] = (ijet1_long_num_aqgjet[ik][isrc]/ijet1_long_den_aqgjet[ik][isrc]);
-                RecoJCO_aqgjet[1][1][ik][isrc] = (ijet2_long_num_aqgjet[ik][isrc]/ijet2_long_den_aqgjet[ik][isrc]);
-
-                RecoJCO_aqgjet[2][0][ik][isrc] = (ijet1_tran_num_aqgjet[ik][isrc]/ijet1_tran_den_aqgjet[ik][isrc]);
-                RecoJCO_aqgjet[2][1][ik][isrc] = (ijet2_tran_num_aqgjet[ik][isrc]/ijet2_tran_den_aqgjet[ik][isrc]);
-
-                recomomJCO_aqgjet[0][0][ik][isrc] = (pow(ijet1candsmom_den_aqgjet[ik][isrc],kappa[ik]));
-                recomomJCO_aqgjet[0][1][ik][isrc] = (pow(ijet2candsmom_den_aqgjet[ik][isrc],kappa[ik]));
-
-                recomomJCO_aqgjet[1][0][ik][isrc] = (ijet1_long_den_aqgjet[ik][isrc]);
-                recomomJCO_aqgjet[1][1][ik][isrc] = (ijet2_long_den_aqgjet[ik][isrc]);
-
-                recomomJCO_aqgjet[2][0][ik][isrc] = (ijet1_tran_den_aqgjet[ik][isrc]);
-                recomomJCO_aqgjet[2][1][ik][isrc] = (ijet2_tran_den_aqgjet[ik][isrc]);
-
-		//others
-		RecoJCO_aqojet[0][0][ik][isrc] = (ijet1candsmom_num_aqojet[ik][isrc]/(pow(ijet1candsmom_den_aqojet[ik][isrc],kappa[ik])));
-                RecoJCO_aqojet[0][1][ik][isrc] = (ijet2candsmom_num_aqojet[ik][isrc]/(pow(ijet2candsmom_den_aqojet[ik][isrc],kappa[ik])));
-
-                RecoJCO_aqojet[1][0][ik][isrc] = (ijet1_long_num_aqojet[ik][isrc]/ijet1_long_den_aqojet[ik][isrc]);
-                RecoJCO_aqojet[1][1][ik][isrc] = (ijet2_long_num_aqojet[ik][isrc]/ijet2_long_den_aqojet[ik][isrc]);
-
-                RecoJCO_aqojet[2][0][ik][isrc] = (ijet1_tran_num_aqojet[ik][isrc]/ijet1_tran_den_aqojet[ik][isrc]);
-                RecoJCO_aqojet[2][1][ik][isrc] = (ijet2_tran_num_aqojet[ik][isrc]/ijet2_tran_den_aqojet[ik][isrc]);
-
-                recomomJCO_aqojet[0][0][ik][isrc] = (pow(ijet1candsmom_den_aqojet[ik][isrc],kappa[ik]));
-                recomomJCO_aqojet[0][1][ik][isrc] = (pow(ijet2candsmom_den_aqojet[ik][isrc],kappa[ik]));
-
-                recomomJCO_aqojet[1][0][ik][isrc] = (ijet1_long_den_aqojet[ik][isrc]);
-                recomomJCO_aqojet[1][1][ik][isrc] = (ijet2_long_den_aqojet[ik][isrc]);
-
-                recomomJCO_aqojet[2][0][ik][isrc] = (ijet1_tran_den_aqojet[ik][isrc]);
-                recomomJCO_aqojet[2][1][ik][isrc] = (ijet2_tran_den_aqojet[ik][isrc]);
-		*/
 #endif
 		
 #ifdef TRACKEFF
@@ -9064,6 +10937,26 @@ for (int ik=0; ik<nkappa; ik++){
 
                 recomomJCO_trackeff[2][0][ik][isrc] = (ijet1_tran_den_trackeff[ik][isrc]);
                 recomomJCO_trackeff[2][1][ik][isrc] = (ijet2_tran_den_trackeff[ik][isrc]);
+
+		//BJet
+		RecoJCO_bjet_deepJETT_trackeff[0][0][ik][isrc] = (ijet1candsmom_bjet_deepJETT_num_trackeff[ik][isrc]/(pow(ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc],kappa[ik])));
+                RecoJCO_bjet_deepJETT_trackeff[0][1][ik][isrc] = (ijet2candsmom_bjet_deepJETT_num_trackeff[ik][isrc]/(pow(ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc],kappa[ik])));
+
+                RecoJCO_bjet_deepJETT_trackeff[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_num_trackeff[ik][isrc]/ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackeff[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_num_trackeff[ik][isrc]/ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc]);
+
+                RecoJCO_bjet_deepJETT_trackeff[2][0][ik][isrc] = (ijet1_bjet_deepJETT_tran_num_trackeff[ik][isrc]/ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackeff[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_num_trackeff[ik][isrc]/ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc]);
+
+
+                recomomJCO_bjet_deepJETT_trackeff[0][0][ik][isrc] = (pow(ijet1candsmom_bjet_deepJETT_den_trackeff[ik][isrc],kappa[ik]));
+                recomomJCO_bjet_deepJETT_trackeff[0][1][ik][isrc] = (pow(ijet2candsmom_bjet_deepJETT_den_trackeff[ik][isrc],kappa[ik]));
+
+                recomomJCO_bjet_deepJETT_trackeff[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_den_trackeff[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackeff[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_den_trackeff[ik][isrc]);
+
+                recomomJCO_bjet_deepJETT_trackeff[2][0][ik][isrc] = (ijet1_bjet_deepJETT_tran_den_trackeff[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackeff[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_den_trackeff[ik][isrc]);
 #endif
 
 /*
@@ -9109,6 +11002,26 @@ for (int ik=0; ik<nkappa; ik++){
 
                 recomomJCO_trackpt1[2][0][ik][isrc] = (ijet1_tran_den_trackpt1[ik][isrc]);
                 recomomJCO_trackpt1[2][1][ik][isrc] = (ijet2_tran_den_trackpt1[ik][isrc]);
+
+      		//BJet
+      		RecoJCO_bjet_deepJETT_trackpt1[0][0][ik][isrc] = (ijet1candsmom_bjet_deepJETT_num_trackpt1[ik][isrc]/(pow(ijet1candsmom_bjet_deepJETT_den_trackpt1[ik][isrc],kappa[ik])));
+                RecoJCO_bjet_deepJETT_trackpt1[0][1][ik][isrc] = (ijet2candsmom_bjet_deepJETT_num_trackpt1[ik][isrc]/(pow(ijet2candsmom_bjet_deepJETT_den_trackpt1[ik][isrc],kappa[ik])));
+
+                RecoJCO_bjet_deepJETT_trackpt1[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_num_trackpt1[ik][isrc]/ijet1_bjet_deepJETT_long_den_trackpt1[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackpt1[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_num_trackpt1[ik][isrc]/ijet2_bjet_deepJETT_long_den_trackpt1[ik][isrc]);
+
+                RecoJCO_bjet_deepJETT_trackpt1[2][0][ik][isrc] = (ijet1_bjet_deepJETT_tran_num_trackpt1[ik][isrc]/ijet1_bjet_deepJETT_tran_den_trackpt1[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackpt1[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_num_trackpt1[ik][isrc]/ijet2_bjet_deepJETT_tran_den_trackpt1[ik][isrc]);
+
+
+                recomomJCO_bjet_deepJETT_trackpt1[0][0][ik][isrc] = (pow(ijet1candsmom_bjet_deepJETT_den_trackpt1[ik][isrc],kappa[ik]));
+                recomomJCO_bjet_deepJETT_trackpt1[0][1][ik][isrc] = (pow(ijet2candsmom_bjet_deepJETT_den_trackpt1[ik][isrc],kappa[ik]));
+
+                recomomJCO_bjet_deepJETT_trackpt1[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_den_trackpt1[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackpt1[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_den_trackpt1[ik][isrc]);
+
+                recomomJCO_bjet_deepJETT_trackpt1[2][0][ik][isrc] = (ijet2_bjet_deepJETT_tran_den_trackpt1[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackpt1[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_den_trackpt1[ik][isrc]);
 #endif
 
 #ifdef TRACKPTDOWN
@@ -9130,6 +11043,27 @@ for (int ik=0; ik<nkappa; ik++){
 
                 recomomJCO_trackpt2[2][0][ik][isrc] = (ijet1_tran_den_trackpt2[ik][isrc]);
                 recomomJCO_trackpt2[2][1][ik][isrc] = (ijet2_tran_den_trackpt2[ik][isrc]);
+
+
+		//BJet
+		RecoJCO_bjet_deepJETT_trackpt2[0][0][ik][isrc] = (ijet1candsmom_bjet_deepJETT_num_trackpt2[ik][isrc]/(pow(ijet1candsmom_bjet_deepJETT_den_trackpt2[ik][isrc],kappa[ik])));
+                RecoJCO_bjet_deepJETT_trackpt2[0][1][ik][isrc] = (ijet2candsmom_bjet_deepJETT_num_trackpt2[ik][isrc]/(pow(ijet2candsmom_bjet_deepJETT_den_trackpt2[ik][isrc],kappa[ik])));
+
+                RecoJCO_bjet_deepJETT_trackpt2[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_num_trackpt2[ik][isrc]/ijet1_bjet_deepJETT_long_den_trackpt2[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackpt2[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_num_trackpt2[ik][isrc]/ijet2_bjet_deepJETT_long_den_trackpt2[ik][isrc]);
+
+                RecoJCO_bjet_deepJETT_trackpt2[2][0][ik][isrc] = (ijet1_bjet_deepJETT_tran_num_trackpt2[ik][isrc]/ijet1_bjet_deepJETT_tran_den_trackpt2[ik][isrc]);
+                RecoJCO_bjet_deepJETT_trackpt2[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_num_trackpt2[ik][isrc]/ijet2_bjet_deepJETT_tran_den_trackpt2[ik][isrc]);
+
+
+                recomomJCO_bjet_deepJETT_trackpt2[0][0][ik][isrc] = (pow(ijet1candsmom_bjet_deepJETT_den_trackpt2[ik][isrc],kappa[ik]));
+                recomomJCO_bjet_deepJETT_trackpt2[0][1][ik][isrc] = (pow(ijet2candsmom_bjet_deepJETT_den_trackpt2[ik][isrc],kappa[ik]));
+
+                recomomJCO_bjet_deepJETT_trackpt2[1][0][ik][isrc] = (ijet1_bjet_deepJETT_long_den_trackpt2[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackpt2[1][1][ik][isrc] = (ijet2_bjet_deepJETT_long_den_trackpt2[ik][isrc]);
+
+                recomomJCO_bjet_deepJETT_trackpt2[2][0][ik][isrc] = (ijet1_bjet_deepJETT_tran_den_trackpt2[ik][isrc]);
+                recomomJCO_bjet_deepJETT_trackpt2[2][1][ik][isrc] = (ijet2_bjet_deepJETT_tran_den_trackpt2[ik][isrc]);
 #endif
 		}
 	
@@ -9144,14 +11078,14 @@ for (int ik=0; ik<nkappa; ik++){
 		GenJCO[2][1][ik][isrc] = (igenjet2_tran_num[ik][isrc]/igenjet2_tran_den[ik][isrc]);
 
 		//b-jet for unfolding
-		GenJCO_bjet_WPT[0][0][ik][isrc] = (igenjet1candsmom_num_bjet_WPT[ik][isrc]/(pow(igenjet1candsmom_den_bjet_WPT[ik][isrc],kappa[ik])));
-                GenJCO_bjet_WPT[0][1][ik][isrc] = (igenjet2candsmom_num_bjet_WPT[ik][isrc]/(pow(igenjet2candsmom_den_bjet_WPT[ik][isrc],kappa[ik])));
+		GenJCO_BJet[0][0][ik][isrc] = (igenjet1candsmom_num_BJet[ik][isrc]/(pow(igenjet1candsmom_den_BJet[ik][isrc],kappa[ik])));
+                GenJCO_BJet[0][1][ik][isrc] = (igenjet2candsmom_num_BJet[ik][isrc]/(pow(igenjet2candsmom_den_BJet[ik][isrc],kappa[ik])));
 
-                GenJCO_bjet_WPT[1][0][ik][isrc] = (igenjet1_long_num_bjet_WPT[ik][isrc]/igenjet1_long_den_bjet_WPT[ik][isrc]);
-                GenJCO_bjet_WPT[1][1][ik][isrc] = (igenjet2_long_num_bjet_WPT[ik][isrc]/igenjet2_long_den_bjet_WPT[ik][isrc]);
+                GenJCO_BJet[1][0][ik][isrc] = (igenjet1_long_num_BJet[ik][isrc]/igenjet1_long_den_BJet[ik][isrc]);
+                GenJCO_BJet[1][1][ik][isrc] = (igenjet2_long_num_BJet[ik][isrc]/igenjet2_long_den_BJet[ik][isrc]);
 
-                GenJCO_bjet_WPT[2][0][ik][isrc] = (igenjet1_tran_num_bjet_WPT[ik][isrc]/igenjet1_tran_den_bjet_WPT[ik][isrc]);
-                GenJCO_bjet_WPT[2][1][ik][isrc] = (igenjet2_tran_num_bjet_WPT[ik][isrc]/igenjet2_tran_den_bjet_WPT[ik][isrc]);
+                GenJCO_BJet[2][0][ik][isrc] = (igenjet1_tran_num_BJet[ik][isrc]/igenjet1_tran_den_BJet[ik][isrc]);
+                GenJCO_BJet[2][1][ik][isrc] = (igenjet2_tran_num_BJet[ik][isrc]/igenjet2_tran_den_BJet[ik][isrc]);
 
 #ifdef TRACKEFF
 		GenJCO_trackeff[0][0][ik][isrc] = (igenjet1candsmom_num_trackeff[ik][isrc]/(pow(igenjet1candsmom_den_trackeff[ik][isrc],kappa[ik])));
@@ -9162,6 +11096,16 @@ for (int ik=0; ik<nkappa; ik++){
 
                 GenJCO_trackeff[2][0][ik][isrc] = (igenjet1_tran_num_trackeff[ik][isrc]/igenjet1_tran_den_trackeff[ik][isrc]);
                 GenJCO_trackeff[2][1][ik][isrc] = (igenjet2_tran_num_trackeff[ik][isrc]/igenjet2_tran_den_trackeff[ik][isrc]);
+
+		//BJet
+		GenJCO_BJet_trackeff[0][0][ik][isrc] = (igenjet1candsmom_BJet_num_trackeff[ik][isrc]/(pow(igenjet1candsmom_BJet_den_trackeff[ik][isrc],kappa[ik])));
+                GenJCO_BJet_trackeff[0][1][ik][isrc] = (igenjet2candsmom_BJet_num_trackeff[ik][isrc]/(pow(igenjet2candsmom_BJet_den_trackeff[ik][isrc],kappa[ik])));
+
+                GenJCO_BJet_trackeff[1][0][ik][isrc] = (igenjet1_BJet_long_num_trackeff[ik][isrc]/igenjet1_BJet_long_den_trackeff[ik][isrc]);
+                GenJCO_BJet_trackeff[1][1][ik][isrc] = (igenjet2_BJet_long_num_trackeff[ik][isrc]/igenjet2_BJet_long_den_trackeff[ik][isrc]);
+
+                GenJCO_BJet_trackeff[2][0][ik][isrc] = (igenjet1_BJet_tran_num_trackeff[ik][isrc]/igenjet1_BJet_tran_den_trackeff[ik][isrc]);
+                GenJCO_BJet_trackeff[2][1][ik][isrc] = (igenjet2_BJet_tran_num_trackeff[ik][isrc]/igenjet2_BJet_tran_den_trackeff[ik][isrc]);
 #endif
 
 /*
@@ -9190,14 +11134,14 @@ for (int ik=0; ik<nkappa; ik++){
                 genmomJCO[2][1][ik][isrc] = (igenjet2_tran_den[ik][isrc]);
 
                 //b-jet for unfolding
-                genmomJCO_bjet_WPT[0][0][ik][isrc] = (pow(igenjet1candsmom_den_bjet_WPT[ik][isrc],kappa[ik]));
-                genmomJCO_bjet_WPT[0][1][ik][isrc] = (pow(igenjet2candsmom_den_bjet_WPT[ik][isrc],kappa[ik]));
+                genmomJCO_BJet[0][0][ik][isrc] = (pow(igenjet1candsmom_den_BJet[ik][isrc],kappa[ik]));
+                genmomJCO_BJet[0][1][ik][isrc] = (pow(igenjet2candsmom_den_BJet[ik][isrc],kappa[ik]));
 
-                genmomJCO_bjet_WPT[1][0][ik][isrc] = (igenjet1_long_den_bjet_WPT[ik][isrc]);
-                genmomJCO_bjet_WPT[1][1][ik][isrc] = (igenjet2_long_den_bjet_WPT[ik][isrc]);
+                genmomJCO_BJet[1][0][ik][isrc] = (igenjet1_long_den_BJet[ik][isrc]);
+                genmomJCO_BJet[1][1][ik][isrc] = (igenjet2_long_den_BJet[ik][isrc]);
 
-                genmomJCO_bjet_WPT[2][0][ik][isrc] = (igenjet1_tran_den_bjet_WPT[ik][isrc]);
-                genmomJCO_bjet_WPT[2][1][ik][isrc] = (igenjet2_tran_den_bjet_WPT[ik][isrc]);
+                genmomJCO_BJet[2][0][ik][isrc] = (igenjet1_tran_den_BJet[ik][isrc]);
+                genmomJCO_BJet[2][1][ik][isrc] = (igenjet2_tran_den_BJet[ik][isrc]);
 
 #ifdef TRACKEFF			
 		genmomJCO_trackeff[0][0][ik][isrc] = (pow(igenjet1candsmom_den_trackeff[ik][isrc],kappa[ik]));
@@ -9208,6 +11152,16 @@ for (int ik=0; ik<nkappa; ik++){
 
                 genmomJCO_trackeff[2][0][ik][isrc] = (igenjet1_tran_den_trackeff[ik][isrc]);
                 genmomJCO_trackeff[2][1][ik][isrc] = (igenjet2_tran_den_trackeff[ik][isrc]);
+
+		//BJet
+		genmomJCO_BJet_trackeff[0][0][ik][isrc] = (pow(igenjet1candsmom_BJet_den_trackeff[ik][isrc],kappa[ik]));
+                genmomJCO_BJet_trackeff[0][1][ik][isrc] = (pow(igenjet2candsmom_BJet_den_trackeff[ik][isrc],kappa[ik]));
+
+                genmomJCO_BJet_trackeff[1][0][ik][isrc] = (igenjet1_BJet_long_den_trackeff[ik][isrc]);
+                genmomJCO_BJet_trackeff[1][1][ik][isrc] = (igenjet2_BJet_long_den_trackeff[ik][isrc]);
+
+                genmomJCO_BJet_trackeff[2][0][ik][isrc] = (igenjet1_BJet_tran_den_trackeff[ik][isrc]);
+                genmomJCO_BJet_trackeff[2][1][ik][isrc] = (igenjet2_BJet_tran_den_trackeff[ik][isrc]);
 #endif
 
 		//GenJet Flavour Info
@@ -9385,12 +11339,12 @@ for (int ik=0; ik<nkappa; ik++){
 		}
 	}
 
-double recojetpt[njet] = {0.0}, recobjetpt_WPT[njet] = {0.0};
-double nTrack[njet] = {0.0}, nTrack_bjet_WPT[njet] = {0.0};
+double recojetpt[njet] = {0.0}, recobjetpt_deepJETT[njet] = {0.0};
+double nTrack[njet] = {0.0}, nTrack_bjet_deepJETT[njet] = {0.0};
 
-double RecoCandX1[njet] = {0.0}, RecoCandX1_bjet_WPT[njet] = {0.0};
-double RecoCandX2[njet] = {0.0}, RecoCandX2_bjet_WPT[njet] = {0.0};
-double RecoCandX3[njet] = {0.0}, RecoCandX3_bjet_WPT[njet] = {0.0};
+double RecoCandX1[njet] = {0.0}, RecoCandX1_bjet_deepJETT[njet] = {0.0};
+double RecoCandX2[njet] = {0.0}, RecoCandX2_bjet_deepJETT[njet] = {0.0};
+double RecoCandX3[njet] = {0.0}, RecoCandX3_bjet_deepJETT[njet] = {0.0};
 
 #ifdef FLAV
 double recobjetpt[njet] = {0.0};
@@ -9406,18 +11360,18 @@ double genjetpt[njet] = {0.0}, genbjetpt[njet] = {0.0};
 #endif
 for(int ij=0; ij<njet; ij++){
 	recojetpt[0] = recojet1_pt, recojetpt[1] = recojet2_pt;
-	recobjetpt_WPT[0] = recobjet1_pt_WPT, recobjetpt_WPT[1] = recobjet2_pt_WPT;
+	recobjetpt_deepJETT[0] = recobjet1_pt_deepJETT, recobjetpt_deepJETT[1] = recobjet2_pt_deepJETT;
 
 	nTrack[0] = nchg1, nTrack[1] = nchg2;
-	nTrack_bjet_WPT[0] = nchg1_bjet_WPT, nTrack_bjet_WPT[1] = nchg2_bjet_WPT;
+	nTrack_bjet_deepJETT[0] = nchg1_bjet_deepJETT, nTrack_bjet_deepJETT[1] = nchg2_bjet_deepJETT;
 	
 	RecoCandX1[0] = recoCandX1_J1, RecoCandX1[1] = recoCandX1_J2;
 	RecoCandX2[0] = recoCandX2_J1, RecoCandX2[1] = recoCandX2_J2;
 	RecoCandX3[0] = recoCandX3_J1, RecoCandX3[1] = recoCandX3_J2;
 
-	RecoCandX1_bjet_WPT[0] = recoCandX1_bjet_WPT_J1, RecoCandX1_bjet_WPT[1] = recoCandX1_bjet_WPT_J2;
-        RecoCandX2_bjet_WPT[0] = recoCandX2_bjet_WPT_J1, RecoCandX2_bjet_WPT[1] = recoCandX2_bjet_WPT_J2;
-        RecoCandX3_bjet_WPT[0] = recoCandX3_bjet_WPT_J1, RecoCandX3_bjet_WPT[1] = recoCandX3_bjet_WPT_J2;
+	RecoCandX1_bjet_deepJETT[0] = recoCandX1_bjet_deepJETT_J1, RecoCandX1_bjet_deepJETT[1] = recoCandX1_bjet_deepJETT_J2;
+        RecoCandX2_bjet_deepJETT[0] = recoCandX2_bjet_deepJETT_J1, RecoCandX2_bjet_deepJETT[1] = recoCandX2_bjet_deepJETT_J2;
+        RecoCandX3_bjet_deepJETT[0] = recoCandX3_bjet_deepJETT_J1, RecoCandX3_bjet_deepJETT[1] = recoCandX3_bjet_deepJETT_J2;
 
 #ifdef FLAV
 	recobjetpt[0] = recobjet1_pt, recobjetpt[1] = recobjet2_pt;
@@ -9449,11 +11403,18 @@ for(int ik=0; ik<nkappa; ik++){
                         if(recomomJCO[id][ij][ik][isrc]>0){hprof_Reco_X123_vs_jco[id][ij][ik]->Fill((RecoCandX1[ij]+RecoCandX2[ij]+RecoCandX3[ij])/recojetpt[ij],RecoJCO[id][ij][ik][isrc],weighttrg);}
 
 			//b-jet Tight Working point
-			if(recomomJCO_bjet_WPT[id][ij][ik][isrc]>0){hprof_reco_jco_pt_bjet_WPT[id][ij][ik]->Fill(recobjetpt_WPT[ij],RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);}
-			if(recomomJCO_bjet_WPT[id][ij][ik][isrc]>0){hprof_Reco_ntrack_vs_jco_bjet_WPT[id][ij][ik]->Fill(nTrack_bjet_WPT[ij],RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);}
-			if(recomomJCO_bjet_WPT[id][ij][ik][isrc]>0){hprof_Reco_X1_vs_jco_bjet_WPT[id][ij][ik]->Fill(RecoCandX1_bjet_WPT[ij]/recobjetpt_WPT[ij],RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);}
-			if(recomomJCO_bjet_WPT[id][ij][ik][isrc]>0){hprof_Reco_X12_vs_jco_bjet_WPT[id][ij][ik]->Fill((RecoCandX1_bjet_WPT[ij]+RecoCandX2_bjet_WPT[ij])/recobjetpt_WPT[ij],RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);}
-			if(recomomJCO_bjet_WPT[id][ij][ik][isrc]>0){hprof_Reco_X123_vs_jco_bjet_WPT[id][ij][ik]->Fill((RecoCandX1_bjet_WPT[ij]+RecoCandX2_bjet_WPT[ij]+RecoCandX3_bjet_WPT[ij])/recobjetpt_WPT[ij],RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);}
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_reco_jco_pt_bjet_deepJETT[id][ij][ik]->Fill(recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);}
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_ntrack_vs_jco_bjet_deepJETT[id][ij][ik]->Fill(nTrack_bjet_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);}
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X1_vs_jco_bjet_deepJETT[id][ij][ik]->Fill(RecoCandX1_bjet_deepJETT[ij]/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);}
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X12_vs_jco_bjet_deepJETT[id][ij][ik]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);}
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X123_vs_jco_bjet_deepJETT[id][ij][ik]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij]+RecoCandX3_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);}
+
+			//No SF
+			if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_reco_jco_pt_bjet_deepJETT_NoSF[id][ij][ik]->Fill(recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);}
+                        if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_ntrack_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Fill(nTrack_bjet_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);}
+                        if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X1_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Fill(RecoCandX1_bjet_deepJETT[ij]/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);}
+                        if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X12_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);}
+                        if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]>0){hprof_Reco_X123_vs_jco_bjet_deepJETT_NoSF[id][ij][ik]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij]+RecoCandX3_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);}
 #ifdef FLAV
 			//RecJet Flavour Information
 			if(recomomJCO_gjet[id][ij][ik][isrc]>0){hprof_reco_jco_pt_gjet[id][ij][ik]->Fill(recojetpt[ij],RecoJCO_gjet[id][ij][ik][isrc],weighttrg);}
@@ -9507,9 +11468,14 @@ for(int ij=0; ij<njet; ij++){
 			Reco_X12[ij]->Fill((RecoCandX1[ij]+RecoCandX2[ij])/recojetpt[ij],weighttrg);
 			Reco_X123[ij]->Fill((RecoCandX1[ij]+RecoCandX2[ij]+RecoCandX3[ij])/recojetpt[ij],weighttrg);
 
-			Reco_X1_bjet_WPT[ij]->Fill(RecoCandX1_bjet_WPT[ij]/recobjetpt_WPT[ij],weighttrg);
-                        Reco_X12_bjet_WPT[ij]->Fill((RecoCandX1_bjet_WPT[ij]+RecoCandX2_bjet_WPT[ij])/recobjetpt_WPT[ij],weighttrg);
-                        Reco_X123_bjet_WPT[ij]->Fill((RecoCandX1_bjet_WPT[ij]+RecoCandX2_bjet_WPT[ij]+RecoCandX3_bjet_WPT[ij])/recobjetpt_WPT[ij],weighttrg);
+			Reco_X1_bjet_deepJETT[ij]->Fill(RecoCandX1_bjet_deepJETT[ij]/recobjetpt_deepJETT[ij],weighttrg*BTagWt);
+                        Reco_X12_bjet_deepJETT[ij]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],weighttrg*BTagWt);
+                        Reco_X123_bjet_deepJETT[ij]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij]+RecoCandX3_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],weighttrg*BTagWt);
+
+			//No SF
+			Reco_X1_bjet_deepJETT_NoSF[ij]->Fill(RecoCandX1_bjet_deepJETT[ij]/recobjetpt_deepJETT[ij],weighttrg);
+                        Reco_X12_bjet_deepJETT_NoSF[ij]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],weighttrg);
+                        Reco_X123_bjet_deepJETT_NoSF[ij]->Fill((RecoCandX1_bjet_deepJETT[ij]+RecoCandX2_bjet_deepJETT[ij]+RecoCandX3_bjet_deepJETT[ij])/recobjetpt_deepJETT[ij],weighttrg);
 #ifdef FLAV
 			Reco_X1_bjet[ij]->Fill(RecoCandX1_bjet[ij]/recobjetpt[ij],weighttrg);
                         Reco_X12_bjet[ij]->Fill((RecoCandX1_bjet[ij]+RecoCandX2_bjet[ij])/recobjetpt[ij],weighttrg);
@@ -9626,18 +11592,6 @@ for(int iet=0; iet<njetetamn; iet++){
                                                                         h_recovar_bbarjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bbarjet[id][ij][ik][isrc],weighttrg);}
 								if(recomomJCO_ojet[id][ij][ik][isrc]>0){
 									h_recovar_ojet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_ojet[id][ij][ik][isrc],weighttrg);}
-
-								/*
-								//Second-set Flavor Tagging
-								if(recomomJCO_qjet[id][ij][ik][isrc]>0){
-                                                                	h_recovar_qjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_qjet[id][ij][ik][isrc],weighttrg);}
-								if(recomomJCO_aqjet[id][ij][ik][isrc]>0){
-                                                                	h_recovar_aqjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_aqjet[id][ij][ik][isrc],weighttrg);}
-								if(recomomJCO_aqgjet[id][ij][ik][isrc]>0){
-                                                                	h_recovar_aqgjet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_aqgjet[id][ij][ik][isrc],weighttrg);}
-								if(recomomJCO_aqojet[id][ij][ik][isrc]>0){
-                                                                	h_recovar_aqojet[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_aqojet[id][ij][ik][isrc],weighttrg);}
-								*/
 #endif
 							
 #ifdef PREFIRE
@@ -9861,22 +11815,6 @@ for(int iet=0; iet<njetetamn; iet++){
 								if(recomomJCO_ojet[id][ij][ik][isrc]>0){
 									int irecbin_ojet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_ojet[id][ij][ik][isrc],leadingptjec[isrc]);
 									h_recovar_ojet2D[id][ij][ik][iet]->Fill(irecbin_ojet,weighttrg);}
-
-								/*
-								//Second-set Flavor Tagging
-								if(recomomJCO_qjet[id][ij][ik][isrc]>0){
-                                                                	int irecbin_qjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_qjet[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                                	h_recovar_qjet2D[id][ij][ik][iet]->Fill(irecbin_qjet,weighttrg);}
-								if(recomomJCO_aqjet[id][ij][ik][isrc]>0){
-                                                                	int irecbin_aqjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_aqjet[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                                	h_recovar_aqjet2D[id][ij][ik][iet]->Fill(irecbin_aqjet,weighttrg);}
-								if(recomomJCO_aqgjet[id][ij][ik][isrc]>0){
-                        	                                        int irecbin_aqgjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_aqgjet[id][ij][ik][isrc],leadingptjec[isrc]);
-                                	                                h_recovar_aqgjet2D[id][ij][ik][iet]->Fill(irecbin_aqgjet,weighttrg);}
-								if(recomomJCO_aqojet[id][ij][ik][isrc]>0){
-                                                	                int irecbin_aqojet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_aqojet[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                        	        h_recovar_aqojet2D[id][ij][ik][iet]->Fill(irecbin_aqojet,weighttrg);}
-								*/
 #endif
 
 #ifdef PREFIRE
@@ -10413,18 +12351,21 @@ for(int ik=0; ik<nkappa; ik++){
 for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef MATCHING
-	if(recomomJCO_bjet_WPT[id][ij][ik][0]<=0 || recomomJCO_bjet_WPT[id][ij][ik][1]<=0 || recomomJCO_bjet_WPT[id][ij][ik][2]<=0 || genmomJCO_bjet_WPT[id][ij][ik][0]<=0) continue;
+	if(recomomJCO_bjet_deepJETT[id][ij][ik][0]<=0 || recomomJCO_bjet_deepJETT[id][ij][ik][1]<=0 || recomomJCO_bjet_deepJETT[id][ij][ik][2]<=0 || genmomJCO_BJet[id][ij][ik][0]<=0) continue;
 #endif
 		if (isReconstruct) {
 			for (int isrc=0; isrc<njecmx; isrc++) {
 #ifndef MATCHING
-                        	if(recomomJCO_bjet_WPT[id][ij][ik][isrc]<=0) continue;
+                        	if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]<=0) continue;
 #endif
 				if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 					if (isrc==0) {
                                         	if(ak4PFJets->size()>=2){
                                                 isRecoJCO_bjet_1D[id][ij][ik][iet]=true;
-                                                h_recovar_bjet_WPT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                                h_recovar_bjet_deepJETT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);
+						h_recovar_bjet_deepJETT_NoSF[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);
+						h_recovarIB_bjet_deepJETT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);
+						h_recovarIB_bjet_deepJETT_NoSF[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg);
 							}
 						}
 					}
@@ -10436,7 +12377,7 @@ for(int iet=0; iet<njetetamn; iet++){
                                 	if(isrc==0){
                                         	if(genjets->size()>=2){
                                                 isGenJCO_bjet_1D[id][ij][ik][iet]=true;
-                                                h_genvar_bjet_WPT[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                                h_genvar_BJet[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_BJet[id][ij][ik][isrc],weighttrg);
 						}
 					}
 				}
@@ -10448,21 +12389,21 @@ for(int iet=0; iet<njetetamn; iet++){
 						if( isRecoJCO_bjet_1D[id][ij][ik][iet] && isGenJCO_bjet_1D[id][ij][ik][iet] && irecohtjec[isrc]==igenhtres[isrc] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 #endif
 						if(ak4PFJets->size()>=2 && genjets->size()>=2){
-                                			h_RM_bjet_WPT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_WPT[id][ij][ik][isrc],GenJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                			h_RM_bjet_deepJETT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],GenJCO_BJet[id][ij][ik][isrc],weighttrg*BTagWt);
 						}
 						else if(ak4PFJets->size()>=2){
-                                			h_recofake_bjet_WPT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                			h_recofake_bjet_deepJETT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);
 							}
 						else if(genjets->size()>=2){
-                                			h_genmiss_bjet_WPT[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                			h_genmiss_BJet[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_BJet[id][ij][ik][isrc],weighttrg);
 							}
 						}
 						else{
 							if(isRecoJCO_bjet_1D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
-                                        			h_recofake_bjet_WPT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                        			h_recofake_bjet_deepJETT[id][ij][ik][iet][irecohtjec[isrc]]->Fill(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],weighttrg*BTagWt);
 							}
 							if(isGenJCO_bjet_1D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                        			h_genmiss_bjet_WPT[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_bjet_WPT[id][ij][ik][isrc],weighttrg);
+                                        			h_genmiss_BJet[id][ij][ik][iet][igenhtres[isrc]]->Fill(GenJCO_BJet[id][ij][ik][isrc],weighttrg);
 								}
 							}//else{
 						}//if (isrc==0 && isReconstruct){		
@@ -10479,6 +12420,9 @@ for(int iet=0; iet<njetetamn; iet++){
 
 bool isRecoJCO_bjet_2D[ndef][njet][nkappa][njetetamn];
 bool isGenJCO_bjet_2D[ndef][njet][nkappa][njetetamn];
+#ifdef JETRESO
+bool isRecoJCO_bjet_deepJETT_JER_2D[ndef][njet][nkappa][njetetamn][njecmx];
+#endif
 
 for(int id=0; id<ndef; id++){
 for(int ij=0; ij<njet; ij++){
@@ -10486,23 +12430,68 @@ for(int ik=0; ik<nkappa; ik++){
 for(int iet=0; iet<njetetamn; iet++){
 
 #ifdef MATCHING
-        if(recomomJCO_bjet_WPT[id][ij][ik][0]<=0 || recomomJCO_bjet_WPT[id][ij][ik][1]<=0 || recomomJCO_bjet_WPT[id][ij][ik][2]<=0 || genmomJCO_bjet_WPT[id][ij][ik][0]<=0) continue;
+        if(recomomJCO_bjet_deepJETT[id][ij][ik][0]<=0 || recomomJCO_bjet_deepJETT[id][ij][ik][1]<=0 || recomomJCO_bjet_deepJETT[id][ij][ik][2]<=0 || genmomJCO_BJet[id][ij][ik][0]<=0) continue;
 #endif
 		if (isReconstruct) {
                 	for (int isrc=0; isrc<njecmx; isrc++) {
 #ifndef MATCHING
-                        	if(recomomJCO_bjet_WPT[id][ij][ik][isrc]<=0) continue;
+                        	if(recomomJCO_bjet_deepJETT[id][ij][ik][isrc]<=0) continue;
 #endif
                                 if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
                                         if (isrc==0) {
                                                 if(ak4PFJets->size()>=2){
                                                 isRecoJCO_bjet_2D[id][ij][ik][iet]=true;
-						int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_WPT[id][ij][ik][isrc],leadingptjec[isrc]);
-                                                h_recovar_bjet2D_WPT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg);
+						int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recovar_bjet2D_deepJETT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+						h_recovar_bjet2D_deepJETT_NoSF[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg);
+						//cout<<"BTagWt : "<<BTagWt<<" weighttrg : "<<weighttrg<<" Total wt : "<<weighttrg*BTagWt<<endl;
+#ifdef PREFIRE
+                                                h_recovar_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                h_recovar_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1up*BTagWt);
+                                                h_recovar_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1down*BTagWt);
+#endif
+
+#ifdef BTAGUNC
+                                                h_recovar_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upCorr);
+                                                h_recovar_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downCorr);
+                                                h_recovar_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                h_recovar_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downUncorr);
+						/*
+						cout<<"BTagWt_upCorr : "<<BTagWt_upCorr<<" weighttrg : "<<weighttrg<<" Total BTagWt_upCorr : "<<weighttrg*BTagWt_upCorr<<endl;
+						cout<<"BTagWt_downCorr : "<<BTagWt_downCorr<<" weighttrg : "<<weighttrg<<" Total BTagWt_downCorr : "<<weighttrg*BTagWt_downCorr<<endl;
+						cout<<"BTagWt_upUncorr : "<<BTagWt_upUncorr<<" weighttrg : "<<weighttrg<<" Total BTagWt_upUncorr : "<<weighttrg*BTagWt_upUncorr<<endl;
+						cout<<"BTagWt_downUncorr : "<<BTagWt_downUncorr<<" weighttrg : "<<weighttrg<<" Total BTagWt_downUncorr : "<<weighttrg*BTagWt_downUncorr<<endl;
+						*/
+#endif
+
+#ifdef LHAPDF
+                                                        for (int ix=1; ix<nnnmx; ix++) {
+                                                                if (ak4PFJets->size()>=2) {
+                                                                        int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                                        h_recovar_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Fill(irecbin_bjet, weighttrg*BTagWt*pdfwt[ix]);
+                                                                }
                                                         }
-                                                }
-                                        }
-                                }
+#endif
+                                                        }//if(ak4PFJets->size()>=2){
+                                                }//if (isrc==0) {
+						else{
+#ifdef JETENERGY
+                                                        if(ak4PFJets->size()>=2){
+                                                                int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                                h_recovar_bjet_deepJETT_jec2D[id][ij][ik][iet][isrc]->Fill(irecbin_bjet, weighttrg);
+                                                        }
+
+#elif defined(JETRESO)
+                                                        if(ak4PFJets->size()>=2){
+                                                                isRecoJCO_JER_2D[id][ij][ik][iet][isrc]=true;
+                                                                int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                                h_recovar_bjet_deepJETT_res2D[id][ij][ik][iet][isrc]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                        }
+
+#endif
+						}
+                                        }//if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+                                }//for (int isrc=0; isrc<njecmx; isrc++) {
                         }//if (isReconstruct) {
 		if(isMC){
                         for (int isrc=0; isrc<nGenReso; isrc++) {
@@ -10510,11 +12499,48 @@ for(int iet=0; iet<njetetamn; iet++){
                                         if(isrc==0){
                                                 if(genjets->size()>=2){
                                                 isGenJCO_bjet_2D[id][ij][ik][iet]=true;
-						int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_bjet_WPT[id][ij][ik][isrc],leadgenptres[isrc]);
-                                                h_genvar_bjet2D_WPT[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);			
-                                                }
-                                        }
-                                }
+						int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genvar_BJet2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);	
+
+#ifdef PREFIRE
+                                                h_genvar_BJet_prefire2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);
+                                                h_genvar_BJet_prefireup_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1up);
+                                                h_genvar_BJet_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1down);
+#endif
+
+#ifdef BTAGUNC
+                                                h_genvar_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upCorr);
+                                                h_genvar_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downCorr);
+                                                h_genvar_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                h_genvar_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downUncorr);
+#endif
+
+                                                }//if(genjets->size()>=2){
+#ifdef LHAPDF
+                                                        for (int ix=1; ix<nnnmx; ix++) {
+                                                                if (genjets->size()>=2) {
+                                                                        int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                                        h_genvar_BJet_pdf2D[id][ij][ik][iet][ix]->Fill(igenbin_bjet, weighttrg*pdfwt[ix]);
+                                                                }
+                                                        }
+                                                        for (int iy=0; iy<nmgscale; iy++) {
+                                                                if (genjets->size()>=2) {
+                                                                        int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                                        h_genvar_BJet_mgscale2D[id][ij][ik][iet][iy]->Fill(igenbin_bjet, weighttrg*mgscale[iy]);
+                                                                }
+                                                        }
+#endif
+
+#ifdef SCALEUNC
+                                                        for (int ix=0; ix<nscale; ix++) {
+                                                                if (genjets->size()>=2) {
+                                                                        int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                                        h_genvar_BJet_scaleunc2D[id][ij][ik][iet][ix]->Fill(igenbin_bjet, weighttrg*scalewt[ix]);
+                                                                }
+                                                        }
+#endif
+                                        }//if(isrc==0){
+                                }//if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
                                         if (isrc==0 && isReconstruct){
 #ifdef MATCHING
                                                 if( isRecoJCO_bjet_2D[id][ij][ik][iet] && isGenJCO_bjet_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
@@ -10522,28 +12548,158 @@ for(int iet=0; iet<njetetamn; iet++){
                                                 if( isRecoJCO_bjet_2D[id][ij][ik][iet] && isGenJCO_bjet_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
 #endif
                                 		if(ak4PFJets->size()>=2 && genjets->size()>=2){
-							int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_WPT[id][ij][ik][isrc],leadingptjec[isrc]);
-                                        		int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_bjet_WPT[id][ij][ik][isrc],leadgenptres[isrc]);
-                                        		h_RM_bjet2D_WPT[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg);
+							int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],leadingptjec[isrc]);
+                                        		int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                        		h_RM_bjet2D_deepJETT[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt);
+
+#ifdef PREFIRE
+                                                        h_RM_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt);
+                                                        h_RM_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrgL1up*BTagWt);
+                                                        h_RM_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrgL1down*BTagWt);
+#endif
+
+#ifdef BTAGUNC
+                                                        h_RM_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt_upCorr);
+                                                        h_RM_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt_downCorr);
+                                                        h_RM_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt_upUncorr);
+                                                        h_RM_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt_downUncorr);
+#endif
+
+#ifdef LHAPDF
+                                                for (int ix=1; ix<nnnmx; ix++) {
+                                                        h_RM_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Fill(irecbin_bjet, igenbin_bjet, weighttrg*BTagWt*pdfwt[ix]);
+                                                }
+#endif
                                 		}else if(ak4PFJets->size()>=2){
-							int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_WPT[id][ij][ik][isrc],leadingptjec[isrc]);
-                                        		h_recofake_bjet2D_WPT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg);
+							int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],leadingptjec[isrc]);
+                                        		h_recofake_bjet2D_deepJETT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+
+#ifdef PREFIRE
+                                                        h_recofake_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                        h_recofake_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1up*BTagWt);
+                                                        h_recofake_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1down*BTagWt);
+#endif
+
+#ifdef BTAGUNC
+                                                        h_recofake_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upCorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downCorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downUncorr);
+#endif
+
+#ifdef LHAPDF
+                                                for (int ix=1; ix<nnnmx; ix++) {
+                                                        h_recofake_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Fill(irecbin_bjet, weighttrg*BTagWt*pdfwt[ix]);
+                                                }
+#endif
                                 		}else if(genjets->size()>=2){
-							int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_bjet_WPT[id][ij][ik][isrc],leadgenptres[isrc]);
-                                        		h_genmiss_bjet2D_WPT[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);	
+							int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                        		h_genmiss_BJet2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);	
+
+#ifdef PREFIRE
+                                                        h_genmiss_BJet_prefire2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);
+                                                        h_genmiss_BJet_prefireup_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1up);
+                                                        h_genmiss_BJet_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1down);
+#endif
+
+#ifdef BTAGUNC
+                                                        h_genmiss_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upCorr);
+                                                        h_genmiss_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downCorr);
+                                                        h_genmiss_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                        h_genmiss_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downUncorr);
+#endif
+
+#ifdef LHAPDF
+                                                for (int ix=1; ix<nnnmx; ix++) {
+                                                        h_genmiss_BJet_pdf2D[id][ij][ik][iet][ix]->Fill(igenbin_bjet, weighttrg*pdfwt[ix]);
+                                                }
+#endif
                                 			}
 						}
 						else{
                                         		if(isRecoJCO_bjet_2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
-                                                		int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_WPT[id][ij][ik][isrc],leadingptjec[isrc]);
-                                        			h_recofake_bjet2D_WPT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg);
+                                                		int irecbin_bjet = RecoBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][isrc],leadingptjec[isrc]);
+                                        			h_recofake_bjet2D_deepJETT[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+
+#ifdef PREFIRE
+                                                                h_recofake_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                                h_recofake_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1up*BTagWt);
+                                                                h_recofake_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrgL1down*BTagWt);
+#endif
+
+#ifdef BTAGUNC
+                                                        h_recofake_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upCorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downCorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                        h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(irecbin_bjet, weighttrg*BTagWt_downUncorr);
+#endif
+
+#ifdef LHAPDF
+                                                for (int ix=1; ix<nnnmx; ix++) {
+                                                        h_recofake_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Fill(irecbin_bjet, weighttrg*BTagWt*pdfwt[ix]);
+                                                }
+#endif
                                         		}
                                         		if(isGenJCO_bjet_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
-                                                		int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_bjet_WPT[id][ij][ik][isrc],leadgenptres[isrc]);
-                                        			h_genmiss_bjet2D_WPT[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);
+                                                		int igenbin_bjet = GenBinningbjet2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                        			h_genmiss_BJet2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);
+
+
+#ifdef PREFIRE
+                                                                h_genmiss_BJet_prefire2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg);
+                                                                h_genmiss_BJet_prefireup_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1up);
+                                                                h_genmiss_BJet_prefiredown_2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrgL1down);
+#endif
+
+#ifdef BTAGUNC
+                                                        h_genmiss_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upCorr);
+                                                        h_genmiss_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downCorr);
+                                                        h_genmiss_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_upUncorr);
+                                                        h_genmiss_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Fill(igenbin_bjet, weighttrg*BTagWt_downUncorr);
+#endif
+
+#ifdef LHAPDF
+                                                for (int ix=1; ix<nnnmx; ix++) {
+                                                        h_genmiss_BJet_pdf2D[id][ij][ik][iet][ix]->Fill(igenbin_bjet, weighttrg*pdfwt[ix]);
+                                                }
+#endif
                         	                		}
                                 			}//else{
 						}//if (isrc==0 && isReconstruct){               
+
+#ifdef JETRESO
+                        if(isrc==0 && isReconstruct){
+                                for(int ijer=0 ; ijer < njecmx ; ijer++){
+#ifdef MATCHING
+                                        if( isRecoJCO_bjet_deepJETT_JER_2D[id][ij][ik][iet][ijer] && isGenJCO_bjet_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && jet_matches){
+#endif
+                                                if(ak4PFJets->size()>=2 && genjets->size()>=2){
+                                                        int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][ijer],leadingptjec[ijer]);
+                                                        int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                        h_RM_bjet_deepJETT_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin_bjet,igenbin_bjet,weighttrg*BTagWt);
+                                                        }
+                                                else if(ak4PFJets->size()>=2){
+                                                        int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][ijer],leadingptjec[ijer]);
+                                                        h_recofake_bjet_deepJETT_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                        }
+                                                else if(genjets->size()>=2){
+                                                        int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                        h_genmiss_BJet_JER_2D[id][ij][ik][iet][ijer]->Fill(igenbin_bjet, weighttrg);
+                                                        }
+                                                }
+                                                else{
+                                                        if(isRecoJCO_bjet_deepJETT_JER_2D[id][ij][ik][iet][ijer] && irecohtjec[ijer]>=0 && irecohtjec[ijer]<njetptmn && ak4PFJets->size()>=2){
+                                                                int irecbin_bjet = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT[id][ij][ik][ijer],leadingptjec[ijer]);
+                                                                h_recofake_bjet_deepJETT_JER_2D[id][ij][ik][iet][ijer]->Fill(irecbin_bjet, weighttrg*BTagWt);
+                                                                }
+                                                        if(isGenJCO2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
+                                                                int igenbin_bjet = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                                h_genmiss_BJet_JER_2D[id][ij][ik][iet][ijer]->Fill(igenbin_bjet, weighttrg);
+                                                                }
+                                                        }
+                                                }//for(int ijer=0 ; ijer < njecmx ; ijer++){
+					 }//if(isrc==0 && isReconstruct){
+#endif
                         		}//for (int isrc=0; isrc<nGenReso; isrc++) {
 				}//if(isMC){
                         }//for (int ik=0; ik<nkappa; ik++){
@@ -10551,6 +12707,223 @@ for(int iet=0; iet<njetetamn; iet++){
         }//for(int id=0; id<ndef; id++){
 }//for (int iet=0; iet<njetetamn; iet++){
 
+
+#ifdef TRACKEFF
+bool isRecoJCO_BJet_TrackEff2D[ndef][njet][nkappa][njetetamn];
+bool isGenJCO_BJet_TrackEff2D[ndef][njet][nkappa][njetetamn];
+
+for(int id=0; id<ndef; id++){
+for(int ij=0; ij<njet; ij++){
+for(int ik=0; ik<nkappa; ik++){
+for(int iet=0; iet<njetetamn; iet++){
+
+#ifdef MATCHING
+        if(recomomJCO_bjet_deepJETT_trackeff[id][ij][ik][0]<=0 || recomomJCO_bjet_deepJETT_trackeff[id][ij][ik][1]<=0 || recomomJCO_bjet_deepJETT_trackeff[id][ij][ik][2]<=0 || genmomJCO_BJet_trackeff[id][ij][ik][0]<=0) continue;
+#endif
+                if (isReconstruct) {
+                        for (int isrc=0; isrc<njecmx; isrc++) {
+                                if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+                                        if (isrc==0) {
+                                                if(ak4PFJets->size()>=2){
+                                                        isRecoJCO_BJet_TrackEff2D[id][ij][ik][iet]=true;
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                        h_recovar_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Fill(irecbin,weighttrg*BTagWt);
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                if(isMC){
+                        for (int isrc=0; isrc<nGenReso; isrc++) {
+                                if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                        if(isrc==0){
+                                                if(genjets->size()>=2){
+                                                        isGenJCO_BJet_TrackEff2D[id][ij][ik][iet]=true;
+                                                        int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                        h_genvar_BJet_trackeff2D[id][ij][ik][iet]->Fill(igenbin,weighttrg);
+                                                        }
+                                                }
+                                        }
+                                if(isrc==0 && isReconstruct){
+#ifdef MATCHING
+                                if(isRecoJCO_BJet_TrackEff2D[id][ij][ik][iet] && isGenJCO_BJet_TrackEff2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
+#endif
+                                        if(ak4PFJets->size()>=2 && genjets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_RM_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg*BTagWt);
+                                        }
+                                        else if(ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        else if(genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackeff2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                        }
+                                }
+                                else{
+                                        if(isRecoJCO_TrackEff2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackeff[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        if(isGenJCO_TrackEff2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet_trackeff[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackeff2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                }
+                                        }
+                                }
+                        }
+                }
+                        }
+                }
+        }
+}
+#endif
+
+#ifdef TRACKPTUP
+//Trackpt UP
+bool isRecoJCO_bjet_deepJETT_TrackPT1_2D[ndef][njet][nkappa][njetetamn];
+bool isGenJCO_bjet_deepJETT_TrackPT1_2D[ndef][njet][nkappa][njetetamn];
+
+for(int id=0; id<ndef; id++){
+for(int ij=0; ij<njet; ij++){
+for(int ik=0; ik<nkappa; ik++){
+for(int iet=0; iet<njetetamn; iet++){
+
+#ifdef MATCHING
+        if(recomomJCO_bjet_deepJETT_trackpt1[id][ij][ik][0]<=0 || recomomJCO_bjet_deepJETT_trackpt1[id][ij][ik][1]<=0 || recomomJCO_bjet_deepJETT_trackpt1[id][ij][ik][2]<=0 || genmomJCO_BJet[id][ij][ik][0]<=0) continue;
+#endif
+                if (isReconstruct) {
+                        for (int isrc=0; isrc<njecmx; isrc++) {
+                                if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+                                        if (isrc==0) {
+                                                if(ak4PFJets->size()>=2){
+                                                        isRecoJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet]=true;
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt1[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                        h_recovar_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Fill(irecbin,weighttrg*BTagWt);
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                if(isMC){
+                        for (int isrc=0; isrc<nGenReso; isrc++) {
+                                if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                        if(isrc==0){
+                                                if(genjets->size()>=2){
+                                                isGenJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet]=true;
+                                                }
+                                        }
+                                }
+                                if (isrc==0 && isReconstruct){
+#ifdef MATCHING
+                                if(isRecoJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet] && isGenJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
+#endif
+                                        if(ak4PFJets->size()>=2 && genjets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt1[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_RM_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg*BTagWt);
+                                        }
+                                        else if(ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt1[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        else if(genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackpt1_2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                        }
+                                }
+                                else{
+                                        if(isRecoJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt1[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        if(isGenJCO_bjet_deepJETT_TrackPT1_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackpt1_2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                }
+                                        }
+                                }
+                        }
+                }
+                        }
+                }
+        }
+}
+#endif
+
+#ifdef TRACKPTDOWN
+//Trackpt Down
+bool isRecoJCO_bjet_deepJETT_TrackPT2_2D[ndef][njet][nkappa][njetetamn];
+bool isGenJCO_bjet_deepJETT_TrackPT2_2D[ndef][njet][nkappa][njetetamn];
+
+for(int id=0; id<ndef; id++){
+for(int ij=0; ij<njet; ij++){
+for(int ik=0; ik<nkappa; ik++){
+for(int iet=0; iet<njetetamn; iet++){
+
+#ifdef MATCHING
+        if(recomomJCO_bjet_deepJETT_trackpt2[id][ij][ik][0]<=0 || recomomJCO_bjet_deepJETT_trackpt2[id][ij][ik][1]<=0 || recomomJCO_bjet_deepJETT_trackpt2[id][ij][ik][2]<=0 || genmomJCO_BJet[id][ij][ik][0]<=0) continue;
+#endif
+                if (isReconstruct) {
+                        for (int isrc=0; isrc<njecmx; isrc++) {
+                                if (irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn){
+                                        if (isrc==0) {
+                                                if(ak4PFJets->size()>=2){
+                                                        isRecoJCO_bjet_deepJETT_TrackPT2_2D[id][ij][ik][iet]=true;
+                                                        int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt2[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                        h_recovar_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Fill(irecbin,weighttrg*BTagWt);
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                if(isMC){
+                        for (int isrc=0; isrc<nGenReso; isrc++) {
+                                if (isMC && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn){
+                                        if(isrc==0){
+                                                if(genjets->size()>=2){
+                                                isGenJCO_bjet_deepJETT_TrackPT2_2D[id][ij][ik][iet]=true;
+                                                }
+                                        }
+                                }
+                                if (isrc==0 && isReconstruct){
+#ifdef MATCHING
+                                if(isRecoJCO_bjet_deepJETT_TrackPT2_2D[id][ij][ik][iet] && isGenJCO_bjet_deepJETT_TrackPT2_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && jet_matches){
+#endif
+                                        if(ak4PFJets->size()>=2 && genjets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt2[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_RM_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Fill(irecbin,igenbin,weighttrg*BTagWt);
+                                        }
+                                        else if(ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt2[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        else if(genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackpt2_2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                        }
+                                }
+                                else{
+                                        if(isRecoJCO_TrackPT2_2D[id][ij][ik][iet] && irecohtjec[isrc]>=0 && irecohtjec[isrc]<njetptmn && ak4PFJets->size()>=2){
+                                                int irecbin = RecoBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(RecoJCO_bjet_deepJETT_trackpt2[id][ij][ik][isrc],leadingptjec[isrc]);
+                                                h_recofake_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Fill(irecbin, weighttrg*BTagWt);
+                                        }
+                                        if(isGenJCO_TrackPT2_2D[id][ij][ik][iet] && igenhtres[isrc]>=0 && igenhtres[isrc]<njetptmn && genjets->size()>=2){
+                                                int igenbin = GenBinning2D[id][ij][ik][iet]->GetGlobalBinNumber(GenJCO_BJet[id][ij][ik][isrc],leadgenptres[isrc]);
+                                                h_genmiss_BJet_trackpt2_2D[id][ij][ik][iet]->Fill(igenbin, weighttrg);
+                                                }
+                                        }
+                                }
+                        }
+                }
+                        }
+                }
+        }
+}
+#endif
 
 //cout <<"-------------"<<endl;
 //cout<<"Event wt : "<<weighttrg<<endl;
@@ -10586,7 +12959,7 @@ QCDEventShape::beginJob() {
 #ifdef JETENERGY
   for (int isrc = 0; isrc < nsrc; isrc++) {
     const char *name = srcnames[isrc];
-    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
+    //JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt", name);  // data chnage eras for different era
     JetCorrectorParameters *p = new JetCorrectorParameters("Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt", name);   // for mc
     JetCorrectionUncertainty *unc = new JetCorrectionUncertainty(*p);
     //vsrc[isrc] = unc;vsrc.push_back(unc);
@@ -10615,11 +12988,12 @@ QCDEventShape::endJob()
 					h_RM2D[id][ij][ik][iet]->Write();
 
 					//b-jet
-					h_recovar_bjet2D_WPT[id][ij][ik][iet]->Write();
-                                        h_genvar_bjet2D_WPT[id][ij][ik][iet]->Write();
-                                        h_recofake_bjet2D_WPT[id][ij][ik][iet]->Write();
-                                        h_genmiss_bjet2D_WPT[id][ij][ik][iet]->Write();
-                                        h_RM_bjet2D_WPT[id][ij][ik][iet]->Write();
+					h_recovar_bjet2D_deepJETT[id][ij][ik][iet]->Write();
+					h_recovar_bjet2D_deepJETT_NoSF[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet2D_deepJETT[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet2D_deepJETT[id][ij][ik][iet]->Write();
 
 #ifdef FLAV
 					h_recovar_gjet2D[id][ij][ik][iet]->Write();
@@ -10630,14 +13004,6 @@ QCDEventShape::endJob()
 					h_recovar_bjet2D[id][ij][ik][iet]->Write();
                                         h_recovar_bbarjet2D[id][ij][ik][iet]->Write();
 					h_recovar_ojet2D[id][ij][ik][iet]->Write();
-
-					/*
-					//Second-Set Flavor Tagging
-					h_recovar_qjet2D[id][ij][ik][iet]->Write();
-					h_recovar_aqjet2D[id][ij][ik][iet]->Write();
-					h_recovar_aqgjet2D[id][ij][ik][iet]->Write();
-					h_recovar_aqojet2D[id][ij][ik][iet]->Write();
-					*/
 #endif
 
 					//GenJet Flavour Info
@@ -10656,22 +13022,41 @@ QCDEventShape::endJob()
 						h_recofakepdf2D[id][ij][ik][iet][ix]->Write();
 						h_genmisspdf2D[id][ij][ik][iet][ix]->Write();
 						h_RMpdf2D[id][ij][ik][iet][ix]->Write();
+
+						//BJet
+						h_genvar_BJet_pdf2D[id][ij][ik][iet][ix]->Write();
+                                                h_recovar_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Write();
+                                                h_recofake_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Write();
+                                                h_genmiss_BJet_pdf2D[id][ij][ik][iet][ix]->Write();
+                                                h_RM_bjet_deepJETT_pdf2D[id][ij][ik][iet][ix]->Write();
 					}
 					for (int iy=0; iy<nmgscale; iy++) {h_genvarmgscale2D[id][ij][ik][iet][iy]->Write();}
+					//BJet
+					for (int iy=0; iy<nmgscale; iy++) {h_genvar_BJet_mgscale2D[id][ij][ik][iet][iy]->Write();}
 #endif
 
 #ifdef  SCALEUNC
                                         for (int ix=0; ix<nscale; ix++) {h_genvarscaleunc2D[id][ij][ik][iet][ix]->Write();}
+					//BJet
+					for (int ix=0; ix<nscale; ix++) {h_genvar_BJet_scaleunc2D[id][ij][ik][iet][ix]->Write();}
 #endif
 
 #ifdef  JETENERGY
             				for (int ix=1; ix<njecmx; ix++) {h_recovarjec2D[id][ij][ik][iet][ix]->Write();}
+					//BJet
+					for (int ix=1; ix<njecmx; ix++) {h_recovar_bjet_deepJETT_jec2D[id][ij][ik][iet][ix]->Write();}
 #elif defined(JETRESO)
             				for (int ix=0; ix<njecmx; ix++ ) {
              					h_recovarres2D[id][ij][ik][iet][ix]->Write();
              					h_RM_JER_2D[id][ij][ik][iet][ix]->Write();
              					h_recofake_JER_2D[id][ij][ik][iet][ix]->Write();
              					h_genmiss_JER_2D[id][ij][ik][iet][ix]->Write();
+
+						//BJet
+						h_recovar_bjet_deepJETT_res2D[id][ij][ik][iet][ix]->Write();
+                                                h_RM_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix]->Write();
+                                                h_recofake_bjet_deepJETT_JER_2D[id][ij][ik][iet][ix]->Write();
+                                                h_genmiss_BJet_JER_2D[id][ij][ik][iet][ix]->Write();
          					}
 #endif
 
@@ -10693,6 +13078,25 @@ QCDEventShape::endJob()
                                         h_recofake_prefiredown_2D[id][ij][ik][iet]->Write();
                                         h_genmiss_prefiredown_2D[id][ij][ik][iet]->Write();
                                         h_RM_prefiredown_2D[id][ij][ik][iet]->Write();
+
+					//BJet
+					h_recovar_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_prefire2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_prefire2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_prefire2D[id][ij][ik][iet]->Write();
+
+                                        h_recovar_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_prefireup_2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_prefireup_2D[id][ij][ik][iet]->Write();
+
+                                        h_recovar_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_prefiredown_2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_prefiredown_2D[id][ij][ik][iet]->Write();
 #endif
 
 #ifdef TRACKEFF
@@ -10701,6 +13105,13 @@ QCDEventShape::endJob()
                                         h_recofake_trackeff2D[id][ij][ik][iet]->Write();
                                         h_genmiss_trackeff2D[id][ij][ik][iet]->Write();
                                         h_RM_trackeff2D[id][ij][ik][iet]->Write();
+
+					//BJet
+					h_recovar_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_trackeff2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_trackeff2D[id][ij][ik][iet]->Write();
 #endif
 
 /*
@@ -10718,6 +13129,12 @@ QCDEventShape::endJob()
                                         h_recofake_trackpt1_2D[id][ij][ik][iet]->Write();
                                         h_genmiss_trackpt1_2D[id][ij][ik][iet]->Write();
                                         h_RM_trackpt1_2D[id][ij][ik][iet]->Write();
+
+					//BJet
+					h_recovar_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_trackpt1_2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_trackpt1_2D[id][ij][ik][iet]->Write();
 #endif
 
 #ifdef TRACKPTDOWN
@@ -10725,6 +13142,39 @@ QCDEventShape::endJob()
                                         h_recofake_trackpt2_2D[id][ij][ik][iet]->Write();
                                         h_genmiss_trackpt2_2D[id][ij][ik][iet]->Write();
                                         h_RM_trackpt2_2D[id][ij][ik][iet]->Write();
+
+					//BJet
+					h_recovar_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_trackpt2_2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_trackpt2_2D[id][ij][ik][iet]->Write();
+#endif
+
+#ifdef BTAGUNC
+					h_recovar_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Write();
+					h_recovar_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Write();
+					h_recovar_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Write();
+					h_recovar_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Write();
+
+					h_genvar_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Write();
+                                        h_genvar_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Write();
+
+					h_recofake_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Write();
+                                        h_recofake_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Write();
+
+					h_genmiss_BJet_BTagWt_upCorr2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_BTagWt_downCorr2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_BTagWt_upUncorr2D[id][ij][ik][iet]->Write();
+                                        h_genmiss_BJet_BTagWt_downUncorr2D[id][ij][ik][iet]->Write();
+
+					h_RM_bjet_deepJETT_BTagWt_upCorr2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_BTagWt_downCorr2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_BTagWt_upUncorr2D[id][ij][ik][iet]->Write();
+                                        h_RM_bjet_deepJETT_BTagWt_downUncorr2D[id][ij][ik][iet]->Write();
 #endif
 					}
 				}

@@ -67,33 +67,33 @@ def main():
                 config.General.transferLogs = True
                 config.JobType.pluginName = 'Analysis'
                 config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
-#               config.Data.ignoreLocality = True
+		#config.Data.ignoreLocality = True
                 config.Data.inputDBS = 'global'
-		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt"]
+		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt","btagging_2017.json.gz","BTagEfficiency2017_09Jun2024.root"]
 
-                config.JobType.maxMemoryMB = 2500
-#               config.JobType.priority = 9999
+                config.JobType.maxMemoryMB = 4000
+		#config.JobType.priority = 9999
 		#config.JobType.maxJobRuntimeMin = 3000
-		#config.JobType.numCores = 2
-#               config.Data.splitting = 'EventAwareLumiBased'
+		config.JobType.numCores = 2
+		#config.Data.splitting = 'EventAwareLumiBased'
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
-#               config.Data.useParent = True
+		#config.Data.useParent = True
                 config.Data.inputDataset = None
-#               config.Data.splitting = 'LumiBased'
-#               config.Data.splitting = 'Automatic'
-#               config.Data.unitsPerJob = 20
-#               config.Data.totalUnits = 30
+		#config.Data.splitting = 'LumiBased'
+		#config.Data.splitting = 'Automatic'
+		#config.Data.unitsPerJob = 20
+		#config.Data.totalUnits = 30
                 config.Data.outputDatasetTag = None
-#                config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
-#               config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
+		#config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
+		#config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 		config.Data.outLFNDirBase = '/store/user/sobarman/JetCharge/Analysis/2017'
                 config.Data.publication = False
                 config.JobType.allowUndistributedCMSSW = True
                 #config.Site.storageSite = 'T2_IN_TIFR'
 		config.Site.storageSite = 'T3_US_FNALLPC'
 
-            # Will submit one task for each of these input datasets.
+            	#Will submit one task for each of these input datasets.
                 inputDatasets = [
 	#'/QCD_Pt_15to30_TuneCP5_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM',
 	#'/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM',
@@ -110,6 +110,7 @@ def main():
 	#'/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM',
 	#'/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM',
 	#'/QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM',
+	
 	'/QCD_Pt_15to30_TuneCP5_13TeV_pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1/MINIAODSIM',
 	'/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1/MINIAODSIM',
 	'/QCD_Pt_50to80_TuneCP5_13TeV_pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1/MINIAODSIM',
@@ -129,8 +130,8 @@ def main():
     	  	requestName =['Pt_15to30_TuneCP5','Pt_30to50_TuneCP5','Pt_50to80_TuneCP5','Pt_80to120_TuneCP5','Pt_120to170_TuneCP5','Pt_170to300_TuneCP5',
                                'Pt_300to470_TuneCP5','Pt_470to600_TuneCP5','Pt_600to800_TuneCP5','Pt_800to1000_TuneCP5','Pt_1000to1400_TuneCP5',
 				'Pt_1400to1800_TuneCP5','Pt_1800to2400_TuneCP5','Pt_2400to3200_TuneCP5','Pt_3200toinf_TuneCP5']
-		
-                ireq = 0
+		 
+		ireq = 0
                 for inDS in inputDatasets: 
                         config.General.requestName = requestName[ireq]
                         ireq += 1

@@ -6,9 +6,9 @@ process = cms.Process("Test")
 #process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
 
-process.options = cms.untracked.PSet(
-    SkipEvent = cms.untracked.vstring('ProductNotFound')
-)
+#process.options = cms.untracked.PSet(
+#    SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
 
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
@@ -16,11 +16,9 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/MINIAODSIM/106X_mc2017_realistic_v6-v2/240000/001B7529-3179-1D4E-881E-931109365733.root',
-'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
-#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/4207BCEB-1C21-3F4E-94E7-81254FB74338.root',
-#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2540000/14760F85-292E-9348-AA76-31497448B990.root',
+#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
 #'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/0086E683-690A-A84C-8769-8C1A1BEB7CC4.root',
-#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/30000/02BAF4C4-FC88-8947-BC24-1EA27D3117D8.root',
+'/store/mc/RunIISummer20UL17MiniAODv2/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/30000/02BAF4C4-FC88-8947-BC24-1EA27D3117D8.root',
  )
 
 #eventsToSkip = cms.untracked.VEventRange('1:1950-1:2000'),
@@ -55,8 +53,8 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-#process.options.numberOfThreads=cms.untracked.uint32(2)
-#process.options.numberOfStreams=cms.untracked.uint32(0)
+process.options.numberOfThreads=cms.untracked.uint32(2)
+process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
  cout = cms.untracked.PSet(  
@@ -147,6 +145,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 	objects = cms.InputTag("slimmedPatTrigger"),
         #objects = cms.InputTag("selectedPatTrigger"),
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+	#genparticles = cms.InputTag("prunedGenParticles"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
 	genJetFlavourInfos = cms.InputTag('slimmedGenJetsFlavourInfos'),
@@ -186,13 +185,14 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	BtagScaleFacFile = cms.string("btagging.json.gz"),
+	BTagEffFile = cms.string("BTagEfficiency2017_09Jun2024.root"),
+	BtagScaleFacFile = cms.string("btagging_2017.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
-         'pfCombinedInclusiveSecondaryVertexV2BJetTags',
          'pfDeepCSVJetTags:probb',
          'pfDeepCSVJetTags:probbb',
-         'pfDeepCSVJetTags:probc',
-         'pfDeepCSVJetTags:probudsg'
+	 'pfDeepFlavourJetTags:probb',
+	 'pfDeepFlavourJetTags:probbb',
+	 'pfDeepFlavourJetTags:problepb'
     )
  )
 

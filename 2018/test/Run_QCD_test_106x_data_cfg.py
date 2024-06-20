@@ -6,6 +6,10 @@ process = cms.Process("Test")
 #process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
 
+#process.options = cms.untracked.PSet(
+#    SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
+
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
@@ -19,7 +23,7 @@ process.source = cms.Source("PoolSource",
  )
 )
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
@@ -65,6 +69,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 )  
 
 # For Pileup JetID 
+'''
 process.load('RecoJets.JetProducers.PileupJetID_cfi')
 from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL17
 process.pileupJetIdUpdated = process.pileupJetId.clone(
@@ -73,6 +78,17 @@ process.pileupJetIdUpdated = process.pileupJetId.clone(
         applyJec=False,
         vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
         algos = cms.VPSet(_chsalgos_106X_UL17),
+    )
+'''
+
+process.load('RecoJets.JetProducers.PileupJetID_cfi')
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL18
+process.pileupJetIdUpdated = process.pileupJetId.clone( 
+        jets=cms.InputTag("slimmedJets"),
+        inputIsCorrected=True,
+        applyJec=False,
+        vertexes=cms.InputTag("offlineSlimmedPrimaryVertices"),
+        algos = cms.VPSet(_chsalgos_106X_UL18),
     )
 
 #process.load("HLTrigger.HLTcore.hltPrescaleRecorder_cfi")
@@ -93,10 +109,13 @@ process.pileupJetIdUpdated = process.pileupJetId.clone(
 #makes chs ak5 jets   (instead of ak4 that are default in miniAOD )
 #process.ak5PFJetsCHS = ak5PFJets.clone(src = 'chs')
 
+
+
+
 process.TFileService=cms.Service("TFileService",
     fileName=cms.string("Test_Data_2018UL.root")
 )
-print "test1"
+print ("test1")
 process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 #       photonSrc = cms.untracked.InputTag("cleanPatPhotons"),
 #       electronSrc = cms.untracked.InputTag("cleanPatElectrons"),
@@ -106,12 +125,16 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
         metSrc = cms.InputTag("slimmedMETs"),
         genSrc = cms.untracked.InputTag("packedGenParticles"),
         pfSrc = cms.InputTag("packedPFCandidates"),
+	metPATSrc = cms.InputTag("TriggerResults","","PAT"),
+        metRECOSrc = cms.InputTag("TriggerResults","","RECO"),
         bits = cms.InputTag("TriggerResults","","HLT"),
         prescales = cms.InputTag("patTrigger"),
         objects = cms.InputTag("selectedPatTrigger"),
         vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+	#genparticles = cms.InputTag("prunedGenParticles"),
         bsSrc = cms.InputTag("offlineBeamSpot"),
         genjetSrc = cms.InputTag("slimmedGenJets"),
+	genJetFlavourInfos = cms.InputTag('slimmedGenJetsFlavourInfos'),
         pileupSrc =cms.InputTag("slimmedAddPileupInfo"),
         ak5pfJetSrc = cms.InputTag("ak5PFJets"),
         ak5genJetSrc = cms.InputTag("ak5GenJets"),
@@ -129,19 +152,26 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 	MonteCarlo =  cms.untracked.bool(False),
 	ParticleLabel =  cms.untracked.bool(False),
 	Reconstruct =cms.untracked.bool(True),
-#  EtaRange =  cms.untracked.double(5.0),
-#  PtThreshold = cms.untracked.double(12.0),
+#       EtaRange =  cms.untracked.double(5.0),
+#       PtThreshold = cms.untracked.double(12.0),
   	EtaRange =  cms.untracked.double(3.0),
   	PtThreshold = cms.untracked.double(55.0), #effective is 21
   	LeadingPtThreshold = cms.untracked.double(150.0), #effective is 81       
-#        scaleFactorsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'), 
-#        scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-#        scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
-#        resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-
-      
+#       scaleFactorsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('CondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'), 
+#       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+#       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
+#       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
+ 	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
+	BtagScaleFacFile = cms.string("btagging_2018.json.gz"),
+	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
+	 'pfDeepCSVJetTags:probb',
+         'pfDeepCSVJetTags:probbb',
+         'pfDeepFlavourJetTags:probb',
+         'pfDeepFlavourJetTags:probbb',
+         'pfDeepFlavourJetTags:problepb'
+    )    
  )
 
 
@@ -150,5 +180,5 @@ process.analyzeBasicPat = cms.EDAnalyzer("QCDEventShape",
 
 #process.analyzeBasicPat.append("keep *_ak5PFJetsCHS_*_EX")
 process.p = cms.Path(process.analyzeBasicPat)
-print "test2"
+print ("test2")
 #process.p = cms.Path(process.ak5PFJets*process.ak5GenJets*process.analyzeBasicPat)
