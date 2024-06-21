@@ -1,9 +1,0 @@
-crab resubmit -d crab_projects/crab_HT50to100_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT100to200_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT200to300_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT300to500_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT500to700_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT700to1000_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT1000to1500_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT1500to2000_TuneCP5_APV --maxmemory 5000
-crab resubmit -d crab_projects/crab_HT2000toInf_TuneCP5_APV --maxmemory 5000
