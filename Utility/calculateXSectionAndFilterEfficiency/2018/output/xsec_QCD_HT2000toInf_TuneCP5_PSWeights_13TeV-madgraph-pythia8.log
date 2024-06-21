@@ -1,0 +1,353 @@
+10-Jun-2024 17:01:43 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:01:45 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:01:45 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root?tried=.
+%MSG
+10-Jun-2024 17:01:45 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:02:00 CEST pre-events
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:02:22 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+Begin processing the 1st record. Run 1, Event 33961300, LumiSection 27170 on stream 0 at 10-Jun-2024 17:02:33.996 CEST
+Unable to load sec.protocol plugin libXrdSecztn.so
+10-Jun-2024 17:02:36 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/2BECEFC9-E7ED-BE4A-8198-87D1A0C532AB.root
+10-Jun-2024 17:02:36 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:02:37 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:02:37 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root?tried=.
+%MSG
+10-Jun-2024 17:02:37 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:02:51 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:02:51 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root
+10-Jun-2024 17:03:00 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/94C2DAD9-BA6C-5444-8074-AB56ABA5FF67.root
+10-Jun-2024 17:03:00 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:01 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:01 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root?tried=.
+%MSG
+10-Jun-2024 17:03:01 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:03:14 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:03:14 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root
+Begin processing the 100001st record. Run 1, Event 33332321, LumiSection 26666 on stream 0 at 10-Jun-2024 17:03:29.880 CEST
+10-Jun-2024 17:03:31 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D4490D78-E068-F843-87FF-000826328393.root
+10-Jun-2024 17:03:31 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:32 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:32 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root?tried=.
+%MSG
+10-Jun-2024 17:03:32 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:03:45 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:03:45 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root
+10-Jun-2024 17:03:55 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/0500BD4E-0266-C44A-9DC6-18E88CC1BC7F.root
+10-Jun-2024 17:03:55 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:56 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:03:56 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root?tried=.
+%MSG
+10-Jun-2024 17:03:56 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:04:08 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:04:08 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root
+Begin processing the 200001st record. Run 1, Event 10373646, LumiSection 8299 on stream 0 at 10-Jun-2024 17:04:19.063 CEST
+10-Jun-2024 17:04:20 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/D665F7E5-F33E-A944-A872-A468FB862DD5.root
+10-Jun-2024 17:04:20 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:04:24 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:04:24 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root?tried=.
+%MSG
+10-Jun-2024 17:04:24 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:04:36 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:04:36 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root
+10-Jun-2024 17:04:48 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/62751D9A-E7AA-5047-96CC-7E67B37953A7.root
+10-Jun-2024 17:04:48 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:04:49 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:04:49 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root?tried=.
+%MSG
+10-Jun-2024 17:04:49 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:05:02 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:05:02 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root
+Begin processing the 300001st record. Run 1, Event 63422309, LumiSection 50738 on stream 0 at 10-Jun-2024 17:05:11.138 CEST
+10-Jun-2024 17:05:12 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/150BDACD-C1A9-F045-A649-853B5ECEFEA7.root
+10-Jun-2024 17:05:12 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:05:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:05:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root?tried=.
+%MSG
+10-Jun-2024 17:05:13 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:05:26 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:05:26 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root
+10-Jun-2024 17:05:35 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/25230107-660C-6B4E-990A-92A2BB118A1E.root
+10-Jun-2024 17:05:35 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:05:36 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:05:36 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root?tried=.
+%MSG
+10-Jun-2024 17:05:36 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:05:49 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:05:49 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root
+Begin processing the 400001st record. Run 1, Event 2868950, LumiSection 2296 on stream 0 at 10-Jun-2024 17:05:58.637 CEST
+10-Jun-2024 17:05:59 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B0B82F92-D60C-C040-BA0B-A2FD1947C469.root
+10-Jun-2024 17:05:59 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:00 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:00 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root?tried=.
+%MSG
+10-Jun-2024 17:06:00 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:06:13 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:06:13 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root
+10-Jun-2024 17:06:27 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9E165885-DEB4-F148-BC5C-A8EA3E33C91A.root
+10-Jun-2024 17:06:27 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root?tried=.
+%MSG
+10-Jun-2024 17:06:28 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:06:41 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:06:41 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root
+Begin processing the 500001st record. Run 1, Event 30534038, LumiSection 24428 on stream 0 at 10-Jun-2024 17:06:57.150 CEST
+10-Jun-2024 17:06:58 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/B259773E-EA09-6040-AFDE-0E2E6A2E12AB.root
+10-Jun-2024 17:06:58 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:59 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:06:59 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root?tried=.
+%MSG
+10-Jun-2024 17:06:59 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:07:11 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:07:12 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root
+10-Jun-2024 17:07:30 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/949E6031-8C9B-3741-BBBE-10127A172B74.root
+10-Jun-2024 17:07:30 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:07:31 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:07:31 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root?tried=.
+%MSG
+10-Jun-2024 17:07:31 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:07:44 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:07:45 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root
+Begin processing the 600001st record. Run 1, Event 1880353, LumiSection 1505 on stream 0 at 10-Jun-2024 17:07:54.040 CEST
+10-Jun-2024 17:07:54 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/9BBF0B15-ADC0-3E4D-82C1-22D3546180FA.root
+10-Jun-2024 17:07:54 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:07:55 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:07:55 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root?tried=.
+%MSG
+10-Jun-2024 17:07:55 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:08:08 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:08:09 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root
+10-Jun-2024 17:08:19 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7FA60681-DFA4-B64E-8F79-11CC75917714.root
+10-Jun-2024 17:08:19 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:08:20 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:08:20 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root?tried=.
+%MSG
+10-Jun-2024 17:08:20 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:08:33 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:08:34 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root
+Begin processing the 700001st record. Run 1, Event 18357915, LumiSection 14687 on stream 0 at 10-Jun-2024 17:08:42.454 CEST
+10-Jun-2024 17:08:42 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C3F6AB80-09AA-9549-928E-01220C0535A9.root
+10-Jun-2024 17:08:42 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:08:43 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:08:43 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root?tried=.
+%MSG
+10-Jun-2024 17:08:43 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:08:56 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:08:57 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root
+10-Jun-2024 17:09:15 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/FE06D52A-4ED9-644F-8813-EB93F1722B6E.root
+10-Jun-2024 17:09:15 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:09:16 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:09:16 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root?tried=.
+%MSG
+10-Jun-2024 17:09:16 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:09:29 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:09:30 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root
+10-Jun-2024 17:09:39 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6FEA4DF3-9085-B143-AE7A-620C4FC5757B.root
+10-Jun-2024 17:09:39 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:09:40 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:09:40 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root?tried=.
+%MSG
+10-Jun-2024 17:09:40 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:09:53 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:09:53 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root
+Begin processing the 800001st record. Run 1, Event 19950394, LumiSection 15961 on stream 0 at 10-Jun-2024 17:10:01.596 CEST
+10-Jun-2024 17:10:03 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/E8ABB817-E1A8-584B-92E3-80EF72BFF47E.root
+10-Jun-2024 17:10:03 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:04 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:04 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root?tried=.
+%MSG
+10-Jun-2024 17:10:04 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:10:17 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:10:18 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root
+10-Jun-2024 17:10:27 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DABFB1E1-E0A1-5646-95B6-E90396059308.root
+10-Jun-2024 17:10:27 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root?tried=.
+%MSG
+10-Jun-2024 17:10:28 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:10:40 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:10:41 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root
+Begin processing the 900001st record. Run 1, Event 26247011, LumiSection 20998 on stream 0 at 10-Jun-2024 17:10:49.180 CEST
+10-Jun-2024 17:10:50 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/89E79800-A6EF-5D45-8823-4F0E43440412.root
+10-Jun-2024 17:10:50 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:52 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:10:52 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root?tried=.
+%MSG
+10-Jun-2024 17:10:52 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:11:04 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:11:05 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root
+10-Jun-2024 17:11:16 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/02275C52-22E3-9C43-B733-779A32522A31.root
+10-Jun-2024 17:11:16 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:11:17 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 17:11:17 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root?tried=.
+%MSG
+10-Jun-2024 17:11:17 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 17:11:30 CEST PostProcessEvent
+Data is served from fnal.gov instead of original site T2_FR_GRIF_LLR
+%MSG
+10-Jun-2024 17:11:31 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root
+    215.860000      0.624836      0.074483             2
+     55.894300      0.357509      0.074483             1
+      7.771900      0.083673      0.074483             0
+ 
+10-Jun-2024 17:11:39 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/DB41C1FB-1219-5147-B802-299DA3228F31.root
+
+------------------------------------
+GenXsecAnalyzer:
+------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+Overall cross-section summary 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Process		xsec_before [pb]		passed	nposw	nnegw	tried	nposw	nnegw 	xsec_match [pb]			accepted [%]	 event_eff [%]
+0		7.994e+00 +/- 2.533e-03		5773	5773	0	366852	366852	0	1.258e-01 +/- 1.643e-03		1.6 +/- 0.0	1.6 +/- 0.0
+1		5.625e+01 +/- 1.156e-02		21189	21189	0	2558100	2558100	0	4.659e-01 +/- 3.189e-03		0.8 +/- 0.0	0.8 +/- 0.0
+2		2.154e+02 +/- 1.826e-02		973123	973123	0	9797548	9797548	0	2.140e+01 +/- 2.067e-02		9.9 +/- 0.0	9.9 +/- 0.0
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+Total		2.797e+02 +/- 2.176e-02		1000085	1000085	0	12722500	12722500	0	2.199e+01 +/- 2.117e-02		7.9 +/- 0.0	7.9 +/- 0.0
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Before matching: total cross section = 2.797e+02 +- 2.176e-02 pb
+After matching: total cross section = 2.199e+01 +- 2.117e-02 pb
+Matching efficiency = 0.1 +/- 0.0   [TO BE USED IN MCM]
+Filter efficiency (taking into account weights)= (1.00008e+06) / (1.00008e+06) = 1.000e+00 +- 0.000e+00
+Filter efficiency (event-level)= (1.00008e+06) / (1.00008e+06) = 1.000e+00 +- 0.000e+00    [TO BE USED IN MCM]
+
+After filter: final cross section = 2.199e+01 +- 2.117e-02 pb
+After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+After filter: final equivalent lumi for 1M events (1/fb) = 4.548e+01 +- 6.315e-02
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 GenXSecAnalyzer      -w GenXSecAnalyzer:                      17       17
+    2 XrdAdaptor           -w file_open                             22       22
+    3 XrdAdaptorInternal   -w file_open                             44       44
+    4 fileAction           -s file_close                            22       22
+    5 fileAction           -s file_open                             66       66
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 GenXSecAnalyzer      PostGlobalEndRun PostGlobalEndRun PostGlobalEndRun
+    2 XrdAdaptor           pre-events       PostProcessEvent PostProcessEvent
+    3 XrdAdaptorInternal   pre-events       pre-events       PostProcessEvent
+    4 fileAction           PostProcessEvent PostProcessEvent PostGlobalEndRun
+    5 fileAction           pre-events       pre-events       PostProcessEvent
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Warning                83                  83
+System                 88                  88
+
+dropped waiting message count 0
