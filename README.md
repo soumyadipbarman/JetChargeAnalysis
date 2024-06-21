@@ -57,8 +57,11 @@ git cms-addpkg GeneratorInterface/Core
 scram b -j8
 cd ../../
 
+cp -r calculateXSectionAndFilterEfficiency
+cd calculateXSectionAndFilterEfficiency
+
 # run using list of dataset names mode
-./calculateXSectionAndFilterEfficiency.sh -f datasets.txt -c Moriond17 -d MINIAODSIM -n 1000000
+./calculateXSectionAndFilterEfficiency.sh -f 2017/PY8Bin2017.txt -c RunIISummer20UL17MiniAODv2 -d MINIAODSIM -n 1000000
 
 # For full details - https://twiki.cern.ch/twiki/bin/viewauth/CMS/HowToGenXSecAnalyzer
 ```
