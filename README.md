@@ -65,3 +65,10 @@ cd calculateXSectionAndFilterEfficiency
 
 # For full details - https://twiki.cern.ch/twiki/bin/viewauth/CMS/HowToGenXSecAnalyzer
 ```
+
+### Setup for Trigger-path based PU profile Calculation
+```
+cmsrel CMSSW_10_6_20
+cd CMSSW_10_6_20/src
+cmsenv
+```
