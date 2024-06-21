@@ -1,0 +1,347 @@
+11-Jun-2024 09:33:02 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:33:03 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:33:03 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root?tried=.
+%MSG
+11-Jun-2024 09:33:03 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:33:07 CEST pre-events
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:33:19 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root
+Begin processing the 1st record. Run 1, Event 234013, LumiSection 235 on stream 0 at 11-Jun-2024 09:34:03.880 CEST
+11-Jun-2024 09:34:08 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/62ACFB2D-8860-5C4B-8C14-1E181E6FAFB1.root
+11-Jun-2024 09:34:08 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:34:09 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:34:09 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root?tried=.
+%MSG
+11-Jun-2024 09:34:09 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:34:12 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:34:13 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root
+11-Jun-2024 09:34:30 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/23C7D543-506E-2D45-ABB1-0EAA43E59E8D.root
+11-Jun-2024 09:34:30 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:34:31 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:34:31 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root?tried=.
+%MSG
+11-Jun-2024 09:34:31 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:34:44 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:34:45 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root
+Begin processing the 100001st record. Run 1, Event 24398015, LumiSection 24399 on stream 0 at 11-Jun-2024 09:35:01.571 CEST
+11-Jun-2024 09:35:02 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/FED539AE-A046-9E46-86E1-5814EFBF2F40.root
+11-Jun-2024 09:35:02 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:03 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:03 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root?tried=.
+%MSG
+11-Jun-2024 09:35:03 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:35:06 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:35:06 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root
+11-Jun-2024 09:35:22 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D6C0B6E6-678C-3B46-AB17-7C3CD32BE798.root
+11-Jun-2024 09:35:22 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:23 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:23 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root?tried=.
+%MSG
+11-Jun-2024 09:35:23 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:35:26 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:35:27 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root
+Begin processing the 200001st record. Run 1, Event 19410006, LumiSection 19411 on stream 0 at 11-Jun-2024 09:35:45.816 CEST
+11-Jun-2024 09:35:46 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/E5EB9267-ADD9-CD4C-8088-A7CC336804BC.root
+11-Jun-2024 09:35:46 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:47 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:35:47 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root?tried=.
+%MSG
+11-Jun-2024 09:35:47 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:35:54 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:35:55 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root
+11-Jun-2024 09:36:12 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/C4AF847F-CFD0-4B4F-99F9-238D0A52F42F.root
+11-Jun-2024 09:36:12 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root?tried=.
+%MSG
+11-Jun-2024 09:36:13 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:36:15 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:36:16 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root
+Begin processing the 300001st record. Run 1, Event 17036001, LumiSection 17037 on stream 0 at 11-Jun-2024 09:36:35.393 CEST
+11-Jun-2024 09:36:36 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/EEA72530-4A11-B146-864A-DDDEEC14C64A.root
+11-Jun-2024 09:36:36 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:37 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:37 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root?tried=.
+%MSG
+11-Jun-2024 09:36:37 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:36:39 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:36:40 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root
+11-Jun-2024 09:36:57 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/713411B6-6D51-A349-A848-FF6B369EE346.root
+11-Jun-2024 09:36:57 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:58 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:36:58 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root?tried=.
+%MSG
+11-Jun-2024 09:36:58 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:37:23 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:37:24 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root
+Begin processing the 400001st record. Run 1, Event 18206002, LumiSection 18207 on stream 0 at 11-Jun-2024 09:37:41.684 CEST
+11-Jun-2024 09:37:42 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/8CFAA0E3-B026-1E40-9F26-2092A91367C3.root
+11-Jun-2024 09:37:42 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:37:43 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:37:43 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root?tried=.
+%MSG
+11-Jun-2024 09:37:43 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:37:55 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:37:56 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root
+11-Jun-2024 09:38:12 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/4331EA12-5A90-D24C-BA09-0ADA60290C3C.root
+11-Jun-2024 09:38:12 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:38:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:38:13 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root?tried=.
+%MSG
+11-Jun-2024 09:38:13 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:38:20 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:38:21 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root
+Begin processing the 500001st record. Run 1, Event 31040006, LumiSection 31041 on stream 0 at 11-Jun-2024 09:38:43.795 CEST
+11-Jun-2024 09:38:43 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9C3C0B9E-B383-A64B-A355-A7BB7877065E.root
+11-Jun-2024 09:38:43 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:38:44 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:38:44 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root?tried=.
+%MSG
+11-Jun-2024 09:38:44 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:38:57 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:38:58 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root
+11-Jun-2024 09:39:14 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/AB2A3729-143F-0D45-A9E4-63B152C03997.root
+11-Jun-2024 09:39:14 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:39:15 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:39:15 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root?tried=.
+%MSG
+11-Jun-2024 09:39:15 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:39:18 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:39:18 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root
+11-Jun-2024 09:39:41 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/65465229-108D-644C-A294-6910F58E5D7A.root
+11-Jun-2024 09:39:41 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:39:42 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:39:42 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root?tried=.
+%MSG
+11-Jun-2024 09:39:42 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:39:55 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:39:56 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root
+Begin processing the 600001st record. Run 1, Event 10894009, LumiSection 10895 on stream 0 at 11-Jun-2024 09:40:15.780 CEST
+11-Jun-2024 09:40:17 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/B1DBBAA7-6101-5143-928F-CD1770EB14EB.root
+11-Jun-2024 09:40:17 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:40:18 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:40:18 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root?tried=.
+%MSG
+11-Jun-2024 09:40:18 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:40:25 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:40:26 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root
+11-Jun-2024 09:40:43 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D17751A3-00E4-B14D-898C-B6F646D121D7.root
+11-Jun-2024 09:40:43 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:40:44 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:40:44 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root?tried=.
+%MSG
+11-Jun-2024 09:40:44 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:40:48 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:40:49 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root
+Begin processing the 700001st record. Run 1, Event 37622003, LumiSection 37623 on stream 0 at 11-Jun-2024 09:41:05.471 CEST
+11-Jun-2024 09:41:06 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/39048F74-BEF6-A047-862A-C95E638C2B3E.root
+11-Jun-2024 09:41:06 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:07 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:07 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root?tried=.
+%MSG
+11-Jun-2024 09:41:07 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:41:09 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:41:10 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root
+11-Jun-2024 09:41:27 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/721FF10A-B4AC-4244-BBB8-A9F2580D7AA4.root
+11-Jun-2024 09:41:27 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:28 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root?tried=.
+%MSG
+11-Jun-2024 09:41:28 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:41:41 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:41:42 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root
+Begin processing the 800001st record. Run 1, Event 4668005, LumiSection 4669 on stream 0 at 11-Jun-2024 09:41:57.417 CEST
+11-Jun-2024 09:41:58 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/3DEE78B5-EA91-EE4F-A188-24AFAC0D20F6.root
+11-Jun-2024 09:41:58 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:59 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:41:59 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root?tried=.
+%MSG
+11-Jun-2024 09:41:59 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:42:11 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:42:12 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root
+11-Jun-2024 09:42:31 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/9A247FE0-B7E2-0E49-B4EB-A30F32A9A24A.root
+11-Jun-2024 09:42:31 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:42:32 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:42:32 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root?tried=.
+%MSG
+11-Jun-2024 09:42:32 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:42:45 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:42:46 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root
+Begin processing the 900001st record. Run 1, Event 13068010, LumiSection 13069 on stream 0 at 11-Jun-2024 09:43:02.641 CEST
+11-Jun-2024 09:43:03 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/942F7836-1DC3-6E43-A762-AFEB501BD966.root
+11-Jun-2024 09:43:03 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:04 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:04 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root?tried=.
+%MSG
+11-Jun-2024 09:43:04 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:43:07 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:43:08 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root
+11-Jun-2024 09:43:14 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/D716E463-FE8A-E941-BDDF-BC98823F2FD7.root
+11-Jun-2024 09:43:14 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:15 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:15 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root?tried=.
+%MSG
+11-Jun-2024 09:43:15 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:43:17 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:43:18 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root
+11-Jun-2024 09:43:34 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/D032F1CF-1BF8-6447-A767-EA6E02361EB8.root
+11-Jun-2024 09:43:34 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:35 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 11-Jun-2024 09:43:35 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root?tried=.
+%MSG
+11-Jun-2024 09:43:35 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root
+%MSG-w XrdAdaptor:  file_open 11-Jun-2024 09:43:37 CEST PostProcessEvent
+Data is served from T2_US_Nebraska instead of original site T2_FR_GRIF_LLR
+%MSG
+11-Jun-2024 09:43:38 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root
+11-Jun-2024 09:43:53 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL16MiniAODv2/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/CA7B8BA4-9196-204E-97B3-FB1880098A00.root
+
+------------------------------------
+GenXsecAnalyzer:
+------------------------------------
+Before Filter: total cross section = 2.624e+01 +- 1.222e-02 pb
+Filter efficiency (taking into account weights)= (1e+06) / (1e+06) = 1.000e+00 +- 0.000e+00
+Filter efficiency (event-level)= (1e+06) / (1e+06) = 1.000e+00 +- 0.000e+00    [TO BE USED IN MCM]
+
+After filter: final cross section = 2.624e+01 +- 1.222e-02 pb
+After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+After filter: final equivalent lumi for 1M events (1/fb) = 3.810e+01 +- 4.203e-02
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 GenXSecAnalyzer      -w GenXSecAnalyzer:                       7        7
+    2 XrdAdaptor           -w file_open                             23       23
+    3 XrdAdaptorInternal   -w file_open                             46       46
+    4 fileAction           -s file_close                            23       23
+    5 fileAction           -s file_open                             69       69
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 GenXSecAnalyzer      PostGlobalEndRun PostGlobalEndRun PostGlobalEndRun
+    2 XrdAdaptor           pre-events       PostProcessEvent PostProcessEvent
+    3 XrdAdaptorInternal   pre-events       pre-events       PostProcessEvent
+    4 fileAction           PostProcessEvent PostProcessEvent PostGlobalEndRun
+    5 fileAction           pre-events       pre-events       PostProcessEvent
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Warning                76                  76
+System                 92                  92
+
+dropped waiting message count 0

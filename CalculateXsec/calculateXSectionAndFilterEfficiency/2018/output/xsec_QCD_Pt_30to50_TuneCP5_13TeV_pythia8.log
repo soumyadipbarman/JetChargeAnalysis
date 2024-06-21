@@ -1,0 +1,226 @@
+10-Jun-2024 14:11:14 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:11:15 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:11:15 CEST pre-events
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root?tried=.
+%MSG
+10-Jun-2024 14:11:15 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:11:30 CEST pre-events
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:11:36 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+Begin processing the 1st record. Run 1, Event 7683015, LumiSection 7684 on stream 0 at 10-Jun-2024 14:11:46.294 CEST
+10-Jun-2024 14:11:49 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/100000/BCBE85CF-0459-744E-A64E-10A738DB2B90.root
+10-Jun-2024 14:11:49 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:11:50 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:11:50 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root?tried=.
+%MSG
+10-Jun-2024 14:11:50 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:12:05 CEST PostProcessEvent
+Data is served from T2_US_Caltech instead of original site infn.it
+%MSG
+10-Jun-2024 14:12:06 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root
+Begin processing the 100001st record. Run 1, Event 12433012, LumiSection 12434 on stream 0 at 10-Jun-2024 14:12:21.939 CEST
+10-Jun-2024 14:12:23 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/8F5EE1B2-EB62-F64F-BDA2-87D4665A54C2.root
+10-Jun-2024 14:12:23 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:12:24 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:12:24 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root?tried=.
+%MSG
+10-Jun-2024 14:12:24 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:12:37 CEST PostProcessEvent
+Data is served from T2_US_Caltech instead of original site infn.it
+%MSG
+10-Jun-2024 14:12:38 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root
+10-Jun-2024 14:12:52 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/912F939D-53EE-B847-852B-378FB6AB0D02.root
+10-Jun-2024 14:12:52 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:12:53 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:12:53 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root?tried=.
+%MSG
+10-Jun-2024 14:12:53 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:13:06 CEST PostProcessEvent
+Data is served from T2_US_Caltech instead of original site infn.it
+%MSG
+10-Jun-2024 14:13:07 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root
+Begin processing the 200001st record. Run 1, Event 15014002, LumiSection 15015 on stream 0 at 10-Jun-2024 14:13:17.326 CEST
+10-Jun-2024 14:13:19 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/240000/00B40B5A-53EE-0B40-ABC6-C2DA0E452FA1.root
+10-Jun-2024 14:13:19 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:13:20 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:13:20 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root?tried=.
+%MSG
+10-Jun-2024 14:13:20 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:13:34 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:13:35 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+Begin processing the 300001st record. Run 1, Event 17811006, LumiSection 17812 on stream 0 at 10-Jun-2024 14:13:50.840 CEST
+10-Jun-2024 14:13:52 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/6C09053A-344C-1A41-8EB2-FE3826230259.root
+10-Jun-2024 14:13:52 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:13:53 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:13:53 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root?tried=.
+%MSG
+10-Jun-2024 14:13:53 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:14:07 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:14:08 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+Begin processing the 400001st record. Run 1, Event 10918016, LumiSection 10919 on stream 0 at 10-Jun-2024 14:14:22.617 CEST
+10-Jun-2024 14:14:24 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/F57ED038-6A09-1342-A024-CE9BA11DAE53.root
+10-Jun-2024 14:14:24 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:14:25 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:14:25 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root?tried=.
+%MSG
+10-Jun-2024 14:14:25 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:14:38 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:14:39 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+Begin processing the 500001st record. Run 1, Event 17672002, LumiSection 17673 on stream 0 at 10-Jun-2024 14:14:54.389 CEST
+10-Jun-2024 14:14:55 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/96FCC19D-5C74-5D4E-8ECF-8236B62F7F2C.root
+10-Jun-2024 14:14:55 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:14:56 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:14:56 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root?tried=.
+%MSG
+10-Jun-2024 14:14:56 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:15:09 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:15:10 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root
+Begin processing the 600001st record. Run 1, Event 19941003, LumiSection 19942 on stream 0 at 10-Jun-2024 14:15:24.727 CEST
+10-Jun-2024 14:15:24 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/ED9C3D90-FDFC-E24A-91B2-C65BF1C578E4.root
+10-Jun-2024 14:15:24 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:15:25 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:15:25 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root?tried=.
+%MSG
+10-Jun-2024 14:15:25 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:15:38 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:15:39 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root
+10-Jun-2024 14:15:56 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/7BFA66D8-1A78-0A4A-AFB8-7679E1F875D1.root
+10-Jun-2024 14:15:56 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:15:57 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:15:57 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root?tried=.
+%MSG
+10-Jun-2024 14:15:57 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:16:09 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:16:10 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root
+Begin processing the 700001st record. Run 1, Event 2983009, LumiSection 2984 on stream 0 at 10-Jun-2024 14:16:19.589 CEST
+10-Jun-2024 14:16:25 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/3CE736C8-8DB3-804A-9CD7-EB5A4A7E6AC8.root
+10-Jun-2024 14:16:25 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:16:26 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:16:26 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root?tried=.
+%MSG
+10-Jun-2024 14:16:26 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:16:39 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:16:40 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root
+Begin processing the 800001st record. Run 1, Event 3290008, LumiSection 3291 on stream 0 at 10-Jun-2024 14:16:51.352 CEST
+10-Jun-2024 14:16:57 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/C62F56E5-E949-C44C-A68E-C6AA8D1C0A4B.root
+10-Jun-2024 14:16:57 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:16:58 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:16:58 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root?tried=.
+%MSG
+10-Jun-2024 14:16:58 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root
+Unable to load sec.protocol plugin libXrdSecztn.so
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:17:11 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:17:12 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root
+Begin processing the 900001st record. Run 1, Event 13302003, LumiSection 13303 on stream 0 at 10-Jun-2024 14:17:23.881 CEST
+10-Jun-2024 14:17:29 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/819CFA71-0E38-2E4D-8EA0-B7192F553388.root
+10-Jun-2024 14:17:29 CEST  Initiating request to open file root://eoscms.cern.ch//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:17:30 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root.
+%MSG
+%MSG-w XrdAdaptorInternal:  file_open 10-Jun-2024 14:17:30 CEST PostProcessEvent
+Failed to open file at URL root://eoscms.cern.ch:1094//eos/cms/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root?tried=.
+%MSG
+10-Jun-2024 14:17:30 CEST  Fallback request to file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root
+%MSG-w XrdAdaptor:  file_open 10-Jun-2024 14:17:43 CEST PostProcessEvent
+Data is served from T2_US_UCSD-ceph instead of original site infn.it
+%MSG
+10-Jun-2024 14:17:44 CEST  Successfully opened file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root
+10-Jun-2024 14:17:55 CEST  Closed file root://xrootd-cms.infn.it//store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_30to50_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/30000/1AE533FD-F330-AB49-9CCC-1572AE24D4FF.root
+
+------------------------------------
+GenXsecAnalyzer:
+------------------------------------
+Before Filter: total cross section = 1.069e+08 +- 5.547e+04 pb
+Filter efficiency (taking into account weights)= (1e+06) / (1e+06) = 1.000e+00 +- 0.000e+00
+Filter efficiency (event-level)= (1e+06) / (1e+06) = 1.000e+00 +- 0.000e+00    [TO BE USED IN MCM]
+
+After filter: final cross section = 1.069e+08 +- 5.547e+04 pb
+After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+After filter: final equivalent lumi for 1M events (1/fb) = 9.357e-06 +- 1.054e-08
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 GenXSecAnalyzer      -w GenXSecAnalyzer:                       7        7
+    2 XrdAdaptor           -w file_open                             13       13
+    3 XrdAdaptorInternal   -w file_open                             26       26
+    4 fileAction           -s file_close                            13       13
+    5 fileAction           -s file_open                             39       39
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 GenXSecAnalyzer      PostGlobalEndRun PostGlobalEndRun PostGlobalEndRun
+    2 XrdAdaptor           pre-events       PostProcessEvent PostProcessEvent
+    3 XrdAdaptorInternal   pre-events       pre-events       PostProcessEvent
+    4 fileAction           PostProcessEvent PostProcessEvent PostGlobalEndRun
+    5 fileAction           pre-events       pre-events       PostProcessEvent
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Warning                46                  46
+System                 52                  52
+
+dropped waiting message count 0
