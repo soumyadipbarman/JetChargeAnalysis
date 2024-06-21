@@ -49,6 +49,7 @@ source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
 # grid-proxy-init -debug -verify
 voms-proxy-init -voms cms
 # setup cmssw release (choose the CMSSW version according to datasets)
+mkdir CalculateXsec
 cmsrel CMSSW_10_6_0
 cd CMSSW_10_6_0/src
 cmsenv
