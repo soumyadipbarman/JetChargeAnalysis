@@ -39,3 +39,26 @@ https://github.com/soumyadipbarman/JetChargeAnalysis/tree/master/JetCharge
 4. Now rebuild: scram build
 
 ```
+
+### Setup for MC Cross-Section Calculation
+```
+# activate McM tokens, must be done before setting cmsenv
+cern-get-sso-cookie -u https://cms-pdmv.cern.ch/mcm/ -o ~/private/prod-cookie.txt --krb --reprocess
+source /afs/cern.ch/cms/PPD/PdmV/tools/McM/getCookie.sh
+# setup the grid xertificate
+# grid-proxy-init -debug -verify
+voms-proxy-init -voms cms
+# setup cmssw release (choose the CMSSW version according to datasets)
+cmsrel CMSSW_10_6_0
+cd CMSSW_10_6_0/src
+cmsenv
+
+git cms-addpkg GeneratorInterface/Core
+scram b -j8
+cd ../../
+
+# run using list of dataset names mode
+./calculateXSectionAndFilterEfficiency.sh -f datasets.txt -c Moriond17 -d MINIAODSIM -n 1000000
+
+# For full details - https://twiki.cern.ch/twiki/bin/viewauth/CMS/HowToGenXSecAnalyzer
+```
