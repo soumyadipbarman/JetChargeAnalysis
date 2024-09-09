@@ -96,7 +96,8 @@ def main():
             # Will submit one task for each of these input datasets.
                 inputDatasets = [
 		'/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM',
-		'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/MINIAODSIM']
+		'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM']
+		#'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/MINIAODSIM']
 
     	  	requestName =['Pt-15to7000_TuneCP5_Flat_pythia8','Pt-15to7000_TuneCH3_Flat_herwig7']
                           
