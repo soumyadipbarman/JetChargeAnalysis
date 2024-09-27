@@ -1,0 +1,511 @@
+DEBUG 2024-08-09 20:19:09.460 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-09 20:19:09.460 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-09 20:19:09.460 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-09 20:19:09.460 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+INFO 2024-08-09 20:19:09.461 UTC: 	 Will use CRAB configuration file crabConfig_Data_106x_analysis.py
+DEBUG 2024-08-09 20:19:09.461 UTC: 	 Loading CRAB configuration file.
+DEBUG 2024-08-09 20:19:09.462 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+ERROR 2024-08-09 20:19:09.462 UTC: 	 Working area '/afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_JetHT_Run2016F-HIPM_UL2016' already exists 
+Please change the requestName in the config file
+ERROR 2024-08-09 20:19:09.462 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 329, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 392, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_JetHT_Run2016F-HIPM_UL2016' already exists 
+Please change the requestName in the config file
+INFO 2024-08-09 20:19:09.464 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-11 09:17:36.125 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-11 09:17:36.125 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-11 09:17:36.125 UTC: 	 Executing command: 'resubmit'
+DEBUG 2024-08-11 09:17:36.125 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:08.180 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 09:24:08.181 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 09:24:08.181 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-12 09:24:08.181 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:08.181 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-12 09:24:08.293 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 09:24:08.293 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 09:24:08.293 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-12 09:24:08.293 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:08.294 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-12 09:24:08.311 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 09:24:08.311 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 09:24:08.311 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-12 09:24:08.311 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:08.312 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-12 09:24:21.468 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 09:24:21.468 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 09:24:21.468 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-12 09:24:21.468 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:21.469 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-12 09:24:21.502 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 09:24:21.502 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 09:24:21.502 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-12 09:24:21.502 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-12 09:24:21.503 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-12 15:26:58.914 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-12 15:26:58.914 UTC: 	 Running on: Linux lxplus809.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-12 15:26:58.914 UTC: 	 Executing command: 'resubmit'
+DEBUG 2024-08-12 15:26:58.914 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:05:58.706 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:05:58.707 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:05:58.707 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:05:58.707 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:05:58.707 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_15to30_TuneCP5_APV
+ERROR 2024-08-20 13:05:58.707 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_15to30_TuneCP5_APV
+INFO 2024-08-20 13:05:59.020 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:00.001 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:00.001 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:00.001 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:00.001 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:00.002 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_30to50_TuneCP5_APV
+ERROR 2024-08-20 13:06:00.002 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_30to50_TuneCP5_APV
+INFO 2024-08-20 13:06:00.004 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:00.976 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:00.976 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:00.976 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:00.976 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:00.977 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_50to80_TuneCP5_APV
+ERROR 2024-08-20 13:06:00.977 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_50to80_TuneCP5_APV
+INFO 2024-08-20 13:06:00.979 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:02.000 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:02.000 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:02.000 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:02.000 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:02.001 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_80to120_TuneCP5_APV
+ERROR 2024-08-20 13:06:02.001 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_80to120_TuneCP5_APV
+INFO 2024-08-20 13:06:02.002 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:02.948 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:02.948 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:02.948 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:02.948 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:02.949 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_120to170_TuneCP5_APV
+ERROR 2024-08-20 13:06:02.949 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_120to170_TuneCP5_APV
+INFO 2024-08-20 13:06:02.950 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:03.857 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:03.858 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:03.858 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:03.858 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:03.858 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_170to300_TuneCP5_APV
+ERROR 2024-08-20 13:06:03.859 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_170to300_TuneCP5_APV
+INFO 2024-08-20 13:06:03.860 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:04.798 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:04.798 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:04.798 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:04.798 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:04.799 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_300to470_TuneCP5_APV
+ERROR 2024-08-20 13:06:04.799 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_300to470_TuneCP5_APV
+INFO 2024-08-20 13:06:04.802 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:05.723 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:05.723 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:05.723 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:05.723 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:05.724 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_470to600_TuneCP5_APV
+ERROR 2024-08-20 13:06:05.724 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_470to600_TuneCP5_APV
+INFO 2024-08-20 13:06:05.726 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:06.686 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:06.686 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:06.686 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:06.686 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:06.687 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_600to800_TuneCP5_APV
+ERROR 2024-08-20 13:06:06.687 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_600to800_TuneCP5_APV
+INFO 2024-08-20 13:06:06.689 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:07.635 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:07.635 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:07.635 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:07.635 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:07.636 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_800to1000_TuneCP5_APV
+ERROR 2024-08-20 13:06:07.636 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_800to1000_TuneCP5_APV
+INFO 2024-08-20 13:06:07.637 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:08.527 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:08.527 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:08.527 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:08.527 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:08.528 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1000to1400_TuneCP5_APV
+ERROR 2024-08-20 13:06:08.528 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1000to1400_TuneCP5_APV
+INFO 2024-08-20 13:06:08.529 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:09.543 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:09.543 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:09.543 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:09.543 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:09.544 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1400to1800_TuneCP5_APV
+ERROR 2024-08-20 13:06:09.544 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1400to1800_TuneCP5_APV
+INFO 2024-08-20 13:06:09.545 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:10.618 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:10.618 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:10.618 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:10.618 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:10.619 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1800to2400_TuneCP5_APV
+ERROR 2024-08-20 13:06:10.619 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_1800to2400_TuneCP5_APV
+INFO 2024-08-20 13:06:10.621 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:11.596 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:11.596 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:11.596 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:11.596 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:11.597 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_2400to3200_TuneCP5_APV
+ERROR 2024-08-20 13:06:11.597 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_2400to3200_TuneCP5_APV
+INFO 2024-08-20 13:06:11.599 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:06:12.565 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:06:12.565 UTC: 	 Running on: Linux lxplus807.cern.ch 4.18.0-553.8.1.el8_10.x86_64 #1 SMP Fri Jun 14 03:19:37 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:06:12.565 UTC: 	 Executing command: 'status'
+DEBUG 2024-08-20 13:06:12.565 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+ERROR 2024-08-20 13:06:12.566 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_3200toinf_TuneCP5_APV
+ERROR 2024-08-20 13:06:12.566 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 684, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 531, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240621.01/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab_projects/crab_Pt_3200toinf_TuneCP5_APV
+INFO 2024-08-20 13:06:12.567 UTC: 	 Log file is /afs/cern.ch/work/s/sobarman/private/MiniAODJCO2016/CMSSW_10_6_30/src/Analysis/MiniAODAnalyzer/test/crab.log
+DEBUG 2024-08-20 13:11:46.434 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:46.434 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:46.434 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:46.435 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:46.437 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:46.657 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:46.657 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:46.657 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:46.657 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:46.658 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:46.793 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:46.793 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:46.793 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:46.793 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:46.794 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:46.903 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:46.903 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:46.903 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:46.903 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:46.904 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:46.950 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:46.950 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:46.950 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:46.951 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:46.951 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.099 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.100 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.100 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.100 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.100 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.204 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.204 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.204 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.204 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.205 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.267 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.267 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.267 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.267 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.268 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.331 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.331 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.331 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.331 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.332 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.422 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.423 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.423 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.423 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.423 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.535 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.535 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.535 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.535 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.535 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.629 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.629 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.629 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.629 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.630 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:47.721 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:47.721 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:47.721 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:47.721 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:47.722 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:48.109 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:48.109 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:48.109 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:48.109 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:48.110 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-20 13:11:48.338 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-20 13:11:48.338 UTC: 	 Running on: Linux lxplus802.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-20 13:11:48.338 UTC: 	 Executing command: 'submit'
+DEBUG 2024-08-20 13:11:48.338 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
+DEBUG 2024-08-20 13:11:48.338 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+DEBUG 2024-08-24 12:37:27.149 UTC: 	 CRAB Client version: v3.240621
+DEBUG 2024-08-24 12:37:27.150 UTC: 	 Running on: Linux lxplus816.cern.ch 4.18.0-553.16.1.el8_10.x86_64 #1 SMP Thu Aug 1 04:16:12 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-08-24 12:37:27.150 UTC: 	 Executing command: 'resubmit'
+DEBUG 2024-08-24 12:37:27.150 UTC: 	 Found CRAB cache file /afs/cern.ch/user/s/sobarman/.crab3
