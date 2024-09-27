@@ -14,17 +14,28 @@ cd plugin
 **In QCDEventShape folder, put the codes in plugin,test from those folders,
 https://github.com/soumyadipbarman/JetChargeAnalysis/tree/master/JetCharge
 
- ### To complile and Run
- ```
- cd QCDEventShape
- scramv1 b    
- cd test 
- cmsRun Run_QCD_test_106x_mc_cfg.py    ## For MC
- cmsRun Run_QCD_test_106x_data_cfg.py  ## For DATA
+### To complile and Run :
+```
+cd QCDEventShape
+scramv1 b    
+cd test 
+cmsRun Run_QCD_test_106x_mc_cfg.py    ## For MC
+cmsRun Run_QCD_test_106x_data_cfg.py  ## For DATA
+```
+
+### For GenericAnalyzer Setup :
+```
+cmsrel  CMSSW_10_6_30
+cd  CMSSW_10_6_30/src
+cmsenv
+mkdir Analysis
+cd Analysis
+mkedanlzr MiniAODAnalyzer
+cd MiniAODAnalyzer
 ```
 
 ### For TUnFold
- ```
+```
 1. Create a scram toolfile rootunfold.xml with content:
    <tool name="rootunfold" version="6.14.09">
    <info url="http://root.cern.ch/root/"/>
