@@ -69,13 +69,13 @@ def main():
                 config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
 		#config.Data.ignoreLocality = True
                 config.Data.inputDBS = 'global'
-		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt","btagging_2017.json.gz","BTagEfficiency2017_09Jun2024.root"]
+		config.JobType.inputFiles= ["Summer19UL17_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_MC_SF_AK4PFchs.txt","Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt","btagging_2017.json.gz","BTagEfficiency2017_29Apr2025.root","ak4_2017.txt","jetvetomaps_2017.json.gz"]
 
-                config.JobType.maxMemoryMB = 10000
+                config.JobType.maxMemoryMB = 15000
 		#config.JobType.maxJobRuntimeMin = 2750
 		#config.JobType.priority = 9999
 		#config.Data.splitting = 'EventAwareLumiBased'
-		config.JobType.numCores = 4
+		config.JobType.numCores = 8
                 config.Data.splitting = 'FileBased'
                 config.Data.unitsPerJob = 1
 		#config.Data.useParent = True

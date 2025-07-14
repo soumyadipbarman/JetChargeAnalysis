@@ -14,7 +14,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.psetName = 'Run_QCD_test_106x_data_cfg.py'
 
-config.JobType.inputFiles= ["Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt","Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunE_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt","btagging_2017.json.gz","BTagEfficiency2017_09Jun2024.root"]
+config.JobType.inputFiles= ["Summer19UL17_JRV2_DATA_PtResolution_AK4PFchs.txt","Summer19UL17_JRV2_DATA_SF_AK4PFchs.txt","Summer19UL17_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunE_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL17_RunF_V5_DATA_UncertaintySources_AK4PFchs.txt","btagging_2017.json.gz","BTagEfficiency2017_29Apr2025.root","jetvetomaps_2017.json.gz"]
 
 #config.Data.inputDataset = '/JetHT/Run2017B-09Aug2019_UL2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-09Aug2019_UL2017-v1/MINIAOD'

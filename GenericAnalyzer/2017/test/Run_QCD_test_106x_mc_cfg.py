@@ -16,9 +16,9 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 #'/store/mc/RunIISummer19UL17MiniAOD/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/MINIAODSIM/106X_mc2017_realistic_v6-v2/240000/001B7529-3179-1D4E-881E-931109365733.root',
-'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
+#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/2430000/0AC37413-3300-B443-822E-05FB298A7D21.root',
 #'/store/mc/RunIISummer20UL17MiniAODv2/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/0086E683-690A-A84C-8769-8C1A1BEB7CC4.root',
-#'/store/mc/RunIISummer20UL17MiniAODv2/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/30000/02BAF4C4-FC88-8947-BC24-1EA27D3117D8.root',
+'/store/mc/RunIISummer20UL17MiniAODv2/QCD_HT100to200_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/30000/02BAF4C4-FC88-8947-BC24-1EA27D3117D8.root',
  )
 
 #eventsToSkip = cms.untracked.VEventRange('1:1950-1:2000'),
@@ -185,7 +185,8 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	BTagEffFile = cms.string("BTagEfficiency2017_09Jun2024.root"),
+	JetVetoMaps = cms.string("jetvetomaps_2017.json.gz"),
+	BTagEffFile = cms.string("BTagEfficiency2017_29Apr2025.root"),
 	BtagScaleFacFile = cms.string("btagging_2017.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
          'pfDeepCSVJetTags:probb',
