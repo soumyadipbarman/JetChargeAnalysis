@@ -9,13 +9,14 @@ process = cms.Process("Analysis")
 #process.options = cms.untracked.PSet(
 #    SkipEvent = cms.untracked.vstring('ProductNotFound')
 #)
-
+process.load("FWCore.MessageService.MessageLogger_cfi")
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 '/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/08747118-9574-3542-97A8-8DDB07DD9837.root',
+'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2520000/429600BD-D846-964D-98B5-9E9AF891067B.root',
 #'/store/mc/RunIISummer20UL18MiniAODv2/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/110000/0FE7C8C9-B319-104D-9A8D-9929821BC80E.root',
 #'/store/mc/RunIISummer20UL18MiniAODv2/QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2540000/6FD306C3-1D3C-0043-85C3-E362263366F5.root',
 )
@@ -25,11 +26,11 @@ process.source = cms.Source("PoolSource",
 #eventRanges = cms.untracked.VEventRange('1:1000-1:2000'),
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(30000) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
@@ -52,7 +53,7 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-process.options.numberOfThreads=cms.untracked.uint32(2)
+process.options.numberOfThreads=cms.untracked.uint32(4)
 process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
@@ -197,7 +198,8 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
+	JetVetoMaps = cms.string("jetvetomaps_2018.json.gz"),
+	BTagEffFile = cms.string("BTagEfficiency2018_29Apr2025.root"),
 	BtagScaleFacFile = cms.string("btagging_2018.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
          'pfDeepCSVJetTags:probb',
@@ -205,7 +207,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 	 'pfDeepFlavourJetTags:probb',
 	 'pfDeepFlavourJetTags:probbb',
 	 'pfDeepFlavourJetTags:problepb'
-    )
+        ),
  )
 
 
@@ -217,6 +219,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #process.analyzeBasicPat.append("keep *_ak5PFJets_*_EX")
 
 #process.analyzeBasicPat.append("keep *_ak5PFJetsCHS_*_EX")
+process.p = cms.Path(process.pileupJetIdUpdated)
 process.p = cms.Path(process.analyzeBasicPat)
 print "test2"
 #process.p = cms.Path(process.ak5PFJets*process.ak5GenJets*process.analyzeBasicPat)
