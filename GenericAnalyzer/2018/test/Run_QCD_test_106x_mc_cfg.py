@@ -9,7 +9,7 @@ process = cms.Process("Analysis")
 #process.options = cms.untracked.PSet(
 #    SkipEvent = cms.untracked.vstring('ProductNotFound')
 #)
-process.load("FWCore.MessageService.MessageLogger_cfi")
+
 process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
@@ -25,10 +25,10 @@ process.source = cms.Source("PoolSource",
 #eventRanges = cms.untracked.VEventRange('1:1000-1:2000'),
 )
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(20000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(30000) )
 
 #process.load("Configuration.StandardSequences.Geometry_cff")
@@ -197,7 +197,6 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	JetVetoMaps = cms.string("jetvetomaps.json.gz"),
 	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
 	BtagScaleFacFile = cms.string("btagging_2018.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
@@ -206,7 +205,7 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 	 'pfDeepFlavourJetTags:probb',
 	 'pfDeepFlavourJetTags:probbb',
 	 'pfDeepFlavourJetTags:problepb'
-        ),
+    )
  )
 
 
@@ -218,7 +217,6 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #process.analyzeBasicPat.append("keep *_ak5PFJets_*_EX")
 
 #process.analyzeBasicPat.append("keep *_ak5PFJetsCHS_*_EX")
-process.p = cms.Path(process.pileupJetIdUpdated)
 process.p = cms.Path(process.analyzeBasicPat)
 print "test2"
 #process.p = cms.Path(process.ak5PFJets*process.ak5GenJets*process.analyzeBasicPat)
