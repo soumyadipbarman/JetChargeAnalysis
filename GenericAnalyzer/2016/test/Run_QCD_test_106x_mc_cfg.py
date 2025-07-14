@@ -54,7 +54,7 @@ process.options = cms.untracked.PSet(
 )
 
 #Setup FWK for multithreaded
-process.options.numberOfThreads=cms.untracked.uint32(2)
+process.options.numberOfThreads=cms.untracked.uint32(4)
 process.options.numberOfStreams=cms.untracked.uint32(0)
 
 process.MessageLogger = cms.Service("MessageLogger",  
@@ -213,9 +213,11 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #        resolutionsFile = cms.FileInPath('xxCondFormats/JetMETObjects/data/Summer15_V0_MC_JER_AK4PFchs.txt'),
 #        scaleFactorsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #        resolutionsFile = cms.FileInPath('Test/QCDEventShape/test/Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	#BTagEffFile = cms.string("BTagEfficiency2016preVFP_09Jun2024.root"),	# APV
+	#JetVetoMaps = cms.string("jetvetomaps_2016preVFP.json.gz"),
+	JetVetoMaps = cms.string("jetvetomaps_2016postVFP.json.gz"),
+	#BTagEffFile = cms.string("BTagEfficiency2016preVFP_29Apr2025.root"),	# APV
 	#BtagScaleFacFile = cms.string("btagging_2016preVFP.json.gz"),
-	BTagEffFile = cms.string("BTagEfficiency2016postVFP_09Jun2024.root"),  # Non APV
+	BTagEffFile = cms.string("BTagEfficiency2016postVFP_29Apr2025.root"),  # Non APV
 	BtagScaleFacFile = cms.string("btagging_2016postVFP.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
          'pfDeepCSVJetTags:probb',

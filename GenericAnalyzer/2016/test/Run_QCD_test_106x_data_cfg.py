@@ -167,9 +167,11 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
 #       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
-	#BTagEffFile = cms.string("BTagEfficiency2016preVFP_09Jun2024.root"),	# APV
+	#JetVetoMaps = cms.string("jetvetomaps_2016preVFP.json.gz"),
+        JetVetoMaps = cms.string("jetvetomaps_2016postVFP.json.gz"),
+	#BTagEffFile = cms.string("BTagEfficiency2016preVFP_29Apr2025.root"),	# APV
 	#BtagScaleFacFile = cms.string("btagging_2016preVFP.json.gz"),
- 	BTagEffFile = cms.string("BTagEfficiency2016postVFP_09Jun2024.root"),  # NonAPV
+ 	BTagEffFile = cms.string("BTagEfficiency2016postVFP_29Apr2025.root"),  # NonAPV
 	BtagScaleFacFile = cms.string("btagging_2016postVFP.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
 	 'pfDeepCSVJetTags:probb',
