@@ -17,9 +17,12 @@ process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 # source
 process.source = cms.Source("PoolSource",
      fileNames = cms.untracked.vstring(
-'/store/data/Run2018A/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/00B87525-94D1-C741-9B03-00528106D15A.root',
+#'/store/data/Run2018A/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/00B87525-94D1-C741-9B03-00528106D15A.root',
 #'/store/data/Run2018A/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/00F0369F-B9FA-5643-B0F4-F286B80B30B5.root',
-#'/store/data/Run2018A/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/0173DB9C-3E46-4741-B80B-9671E9E917CA.root'
+#'/store/data/Run2018A/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/0173DB9C-3E46-4741-B80B-9671E9E917CA.root',
+'/store/data/Run2018C/JetHT/MINIAOD/UL2018_MiniAODv2-v1/260000/091A1C55-0CB8-5440-B925-706D92C02FE1.root',
+#'/store/data/Run2018C/JetHT/MINIAOD/UL2018_MiniAODv2-v1/140000/160530F1-69F9-8242-BABE-F18AF0A45A4D.root',
+#'/store/data/Run2018D/JetHT/MINIAOD/UL2018_MiniAODv2-v2/2560000/0337EBE4-98DB-AA47-A434-604D39F0CF02.root',
  )
 )
 
@@ -163,7 +166,8 @@ process.analyzeBasicPat = cms.EDAnalyzer("MiniAODAnalyzer",
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
 #       scaleFactorsFile = cms.FileInPath('Fall15_25nsV2_MC_SF_AK4PFchs.txt'),
 #       resolutionsFile = cms.FileInPath('Fall15_25nsV2_MC_PtResolution_AK4PFchs.txt'),
- 	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
+ 	JetVetoMaps = cms.string("jetvetomaps.json.gz"),
+	BTagEffFile = cms.string("BTagEfficiency2018_09Jun2024.root"),
 	BtagScaleFacFile = cms.string("btagging_2018.json.gz"),
 	bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
 	 'pfDeepCSVJetTags:probb',

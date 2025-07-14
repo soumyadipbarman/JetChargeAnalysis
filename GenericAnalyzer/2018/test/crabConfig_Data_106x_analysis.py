@@ -13,7 +13,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.psetName = 'Run_QCD_test_106x_data_cfg.py'
 
-config.JobType.inputFiles= ["Summer19UL18_JRV2_DATA_SF_AK4PFchs.txt", "Summer19UL18_JRV2_DATA_PtResolution_AK4PFchs.txt","Summer19UL18_RunA_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt","BTagEfficiency2018_09Jun2024.root","btagging_2018.json.gz"]
+config.JobType.inputFiles= ["Summer19UL18_JRV2_DATA_SF_AK4PFchs.txt", "Summer19UL18_JRV2_DATA_PtResolution_AK4PFchs.txt","Summer19UL18_RunA_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunB_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunC_V5_DATA_UncertaintySources_AK4PFchs.txt","Summer19UL18_RunD_V5_DATA_UncertaintySources_AK4PFchs.txt","BTagEfficiency2018_09Jun2024.root","btagging_2018.json.gz","jetvetomaps.json.gz"]
 
 #config.Data.inputDataset = '/JetHT/Run2018A-UL2018_MiniAODv2-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2018B-UL2018_MiniAODv2-v1/MINIAOD'

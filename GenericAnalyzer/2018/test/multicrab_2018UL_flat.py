@@ -69,9 +69,9 @@ def main():
                 config.JobType.psetName = 'Run_QCD_test_106x_mc_cfg.py'
 		#config.Data.ignoreLocality = True
                 config.Data.inputDBS = 'global'
-		config.JobType.inputFiles= ["Summer19UL18_JRV2_MC_SF_AK4PFchs.txt","Summer19UL18_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt","BTagEfficiency2018_09Jun2024.root","btagging_2018.json.gz"]
+		config.JobType.inputFiles= ["Summer19UL18_JRV2_MC_SF_AK4PFchs.txt","Summer19UL18_JRV2_MC_PtResolution_AK4PFchs.txt","Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt","BTagEfficiency2018_09Jun2024.root","btagging_2018.json.gz","ak4.txt","jetvetomaps.json.gz"]
 
-                config.JobType.maxMemoryMB = 4000
+                config.JobType.maxMemoryMB = 5000
 		#config.JobType.maxJobRuntimeMin = 3000
                 config.JobType.numCores = 2
 		#config.JobType.priority = 9999
@@ -95,11 +95,11 @@ def main():
 
             # Will submit one task for each of these input datasets.
                 inputDatasets = [
-		'/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM',
-		'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM']
+		'/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM']
+		#'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM']
 		#'/QCD_Pt-15to7000_TuneCH3_Flat_13TeV_herwig7/RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/MINIAODSIM']
 
-    	  	requestName =['Pt-15to7000_TuneCP5_Flat_pythia8','Pt-15to7000_TuneCH3_Flat_herwig7']
+    	  	requestName =['Pt-15to7000_TuneCP5_Flat_pythia8']#,'Pt-15to7000_TuneCH3_Flat_herwig7']
                           
                 ireq = 0
                 for inDS in inputDatasets: 
